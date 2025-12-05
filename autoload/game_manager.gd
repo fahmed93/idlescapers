@@ -49,7 +49,7 @@ func get_xp_for_level(level: int) -> float:
 	if level < 1:
 		return 0.0
 	if level > MAX_LEVEL:
-		return xp_table[MAX_LEVEL - 1]
+		return xp_table[xp_table.size() - 1]
 	return xp_table[level - 1]
 
 ## Get level from XP amount

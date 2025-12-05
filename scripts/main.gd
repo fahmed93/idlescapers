@@ -224,7 +224,7 @@ func _update_sidebar_button(skill_id: String) -> void:
 	if total_label:
 		total_label.text = "Total: %d" % GameManager.get_total_level()
 
-func _on_action_completed(_skill_id: String, _method_id: String, success: bool) -> void:
+func _on_action_completed(_skill_id: String, _method_id: String, _success: bool) -> void:
 	_on_inventory_updated()
 
 func _on_inventory_updated() -> void:

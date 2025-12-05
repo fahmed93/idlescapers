@@ -168,8 +168,9 @@ func _calculate_offline_progress(skill_id: String, method_id: String, time_away:
 		GameManager.add_xp(skill_id, xp)
 		xp_gained[skill_id] = xp_gained.get(skill_id, 0.0) + xp
 		
-		# Produce items on success
-		var success := randf() <= method.success_rate
+		# Produce items based on success rate (use deterministic calculation for offline)
+		# Average items = success_rate * produced_items, so we multiply by rate for offline
+		var success := (method.success_rate >= 1.0) or (float(i % 100) / 100.0 < method.success_rate)
 		if success:
 			for item_id in method.produced_items:
 				var amount: int = method.produced_items[item_id]
