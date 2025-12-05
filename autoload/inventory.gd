@@ -73,7 +73,7 @@ func add_item(item_id: String, amount: int = 1) -> bool:
 	if amount <= 0:
 		return false
 	
-	var current := inventory.get(item_id, 0)
+	var current: int = inventory.get(item_id, 0)
 	inventory[item_id] = current + amount
 	
 	item_added.emit(item_id, amount, inventory[item_id])
@@ -85,7 +85,7 @@ func remove_item(item_id: String, amount: int = 1) -> bool:
 	if amount <= 0:
 		return false
 	
-	var current := inventory.get(item_id, 0)
+	var current: int = inventory.get(item_id, 0)
 	if current < amount:
 		return false
 	

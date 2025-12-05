@@ -40,7 +40,7 @@ func _build_xp_table() -> void:
 	var total_xp := 0.0
 	for level in range(2, MAX_LEVEL + 1):
 		# RuneScape XP formula: sum of floor(level + 300 * 2^(level/7)) / 4
-		var points := floor((level - 1) + 300.0 * pow(2.0, (level - 1) / 7.0))
+		var points: float = floor((level - 1) + 300.0 * pow(2.0, (level - 1) / 7.0))
 		total_xp += floor(points / 4.0)
 		xp_table.append(total_xp * XP_MULTIPLIER)
 
@@ -61,7 +61,7 @@ func get_level_from_xp(xp: float) -> int:
 
 ## Get progress to next level (0.0 to 1.0)
 func get_level_progress(skill_id: String) -> float:
-	var xp := skill_xp.get(skill_id, 0.0)
+	var xp: float = skill_xp.get(skill_id, 0.0)
 	var level := get_skill_level(skill_id)
 	
 	if level >= MAX_LEVEL:
