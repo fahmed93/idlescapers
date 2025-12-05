@@ -1,0 +1,9 @@
+<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg">
+  <rect x="2" y="2" width="124" height="124" rx="14" fill="#363d52" stroke="#212532" stroke-width="4"/>
+  <g transform="scale(0.5) translate(64, 64)">
+    <path d="M105.81 90.52L64 128l-41.81-37.48a64 64 0 1 1 83.62 0z" fill="#478cbf"/>
+    <path d="M64 0a64 64 0 0 0-64 64c0 14.5 4.8 27.9 12.9 38.7L64 128l51.1-25.3A64 64 0 0 0 64 0z" fill="#478cbf"/>
+    <circle cx="64" cy="64" r="32" fill="#fff"/>
+  </g>
+  <text x="64" y="100" text-anchor="middle" font-family="sans-serif" font-size="24" font-weight="bold" fill="#fff">IS</text>
+</svg>

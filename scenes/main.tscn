@@ -1,0 +1,187 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8r8x2p8r8n7k"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.14, 0.18, 1)
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 120
+
+[node name="SkillSidebar" type="VBoxContainer" parent="HSplitContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+
+[node name="SidebarHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+layout_mode = 2
+text = "Skills"
+horizontal_alignment = 1
+
+[node name="MainContent" type="VBoxContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="SelectedSkillHeader" type="VBoxContainer" parent="HSplitContainer/MainContent"]
+layout_mode = 2
+
+[node name="SkillName" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Select a Skill"
+horizontal_alignment = 1
+
+[node name="SkillLevel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+layout_mode = 2
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="XPProgressBar" type="ProgressBar" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="XPLabel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "0 / 83 XP"
+horizontal_alignment = 1
+
+[node name="TrainingPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContent/TrainingPanel"]
+layout_mode = 2
+
+[node name="TrainingLabel" type="Label" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+layout_mode = 2
+text = "Training: None"
+horizontal_alignment = 1
+
+[node name="TrainingProgressBar" type="ProgressBar" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+max_value = 100.0
+value = 0.0
+show_percentage = false
+
+[node name="StopButton" type="Button" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Stop Training"
+
+[node name="ActionListLabel" type="Label" parent="HSplitContainer/MainContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Training Methods"
+horizontal_alignment = 1
+
+[node name="ActionList" type="PanelContainer" parent="HSplitContainer/MainContent"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContent/ActionList"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="ActionListContent" type="VBoxContainer" parent="HSplitContainer/MainContent/ActionList/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="InventoryLabel" type="Label" parent="HSplitContainer/MainContent"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Inventory"
+horizontal_alignment = 1
+
+[node name="InventoryPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContent/InventoryPanel"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContent/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="InventoryGrid" type="GridContainer" parent="HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 4
+
+[node name="TotalStatsPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+layout_mode = 2
+
+[node name="TotalStatsLabel" type="Label" parent="HSplitContainer/MainContent/TotalStatsPanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Total Level: 3 | Total XP: 0 | Inventory Value: 0"
+horizontal_alignment = 1
+
+[node name="OfflineProgressPopup" type="PanelContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -100.0
+offset_right = 150.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OfflineProgressPopup"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="OfflineProgressPopup/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Offline Progress"
+horizontal_alignment = 1
+
+[node name="MessageLabel" type="Label" parent="OfflineProgressPopup/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Welcome back!"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="OfflineProgressPopup/VBoxContainer"]
+layout_mode = 2
+text = "Continue"
+
+[connection signal="pressed" from="OfflineProgressPopup/VBoxContainer/CloseButton" to="." method="_on_close_offline_popup"]
