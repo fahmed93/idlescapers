@@ -212,6 +212,107 @@ func _create_fishing_methods() -> Array[TrainingMethodData]:
 	anglerfish.produced_items = {"raw_anglerfish": 1}
 	methods.append(anglerfish)
 	
+	# Additional training methods
+	var anchovy := TrainingMethodData.new()
+	anchovy.id = "anchovy"
+	anchovy.name = "Anchovy"
+	anchovy.description = "Tiny fish that swim in large schools."
+	anchovy.level_required = 3
+	anchovy.xp_per_action = 15.0
+	anchovy.action_time = 2.5
+	anchovy.produced_items = {"raw_anchovy": 1}
+	methods.append(anchovy)
+	
+	var mackerel := TrainingMethodData.new()
+	mackerel.id = "mackerel"
+	mackerel.name = "Mackerel"
+	mackerel.description = "A fast-swimming fish with striped patterns."
+	mackerel.level_required = 8
+	mackerel.xp_per_action = 25.0
+	mackerel.action_time = 3.2
+	mackerel.produced_items = {"raw_mackerel": 1}
+	methods.append(mackerel)
+	
+	var cod := TrainingMethodData.new()
+	cod.id = "cod"
+	cod.name = "Cod"
+	cod.description = "A popular white fish found in cold waters."
+	cod.level_required = 13
+	cod.xp_per_action = 35.0
+	cod.action_time = 4.2
+	cod.produced_items = {"raw_cod": 1}
+	methods.append(cod)
+	
+	var pike := TrainingMethodData.new()
+	pike.id = "pike"
+	pike.name = "Pike"
+	pike.description = "An aggressive freshwater predator."
+	pike.level_required = 18
+	pike.xp_per_action = 45.0
+	pike.action_time = 4.8
+	pike.produced_items = {"raw_pike": 1}
+	methods.append(pike)
+	
+	var bass := TrainingMethodData.new()
+	bass.id = "bass"
+	bass.name = "Bass"
+	bass.description = "A prized sport fish with firm flesh."
+	bass.level_required = 25
+	bass.xp_per_action = 60.0
+	bass.action_time = 5.2
+	bass.produced_items = {"raw_bass": 1}
+	methods.append(bass)
+	
+	var tuna := TrainingMethodData.new()
+	tuna.id = "tuna"
+	tuna.name = "Tuna"
+	tuna.description = "A powerful ocean fish that swims at high speeds."
+	tuna.level_required = 35
+	tuna.xp_per_action = 80.0
+	tuna.action_time = 5.8
+	tuna.produced_items = {"raw_tuna": 1}
+	methods.append(tuna)
+	
+	var manta_ray := TrainingMethodData.new()
+	manta_ray.id = "manta_ray"
+	manta_ray.name = "Manta Ray"
+	manta_ray.description = "A graceful giant that glides through the water."
+	manta_ray.level_required = 55
+	manta_ray.xp_per_action = 115.0
+	manta_ray.action_time = 6.5
+	manta_ray.produced_items = {"raw_manta_ray": 1}
+	methods.append(manta_ray)
+	
+	var sea_turtle := TrainingMethodData.new()
+	sea_turtle.id = "sea_turtle"
+	sea_turtle.name = "Sea Turtle"
+	sea_turtle.description = "An ancient marine reptile with valuable shells."
+	sea_turtle.level_required = 68
+	sea_turtle.xp_per_action = 135.0
+	sea_turtle.action_time = 7.5
+	sea_turtle.produced_items = {"raw_sea_turtle": 1}
+	methods.append(sea_turtle)
+	
+	var sailfish := TrainingMethodData.new()
+	sailfish.id = "sailfish"
+	sailfish.name = "Sailfish"
+	sailfish.description = "The fastest fish in the ocean with a spectacular dorsal fin."
+	sailfish.level_required = 85
+	sailfish.xp_per_action = 165.0
+	sailfish.action_time = 8.0
+	sailfish.produced_items = {"raw_sailfish": 1}
+	methods.append(sailfish)
+	
+	var kraken_tentacle := TrainingMethodData.new()
+	kraken_tentacle.id = "kraken_tentacle"
+	kraken_tentacle.name = "Kraken Tentacle"
+	kraken_tentacle.description = "A rare and dangerous catch from the depths."
+	kraken_tentacle.level_required = 92
+	kraken_tentacle.xp_per_action = 200.0
+	kraken_tentacle.action_time = 9.0
+	kraken_tentacle.produced_items = {"kraken_tentacle": 1}
+	methods.append(kraken_tentacle)
+	
 	return methods
 
 func _create_woodcutting_methods() -> Array[TrainingMethodData]:
@@ -286,6 +387,107 @@ func _create_woodcutting_methods() -> Array[TrainingMethodData]:
 	redwood.action_time = 10.0
 	redwood.produced_items = {"redwood_logs": 1}
 	methods.append(redwood)
+	
+	# Additional training methods
+	var achey := TrainingMethodData.new()
+	achey.id = "achey"
+	achey.name = "Achey Tree"
+	achey.description = "A thin, flexible tree good for crafting."
+	achey.level_required = 5
+	achey.xp_per_action = 30.0
+	achey.action_time = 3.5
+	achey.produced_items = {"achey_logs": 1}
+	methods.append(achey)
+	
+	var teak := TrainingMethodData.new()
+	teak.id = "teak"
+	teak.name = "Teak Tree"
+	teak.description = "A durable tropical hardwood tree."
+	teak.level_required = 35
+	teak.xp_per_action = 85.0
+	teak.action_time = 6.0
+	teak.produced_items = {"teak_logs": 1}
+	methods.append(teak)
+	
+	var mahogany := TrainingMethodData.new()
+	mahogany.id = "mahogany"
+	mahogany.name = "Mahogany Tree"
+	mahogany.description = "A rich, reddish-brown wood highly valued for furniture."
+	mahogany.level_required = 50
+	mahogany.xp_per_action = 125.0
+	mahogany.action_time = 7.0
+	mahogany.produced_items = {"mahogany_logs": 1}
+	methods.append(mahogany)
+	
+	var arctic_pine := TrainingMethodData.new()
+	arctic_pine.id = "arctic_pine"
+	arctic_pine.name = "Arctic Pine"
+	arctic_pine.description = "A hardy pine from frozen regions."
+	arctic_pine.level_required = 55
+	arctic_pine.xp_per_action = 140.0
+	arctic_pine.action_time = 6.5
+	arctic_pine.produced_items = {"arctic_pine_logs": 1}
+	methods.append(arctic_pine)
+	
+	var eucalyptus := TrainingMethodData.new()
+	eucalyptus.id = "eucalyptus"
+	eucalyptus.name = "Eucalyptus Tree"
+	eucalyptus.description = "A fragrant tree with medicinal properties."
+	eucalyptus.level_required = 58
+	eucalyptus.xp_per_action = 165.0
+	eucalyptus.action_time = 7.5
+	eucalyptus.produced_items = {"eucalyptus_logs": 1}
+	methods.append(eucalyptus)
+	
+	var elder := TrainingMethodData.new()
+	elder.id = "elder"
+	elder.name = "Elder Tree"
+	elder.description = "A mystical tree with spiritual significance."
+	elder.level_required = 65
+	elder.xp_per_action = 190.0
+	elder.action_time = 7.0
+	elder.produced_items = {"elder_logs": 1}
+	methods.append(elder)
+	
+	var blisterwood := TrainingMethodData.new()
+	blisterwood.id = "blisterwood"
+	blisterwood.name = "Blisterwood Tree"
+	blisterwood.description = "A cursed tree with dark power."
+	blisterwood.level_required = 70
+	blisterwood.xp_per_action = 220.0
+	blisterwood.action_time = 8.5
+	blisterwood.produced_items = {"blisterwood_logs": 1}
+	methods.append(blisterwood)
+	
+	var bloodwood := TrainingMethodData.new()
+	bloodwood.id = "bloodwood"
+	bloodwood.name = "Bloodwood Tree"
+	bloodwood.description = "A rare tree that oozes crimson sap."
+	bloodwood.level_required = 78
+	bloodwood.xp_per_action = 280.0
+	bloodwood.action_time = 9.0
+	bloodwood.produced_items = {"bloodwood_logs": 1}
+	methods.append(bloodwood)
+	
+	var crystal := TrainingMethodData.new()
+	crystal.id = "crystal"
+	crystal.name = "Crystal Tree"
+	crystal.description = "A shimmering tree formed from pure crystal."
+	crystal.level_required = 82
+	crystal.xp_per_action = 320.0
+	crystal.action_time = 9.5
+	crystal.produced_items = {"crystal_logs": 1}
+	methods.append(crystal)
+	
+	var spirit := TrainingMethodData.new()
+	spirit.id = "spirit"
+	spirit.name = "Spirit Tree"
+	spirit.description = "An ancient, sentient tree connected to nature's essence."
+	spirit.level_required = 85
+	spirit.xp_per_action = 350.0
+	spirit.action_time = 11.0
+	spirit.produced_items = {"spirit_logs": 1}
+	methods.append(spirit)
 	
 	return methods
 
@@ -411,6 +613,115 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_anglerfish.produced_items = {"cooked_anglerfish": 1}
 	cook_anglerfish.success_rate = 0.95
 	methods.append(cook_anglerfish)
+	
+	# Additional cooking methods
+	var cook_anchovy := TrainingMethodData.new()
+	cook_anchovy.id = "cook_anchovy"
+	cook_anchovy.name = "Cook Anchovy"
+	cook_anchovy.description = "Cook tiny anchovies into a salty treat."
+	cook_anchovy.level_required = 3
+	cook_anchovy.xp_per_action = 35.0
+	cook_anchovy.action_time = 1.8
+	cook_anchovy.consumed_items = {"raw_anchovy": 1}
+	cook_anchovy.produced_items = {"cooked_anchovy": 1}
+	cook_anchovy.success_rate = 0.65
+	methods.append(cook_anchovy)
+	
+	var cook_mackerel := TrainingMethodData.new()
+	cook_mackerel.id = "cook_mackerel"
+	cook_mackerel.name = "Cook Mackerel"
+	cook_mackerel.description = "Cook mackerel into a flavorful meal."
+	cook_mackerel.level_required = 8
+	cook_mackerel.xp_per_action = 45.0
+	cook_mackerel.action_time = 2.0
+	cook_mackerel.consumed_items = {"raw_mackerel": 1}
+	cook_mackerel.produced_items = {"cooked_mackerel": 1}
+	cook_mackerel.success_rate = 0.72
+	methods.append(cook_mackerel)
+	
+	var cook_cod := TrainingMethodData.new()
+	cook_cod.id = "cook_cod"
+	cook_cod.name = "Cook Cod"
+	cook_cod.description = "Cook cod into a delicious white fish dish."
+	cook_cod.level_required = 15
+	cook_cod.xp_per_action = 60.0
+	cook_cod.action_time = 2.2
+	cook_cod.consumed_items = {"raw_cod": 1}
+	cook_cod.produced_items = {"cooked_cod": 1}
+	cook_cod.success_rate = 0.78
+	methods.append(cook_cod)
+	
+	var cook_pike := TrainingMethodData.new()
+	cook_pike.id = "cook_pike"
+	cook_pike.name = "Cook Pike"
+	cook_pike.description = "Cook pike into a hearty meal."
+	cook_pike.level_required = 22
+	cook_pike.xp_per_action = 75.0
+	cook_pike.action_time = 2.5
+	cook_pike.consumed_items = {"raw_pike": 1}
+	cook_pike.produced_items = {"cooked_pike": 1}
+	cook_pike.success_rate = 0.82
+	methods.append(cook_pike)
+	
+	var cook_bass := TrainingMethodData.new()
+	cook_bass.id = "cook_bass"
+	cook_bass.name = "Cook Bass"
+	cook_bass.description = "Cook bass into a premium fish dish."
+	cook_bass.level_required = 28
+	cook_bass.xp_per_action = 95.0
+	cook_bass.action_time = 2.8
+	cook_bass.consumed_items = {"raw_bass": 1}
+	cook_bass.produced_items = {"cooked_bass": 1}
+	cook_bass.success_rate = 0.84
+	methods.append(cook_bass)
+	
+	var cook_tuna := TrainingMethodData.new()
+	cook_tuna.id = "cook_tuna"
+	cook_tuna.name = "Cook Tuna"
+	cook_tuna.description = "Cook tuna into a protein-rich meal."
+	cook_tuna.level_required = 38
+	cook_tuna.xp_per_action = 110.0
+	cook_tuna.action_time = 3.0
+	cook_tuna.consumed_items = {"raw_tuna": 1}
+	cook_tuna.produced_items = {"cooked_tuna": 1}
+	cook_tuna.success_rate = 0.86
+	methods.append(cook_tuna)
+	
+	var cook_manta_ray := TrainingMethodData.new()
+	cook_manta_ray.id = "cook_manta_ray"
+	cook_manta_ray.name = "Cook Manta Ray"
+	cook_manta_ray.description = "Cook manta ray into an exotic delicacy."
+	cook_manta_ray.level_required = 58
+	cook_manta_ray.xp_per_action = 160.0
+	cook_manta_ray.action_time = 3.2
+	cook_manta_ray.consumed_items = {"raw_manta_ray": 1}
+	cook_manta_ray.produced_items = {"cooked_manta_ray": 1}
+	cook_manta_ray.success_rate = 0.88
+	methods.append(cook_manta_ray)
+	
+	var cook_sea_turtle := TrainingMethodData.new()
+	cook_sea_turtle.id = "cook_sea_turtle"
+	cook_sea_turtle.name = "Cook Sea Turtle"
+	cook_sea_turtle.description = "Cook sea turtle into a rare delicacy."
+	cook_sea_turtle.level_required = 70
+	cook_sea_turtle.xp_per_action = 180.0
+	cook_sea_turtle.action_time = 3.5
+	cook_sea_turtle.consumed_items = {"raw_sea_turtle": 1}
+	cook_sea_turtle.produced_items = {"cooked_sea_turtle": 1}
+	cook_sea_turtle.success_rate = 0.90
+	methods.append(cook_sea_turtle)
+	
+	var cook_sailfish := TrainingMethodData.new()
+	cook_sailfish.id = "cook_sailfish"
+	cook_sailfish.name = "Cook Sailfish"
+	cook_sailfish.description = "Cook sailfish into a premium oceanic feast."
+	cook_sailfish.level_required = 88
+	cook_sailfish.xp_per_action = 250.0
+	cook_sailfish.action_time = 4.0
+	cook_sailfish.consumed_items = {"raw_sailfish": 1}
+	cook_sailfish.produced_items = {"cooked_sailfish": 1}
+	cook_sailfish.success_rate = 0.93
+	methods.append(cook_sailfish)
 	
 	return methods
 

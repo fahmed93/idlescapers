@@ -29,6 +29,18 @@ func _load_items() -> void:
 	_add_item("raw_shark", "Raw Shark", "An apex predator.", ItemData.ItemType.RAW_MATERIAL, 300)
 	_add_item("raw_anglerfish", "Raw Anglerfish", "A deep sea fish.", ItemData.ItemType.RAW_MATERIAL, 500)
 	
+	# Additional fish (raw)
+	_add_item("raw_anchovy", "Raw Anchovy", "Tiny fish in a school.", ItemData.ItemType.RAW_MATERIAL, 8)
+	_add_item("raw_mackerel", "Raw Mackerel", "A striped fast swimmer.", ItemData.ItemType.RAW_MATERIAL, 12)
+	_add_item("raw_cod", "Raw Cod", "A popular white fish.", ItemData.ItemType.RAW_MATERIAL, 18)
+	_add_item("raw_pike", "Raw Pike", "An aggressive predator.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("raw_bass", "Raw Bass", "A prized sport fish.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("raw_tuna", "Raw Tuna", "A powerful ocean fish.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("raw_manta_ray", "Raw Manta Ray", "A graceful giant.", ItemData.ItemType.RAW_MATERIAL, 220)
+	_add_item("raw_sea_turtle", "Raw Sea Turtle", "An ancient marine reptile.", ItemData.ItemType.RAW_MATERIAL, 350)
+	_add_item("raw_sailfish", "Raw Sailfish", "The fastest fish.", ItemData.ItemType.RAW_MATERIAL, 550)
+	_add_item("kraken_tentacle", "Kraken Tentacle", "A legendary sea creature's limb.", ItemData.ItemType.RAW_MATERIAL, 800)
+	
 	# Fish (cooked)
 	_add_item("cooked_shrimp", "Cooked Shrimp", "A tasty cooked shrimp.", ItemData.ItemType.CONSUMABLE, 10)
 	_add_item("cooked_sardine", "Cooked Sardine", "A cooked sardine.", ItemData.ItemType.CONSUMABLE, 20)
@@ -41,6 +53,17 @@ func _load_items() -> void:
 	_add_item("cooked_shark", "Cooked Shark", "A cooked shark.", ItemData.ItemType.CONSUMABLE, 600)
 	_add_item("cooked_anglerfish", "Cooked Anglerfish", "A cooked anglerfish.", ItemData.ItemType.CONSUMABLE, 1000)
 	
+	# Additional fish (cooked)
+	_add_item("cooked_anchovy", "Cooked Anchovy", "A salty cooked anchovy.", ItemData.ItemType.CONSUMABLE, 15)
+	_add_item("cooked_mackerel", "Cooked Mackerel", "A flavorful cooked mackerel.", ItemData.ItemType.CONSUMABLE, 25)
+	_add_item("cooked_cod", "Cooked Cod", "A delicious cooked cod.", ItemData.ItemType.CONSUMABLE, 35)
+	_add_item("cooked_pike", "Cooked Pike", "A hearty cooked pike.", ItemData.ItemType.CONSUMABLE, 60)
+	_add_item("cooked_bass", "Cooked Bass", "A premium cooked bass.", ItemData.ItemType.CONSUMABLE, 100)
+	_add_item("cooked_tuna", "Cooked Tuna", "A protein-rich cooked tuna.", ItemData.ItemType.CONSUMABLE, 200)
+	_add_item("cooked_manta_ray", "Cooked Manta Ray", "An exotic cooked manta ray.", ItemData.ItemType.CONSUMABLE, 440)
+	_add_item("cooked_sea_turtle", "Cooked Sea Turtle", "A rare cooked sea turtle.", ItemData.ItemType.CONSUMABLE, 700)
+	_add_item("cooked_sailfish", "Cooked Sailfish", "A premium cooked sailfish.", ItemData.ItemType.CONSUMABLE, 1100)
+	
 	# Logs
 	_add_item("logs", "Logs", "Standard wooden logs.", ItemData.ItemType.RAW_MATERIAL, 5)
 	_add_item("oak_logs", "Oak Logs", "Sturdy oak logs.", ItemData.ItemType.RAW_MATERIAL, 20)
@@ -49,6 +72,18 @@ func _load_items() -> void:
 	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Additional logs
+	_add_item("achey_logs", "Achey Logs", "Flexible achey logs.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("teak_logs", "Teak Logs", "Durable teak logs.", ItemData.ItemType.RAW_MATERIAL, 90)
+	_add_item("mahogany_logs", "Mahogany Logs", "Rich mahogany logs.", ItemData.ItemType.RAW_MATERIAL, 150)
+	_add_item("arctic_pine_logs", "Arctic Pine Logs", "Hardy arctic pine logs.", ItemData.ItemType.RAW_MATERIAL, 170)
+	_add_item("eucalyptus_logs", "Eucalyptus Logs", "Fragrant eucalyptus logs.", ItemData.ItemType.RAW_MATERIAL, 220)
+	_add_item("elder_logs", "Elder Logs", "Mystical elder logs.", ItemData.ItemType.RAW_MATERIAL, 280)
+	_add_item("blisterwood_logs", "Blisterwood Logs", "Cursed blisterwood logs.", ItemData.ItemType.RAW_MATERIAL, 350)
+	_add_item("bloodwood_logs", "Bloodwood Logs", "Crimson bloodwood logs.", ItemData.ItemType.RAW_MATERIAL, 450)
+	_add_item("crystal_logs", "Crystal Logs", "Shimmering crystal logs.", ItemData.ItemType.RAW_MATERIAL, 600)
+	_add_item("spirit_logs", "Spirit Logs", "Ancient spirit tree logs.", ItemData.ItemType.RAW_MATERIAL, 750)
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
