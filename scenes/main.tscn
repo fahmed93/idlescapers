@@ -37,7 +37,12 @@ split_offset = 120
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 
-[node name="SidebarHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+[node name="PlayerHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+layout_mode = 2
+text = "Player"
+horizontal_alignment = 1
+
+[node name="SkillsHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
 layout_mode = 2
 text = "Skills"
 horizontal_alignment = 1
