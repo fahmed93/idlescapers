@@ -628,8 +628,8 @@ func _create_inventory_ui() -> void:
 	main_content.add_child(inventory_panel_view)
 	main_content.move_child(inventory_panel_view, inventory_panel.get_index() + 1)
 
-## Create Inventory UI
-func _create_inventory_ui() -> void:
+## Create Equipment UI
+func _create_equipment_ui() -> void:
 	# Create equipment panel (hidden by default)
 	equipment_panel_view = PanelContainer.new()
 	equipment_panel_view.name = "EquipmentPanelView"
@@ -663,16 +663,6 @@ func _create_inventory_ui() -> void:
 	# Add to main content
 	main_content.add_child(equipment_panel_view)
 	main_content.move_child(equipment_panel_view, inventory_panel.get_index() + 1)
-
-## Handle equipment changed signal
-func _on_equipment_changed(_slot: ItemData.EquipmentSlot) -> void:
-	if is_equipment_view:
-		_populate_equipment_slots()
-
-## Handle equipment changed signal
-func _on_equipment_changed(_slot: ItemData.EquipmentSlot) -> void:
-	if is_equipment_view:
-		_populate_equipment_slots()
 
 ## Handle equipment button click
 func _on_equipment_selected() -> void:
@@ -786,6 +776,11 @@ func _get_equipment_slot_name(slot: ItemData.EquipmentSlot) -> String:
 ## Handle unequip from slot
 func _on_unequip_from_slot(slot: ItemData.EquipmentSlot) -> void:
 	Equipment.unequip_item(slot)
+
+## Handle equipment changed signal
+func _on_equipment_changed(_slot: ItemData.EquipmentSlot) -> void:
+	if is_equipment_view:
+		_populate_equipment_slots()
 
 ## Handle inventory button click
 func _on_inventory_selected() -> void:
