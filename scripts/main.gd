@@ -8,11 +8,15 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
+@onready var sidebar_toggle_button: Button = $HSplitContainer/MainContent/SidebarToggleButton
+@onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContent/SelectedSkillHeader
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
 @onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
 @onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
 @onready var skill_xp_bar: ProgressBar = $HSplitContainer/MainContent/SelectedSkillHeader/XPProgressBar
 @onready var skill_xp_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/XPLabel
+@onready var action_list_label: Label = $HSplitContainer/MainContent/ActionListLabel
+@onready var action_list_panel: PanelContainer = $HSplitContainer/MainContent/ActionList
 @onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
 @onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
 @onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
@@ -416,12 +420,17 @@ func _on_inventory_selected() -> void:
 
 ## Show inventory view
 func _show_inventory_view() -> void:
+	# Hide other special panels
 	if store_panel:
 		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
+	# Show inventory panel
 	if inventory_panel_view:
 		inventory_panel_view.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
 
 ## Create Store UI
 func _create_store_ui() -> void:
@@ -483,6 +492,7 @@ func _on_store_selected() -> void:
 
 ## Show skill view
 func _show_skill_view() -> void:
+	# Hide special panels
 	if store_panel:
 		store_panel.visible = false
 	if upgrades_panel:
@@ -491,20 +501,40 @@ func _show_skill_view() -> void:
 		inventory_panel_view.visible = false
 	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
 	inventory_panel.visible = false
+	
+	# Show skill-related UI elements
+	_show_skill_ui()
 
 ## Hide skill view
 func _hide_skill_view() -> void:
 	# Nothing to hide - inventory panel is already hidden
 	pass
 
+## Helper function to hide skill-related UI elements
+func _hide_skill_ui() -> void:
+	selected_skill_header.visible = false
+	action_list_label.visible = false
+	action_list_panel.visible = false
+
+## Helper function to show skill-related UI elements
+func _show_skill_ui() -> void:
+	selected_skill_header.visible = true
+	action_list_label.visible = true
+	action_list_panel.visible = true
+
 ## Show store view
 func _show_store_view() -> void:
+	# Hide other special panels
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
+	# Show store panel
 	if store_panel:
 		store_panel.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
 
 ## Populate store items list
 func _populate_store_items() -> void:
@@ -676,12 +706,17 @@ func _on_upgrades_selected() -> void:
 
 ## Show upgrades view
 func _show_upgrades_view() -> void:
+	# Hide other special panels
 	if store_panel:
 		store_panel.visible = false
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
+	# Show upgrades panel
 	if upgrades_panel:
 		upgrades_panel.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
 
 ## Populate upgrades list
 func _populate_upgrades_list() -> void:
