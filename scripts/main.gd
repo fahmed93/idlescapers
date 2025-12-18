@@ -35,6 +35,7 @@ var skill_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
 var is_upgrades_view: bool = false
 var is_inventory_view: bool = false
+var is_equipment_view: bool = false
 var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
@@ -42,6 +43,9 @@ var upgrades_gold_label: Label = null
 var inventory_button: Button = null
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
+var equipment_button: Button = null
+var equipment_panel_view: PanelContainer = null
+var equipment_slots_container: VBoxContainer = null
 var is_sidebar_expanded: bool = false
 var item_detail_popup: PanelContainer = null
 var toast_container: VBoxContainer = null
@@ -52,6 +56,8 @@ func _ready() -> void:
 	_create_toast_container()
 	_create_inventory_ui()
 	_create_inventory_button()
+	_create_equipment_ui()
+	_create_equipment_button()
 	_create_upgrades_ui()
 	_create_upgrades_button()
 	_populate_skill_sidebar()
@@ -78,6 +84,7 @@ func _setup_signals() -> void:
 	Store.gold_changed.connect(_on_gold_changed)
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
+	Equipment.equipment_changed.connect(_on_equipment_changed)
 	stop_button.pressed.connect(_on_stop_button_pressed)
 	menu_button.pressed.connect(_on_sidebar_toggle_pressed)
 	change_character_button.pressed.connect(_on_change_character_pressed)
@@ -114,6 +121,7 @@ func _populate_skill_sidebar() -> void:
 func _on_skill_selected(skill_id: String) -> void:
 	is_upgrades_view = false
 	is_inventory_view = false
+	is_equipment_view = false
 	selected_skill_id = skill_id
 	_show_skill_view()
 	_update_skill_display()
@@ -580,6 +588,7 @@ func _create_inventory_button() -> void:
 func _on_inventory_selected() -> void:
 	is_upgrades_view = false
 	is_inventory_view = true
+	is_equipment_view = false
 	_hide_skill_view()
 	_show_inventory_view()
 	_on_inventory_updated()
@@ -589,6 +598,8 @@ func _show_inventory_view() -> void:
 	# Hide other special panels
 	if upgrades_panel:
 		upgrades_panel.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
 	# Show inventory panel
 	if inventory_panel_view:
 		inventory_panel_view.visible = true
@@ -603,6 +614,8 @@ func _show_skill_view() -> void:
 		upgrades_panel.visible = false
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
 	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
 	inventory_panel.visible = false
 	
@@ -625,6 +638,161 @@ func _show_skill_ui() -> void:
 	selected_skill_header.visible = true
 	action_list_label.visible = true
 	action_list_panel.visible = true
+
+## Create Equipment UI
+func _create_equipment_ui() -> void:
+	# Create equipment panel (hidden by default)
+	equipment_panel_view = PanelContainer.new()
+	equipment_panel_view.name = "EquipmentPanelView"
+	equipment_panel_view.visible = false
+	equipment_panel_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var equipment_vbox := VBoxContainer.new()
+	equipment_panel_view.add_child(equipment_vbox)
+	
+	# Equipment header
+	var equipment_header := Label.new()
+	equipment_header.text = "Equipment"
+	equipment_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	equipment_header.add_theme_font_size_override("font_size", 20)
+	equipment_header.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
+	equipment_vbox.add_child(equipment_header)
+	
+	# Equipment slots list
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	equipment_vbox.add_child(scroll)
+	
+	equipment_slots_container = VBoxContainer.new()
+	equipment_slots_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(equipment_slots_container)
+	
+	# Add to main content
+	main_content.add_child(equipment_panel_view)
+	main_content.move_child(equipment_panel_view, inventory_panel.get_index() + 1)
+
+## Create Equipment button
+func _create_equipment_button() -> void:
+	equipment_button = Button.new()
+	equipment_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	equipment_button.text = "Equipment"
+	equipment_button.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
+	equipment_button.pressed.connect(_on_equipment_selected)
+	skill_sidebar.add_child(equipment_button)
+
+## Handle equipment button click
+func _on_equipment_selected() -> void:
+	is_upgrades_view = false
+	is_inventory_view = false
+	is_equipment_view = true
+	_hide_skill_view()
+	_show_equipment_view()
+	_populate_equipment_slots()
+
+## Show equipment view
+func _show_equipment_view() -> void:
+	# Hide other special panels
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	# Show equipment panel
+	if equipment_panel_view:
+		equipment_panel_view.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
+
+## Populate equipment slots display
+func _populate_equipment_slots() -> void:
+	if not equipment_slots_container:
+		return
+	
+	# Clear existing slots
+	for child in equipment_slots_container.get_children():
+		child.queue_free()
+	
+	# Define slot order for display
+	var slot_order := [
+		ItemData.EquipmentSlot.HELM,
+		ItemData.EquipmentSlot.NECKLACE,
+		ItemData.EquipmentSlot.CHEST,
+		ItemData.EquipmentSlot.GLOVES,
+		ItemData.EquipmentSlot.RING_1,
+		ItemData.EquipmentSlot.RING_2,
+		ItemData.EquipmentSlot.MAIN_HAND,
+		ItemData.EquipmentSlot.OFF_HAND,
+		ItemData.EquipmentSlot.LEGS,
+		ItemData.EquipmentSlot.ARROWS,
+		ItemData.EquipmentSlot.BOOTS,
+	]
+	
+	for slot in slot_order:
+		var slot_panel := PanelContainer.new()
+		slot_panel.custom_minimum_size = Vector2(0, 80)
+		
+		var hbox := HBoxContainer.new()
+		slot_panel.add_child(hbox)
+		
+		# Slot info
+		var info_vbox := VBoxContainer.new()
+		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		hbox.add_child(info_vbox)
+		
+		var slot_name := _get_equipment_slot_name(slot)
+		var slot_label := Label.new()
+		slot_label.text = slot_name
+		slot_label.add_theme_font_size_override("font_size", 16)
+		slot_label.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
+		info_vbox.add_child(slot_label)
+		
+		var equipped_item_id := Equipment.get_equipped_item(slot)
+		var equipped_label := Label.new()
+		if equipped_item_id != "":
+			var item_data := Inventory.get_item_data(equipped_item_id)
+			equipped_label.text = item_data.name if item_data else equipped_item_id
+			equipped_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
+		else:
+			equipped_label.text = "Empty"
+			equipped_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+		equipped_label.add_theme_font_size_override("font_size", 14)
+		info_vbox.add_child(equipped_label)
+		
+		# Unequip button (only shown if item is equipped)
+		if equipped_item_id != "":
+			var unequip_button := Button.new()
+			unequip_button.custom_minimum_size = Vector2(80, 40)
+			unequip_button.text = "Unequip"
+			unequip_button.pressed.connect(_on_unequip_from_slot.bind(slot))
+			hbox.add_child(unequip_button)
+		
+		equipment_slots_container.add_child(slot_panel)
+
+## Get human-readable equipment slot name
+func _get_equipment_slot_name(slot: ItemData.EquipmentSlot) -> String:
+	match slot:
+		ItemData.EquipmentSlot.HELM: return "Helm"
+		ItemData.EquipmentSlot.NECKLACE: return "Necklace"
+		ItemData.EquipmentSlot.CHEST: return "Chest"
+		ItemData.EquipmentSlot.GLOVES: return "Gloves"
+		ItemData.EquipmentSlot.RING_1: return "Ring 1"
+		ItemData.EquipmentSlot.RING_2: return "Ring 2"
+		ItemData.EquipmentSlot.MAIN_HAND: return "Main Hand"
+		ItemData.EquipmentSlot.OFF_HAND: return "Off Hand"
+		ItemData.EquipmentSlot.LEGS: return "Legs"
+		ItemData.EquipmentSlot.ARROWS: return "Arrows"
+		ItemData.EquipmentSlot.BOOTS: return "Boots"
+		_: return "Unknown"
+
+## Handle unequip from slot
+func _on_unequip_from_slot(slot: ItemData.EquipmentSlot) -> void:
+	Equipment.unequip_item(slot)
+
+## Handle equipment changed signal
+func _on_equipment_changed(_slot: ItemData.EquipmentSlot) -> void:
+	if is_equipment_view:
+		_populate_equipment_slots()
 
 ## Update gold display when gold changes
 func _on_gold_changed(new_amount: int) -> void:
@@ -686,6 +854,7 @@ func _create_upgrades_button() -> void:
 func _on_upgrades_selected() -> void:
 	is_upgrades_view = true
 	is_inventory_view = false
+	is_equipment_view = false
 	_hide_skill_view()
 	_show_upgrades_view()
 	_populate_upgrades_list()
@@ -695,6 +864,8 @@ func _show_upgrades_view() -> void:
 	# Hide other special panels
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
 	# Show upgrades panel
 	if upgrades_panel:
 		upgrades_panel.visible = true
