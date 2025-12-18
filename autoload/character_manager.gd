@@ -25,6 +25,7 @@ var current_slot: int = -1
 
 func _ready() -> void:
 	load_characters()
+	_migrate_old_save_if_exists()
 
 ## Load character list from file
 func load_characters() -> void:
@@ -167,3 +168,42 @@ func update_character_stats(slot: int, total_level: int, total_xp: float) -> voi
 		characters[str(slot)]["total_xp"] = total_xp
 		characters[str(slot)]["last_played"] = int(Time.get_unix_time_from_system())
 		save_characters()
+
+## Migrate old save file to slot 0 if it exists
+func _migrate_old_save_if_exists() -> void:
+	const OLD_SAVE_FILE := "user://idlescapers_save.json"
+	
+	# Only migrate if old save exists and we have no characters
+	if FileAccess.file_exists(OLD_SAVE_FILE) and characters.is_empty():
+		print("[CharacterManager] Found old save file. Migrating to slot 0...")
+		
+		# Create a character in slot 0
+		var now := int(Time.get_unix_time_from_system())
+		var character_data := {
+			"slot": 0,
+			"name": "Legacy Character",
+			"created_at": now,
+			"last_played": now,
+			"total_level": 6,
+			"total_xp": 0.0
+		}
+		
+		characters["0"] = character_data
+		save_characters()
+		
+		# Copy old save file to new slot 0 save file
+		var new_save_file := _get_save_file_path(0)
+		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
+		if old_file:
+			var content := old_file.get_as_text()
+			old_file.close()
+			
+			var new_file := FileAccess.open(new_save_file, FileAccess.WRITE)
+			if new_file:
+				new_file.store_string(content)
+				new_file.close()
+				print("[CharacterManager] Successfully migrated old save to slot 0.")
+				
+				# Delete old save file
+				DirAccess.remove_absolute(OLD_SAVE_FILE)
+				print("[CharacterManager] Removed old save file.")
