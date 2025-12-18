@@ -1,8 +1,6 @@
 #!/bin/bash
 # Run all Godot test scenes and report results
 
-set -e  # Exit on first error
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
