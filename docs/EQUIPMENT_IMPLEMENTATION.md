@@ -95,6 +95,7 @@ Equipment data is serialized as part of save files:
   - Arrows positioned on right side (back/quiver)
 - Shows equipped item name or "Empty"
 - Clickable slots to unequip items (disabled when empty)
+- **Note**: Changed from previous implementation where separate "Unequip" buttons were shown next to each slot
 
 **Item Detail Popup** (`scripts/item_detail_popup.gd`)
 - Shows equipment slot for equippable items

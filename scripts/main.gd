@@ -740,6 +740,7 @@ func _populate_equipment_slots() -> void:
 	}
 	
 	# Create a slot panel for each equipment slot
+	# Note: Iteration order doesn't matter since we use absolute positioning
 	for slot in slot_positions:
 		var position: Vector2 = slot_positions[slot]
 		var slot_button := Button.new()
