@@ -107,6 +107,7 @@ func _ready() -> void:
 	var item_text_zero := ""
 	var item_id := "raw_shrimp"
 	var item_data := Inventory.get_item_data(item_id)
+	assert(item_data != null, "Raw shrimp item data should exist")
 	var player_count := Inventory.get_item_count(item_id)
 	item_text_zero = "Uses: %s x%d (%d owned)" % [item_data.name, 1, player_count]
 	print("  Display text: %s" % item_text_zero)
