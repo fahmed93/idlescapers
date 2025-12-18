@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://test_change_char_btn"]
+
+[ext_resource type="Script" path="res://test/test_change_character_button.gd" id="1_test_change_char"]
+
+[node name="TestChangeCharacterButton" type="Node"]
+script = ExtResource("1_test_change_char")
