@@ -522,6 +522,7 @@ func _show_toast_notification(skill_id: String, xp_gained: float, items_gained: 
 	# Remove old toasts if there are too many (keep max 3)
 	while toast_container.get_child_count() > 3:
 		var oldest_toast := toast_container.get_child(0)
+		toast_container.remove_child(oldest_toast)
 		oldest_toast.queue_free()
 
 
