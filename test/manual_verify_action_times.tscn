@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bv4qw8fj2hdwp"]
+
+[ext_resource type="Script" path="res://test/manual_verify_action_times.gd" id="1_verify"]
+
+[node name="ManualVerifyActionTimes" type="Node"]
+script = ExtResource("1_verify")

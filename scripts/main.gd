@@ -20,6 +20,7 @@ const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 @onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
 @onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
 @onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
+@onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
 @onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
 @onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
@@ -29,13 +30,8 @@ const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 var selected_skill_id: String = ""
 var skill_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
-var is_store_view: bool = false
 var is_upgrades_view: bool = false
 var is_inventory_view: bool = false
-var store_button: Button = null
-var store_panel: PanelContainer = null
-var store_items_list: VBoxContainer = null
-var store_gold_label: Label = null
 var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
@@ -51,8 +47,6 @@ func _ready() -> void:
 	_create_item_detail_popup()
 	_create_inventory_ui()
 	_create_inventory_button()
-	_create_store_ui()
-	_create_store_button()
 	_create_upgrades_ui()
 	_create_upgrades_button()
 	_populate_skill_sidebar()
@@ -77,7 +71,6 @@ func _setup_signals() -> void:
 	GameManager.action_completed.connect(_on_action_completed)
 	Inventory.inventory_updated.connect(_on_inventory_updated)
 	Store.gold_changed.connect(_on_gold_changed)
-	Store.item_sold.connect(_on_item_sold)
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
@@ -88,9 +81,9 @@ func _process(_delta: float) -> void:
 		_update_training_progress()
 
 func _populate_skill_sidebar() -> void:
-	# Clear existing buttons (but not the header, store button, upgrades button, or inventory button)
+	# Clear existing buttons (but not the header, upgrades button, or inventory button)
 	for child in skill_sidebar.get_children():
-		if child is Button and child != store_button and child != upgrades_button and child != inventory_button:
+		if child is Button and child != upgrades_button and child != inventory_button:
 			child.queue_free()
 	skill_buttons.clear()
 	
@@ -113,7 +106,6 @@ func _populate_skill_sidebar() -> void:
 	skill_sidebar.add_child(total_label)
 
 func _on_skill_selected(skill_id: String) -> void:
-	is_store_view = false
 	is_upgrades_view = false
 	is_inventory_view = false
 	selected_skill_id = skill_id
@@ -179,7 +171,7 @@ func _populate_action_list() -> void:
 		info_vbox.add_child(name_label)
 		
 		var stats_label := Label.new()
-		stats_label.text = method.get_stats_text()
+		stats_label.text = method.get_stats_text(selected_skill_id)
 		stats_label.add_theme_font_size_override("font_size", 12)
 		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		info_vbox.add_child(stats_label)
@@ -239,6 +231,7 @@ func _on_training_started(_skill_id: String, method_id: String) -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
 		training_label.text = "Training: %s" % method.name
+		training_time_label.text = "0.0s / %.1fs" % method.action_time
 	training_panel.visible = true
 	training_progress.value = 0
 
@@ -248,12 +241,15 @@ func _on_training_stopped(_skill_id: String) -> void:
 func _hide_training_panel() -> void:
 	training_panel.visible = false
 	training_progress.value = 0
+	training_time_label.text = "0.0s / 0.0s"
 
 func _update_training_progress() -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
 		var progress := (GameManager.training_progress / method.action_time) * 100.0
 		training_progress.value = progress
+		# Update time label to show elapsed/total time
+		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, method.action_time]
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:
@@ -354,6 +350,7 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through to button
+		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # Fill the button completely
 		item_button.add_child(vbox)
 		
 		# Helper function to create labels with mouse filter ignored
@@ -361,6 +358,7 @@ func _update_inventory_display(grid: GridContainer) -> void:
 			var label := Label.new()
 			label.text = text
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL  # Expand to fill width
 			label.add_theme_font_size_override("font_size", font_size)
 			if color != Color.WHITE:
 				label.add_theme_color_override("font_color", color)
@@ -474,7 +472,6 @@ func _create_inventory_button() -> void:
 
 ## Handle inventory button click
 func _on_inventory_selected() -> void:
-	is_store_view = false
 	is_upgrades_view = false
 	is_inventory_view = true
 	_hide_skill_view()
@@ -484,8 +481,6 @@ func _on_inventory_selected() -> void:
 ## Show inventory view
 func _show_inventory_view() -> void:
 	# Hide other special panels
-	if store_panel:
-		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
 	# Show inventory panel
@@ -495,69 +490,9 @@ func _show_inventory_view() -> void:
 	# Hide skill-related UI elements
 	_hide_skill_ui()
 
-## Create Store UI
-func _create_store_ui() -> void:
-	# Create store panel (hidden by default)
-	store_panel = PanelContainer.new()
-	store_panel.name = "StorePanel"
-	store_panel.visible = false
-	store_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	
-	var store_vbox := VBoxContainer.new()
-	store_panel.add_child(store_vbox)
-	
-	# Store header
-	var store_header := Label.new()
-	store_header.text = "Store - Sell Items"
-	store_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	store_header.add_theme_font_size_override("font_size", 20)
-	store_header.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
-	store_vbox.add_child(store_header)
-	
-	store_gold_label = Label.new()
-	store_gold_label.text = "Gold: %d" % Store.get_gold()
-	store_gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	store_gold_label.add_theme_font_size_override("font_size", 16)
-	store_vbox.add_child(store_gold_label)
-	
-	# Store items list
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
-	store_vbox.add_child(scroll)
-	
-	store_items_list = VBoxContainer.new()
-	store_items_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(store_items_list)
-	
-	# Add to main content (store panel will be positioned after inventory panel)
-	main_content.add_child(store_panel)
-	# Note: inventory_panel is a @onready var, so it's guaranteed to be in tree at this point
-	main_content.move_child(store_panel, inventory_panel.get_index() + 1)
-
-## Create Store button
-func _create_store_button() -> void:
-	store_button = Button.new()
-	store_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
-	store_button.text = "Store\n%d Gold" % Store.get_gold()
-	store_button.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))  # Gold color
-	store_button.pressed.connect(_on_store_selected)
-	skill_sidebar.add_child(store_button)
-
-## Show store view
-func _on_store_selected() -> void:
-	is_store_view = true
-	is_upgrades_view = false
-	is_inventory_view = false
-	_hide_skill_view()
-	_show_store_view()
-	_populate_store_items()
-
 ## Show skill view
 func _show_skill_view() -> void:
 	# Hide special panels
-	if store_panel:
-		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
 	if inventory_panel_view:
@@ -585,130 +520,13 @@ func _show_skill_ui() -> void:
 	action_list_label.visible = true
 	action_list_panel.visible = true
 
-## Show store view
-func _show_store_view() -> void:
-	# Hide other special panels
-	if inventory_panel_view:
-		inventory_panel_view.visible = false
-	if upgrades_panel:
-		upgrades_panel.visible = false
-	# Show store panel
-	if store_panel:
-		store_panel.visible = true
-	
-	# Hide skill-related UI elements
-	_hide_skill_ui()
-
-## Populate store items list
-func _populate_store_items() -> void:
-	if not store_items_list:
-		return
-	
-	# Clear existing items
-	for child in store_items_list.get_children():
-		child.queue_free()
-	
-	var items := Inventory.get_all_items()
-	if items.is_empty():
-		var empty_label := Label.new()
-		empty_label.text = "No items to sell"
-		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		store_items_list.add_child(empty_label)
-		return
-	
-	for item_id in items:
-		var item_data := Inventory.get_item_data(item_id)
-		if item_data == null:
-			continue  # Skip items without data
-		
-		var count: int = items[item_id]
-		
-		var item_panel := PanelContainer.new()
-		item_panel.custom_minimum_size = Vector2(0, 70)
-		
-		var hbox := HBoxContainer.new()
-		item_panel.add_child(hbox)
-		
-		# Item info
-		var info_vbox := VBoxContainer.new()
-		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.add_child(info_vbox)
-		
-		var name_label := Label.new()
-		name_label.text = item_data.name
-		info_vbox.add_child(name_label)
-		
-		var count_label := Label.new()
-		count_label.text = "Owned: %d" % count
-		count_label.add_theme_font_size_override("font_size", 12)
-		count_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
-		info_vbox.add_child(count_label)
-		
-		var value_label := Label.new()
-		value_label.text = "Value: %d gold each" % item_data.value
-		value_label.add_theme_font_size_override("font_size", 12)
-		value_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
-		info_vbox.add_child(value_label)
-		
-		# Sell buttons
-		var button_vbox := VBoxContainer.new()
-		hbox.add_child(button_vbox)
-		
-		var sell_one_button := Button.new()
-		sell_one_button.text = "Sell 1"
-		sell_one_button.custom_minimum_size = Vector2(80, 30)
-		sell_one_button.pressed.connect(_on_sell_item.bind(item_id, 1))
-		button_vbox.add_child(sell_one_button)
-		
-		var sell_all_button := Button.new()
-		sell_all_button.text = "Sell All"
-		sell_all_button.custom_minimum_size = Vector2(80, 30)
-		sell_all_button.pressed.connect(_on_sell_all_item.bind(item_id))
-		button_vbox.add_child(sell_all_button)
-		
-		store_items_list.add_child(item_panel)
-
-## Handle selling an item
-func _on_sell_item(item_id: String, amount: int) -> void:
-	if Store.sell_item(item_id, amount):
-		_populate_store_items()
-
-## Handle selling all of an item
-func _on_sell_all_item(item_id: String) -> void:
-	var count := Inventory.get_item_count(item_id)
-	if count > 0 and Store.sell_item(item_id, count):
-		_populate_store_items()
-
-## Handle selling items from inventory panel
-func _on_sell_from_inventory(item_id: String, amount: int) -> void:
-	if amount > 0 and Store.sell_item(item_id, amount):
-		_on_inventory_updated()
-
-## Handle selling all of an item from inventory panel
-func _on_sell_all_from_inventory(item_id: String) -> void:
-	var count := Inventory.get_item_count(item_id)
-	if count > 0 and Store.sell_item(item_id, count):
-		_on_inventory_updated()
-
 ## Update gold display when gold changes
 func _on_gold_changed(new_amount: int) -> void:
 	_update_total_stats()
 	
-	# Update store button text
-	if store_button:
-		store_button.text = "Store\n%d Gold" % new_amount
-	
-	# Update gold label in store panel
-	if store_gold_label:
-		store_gold_label.text = "Gold: %d" % new_amount
-	
 	# Update gold label in upgrades panel
 	if upgrades_gold_label:
 		upgrades_gold_label.text = "Gold: %d" % new_amount
-
-## Handle item sold signal
-func _on_item_sold(item_id: String, amount: int, gold_earned: int) -> void:
-	print("[Main] Sold %d x %s for %d gold" % [amount, item_id, gold_earned])
 
 ## Create Upgrades Shop UI
 func _create_upgrades_ui() -> void:
@@ -760,7 +578,6 @@ func _create_upgrades_button() -> void:
 
 ## Show upgrades view
 func _on_upgrades_selected() -> void:
-	is_store_view = false
 	is_upgrades_view = true
 	is_inventory_view = false
 	_hide_skill_view()
@@ -770,8 +587,6 @@ func _on_upgrades_selected() -> void:
 ## Show upgrades view
 func _show_upgrades_view() -> void:
 	# Hide other special panels
-	if store_panel:
-		store_panel.visible = false
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
 	# Show upgrades panel
@@ -869,6 +684,9 @@ func _on_upgrade_purchased(upgrade_id: String) -> void:
 	var upgrade: UpgradeData = UpgradeShop.upgrades.get(upgrade_id)
 	if upgrade:
 		print("[Main] Purchased upgrade: %s for %s" % [upgrade.name, upgrade.skill_id])
+		# Refresh action list if viewing the skill that was upgraded
+		if selected_skill_id == upgrade.skill_id:
+			_populate_action_list()
 
 ## Handle upgrades updated signal
 func _on_upgrades_updated() -> void:
