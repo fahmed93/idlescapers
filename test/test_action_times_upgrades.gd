@@ -60,7 +60,9 @@ func _ready() -> void:
 	
 	speed_modifier = UpgradeShop.get_skill_speed_modifier("fishing")
 	print("  Speed modifier (2 upgrades): %.1f%%" % (speed_modifier * 100))
-	assert(abs(speed_modifier - 0.30) < 0.001, "Should have 30% speed bonus from two upgrades")
+	# 0.10 (basic rod) + 0.20 (steel rod) = 0.30 total
+	var expected_modifier := 0.10 + 0.20
+	assert(abs(speed_modifier - expected_modifier) < 0.001, "Should have 30% speed bonus from two upgrades")
 	
 	effective_time_with_upgrade = shrimp_method.get_effective_action_time("fishing")
 	print("  Effective time (2 upgrades): %.1fs" % effective_time_with_upgrade)
