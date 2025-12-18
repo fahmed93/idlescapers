@@ -2,7 +2,6 @@
 ## Handles saving, loading, and offline progress
 extends Node
 
-const SAVE_FILE := "user://idlescapers_save.json"
 const SAVE_VERSION := 1
 
 signal save_completed()
@@ -16,14 +15,17 @@ var _auto_save_timer := 0.0
 ## Last save timestamp for offline progress
 var last_save_time: int = 0
 
-func _ready() -> void:
-	# Load game on startup
-	call_deferred("_delayed_load")
+## Whether auto-save is enabled (disabled until character is selected)
+var auto_save_enabled: bool = false
 
-func _delayed_load() -> void:
-	load_game()
+func _ready() -> void:
+	# Don't auto-load - wait for character selection
+	pass
 
 func _process(delta: float) -> void:
+	if not auto_save_enabled:
+		return
+	
 	_auto_save_timer += delta
 	if _auto_save_timer >= auto_save_interval:
 		_auto_save_timer = 0.0
@@ -31,6 +33,12 @@ func _process(delta: float) -> void:
 
 ## Save the game
 func save_game() -> void:
+	# Get save file path from CharacterManager
+	var save_file := CharacterManager.get_current_save_file()
+	if save_file.is_empty():
+		print("[SaveManager] No character selected, cannot save.")
+		return
+	
 	var save_data := {
 		"version": SAVE_VERSION,
 		"timestamp": Time.get_unix_time_from_system(),
@@ -44,21 +52,38 @@ func save_game() -> void:
 		"purchased_upgrades": UpgradeShop.purchased_upgrades.duplicate(),
 	}
 	
-	var file := FileAccess.open(SAVE_FILE, FileAccess.WRITE)
+	var file := FileAccess.open(save_file, FileAccess.WRITE)
 	if file:
 		file.store_string(JSON.stringify(save_data, "\t"))
 		file.close()
 		last_save_time = save_data["timestamp"]
+		
+		# Update character stats in CharacterManager
+		CharacterManager.update_character_stats(
+			CharacterManager.current_slot,
+			GameManager.get_total_level(),
+			GameManager.get_total_xp()
+		)
+		
 		save_completed.emit()
-		print("[SaveManager] Game saved at ", Time.get_datetime_string_from_unix_time(last_save_time))
+		var timestamp_str := Time.get_datetime_string_from_unix_time(last_save_time)
+		print("[SaveManager] Game saved to slot %d at %s" % [CharacterManager.current_slot, timestamp_str])
 
-## Load the game
+## Load the game for the current character
 func load_game() -> void:
-	if not FileAccess.file_exists(SAVE_FILE):
-		print("[SaveManager] No save file found, starting fresh.")
+	# Get save file path from CharacterManager
+	var save_file := CharacterManager.get_current_save_file()
+	if save_file.is_empty():
+		print("[SaveManager] No character selected, cannot load.")
 		return
 	
-	var file := FileAccess.open(SAVE_FILE, FileAccess.READ)
+	if not FileAccess.file_exists(save_file):
+		print("[SaveManager] No save file found for slot %d, starting fresh." % CharacterManager.current_slot)
+		_reset_game_state()
+		auto_save_enabled = true
+		return
+	
+	var file := FileAccess.open(save_file, FileAccess.READ)
 	if not file:
 		print("[SaveManager] Failed to open save file.")
 		return
@@ -121,8 +146,9 @@ func load_game() -> void:
 				time_away
 			)
 	
+	auto_save_enabled = true
 	load_completed.emit()
-	print("[SaveManager] Game loaded successfully.")
+	print("[SaveManager] Game loaded successfully from slot %d." % CharacterManager.current_slot)
 
 ## Calculate offline progress
 func _calculate_offline_progress(skill_id: String, method_id: String, time_away: int) -> void:
@@ -214,6 +240,27 @@ func _calculate_offline_progress(skill_id: String, method_id: String, time_away:
 
 ## Delete save file
 func delete_save() -> void:
-	if FileAccess.file_exists(SAVE_FILE):
-		DirAccess.remove_absolute(SAVE_FILE)
-		print("[SaveManager] Save file deleted.")
+	var save_file := CharacterManager.get_current_save_file()
+	if save_file.is_empty():
+		print("[SaveManager] No character selected.")
+		return
+	
+	if FileAccess.file_exists(save_file):
+		DirAccess.remove_absolute(save_file)
+		print("[SaveManager] Save file deleted for slot %d." % CharacterManager.current_slot)
+
+## Reset all game state to defaults
+func _reset_game_state() -> void:
+	# Reset GameManager (uses encapsulated method)
+	GameManager.reset_all_skills()
+	
+	# Reset Inventory
+	Inventory.inventory.clear()
+	
+	# Reset Store
+	Store.gold = 0
+	
+	# Reset UpgradeShop
+	UpgradeShop.purchased_upgrades.clear()
+	
+	print("[SaveManager] Game state reset to defaults.")

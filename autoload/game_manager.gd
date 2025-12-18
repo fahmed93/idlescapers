@@ -326,3 +326,14 @@ func get_total_level() -> int:
 	for skill_id in skill_levels:
 		total += skill_levels[skill_id]
 	return total
+
+## Reset all skill progress to defaults
+func reset_all_skills() -> void:
+	for skill_id in skills:
+		skill_xp[skill_id] = 0.0
+		skill_levels[skill_id] = 1
+	current_skill_id = ""
+	current_method_id = ""
+	training_progress = 0.0
+	is_training = false
+	print("[GameManager] All skills reset to defaults.")
