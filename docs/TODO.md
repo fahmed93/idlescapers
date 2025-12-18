@@ -117,7 +117,6 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 70-99: TzHaar, Dagannoth Kings, God Wars Bosses
 
 ### 🌱 Farming
-### 🌱 Farming
 - **Description**: Grow crops, herbs, and trees for resources
 - **Training Methods**:
   - Level 1: Potatoes, Onions, Cabbages
