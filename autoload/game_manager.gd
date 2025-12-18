@@ -431,7 +431,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var normal_logs := TrainingMethodData.new()
 	normal_logs.id = "burn_logs"
 	normal_logs.name = "Burn Logs"
-	normal_logs.description = "Burn normal logs for fire."
+	normal_logs.description = "Light a basic fire with common logs."
 	normal_logs.level_required = 1
 	normal_logs.xp_per_action = 40.0
 	normal_logs.action_time = 2.5
@@ -442,7 +442,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var oak_logs := TrainingMethodData.new()
 	oak_logs.id = "burn_oak_logs"
 	oak_logs.name = "Burn Oak Logs"
-	oak_logs.description = "Burn oak logs for fire."
+	oak_logs.description = "Burn sturdy oak logs for a steady flame."
 	oak_logs.level_required = 15
 	oak_logs.xp_per_action = 60.0
 	oak_logs.action_time = 3.0
@@ -453,7 +453,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var willow_logs := TrainingMethodData.new()
 	willow_logs.id = "burn_willow_logs"
 	willow_logs.name = "Burn Willow Logs"
-	willow_logs.description = "Burn willow logs for fire."
+	willow_logs.description = "Burn flexible willow logs for a crackling fire."
 	willow_logs.level_required = 30
 	willow_logs.xp_per_action = 90.0
 	willow_logs.action_time = 3.5
@@ -464,7 +464,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var maple_logs := TrainingMethodData.new()
 	maple_logs.id = "burn_maple_logs"
 	maple_logs.name = "Burn Maple Logs"
-	maple_logs.description = "Burn maple logs for fire."
+	maple_logs.description = "Burn quality maple logs for a bright fire."
 	maple_logs.level_required = 45
 	maple_logs.xp_per_action = 135.0
 	maple_logs.action_time = 4.0
@@ -475,7 +475,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var yew_logs := TrainingMethodData.new()
 	yew_logs.id = "burn_yew_logs"
 	yew_logs.name = "Burn Yew Logs"
-	yew_logs.description = "Burn yew logs for fire."
+	yew_logs.description = "Burn ancient yew logs for a powerful fire."
 	yew_logs.level_required = 60
 	yew_logs.xp_per_action = 202.5
 	yew_logs.action_time = 4.5
@@ -486,7 +486,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var magic_logs := TrainingMethodData.new()
 	magic_logs.id = "burn_magic_logs"
 	magic_logs.name = "Burn Magic Logs"
-	magic_logs.description = "Burn magic logs for fire."
+	magic_logs.description = "Burn magical logs for an intense, mystical fire."
 	magic_logs.level_required = 75
 	magic_logs.xp_per_action = 303.8
 	magic_logs.action_time = 5.0
@@ -497,7 +497,7 @@ func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var redwood_logs := TrainingMethodData.new()
 	redwood_logs.id = "burn_redwood_logs"
 	redwood_logs.name = "Burn Redwood Logs"
-	redwood_logs.description = "Burn redwood logs for fire."
+	redwood_logs.description = "Burn massive redwood logs for a legendary blaze."
 	redwood_logs.level_required = 90
 	redwood_logs.xp_per_action = 350.0
 	redwood_logs.action_time = 5.5
