@@ -207,7 +207,6 @@ func _populate_action_list() -> void:
 			items_label.text = items_text.strip_edges()
 			items_label.fit_content = true
 			items_label.scroll_active = false
-			items_label.custom_minimum_size = Vector2(0, 20)
 			items_label.add_theme_font_size_override("normal_font_size", 11)
 			items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
 			info_vbox.add_child(items_label)
