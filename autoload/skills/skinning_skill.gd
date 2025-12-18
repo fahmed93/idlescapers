@@ -19,7 +19,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	var chicken := TrainingMethodData.new()
 	chicken.id = "chicken"
 	chicken.name = "Chicken"
-	chicken.description = "Common birds that provide feathers and leather."
+	chicken.description = "Common birds that provide hide."
 	chicken.level_required = 3
 	chicken.xp_per_action = 15.0
 	chicken.action_time = 2.5

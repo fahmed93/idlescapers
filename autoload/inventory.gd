@@ -191,7 +191,7 @@ func _load_items() -> void:
 	
 	# Animal hides and skins (for Skinning skill)
 	_add_item("rabbit_hide", "Rabbit Hide", "Soft hide from a rabbit.", ItemData.ItemType.RAW_MATERIAL, 5)
-	_add_item("chicken_hide", "Chicken Hide", "Leather from a chicken.", ItemData.ItemType.RAW_MATERIAL, 8)
+	_add_item("chicken_hide", "Chicken Hide", "Hide from a chicken.", ItemData.ItemType.RAW_MATERIAL, 8)
 	_add_item("cowhide", "Cowhide", "Tough hide from a cow.", ItemData.ItemType.RAW_MATERIAL, 10)
 	_add_item("bear_hide", "Bear Hide", "Thick fur from a bear.", ItemData.ItemType.RAW_MATERIAL, 15)
 	_add_item("wolf_hide", "Wolf Hide", "Durable pelt from a wolf.", ItemData.ItemType.RAW_MATERIAL, 20)
