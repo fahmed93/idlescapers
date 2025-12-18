@@ -2,9 +2,12 @@
 extends Control
 
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
+const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
+const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
+@onready var sidebar_toggle_button: Button = $HSplitContainer/MainContent/SidebarToggleButton
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
 @onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
 @onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
@@ -24,6 +27,7 @@ var skill_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
 var is_store_view: bool = false
 var is_upgrades_view: bool = false
+var is_inventory_view: bool = false
 var store_button: Button = null
 var store_panel: PanelContainer = null
 var store_items_list: VBoxContainer = null
@@ -32,9 +36,15 @@ var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
 var upgrades_gold_label: Label = null
+var inventory_button: Button = null
+var inventory_panel_view: PanelContainer = null
+var inventory_items_list: GridContainer = null
+var is_sidebar_expanded: bool = false
 
 func _ready() -> void:
 	_setup_signals()
+	_create_inventory_ui()
+	_create_inventory_button()
 	_create_store_ui()
 	_create_store_button()
 	_create_upgrades_ui()
@@ -42,6 +52,9 @@ func _ready() -> void:
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
+	
+	# Set sidebar to collapsed by default
+	_set_sidebar_collapsed(true)
 	
 	# Select first skill by default
 	if not GameManager.skills.is_empty():
@@ -62,15 +75,16 @@ func _setup_signals() -> void:
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
+	sidebar_toggle_button.pressed.connect(_on_sidebar_toggle_pressed)
 
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
 		_update_training_progress()
 
 func _populate_skill_sidebar() -> void:
-	# Clear existing buttons (but not the header, store button, or upgrades button)
+	# Clear existing buttons (but not the header, store button, upgrades button, or inventory button)
 	for child in skill_sidebar.get_children():
-		if child is Button and child != store_button and child != upgrades_button:
+		if child is Button and child != store_button and child != upgrades_button and child != inventory_button:
 			child.queue_free()
 	skill_buttons.clear()
 	
@@ -95,6 +109,7 @@ func _populate_skill_sidebar() -> void:
 func _on_skill_selected(skill_id: String) -> void:
 	is_store_view = false
 	is_upgrades_view = false
+	is_inventory_view = false
 	selected_skill_id = skill_id
 	_show_skill_view()
 	_update_skill_display()
@@ -260,8 +275,13 @@ func _on_action_completed(_skill_id: String, _method_id: String, _success: bool)
 	_on_inventory_updated()
 
 func _on_inventory_updated() -> void:
+	# Update the inventory display in the dedicated inventory screen
+	if inventory_items_list:
+		_update_inventory_display(inventory_items_list)
+
+func _update_inventory_display(grid: GridContainer) -> void:
 	# Clear inventory grid
-	for child in inventory_list.get_children():
+	for child in grid.get_children():
 		child.queue_free()
 	
 	var items := Inventory.get_all_items()
@@ -270,7 +290,11 @@ func _on_inventory_updated() -> void:
 		var count: int = items[item_id]
 		
 		var item_panel := PanelContainer.new()
+<<<<<<< HEAD
 		item_panel.custom_minimum_size = Vector2(100, 100)
+=======
+		item_panel.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
+>>>>>>> d3ca07ff41b4b0fbe62fd599c9e69b38e44e7cf0
 		
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -303,7 +327,7 @@ func _on_inventory_updated() -> void:
 		sell_all_button.pressed.connect(_on_sell_all_from_inventory.bind(item_id))
 		vbox.add_child(sell_all_button)
 		
-		inventory_list.add_child(item_panel)
+		grid.add_child(item_panel)
 
 func _update_total_stats() -> void:
 	var total_level := GameManager.get_total_level()
@@ -341,6 +365,67 @@ func _on_offline_progress(time_away: float, actions_completed: int, xp_gained: D
 
 func _on_close_offline_popup() -> void:
 	offline_popup.visible = false
+
+## Create Inventory UI
+func _create_inventory_ui() -> void:
+	# Create inventory panel (hidden by default)
+	inventory_panel_view = PanelContainer.new()
+	inventory_panel_view.name = "InventoryPanelView"
+	inventory_panel_view.visible = false
+	inventory_panel_view.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var inventory_vbox := VBoxContainer.new()
+	inventory_panel_view.add_child(inventory_vbox)
+	
+	# Inventory header
+	var inventory_header := Label.new()
+	inventory_header.text = "Inventory"
+	inventory_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	inventory_header.add_theme_font_size_override("font_size", 20)
+	inventory_header.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
+	inventory_vbox.add_child(inventory_header)
+	
+	# Inventory items list
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	inventory_vbox.add_child(scroll)
+	
+	inventory_items_list = GridContainer.new()
+	inventory_items_list.columns = 4
+	inventory_items_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(inventory_items_list)
+	
+	# Add to main content
+	main_content.add_child(inventory_panel_view)
+	main_content.move_child(inventory_panel_view, inventory_panel.get_index() + 1)
+
+## Create Inventory button
+func _create_inventory_button() -> void:
+	inventory_button = Button.new()
+	inventory_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	inventory_button.text = "Inventory"
+	inventory_button.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
+	inventory_button.pressed.connect(_on_inventory_selected)
+	skill_sidebar.add_child(inventory_button)
+
+## Handle inventory button click
+func _on_inventory_selected() -> void:
+	is_store_view = false
+	is_upgrades_view = false
+	is_inventory_view = true
+	_hide_skill_view()
+	_show_inventory_view()
+	_on_inventory_updated()
+
+## Show inventory view
+func _show_inventory_view() -> void:
+	if store_panel:
+		store_panel.visible = false
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = true
 
 ## Create Store UI
 func _create_store_ui() -> void:
@@ -395,6 +480,7 @@ func _create_store_button() -> void:
 func _on_store_selected() -> void:
 	is_store_view = true
 	is_upgrades_view = false
+	is_inventory_view = false
 	_hide_skill_view()
 	_show_store_view()
 	_populate_store_items()
@@ -405,14 +491,22 @@ func _show_skill_view() -> void:
 		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
-	inventory_panel.visible = true
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
+	inventory_panel.visible = false
 
 ## Hide skill view
 func _hide_skill_view() -> void:
-	inventory_panel.visible = false
+	# Nothing to hide - inventory panel is already hidden
+	pass
 
 ## Show store view
 func _show_store_view() -> void:
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	if upgrades_panel:
+		upgrades_panel.visible = false
 	if store_panel:
 		store_panel.visible = true
 
@@ -579,6 +673,7 @@ func _create_upgrades_button() -> void:
 func _on_upgrades_selected() -> void:
 	is_store_view = false
 	is_upgrades_view = true
+	is_inventory_view = false
 	_hide_skill_view()
 	_show_upgrades_view()
 	_populate_upgrades_list()
@@ -587,6 +682,8 @@ func _on_upgrades_selected() -> void:
 func _show_upgrades_view() -> void:
 	if store_panel:
 		store_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = true
 
@@ -684,4 +781,18 @@ func _on_upgrades_updated() -> void:
 	if is_upgrades_view:
 		_populate_upgrades_list()
 
+## Toggle sidebar visibility
+func _on_sidebar_toggle_pressed() -> void:
+	_set_sidebar_collapsed(not skill_sidebar.visible)
+
+## Set sidebar collapsed/expanded state
+func _set_sidebar_collapsed(collapsed: bool) -> void:
+	skill_sidebar.visible = not collapsed
+	is_sidebar_expanded = not collapsed
+	
+	# Update toggle button text
+	if collapsed:
+		sidebar_toggle_button.text = "☰ Skills"
+	else:
+		sidebar_toggle_button.text = "✕ Close"
 
