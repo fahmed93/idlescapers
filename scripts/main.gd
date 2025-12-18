@@ -502,10 +502,10 @@ func _create_toast_container() -> void:
 	toast_container.z_index = 200  # Ensure it's on top of everything
 	toast_container.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Allow clicks to pass through
 	
-	# Position at bottom center of screen, closer to the bottom
+	# Position at bottom center of screen, right above the bottom
 	toast_container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	toast_container.offset_top = -400  # Above the bottom
-	toast_container.offset_bottom = -20  # Closer padding from the bottom
+	toast_container.offset_top = -150  # Right above the bottom
+	toast_container.offset_bottom = -20  # Small padding from the bottom
 	
 	add_child(toast_container)
 
