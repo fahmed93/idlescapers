@@ -20,6 +20,7 @@ const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 @onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
 @onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
 @onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
+@onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
 @onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
 @onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
@@ -237,6 +238,7 @@ func _on_training_started(_skill_id: String, method_id: String) -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
 		training_label.text = "Training: %s" % method.name
+		training_time_label.text = "0.0s / %.1fs" % method.action_time
 	training_panel.visible = true
 	training_progress.value = 0
 
@@ -246,12 +248,15 @@ func _on_training_stopped(_skill_id: String) -> void:
 func _hide_training_panel() -> void:
 	training_panel.visible = false
 	training_progress.value = 0
+	training_time_label.text = "0.0s / 0.0s"
 
 func _update_training_progress() -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
 		var progress := (GameManager.training_progress / method.action_time) * 100.0
 		training_progress.value = progress
+		# Update time label to show elapsed/total time
+		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, method.action_time]
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:
