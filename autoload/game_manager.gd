@@ -952,6 +952,8 @@ func _create_fletching_methods() -> Array[TrainingMethodData]:
 	magic_longbow.consumed_items = {"magic_logs": 1, "bowstring": 1}
 	magic_longbow.produced_items = {"magic_longbow": 1}
 	methods.append(magic_longbow)
+	
+	return methods
   
 func _create_mining_methods() -> Array[TrainingMethodData]:
 	var methods: Array[TrainingMethodData] = []
@@ -1045,6 +1047,8 @@ func _create_mining_methods() -> Array[TrainingMethodData]:
 	runite.action_time = 8.0
 	runite.produced_items = {"runite_ore": 1}
 	methods.append(runite)
+	
+	return methods
   
 func _create_firemaking_methods() -> Array[TrainingMethodData]:
 	var methods: Array[TrainingMethodData] = []
