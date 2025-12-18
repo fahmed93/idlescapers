@@ -559,6 +559,8 @@ func _on_upgrades_selected() -> void:
 
 ## Show upgrades view
 func _show_upgrades_view() -> void:
+	if store_panel:
+		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = true
 
@@ -624,6 +626,7 @@ func _populate_upgrades_list() -> void:
 			# Purchase button
 			var button := Button.new()
 			button.custom_minimum_size = Vector2(80, 40)
+			button.text = "Buy"
 			
 			if is_purchased:
 				button.text = "Owned"
@@ -632,10 +635,8 @@ func _populate_upgrades_list() -> void:
 				button.text = "Lv %d" % upgrade.level_required
 				button.disabled = true
 			elif not Store.has_gold(upgrade.cost):
-				button.text = "Buy"
 				button.disabled = true
 			else:
-				button.text = "Buy"
 				button.pressed.connect(_on_purchase_upgrade.bind(upgrade.id))
 			
 			hbox.add_child(button)

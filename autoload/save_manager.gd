@@ -153,7 +153,8 @@ func _calculate_offline_progress(skill_id: String, method_id: String, time_away:
 	if GameManager.get_skill_level(skill_id) < method.level_required:
 		return
 	
-	# Apply speed modifier from upgrades
+	# Apply speed modifier from upgrades to increase effective offline time
+	# This makes training faster by simulating more time passing (conceptually different from real-time)
 	var speed_modifier := UpgradeShop.get_skill_speed_modifier(skill_id)
 	var effective_time := time_away * (1.0 + speed_modifier)
 	

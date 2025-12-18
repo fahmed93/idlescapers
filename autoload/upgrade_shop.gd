@@ -119,14 +119,9 @@ func purchase_upgrade(upgrade_id: String) -> bool:
 			[upgrade_id, player_level, upgrade.level_required])
 		return false
 	
-	# Check if player has enough gold
-	if not Store.has_gold(upgrade.cost):
-		push_warning("[UpgradeShop] Insufficient gold for %s: %d < %d" % 
-			[upgrade_id, Store.get_gold(), upgrade.cost])
-		return false
-	
-	# Deduct gold
+	# Deduct gold (this also validates if player has enough)
 	if not Store.remove_gold(upgrade.cost):
+		push_warning("[UpgradeShop] Insufficient gold for %s" % upgrade_id)
 		return false
 	
 	# Add to purchased upgrades
