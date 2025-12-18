@@ -39,8 +39,12 @@ jobs:
       - name: Import project
         run: |
           echo "Importing project assets..."
-          if ! godot --headless --import --quit; then
-            echo "Warning: Godot import exited with code $?. This is often normal during initial import or when assets are already cached."
+          set +e
+          godot --headless --import --quit
+          EXIT_CODE=$?
+          set -e
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Warning: Godot import exited with code $EXIT_CODE. This is often normal during initial import or when assets are already cached."
             echo "Proceeding with export step..."
           else
             echo "Import completed successfully"
