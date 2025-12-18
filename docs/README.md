@@ -21,10 +21,11 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 
 ### UI Features
 - Mobile-first touch-friendly design
-- Skill sidebar with level display
+- Collapsible sidebar with hamburger menu button in top-left corner
+- Skill sidebar with level display (Skills, Store, Upgrades, Inventory)
+- Dedicated full-screen inventory view
 - Training method list with requirements
 - Progress bars for XP and actions
-- Inventory display with item counts
 - Store interface for selling items
 - Gold tracking across all displays
 - Offline progress popup
