@@ -20,7 +20,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	var farmer := TrainingMethodData.new()
 	farmer.id = "farmer"
 	farmer.name = "Farmer"
-	farmer.description = "Pickpocket farmers for coins and produce."
+	farmer.description = "Pickpocket farmers for coins."
 	farmer.level_required = 5
 	farmer.xp_per_action = 14.5
 	farmer.action_time = 2.5
