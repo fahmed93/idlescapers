@@ -155,6 +155,9 @@ func _populate_skill_sidebar() -> void:
 	for child in skill_sidebar.get_children():
 		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button:
 			child.queue_free()
+		# Also remove TotalLevelLabel if it exists to recreate it
+		elif child.name == "TotalLevelLabel":
+			child.queue_free()
 	skill_buttons.clear()
 	
 	# Create a button for each skill
