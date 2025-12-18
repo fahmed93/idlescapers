@@ -517,6 +517,7 @@ func _show_toast_notification(skill_id: String, xp_gained: float, items_gained: 
 	toast_container.add_child(toast)
 	
 	# Move the new toast to the top (index 0) so it appears above older toasts
+	# Note: With max 3 toasts, performance impact is negligible
 	toast_container.move_child(toast, 0)
 	
 	# Show the action completion
@@ -524,10 +525,12 @@ func _show_toast_notification(skill_id: String, xp_gained: float, items_gained: 
 	
 	# Remove old toasts if there are too many (keep max 3)
 	# Remove from the end since new toasts are now at the beginning
-	while toast_container.get_child_count() > 3:
-		var oldest_toast := toast_container.get_child(toast_container.get_child_count() - 1)
+	var child_count := toast_container.get_child_count()
+	while child_count > 3:
+		var oldest_toast := toast_container.get_child(child_count - 1)
 		toast_container.remove_child(oldest_toast)
 		oldest_toast.queue_free()
+		child_count -= 1
 
 
 ## Create Inventory UI
