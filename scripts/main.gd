@@ -23,13 +23,16 @@ var action_buttons: Dictionary = {}
 var is_store_view: bool = false
 var store_button: Button = null
 var store_panel: PanelContainer = null
+var store_items_list: VBoxContainer = null
+var store_gold_label: Label = null
 
 func _ready() -> void:
 	_setup_signals()
+	_create_store_ui()
+	_create_store_button()
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
-	_create_store_ui()
 	
 	# Select first skill by default
 	if not GameManager.skills.is_empty():
@@ -70,15 +73,6 @@ func _populate_skill_sidebar() -> void:
 		button.pressed.connect(_on_skill_selected.bind(skill_id))
 		skill_sidebar.add_child(button)
 		skill_buttons[skill_id] = button
-	
-	# Add Store button if not already added
-	if store_button == null:
-		store_button = Button.new()
-		store_button.custom_minimum_size = Vector2(0, 60)
-		store_button.text = "Store\n%d Gold" % Store.get_gold()
-		store_button.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))  # Gold color
-		store_button.pressed.connect(_on_store_selected)
-		skill_sidebar.add_child(store_button)
 	
 	# Add total level display at bottom
 	var total_label := Label.new()
@@ -331,12 +325,11 @@ func _create_store_ui() -> void:
 	store_header.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
 	store_vbox.add_child(store_header)
 	
-	var gold_label := Label.new()
-	gold_label.name = "GoldLabel"
-	gold_label.text = "Gold: %d" % Store.get_gold()
-	gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	gold_label.add_theme_font_size_override("font_size", 16)
-	store_vbox.add_child(gold_label)
+	store_gold_label = Label.new()
+	store_gold_label.text = "Gold: %d" % Store.get_gold()
+	store_gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	store_gold_label.add_theme_font_size_override("font_size", 16)
+	store_vbox.add_child(store_gold_label)
 	
 	# Store items list
 	var scroll := ScrollContainer.new()
@@ -344,14 +337,22 @@ func _create_store_ui() -> void:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	store_vbox.add_child(scroll)
 	
-	var store_items_list := VBoxContainer.new()
-	store_items_list.name = "StoreItemsList"
+	store_items_list = VBoxContainer.new()
 	store_items_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(store_items_list)
 	
 	# Add to main content (after inventory panel)
 	main_content.add_child(store_panel)
 	main_content.move_child(store_panel, inventory_panel.get_index() + 1)
+
+## Create Store button
+func _create_store_button() -> void:
+	store_button = Button.new()
+	store_button.custom_minimum_size = Vector2(0, 60)
+	store_button.text = "Store\n%d Gold" % Store.get_gold()
+	store_button.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))  # Gold color
+	store_button.pressed.connect(_on_store_selected)
+	skill_sidebar.add_child(store_button)
 
 ## Show store view
 func _on_store_selected() -> void:
@@ -377,15 +378,11 @@ func _show_store_view() -> void:
 
 ## Populate store items list
 func _populate_store_items() -> void:
-	if not store_panel:
-		return
-	
-	var items_list := store_panel.get_node_or_null("VBoxContainer/ScrollContainer/StoreItemsList")
-	if not items_list:
+	if not store_items_list:
 		return
 	
 	# Clear existing items
-	for child in items_list.get_children():
+	for child in store_items_list.get_children():
 		child.queue_free()
 	
 	var items := Inventory.get_all_items()
@@ -393,7 +390,7 @@ func _populate_store_items() -> void:
 		var empty_label := Label.new()
 		empty_label.text = "No items to sell"
 		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		items_list.add_child(empty_label)
+		store_items_list.add_child(empty_label)
 		return
 	
 	for item_id in items:
@@ -446,7 +443,7 @@ func _populate_store_items() -> void:
 		sell_all_button.pressed.connect(_on_sell_item.bind(item_id, count))
 		button_vbox.add_child(sell_all_button)
 		
-		items_list.add_child(item_panel)
+		store_items_list.add_child(item_panel)
 
 ## Handle selling an item
 func _on_sell_item(item_id: String, amount: int) -> void:
@@ -462,10 +459,8 @@ func _on_gold_changed(new_amount: int) -> void:
 		store_button.text = "Store\n%d Gold" % new_amount
 	
 	# Update gold label in store panel
-	if store_panel:
-		var gold_label := store_panel.get_node_or_null("VBoxContainer/GoldLabel")
-		if gold_label:
-			gold_label.text = "Gold: %d" % new_amount
+	if store_gold_label:
+		store_gold_label.text = "Gold: %d" % new_amount
 
 ## Handle item sold signal
 func _on_item_sold(item_id: String, amount: int, gold_earned: int) -> void:
