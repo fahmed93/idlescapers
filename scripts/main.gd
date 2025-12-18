@@ -4,6 +4,7 @@ extends Control
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
 const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
 const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
+const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
@@ -40,9 +41,11 @@ var inventory_button: Button = null
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
 var is_sidebar_expanded: bool = false
+var item_detail_popup: PanelContainer = null
 
 func _ready() -> void:
 	_setup_signals()
+	_create_item_detail_popup()
 	_create_inventory_ui()
 	_create_inventory_button()
 	_create_store_ui()
@@ -289,41 +292,44 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		var item_data := Inventory.get_item_data(item_id)
 		var count: int = items[item_id]
 		
-		var item_panel := PanelContainer.new()
-		item_panel.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
+		# Create a button instead of panel to make it clickable
+		var item_button := Button.new()
+		item_button.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
+		item_button.pressed.connect(_on_item_clicked.bind(item_id))
 
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
-		item_panel.add_child(vbox)
+		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through to button
+		item_button.add_child(vbox)
 		
 		var name_label := Label.new()
 		name_label.text = item_data.name if item_data else item_id
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		name_label.add_theme_font_size_override("font_size", 11)
+		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(name_label)
 		
 		var count_label := Label.new()
 		count_label.text = "x%d" % count
 		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		count_label.add_theme_font_size_override("font_size", 14)
+		count_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(count_label)
 		
-		# Add sell buttons
-		var sell_one_button := Button.new()
-		sell_one_button.text = "Sell 1"
-		sell_one_button.custom_minimum_size = Vector2(80, 20)
-		sell_one_button.add_theme_font_size_override("font_size", 9)
-		sell_one_button.pressed.connect(_on_sell_from_inventory.bind(item_id, 1))
-		vbox.add_child(sell_one_button)
+		var hint_label := Label.new()
+		hint_label.text = "Tap for details"
+		hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		hint_label.add_theme_font_size_override("font_size", 9)
+		hint_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+		hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_child(hint_label)
 		
-		var sell_all_button := Button.new()
-		sell_all_button.text = "Sell All"
-		sell_all_button.custom_minimum_size = Vector2(80, 20)
-		sell_all_button.add_theme_font_size_override("font_size", 9)
-		sell_all_button.pressed.connect(_on_sell_all_from_inventory.bind(item_id))
-		vbox.add_child(sell_all_button)
-		
-		grid.add_child(item_panel)
+		grid.add_child(item_button)
+
+## Handle item clicked in inventory
+func _on_item_clicked(item_id: String) -> void:
+	if item_detail_popup:
+		item_detail_popup.show_item(item_id)
 
 func _update_total_stats() -> void:
 	var total_level := GameManager.get_total_level()
@@ -361,6 +367,20 @@ func _on_offline_progress(time_away: float, actions_completed: int, xp_gained: D
 
 func _on_close_offline_popup() -> void:
 	offline_popup.visible = false
+
+## Create Item Detail Popup
+func _create_item_detail_popup() -> void:
+	item_detail_popup = ItemDetailPopupScene.instantiate()
+	item_detail_popup.name = "ItemDetailPopup"
+	item_detail_popup.z_index = 100  # Ensure it's on top
+	add_child(item_detail_popup)
+	item_detail_popup.closed.connect(_on_item_detail_closed)
+
+## Handle item detail popup closed
+func _on_item_detail_closed() -> void:
+	# Refresh inventory display if in inventory view
+	if is_inventory_view:
+		_on_inventory_updated()
 
 ## Create Inventory UI
 func _create_inventory_ui() -> void:
