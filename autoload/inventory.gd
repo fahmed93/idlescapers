@@ -119,6 +119,12 @@ func _load_items() -> void:
 	_add_item("adamantite_ore", "Adamantite Ore", "A greenish ore.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("runite_ore", "Runite Ore", "A rare cyan ore.", ItemData.ItemType.RAW_MATERIAL, 500)
 	
+	# Gems
+	_add_item("sapphire", "Sapphire", "A brilliant blue gem.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("emerald", "Emerald", "A lustrous green gem.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("ruby", "Ruby", "A precious red gem.", ItemData.ItemType.RAW_MATERIAL, 400)
+	_add_item("diamond", "Diamond", "A rare and valuable gem.", ItemData.ItemType.RAW_MATERIAL, 800)
+	
 	# Bars (smelted from ores)
 	_add_item("bronze_bar", "Bronze Bar", "A bar of bronze metal.", ItemData.ItemType.PROCESSED, 15)
 	_add_item("iron_bar", "Iron Bar", "A bar of iron metal.", ItemData.ItemType.PROCESSED, 30)
@@ -128,9 +134,80 @@ func _load_items() -> void:
 	_add_item("mithril_bar", "Mithril Bar", "A bar of mithril metal.", ItemData.ItemType.PROCESSED, 300)
 	_add_item("adamantite_bar", "Adamantite Bar", "A bar of adamantite metal.", ItemData.ItemType.PROCESSED, 600)
 	_add_item("runite_bar", "Runite Bar", "A bar of runite metal.", ItemData.ItemType.PROCESSED, 1500)
+	
+	# Smithed items - Arrowheads
+	_add_item("iron_arrowhead", "Iron Arrowhead", "An iron arrowhead.", ItemData.ItemType.PROCESSED, 5)
+	_add_item("steel_arrowhead", "Steel Arrowhead", "A steel arrowhead.", ItemData.ItemType.PROCESSED, 10)
+	_add_item("mithril_arrowhead", "Mithril Arrowhead", "A mithril arrowhead.", ItemData.ItemType.PROCESSED, 20)
+	_add_item("adamantite_arrowhead", "Adamantite Arrowhead", "An adamantite arrowhead.", ItemData.ItemType.PROCESSED, 40)
+	_add_item("runite_arrowhead", "Runite Arrowhead", "A runite arrowhead.", ItemData.ItemType.PROCESSED, 100)
+	
+	# Smithed items - Daggers
+	_add_item("bronze_dagger", "Bronze Dagger", "A bronze dagger.", ItemData.ItemType.TOOL, 20)
+	_add_item("iron_dagger", "Iron Dagger", "An iron dagger.", ItemData.ItemType.TOOL, 40)
+	_add_item("steel_dagger", "Steel Dagger", "A steel dagger.", ItemData.ItemType.TOOL, 100)
+	_add_item("mithril_dagger", "Mithril Dagger", "A mithril dagger.", ItemData.ItemType.TOOL, 200)
+	_add_item("adamantite_dagger", "Adamantite Dagger", "An adamantite dagger.", ItemData.ItemType.TOOL, 400)
+	_add_item("runite_dagger", "Runite Dagger", "A runite dagger.", ItemData.ItemType.TOOL, 1000)
+	
+	# Smithed items - Swords
+	_add_item("bronze_sword", "Bronze Sword", "A bronze sword.", ItemData.ItemType.TOOL, 40)
+	_add_item("iron_sword", "Iron Sword", "An iron sword.", ItemData.ItemType.TOOL, 80)
+	_add_item("steel_sword", "Steel Sword", "A steel sword.", ItemData.ItemType.TOOL, 200)
+	_add_item("mithril_sword", "Mithril Sword", "A mithril sword.", ItemData.ItemType.TOOL, 400)
+	_add_item("adamantite_sword", "Adamantite Sword", "An adamantite sword.", ItemData.ItemType.TOOL, 800)
+	_add_item("runite_sword", "Runite Sword", "A runite sword.", ItemData.ItemType.TOOL, 2000)
+	
+	# Smithed items - Scimitars
+	_add_item("bronze_scimitar", "Bronze Scimitar", "A bronze scimitar.", ItemData.ItemType.TOOL, 50)
+	_add_item("iron_scimitar", "Iron Scimitar", "An iron scimitar.", ItemData.ItemType.TOOL, 100)
+	_add_item("steel_scimitar", "Steel Scimitar", "A steel scimitar.", ItemData.ItemType.TOOL, 250)
+	_add_item("mithril_scimitar", "Mithril Scimitar", "A mithril scimitar.", ItemData.ItemType.TOOL, 500)
+	_add_item("adamantite_scimitar", "Adamantite Scimitar", "An adamantite scimitar.", ItemData.ItemType.TOOL, 1000)
+	_add_item("runite_scimitar", "Runite Scimitar", "A runite scimitar.", ItemData.ItemType.TOOL, 2500)
+	
+	# Smithed items - Armor (Helmets)
+	_add_item("bronze_full_helm", "Bronze Full Helm", "A bronze full helmet.", ItemData.ItemType.TOOL, 60)
+	_add_item("iron_full_helm", "Iron Full Helm", "An iron full helmet.", ItemData.ItemType.TOOL, 120)
+	_add_item("steel_full_helm", "Steel Full Helm", "A steel full helmet.", ItemData.ItemType.TOOL, 300)
+	_add_item("mithril_full_helm", "Mithril Full Helm", "A mithril full helmet.", ItemData.ItemType.TOOL, 600)
+	_add_item("adamantite_full_helm", "Adamantite Full Helm", "An adamantite full helmet.", ItemData.ItemType.TOOL, 1200)
+	_add_item("runite_full_helm", "Runite Full Helm", "A runite full helmet.", ItemData.ItemType.TOOL, 3000)
+	
+	# Smithed items - Armor (Platebodies)
+	_add_item("bronze_platebody", "Bronze Platebody", "A bronze platebody.", ItemData.ItemType.TOOL, 150)
+	_add_item("iron_platebody", "Iron Platebody", "An iron platebody.", ItemData.ItemType.TOOL, 300)
+	_add_item("steel_platebody", "Steel Platebody", "A steel platebody.", ItemData.ItemType.TOOL, 750)
+	_add_item("mithril_platebody", "Mithril Platebody", "A mithril platebody.", ItemData.ItemType.TOOL, 1500)
+	_add_item("adamantite_platebody", "Adamantite Platebody", "An adamantite platebody.", ItemData.ItemType.TOOL, 3000)
+	_add_item("runite_platebody", "Runite Platebody", "A runite platebody.", ItemData.ItemType.TOOL, 7500)
+	
+	# Smithed items - Armor (Platelegs)
+	_add_item("bronze_platelegs", "Bronze Platelegs", "Bronze platelegs.", ItemData.ItemType.TOOL, 120)
+	_add_item("iron_platelegs", "Iron Platelegs", "Iron platelegs.", ItemData.ItemType.TOOL, 240)
+	_add_item("steel_platelegs", "Steel Platelegs", "Steel platelegs.", ItemData.ItemType.TOOL, 600)
+	_add_item("mithril_platelegs", "Mithril Platelegs", "Mithril platelegs.", ItemData.ItemType.TOOL, 1200)
+	_add_item("adamantite_platelegs", "Adamantite Platelegs", "Adamantite platelegs.", ItemData.ItemType.TOOL, 2400)
+	_add_item("runite_platelegs", "Runite Platelegs", "Runite platelegs.", ItemData.ItemType.TOOL, 6000)
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+	
+	# Dirty herbs (from Foraging)
+	_add_item("dirty_guam_leaf", "Dirty Guam Leaf", "An unclean guam leaf that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("dirty_marrentill", "Dirty Marrentill", "An unclean marrentill that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 7)
+	_add_item("dirty_tarromin", "Dirty Tarromin", "An unclean tarromin that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 9)
+	_add_item("dirty_harralander", "Dirty Harralander", "An unclean harralander that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 11)
+	_add_item("dirty_ranarr_weed", "Dirty Ranarr Weed", "An unclean ranarr weed that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 18)
+	_add_item("dirty_toadflax", "Dirty Toadflax", "An unclean toadflax that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 22)
+	_add_item("dirty_irit_leaf", "Dirty Irit Leaf", "An unclean irit leaf that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("dirty_avantoe", "Dirty Avantoe", "An unclean avantoe that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 38)
+	_add_item("dirty_kwuarm", "Dirty Kwuarm", "An unclean kwuarm that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("dirty_snapdragon", "Dirty Snapdragon", "An unclean snapdragon that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 65)
+	_add_item("dirty_cadantine", "Dirty Cadantine", "An unclean cadantine that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 75)
+	_add_item("dirty_lantadyme", "Dirty Lantadyme", "An unclean lantadyme that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 90)
+	_add_item("dirty_dwarf_weed", "Dirty Dwarf Weed", "An unclean dwarf weed that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 105)
+	_add_item("dirty_torstol", "Dirty Torstol", "An unclean torstol that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 150)
 	
 	# Herbs (grimy/clean)
 	_add_item("guam_leaf", "Guam Leaf", "A basic herb used in Attack potions.", ItemData.ItemType.RAW_MATERIAL, 8)
@@ -183,6 +260,9 @@ func _load_items() -> void:
 	# Thieving rewards
 	_add_item("coins", "Coins", "Currency obtained from pickpocketing.", ItemData.ItemType.PROCESSED, 1)
 	
+	# Agility rewards
+	_add_item("marks_of_grace", "Marks of Grace", "Graceful tokens earned from agility courses.", ItemData.ItemType.PROCESSED, 10)
+	
 	# Astrology materials
 	_add_item("stardust", "Stardust", "Shimmering dust from the cosmos.", ItemData.ItemType.RAW_MATERIAL, 10)
 	_add_item("celestial_essence", "Celestial Essence", "Pure essence of celestial bodies.", ItemData.ItemType.PROCESSED, 50)
@@ -212,6 +292,28 @@ func _load_items() -> void:
 	_add_item("diamond_necklace", "Diamond Necklace", "A gold necklace with a diamond.", ItemData.ItemType.PROCESSED, 1600)
 	_add_item("dragonstone_necklace", "Dragonstone Necklace", "A gold necklace with a dragonstone.", ItemData.ItemType.PROCESSED, 2800)
 	_add_item("onyx_necklace", "Onyx Necklace", "A gold necklace with an onyx.", ItemData.ItemType.PROCESSED, 5500)
+  
+	# Animal hides and skins (for Skinning skill)
+	_add_item("rabbit_hide", "Rabbit Hide", "Soft hide from a rabbit.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("chicken_hide", "Chicken Hide", "Hide from a chicken.", ItemData.ItemType.RAW_MATERIAL, 8)
+	_add_item("cowhide", "Cowhide", "Tough hide from a cow.", ItemData.ItemType.RAW_MATERIAL, 10)
+	_add_item("bear_hide", "Bear Hide", "Thick fur from a bear.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("wolf_hide", "Wolf Hide", "Durable pelt from a wolf.", ItemData.ItemType.RAW_MATERIAL, 20)
+	_add_item("snake_skin", "Snake Skin", "Scaled skin from a snake.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("crocodile_hide", "Crocodile Hide", "Tough scaled hide from a crocodile.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("yak_hide", "Yak Hide", "Wooly hide from a yak.", ItemData.ItemType.RAW_MATERIAL, 35)
+	_add_item("polar_bear_hide", "Polar Bear Hide", "Pristine white fur from a polar bear.", ItemData.ItemType.RAW_MATERIAL, 40)
+	_add_item("lion_hide", "Lion Hide", "Golden pelt from a lion.", ItemData.ItemType.RAW_MATERIAL, 45)
+	_add_item("tiger_hide", "Tiger Hide", "Striped fur from a tiger.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("black_bear_hide", "Black Bear Hide", "Sleek dark fur from a black bear.", ItemData.ItemType.RAW_MATERIAL, 55)
+	_add_item("blue_dragonhide", "Blue Dragonhide", "Azure scales from a blue dragon.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("red_dragonhide", "Red Dragonhide", "Crimson scales from a red dragon.", ItemData.ItemType.RAW_MATERIAL, 150)
+	_add_item("black_dragonhide", "Black Dragonhide", "Obsidian scales from a black dragon.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("green_dragonhide", "Green Dragonhide", "Emerald scales from a green dragon.", ItemData.ItemType.RAW_MATERIAL, 250)
+	_add_item("frost_dragonhide", "Frost Dragonhide", "Crystalline scales from a frost dragon.", ItemData.ItemType.RAW_MATERIAL, 350)
+	_add_item("royal_dragonhide", "Royal Dragonhide", "Platinum scales from a royal dragon.", ItemData.ItemType.RAW_MATERIAL, 500)
+	_add_item("chimera_hide", "Chimera Hide", "Multi-textured hide from a chimera.", ItemData.ItemType.RAW_MATERIAL, 750)
+	_add_item("phoenix_feather", "Phoenix Feather", "Radiant feather from a phoenix.", ItemData.ItemType.RAW_MATERIAL, 1000)
 
 
 ## Helper to add item definition
