@@ -71,6 +71,14 @@ theme_override_font_sizes/font_size = 12
 text = "0 / 83 XP"
 horizontal_alignment = 1
 
+[node name="SpeedBonusLabel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(0.5, 1, 0.5, 1)
+text = "+0% Speed Bonus"
+horizontal_alignment = 1
+
 [node name="TrainingPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
 visible = false
 layout_mode = 2
