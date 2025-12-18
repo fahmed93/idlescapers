@@ -93,6 +93,14 @@ func load_game() -> void:
 		var current_time := int(Time.get_unix_time_from_system())
 		var time_away := current_time - last_save_time
 		
+		# Validate timestamp - if it's in the future or unreasonably far in the past, skip offline progress
+		if time_away < 0:
+			print("[SaveManager] Warning: Save timestamp is in the future. Skipping offline progress.")
+			time_away = 0
+		elif time_away > 31536000:  # More than 1 year
+			print("[SaveManager] Warning: Save timestamp is more than 1 year old. Skipping offline progress.")
+			time_away = 0
+		
 		# Only process offline progress if they were training and time passed
 		if time_away > 60 and save_data.get("is_training", false):
 			_calculate_offline_progress(
@@ -100,13 +108,6 @@ func load_game() -> void:
 				save_data.get("current_method_id", ""),
 				time_away
 			)
-		
-		# Restore training state
-		if save_data.get("is_training", false):
-			var skill_id: String = save_data.get("current_skill_id", "")
-			var method_id: String = save_data.get("current_method_id", "")
-			if not skill_id.is_empty() and not method_id.is_empty():
-				GameManager.start_training(skill_id, method_id)
 	
 	load_completed.emit()
 	print("[SaveManager] Game loaded successfully.")
@@ -115,6 +116,13 @@ func load_game() -> void:
 func _calculate_offline_progress(skill_id: String, method_id: String, time_away: int) -> void:
 	if skill_id.is_empty() or method_id.is_empty():
 		return
+	
+	# Cap offline progress to prevent crashes from extreme time values
+	# Maximum 24 hours of offline progress
+	const MAX_OFFLINE_TIME := 86400  # 24 hours in seconds
+	if time_away > MAX_OFFLINE_TIME:
+		print("[SaveManager] Capping offline time from %d to %d seconds" % [time_away, MAX_OFFLINE_TIME])
+		time_away = MAX_OFFLINE_TIME
 	
 	var skill: SkillData = GameManager.skills.get(skill_id)
 	if skill == null:
@@ -135,6 +143,13 @@ func _calculate_offline_progress(skill_id: String, method_id: String, time_away:
 	
 	# Calculate how many actions could have been completed
 	var max_actions := int(time_away / method.action_time)
+	
+	# Cap to 10,000 actions to prevent crashes and excessive processing
+	const MAX_ACTIONS := 10000
+	if max_actions > MAX_ACTIONS:
+		print("[SaveManager] Capping offline actions from %d to %d" % [max_actions, MAX_ACTIONS])
+		max_actions = MAX_ACTIONS
+	
 	var actions_completed := 0
 	var xp_gained: Dictionary = {}
 	
