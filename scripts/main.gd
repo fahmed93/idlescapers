@@ -2,6 +2,8 @@
 extends Control
 
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
+const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
+const ITEM_PANEL_HEIGHT := 60  # Height of inventory item panels
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
@@ -267,8 +269,7 @@ func _on_action_completed(_skill_id: String, _method_id: String, _success: bool)
 	_on_inventory_updated()
 
 func _on_inventory_updated() -> void:
-	# Update both inventory displays (skill view and inventory view)
-	_update_inventory_display(inventory_list)
+	# Update the inventory display in the dedicated inventory screen
 	if inventory_items_list:
 		_update_inventory_display(inventory_items_list)
 
@@ -283,7 +284,7 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		var count: int = items[item_id]
 		
 		var item_panel := PanelContainer.new()
-		item_panel.custom_minimum_size = Vector2(100, 60)
+		item_panel.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
 		
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -383,7 +384,7 @@ func _create_inventory_button() -> void:
 	inventory_button.pressed.connect(_on_inventory_selected)
 	skill_sidebar.add_child(inventory_button)
 
-## Show inventory view
+## Handle inventory button click
 func _on_inventory_selected() -> void:
 	is_store_view = false
 	is_upgrades_view = false
