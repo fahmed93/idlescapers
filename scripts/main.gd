@@ -37,6 +37,7 @@ var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
 var upgrades_gold_label: Label = null
 var inventory_button: Button = null
+<<<<<<< Updated upstream
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
 var is_sidebar_expanded: bool = false
@@ -44,6 +45,14 @@ var is_sidebar_expanded: bool = false
 func _ready() -> void:
 	_setup_signals()
 	_create_inventory_ui()
+=======
+var inventory_view_panel: PanelContainer = null
+var inventory_view_list: GridContainer = null
+
+func _ready() -> void:
+	_setup_signals()
+	_create_inventory_view_ui()
+>>>>>>> Stashed changes
 	_create_inventory_button()
 	_create_store_ui()
 	_create_store_button()
@@ -323,7 +332,15 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		sell_all_button.pressed.connect(_on_sell_all_from_inventory.bind(item_id))
 		vbox.add_child(sell_all_button)
 		
+<<<<<<< Updated upstream
 		grid.add_child(item_panel)
+=======
+		inventory_list.add_child(item_panel)
+	
+	# Also update inventory view if it's visible
+	if is_inventory_view:
+		_populate_inventory_view()
+>>>>>>> Stashed changes
 
 func _update_total_stats() -> void:
 	var total_level := GameManager.get_total_level()
@@ -362,6 +379,7 @@ func _on_offline_progress(time_away: float, actions_completed: int, xp_gained: D
 func _on_close_offline_popup() -> void:
 	offline_popup.visible = false
 
+<<<<<<< Updated upstream
 ## Create Inventory UI
 func _create_inventory_ui() -> void:
 	# Create inventory panel (hidden by default)
@@ -372,21 +390,49 @@ func _create_inventory_ui() -> void:
 	
 	var inventory_vbox := VBoxContainer.new()
 	inventory_panel_view.add_child(inventory_vbox)
+=======
+## Create Inventory View UI
+func _create_inventory_view_ui() -> void:
+	# Create inventory view panel (hidden by default)
+	inventory_view_panel = PanelContainer.new()
+	inventory_view_panel.name = "InventoryViewPanel"
+	inventory_view_panel.visible = false
+	inventory_view_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var inventory_vbox := VBoxContainer.new()
+	inventory_view_panel.add_child(inventory_vbox)
+>>>>>>> Stashed changes
 	
 	# Inventory header
 	var inventory_header := Label.new()
 	inventory_header.text = "Inventory"
 	inventory_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	inventory_header.add_theme_font_size_override("font_size", 20)
+<<<<<<< Updated upstream
 	inventory_header.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
 	inventory_vbox.add_child(inventory_header)
 	
 	# Inventory items list
+=======
+	inventory_header.add_theme_color_override("font_color", Color(0.8, 0.8, 1.0))
+	inventory_vbox.add_child(inventory_header)
+	
+	var inventory_value_label := Label.new()
+	inventory_value_label.name = "InventoryValueLabel"
+	inventory_value_label.text = "Total Value: %d gold" % Inventory.get_total_value()
+	inventory_value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	inventory_value_label.add_theme_font_size_override("font_size", 14)
+	inventory_value_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
+	inventory_vbox.add_child(inventory_value_label)
+	
+	# Inventory grid
+>>>>>>> Stashed changes
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	inventory_vbox.add_child(scroll)
 	
+<<<<<<< Updated upstream
 	inventory_items_list = GridContainer.new()
 	inventory_items_list.columns = 4
 	inventory_items_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -395,24 +441,46 @@ func _create_inventory_ui() -> void:
 	# Add to main content
 	main_content.add_child(inventory_panel_view)
 	main_content.move_child(inventory_panel_view, inventory_panel.get_index() + 1)
+=======
+	inventory_view_list = GridContainer.new()
+	inventory_view_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	inventory_view_list.columns = 4
+	scroll.add_child(inventory_view_list)
+	
+	# Add to main content
+	main_content.add_child(inventory_view_panel)
+	main_content.move_child(inventory_view_panel, inventory_panel.get_index() + 1)
+>>>>>>> Stashed changes
 
 ## Create Inventory button
 func _create_inventory_button() -> void:
 	inventory_button = Button.new()
 	inventory_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
 	inventory_button.text = "Inventory"
+<<<<<<< Updated upstream
 	inventory_button.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
 	inventory_button.pressed.connect(_on_inventory_selected)
 	skill_sidebar.add_child(inventory_button)
 
 ## Handle inventory button click
+=======
+	inventory_button.add_theme_color_override("font_color", Color(0.8, 0.8, 1.0))
+	inventory_button.pressed.connect(_on_inventory_selected)
+	skill_sidebar.add_child(inventory_button)
+
+## Show inventory view
+>>>>>>> Stashed changes
 func _on_inventory_selected() -> void:
 	is_store_view = false
 	is_upgrades_view = false
 	is_inventory_view = true
 	_hide_skill_view()
 	_show_inventory_view()
+<<<<<<< Updated upstream
 	_on_inventory_updated()
+=======
+	_populate_inventory_view()
+>>>>>>> Stashed changes
 
 ## Show inventory view
 func _show_inventory_view() -> void:
@@ -420,8 +488,94 @@ func _show_inventory_view() -> void:
 		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
+<<<<<<< Updated upstream
 	if inventory_panel_view:
 		inventory_panel_view.visible = true
+=======
+	if inventory_view_panel:
+		inventory_view_panel.visible = true
+
+## Populate inventory view
+func _populate_inventory_view() -> void:
+	if not inventory_view_list:
+		return
+	
+	# Clear existing items
+	for child in inventory_view_list.get_children():
+		child.queue_free()
+	
+	# Update value label
+	var inv_value_label = inventory_view_panel.get_node_or_null("VBoxContainer/InventoryValueLabel")
+	if inv_value_label:
+		inv_value_label.text = "Total Value: %d gold" % Inventory.get_total_value()
+	
+	var items := Inventory.get_all_items()
+	if items.is_empty():
+		var empty_label := Label.new()
+		empty_label.text = "No items in inventory"
+		empty_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		inventory_view_list.add_child(empty_label)
+		return
+	
+	for item_id in items:
+		var item_data := Inventory.get_item_data(item_id)
+		var count: int = items[item_id]
+		
+		var item_panel := PanelContainer.new()
+		item_panel.custom_minimum_size = Vector2(140, 140)
+		
+		var vbox := VBoxContainer.new()
+		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		item_panel.add_child(vbox)
+		
+		var name_label := Label.new()
+		name_label.text = item_data.name if item_data else item_id
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.add_theme_font_size_override("font_size", 12)
+		vbox.add_child(name_label)
+		
+		var count_label := Label.new()
+		count_label.text = "x%d" % count
+		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		count_label.add_theme_font_size_override("font_size", 16)
+		vbox.add_child(count_label)
+		
+		if item_data:
+			var value_label := Label.new()
+			value_label.text = "%d gold ea." % item_data.value
+			value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			value_label.add_theme_font_size_override("font_size", 10)
+			value_label.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))
+			vbox.add_child(value_label)
+		
+		# Add sell buttons
+		var sell_one_button := Button.new()
+		sell_one_button.text = "Sell 1"
+		sell_one_button.custom_minimum_size = Vector2(100, 25)
+		sell_one_button.add_theme_font_size_override("font_size", 10)
+		sell_one_button.pressed.connect(_on_sell_from_inventory_view.bind(item_id, 1))
+		vbox.add_child(sell_one_button)
+		
+		var sell_all_button := Button.new()
+		sell_all_button.text = "Sell All"
+		sell_all_button.custom_minimum_size = Vector2(100, 25)
+		sell_all_button.add_theme_font_size_override("font_size", 10)
+		sell_all_button.pressed.connect(_on_sell_all_from_inventory_view.bind(item_id))
+		vbox.add_child(sell_all_button)
+		
+		inventory_view_list.add_child(item_panel)
+
+## Handle selling items from inventory view
+func _on_sell_from_inventory_view(item_id: String, amount: int) -> void:
+	if amount > 0 and Store.sell_item(item_id, amount):
+		_populate_inventory_view()
+
+## Handle selling all of an item from inventory view
+func _on_sell_all_from_inventory_view(item_id: String) -> void:
+	var count := Inventory.get_item_count(item_id)
+	if count > 0 and Store.sell_item(item_id, count):
+		_populate_inventory_view()
+>>>>>>> Stashed changes
 
 ## Create Store UI
 func _create_store_ui() -> void:
@@ -487,10 +641,16 @@ func _show_skill_view() -> void:
 		store_panel.visible = false
 	if upgrades_panel:
 		upgrades_panel.visible = false
+<<<<<<< Updated upstream
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
 	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
 	inventory_panel.visible = false
+=======
+	if inventory_view_panel:
+		inventory_view_panel.visible = false
+	inventory_panel.visible = true
+>>>>>>> Stashed changes
 
 ## Hide skill view
 func _hide_skill_view() -> void:
@@ -776,6 +936,7 @@ func _on_upgrade_purchased(upgrade_id: String) -> void:
 func _on_upgrades_updated() -> void:
 	if is_upgrades_view:
 		_populate_upgrades_list()
+<<<<<<< Updated upstream
 
 ## Toggle sidebar visibility
 func _on_sidebar_toggle_pressed() -> void:
@@ -792,3 +953,5 @@ func _set_sidebar_collapsed(collapsed: bool) -> void:
 	else:
 		sidebar_toggle_button.text = "✕ Close"
 
+=======
+>>>>>>> Stashed changes
