@@ -128,6 +128,61 @@ func _load_items() -> void:
 	_add_item("mithril_bar", "Mithril Bar", "A bar of mithril metal.", ItemData.ItemType.PROCESSED, 300)
 	_add_item("adamantite_bar", "Adamantite Bar", "A bar of adamantite metal.", ItemData.ItemType.PROCESSED, 600)
 	_add_item("runite_bar", "Runite Bar", "A bar of runite metal.", ItemData.ItemType.PROCESSED, 1500)
+	
+	# Smithed items - Arrowheads
+	_add_item("iron_arrowhead", "Iron Arrowhead", "An iron arrowhead.", ItemData.ItemType.PROCESSED, 5)
+	_add_item("steel_arrowhead", "Steel Arrowhead", "A steel arrowhead.", ItemData.ItemType.PROCESSED, 10)
+	_add_item("mithril_arrowhead", "Mithril Arrowhead", "A mithril arrowhead.", ItemData.ItemType.PROCESSED, 20)
+	_add_item("adamantite_arrowhead", "Adamantite Arrowhead", "An adamantite arrowhead.", ItemData.ItemType.PROCESSED, 40)
+	_add_item("runite_arrowhead", "Runite Arrowhead", "A runite arrowhead.", ItemData.ItemType.PROCESSED, 100)
+	
+	# Smithed items - Daggers
+	_add_item("bronze_dagger", "Bronze Dagger", "A bronze dagger.", ItemData.ItemType.TOOL, 20)
+	_add_item("iron_dagger", "Iron Dagger", "An iron dagger.", ItemData.ItemType.TOOL, 40)
+	_add_item("steel_dagger", "Steel Dagger", "A steel dagger.", ItemData.ItemType.TOOL, 100)
+	_add_item("mithril_dagger", "Mithril Dagger", "A mithril dagger.", ItemData.ItemType.TOOL, 200)
+	_add_item("adamantite_dagger", "Adamantite Dagger", "An adamantite dagger.", ItemData.ItemType.TOOL, 400)
+	_add_item("runite_dagger", "Runite Dagger", "A runite dagger.", ItemData.ItemType.TOOL, 1000)
+	
+	# Smithed items - Swords
+	_add_item("bronze_sword", "Bronze Sword", "A bronze sword.", ItemData.ItemType.TOOL, 40)
+	_add_item("iron_sword", "Iron Sword", "An iron sword.", ItemData.ItemType.TOOL, 80)
+	_add_item("steel_sword", "Steel Sword", "A steel sword.", ItemData.ItemType.TOOL, 200)
+	_add_item("mithril_sword", "Mithril Sword", "A mithril sword.", ItemData.ItemType.TOOL, 400)
+	_add_item("adamantite_sword", "Adamantite Sword", "An adamantite sword.", ItemData.ItemType.TOOL, 800)
+	_add_item("runite_sword", "Runite Sword", "A runite sword.", ItemData.ItemType.TOOL, 2000)
+	
+	# Smithed items - Scimitars
+	_add_item("bronze_scimitar", "Bronze Scimitar", "A bronze scimitar.", ItemData.ItemType.TOOL, 50)
+	_add_item("iron_scimitar", "Iron Scimitar", "An iron scimitar.", ItemData.ItemType.TOOL, 100)
+	_add_item("steel_scimitar", "Steel Scimitar", "A steel scimitar.", ItemData.ItemType.TOOL, 250)
+	_add_item("mithril_scimitar", "Mithril Scimitar", "A mithril scimitar.", ItemData.ItemType.TOOL, 500)
+	_add_item("adamantite_scimitar", "Adamantite Scimitar", "An adamantite scimitar.", ItemData.ItemType.TOOL, 1000)
+	_add_item("runite_scimitar", "Runite Scimitar", "A runite scimitar.", ItemData.ItemType.TOOL, 2500)
+	
+	# Smithed items - Armor (Helmets)
+	_add_item("bronze_full_helm", "Bronze Full Helm", "A bronze full helmet.", ItemData.ItemType.TOOL, 60)
+	_add_item("iron_full_helm", "Iron Full Helm", "An iron full helmet.", ItemData.ItemType.TOOL, 120)
+	_add_item("steel_full_helm", "Steel Full Helm", "A steel full helmet.", ItemData.ItemType.TOOL, 300)
+	_add_item("mithril_full_helm", "Mithril Full Helm", "A mithril full helmet.", ItemData.ItemType.TOOL, 600)
+	_add_item("adamantite_full_helm", "Adamantite Full Helm", "An adamantite full helmet.", ItemData.ItemType.TOOL, 1200)
+	_add_item("runite_full_helm", "Runite Full Helm", "A runite full helmet.", ItemData.ItemType.TOOL, 3000)
+	
+	# Smithed items - Armor (Platebodies)
+	_add_item("bronze_platebody", "Bronze Platebody", "A bronze platebody.", ItemData.ItemType.TOOL, 150)
+	_add_item("iron_platebody", "Iron Platebody", "An iron platebody.", ItemData.ItemType.TOOL, 300)
+	_add_item("steel_platebody", "Steel Platebody", "A steel platebody.", ItemData.ItemType.TOOL, 750)
+	_add_item("mithril_platebody", "Mithril Platebody", "A mithril platebody.", ItemData.ItemType.TOOL, 1500)
+	_add_item("adamantite_platebody", "Adamantite Platebody", "An adamantite platebody.", ItemData.ItemType.TOOL, 3000)
+	_add_item("runite_platebody", "Runite Platebody", "A runite platebody.", ItemData.ItemType.TOOL, 7500)
+	
+	# Smithed items - Armor (Platelegs)
+	_add_item("bronze_platelegs", "Bronze Platelegs", "Bronze platelegs.", ItemData.ItemType.TOOL, 120)
+	_add_item("iron_platelegs", "Iron Platelegs", "Iron platelegs.", ItemData.ItemType.TOOL, 240)
+	_add_item("steel_platelegs", "Steel Platelegs", "Steel platelegs.", ItemData.ItemType.TOOL, 600)
+	_add_item("mithril_platelegs", "Mithril Platelegs", "Mithril platelegs.", ItemData.ItemType.TOOL, 1200)
+	_add_item("adamantite_platelegs", "Adamantite Platelegs", "Adamantite platelegs.", ItemData.ItemType.TOOL, 2400)
+	_add_item("runite_platelegs", "Runite Platelegs", "Runite platelegs.", ItemData.ItemType.TOOL, 6000)
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
