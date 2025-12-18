@@ -161,6 +161,9 @@ func _populate_action_list() -> void:
 	
 	var player_level := GameManager.get_skill_level(selected_skill_id)
 	
+	# Get speed modifier once for all methods (used for time remaining calculation)
+	var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
+	
 	for method in skill.training_methods:
 		var panel := PanelContainer.new()
 		panel.custom_minimum_size = Vector2(0, 80)
