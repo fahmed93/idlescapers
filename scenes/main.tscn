@@ -20,6 +20,16 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.12, 0.14, 0.18, 1)
 
+[node name="MenuButton" type="Button" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 58.0
+offset_bottom = 58.0
+theme_override_font_sizes/font_size = 24
+text = "☰"
+
 [node name="HSplitContainer" type="HSplitContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
@@ -45,11 +55,6 @@ horizontal_alignment = 1
 [node name="MainContent" type="VBoxContainer" parent="HSplitContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="SidebarToggleButton" type="Button" parent="HSplitContainer/MainContent"]
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-text = "☰ Skills"
 
 [node name="SelectedSkillHeader" type="VBoxContainer" parent="HSplitContainer/MainContent"]
 layout_mode = 2
