@@ -428,7 +428,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 func _create_fletching_methods() -> Array[TrainingMethodData]:
 	var methods: Array[TrainingMethodData] = []
 	
-	# Level 1: Arrow Shafts (15 per log)
+	# Level 1: Arrow Shafts (15 per log - matches OSRS design)
 	var arrow_shafts := TrainingMethodData.new()
 	arrow_shafts.id = "arrow_shafts"
 	arrow_shafts.name = "Arrow Shafts"
