@@ -106,9 +106,9 @@ func _process(_delta: float) -> void:
 		_update_training_progress()
 
 func _populate_skill_sidebar() -> void:
-	# Clear existing buttons (but not the header, upgrades button, or inventory button)
+	# Clear existing buttons (but not the header, upgrades button, inventory button, or equipment button)
 	for child in skill_sidebar.get_children():
-		if child is Button and child != upgrades_button and child != inventory_button:
+		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button:
 			child.queue_free()
 	skill_buttons.clear()
 	
