@@ -37,36 +37,49 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 75: Magic Tree (250 XP, 8s)
   - Level 90: Redwood Tree (380 XP, 10s)
 
+### ✅ Fletching
+- **Description**: Create bows, arrows, and bolts from logs
+- **Special Mechanic**: Uses logs from Woodcutting
+
+### ✅ Mining
+- **Description**: Extract ores and gems from rocks
+- **Special**: Random gem drops while mining
+
+### ✅ Firemaking
+- **Description**: Burn logs for XP and unlock special fires
+- **Special**: Consumes logs for XP
+
+### ✅ Smithing
+- **Description**: Smelt ores into bars and forge equipment
+- **Special Mechanic**: Requires specific ore combinations, iron has 50% success rate
+
+### ✅ Herblore
+- **Description**: Create potions from herbs and secondary ingredients
+- **Special Mechanic**: Requires herbs and secondary ingredients
+
+### ✅ Thieving
+- **Description**: Pickpocket NPCs and unlock chests for coins and valuables
+- **Special Mechanic**: Progressive difficulty and rewards
+
+### ✅ Astrology
+- **Description**: Study celestial bodies and constellations to unlock cosmic powers
+- **Special Mechanic**: Unique cosmic materials
+
+### ✅ Skinning
+- **Description**: Skin animals to collect hides to use in crafting
+- **Training Methods**:
+  - Level 1: Rabbit (10 XP, 3s) → rabbit_hide
+  - Level 5: Cow (20 XP, 3.5s) → cowhide
+  - Level 20: Snake (50 XP, 4.5s) → snake_skin
+  - Level 40: Lion (90 XP, 5.8s) → lion_hide
+  - Level 55: Blue Dragon (120 XP, 6.5s) → blue_dragonhide
+  - Level 90: Phoenix (225 XP, 9.5s) → phoenix_feather
+- **Special Mechanic**: No consumed items, produces raw materials for future Crafting
+- **Total Methods**: 20 different animals to skin
+
 ---
 
 ## Planned Skills
-
-### 🔨 Mining
-- **Description**: Extract ores and gems from rocks
-- **Training Methods**:
-  - Level 1: Copper Ore (17.5 XP, 2.5s)
-  - Level 1: Tin Ore (17.5 XP, 2.5s)
-  - Level 15: Iron Ore (35 XP, 3s)
-  - Level 20: Silver Ore (40 XP, 4s)
-  - Level 30: Coal (50 XP, 3.5s)
-  - Level 40: Gold Ore (65 XP, 4s)
-  - Level 55: Mithril Ore (80 XP, 5s)
-  - Level 70: Adamantite Ore (95 XP, 6s)
-  - Level 85: Runite Ore (125 XP, 8s)
-- **Special**: Random gem drops while mining
-
-### ⚒️ Smithing
-- **Description**: Smelt ores into bars and forge equipment
-- **Training Methods**:
-  - Level 1: Bronze Bar (6.25 XP, 2s) - requires 1 copper + 1 tin
-  - Level 15: Iron Bar (12.5 XP, 3s) - 50% success rate
-  - Level 20: Silver Bar (13.75 XP, 3s)
-  - Level 30: Steel Bar (17.5 XP, 4s) - requires iron + 2 coal
-  - Level 40: Gold Bar (22.5 XP, 3s)
-  - Level 50: Mithril Bar (30 XP, 5s)
-  - Level 70: Adamantite Bar (37.5 XP, 6s)
-  - Level 85: Runite Bar (50 XP, 7s)
-- **Equipment Forging**: Create weapons and armor for Combat
 
 ### ⚔️ Combat
 - **Description**: Fight monsters for loot and XP
@@ -109,19 +122,6 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 35-99: Hardwood Trees
 - **Special Mechanic**: Real-time growth with offline progress
 
-### 🧪 Herblore
-- **Description**: Create potions from herbs and secondary ingredients
-- **Training Methods**:
-  - Level 1: Attack Potion
-  - Level 12: Antipoison
-  - Level 26: Energy Potion
-  - Level 38: Prayer Potion
-  - Level 45: Super Attack/Strength/Defence
-  - Level 66: Saradomin Brew
-  - Level 78: Antifire
-  - Level 90: Overload
-- **Requires**: Herbs from Farming, secondaries from various skills
-
 ### 🔮 Runecraft
 - **Description**: Create runes for Magic combat
 - **Training Methods**:
@@ -138,31 +138,6 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 77: Death Runes
   - Level 91: Wrath Runes
 
-### 🏹 Fletching
-- **Description**: Create bows, arrows, and bolts
-- **Training Methods**:
-  - Level 1: Arrow shafts, Bronze arrows
-  - Level 5: Shortbows
-  - Level 10: Longbows
-  - Level 20: Oak bows
-  - Level 35: Willow bows
-  - Level 50: Maple bows
-  - Level 65: Yew bows
-  - Level 80: Magic bows
-- **Requires**: Logs from Woodcutting
-
-### 🔥 Firemaking
-- **Description**: Burn logs for XP and unlock special fires
-- **Training Methods**:
-  - Level 1: Normal Logs (40 XP)
-  - Level 15: Oak Logs (60 XP)
-  - Level 30: Willow Logs (90 XP)
-  - Level 45: Maple Logs (135 XP)
-  - Level 60: Yew Logs (202.5 XP)
-  - Level 75: Magic Logs (303.8 XP)
-  - Level 90: Redwood Logs (350 XP)
-- **Special**: Wintertodt minigame-style activity
-
 ### 🪄 Magic
 - **Description**: Cast spells for combat and utility
 - **Training Methods**:
@@ -171,18 +146,6 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Enchanting - Imbue jewelry with effects
   - Teleportation - Unlock fast travel
 - **Requires**: Runes from Runecraft
-
-### ⛏️ Thieving
-- **Description**: Pickpocket NPCs and unlock chests
-- **Training Methods**:
-  - Level 1: Man/Woman (8 XP)
-  - Level 5: Farmer (14.5 XP)
-  - Level 25: Warrior (26 XP)
-  - Level 40: Guard (46.8 XP)
-  - Level 55: Knight (84.3 XP)
-  - Level 70: Paladin (151.7 XP)
-  - Level 82: Hero (273.3 XP)
-  - Level 91: Elf (353.3 XP)
 
 ### 🏃 Agility
 - **Description**: Complete obstacle courses for XP and unlocks

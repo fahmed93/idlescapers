@@ -197,6 +197,17 @@ func _load_skills() -> void:
 	skill_xp["astrology"] = 0.0
 	skill_levels["astrology"] = 1
 	
+	# Create Skinning skill
+	var skinning := SkillData.new()
+	skinning.id = "skinning"
+	skinning.name = "Skinning"
+	skinning.description = "Skin animals to collect hides to use in crafting."
+	skinning.color = Color(0.7, 0.5, 0.3)
+	skinning.training_methods = preload("res://autoload/skills/skinning_skill.gd").create_methods()
+	skills["skinning"] = skinning
+	skill_xp["skinning"] = 0.0
+	skill_levels["skinning"] = 1
+  
 	# Create Foraging skill
 	var foraging := SkillData.new()
 	foraging.id = "foraging"

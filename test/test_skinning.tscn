@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkvjq8y3q8y0k"]
+
+[ext_resource type="Script" path="res://test/test_skinning.gd" id="1_w2k8n"]
+
+[node name="TestSkinning" type="Node"]
+script = ExtResource("1_w2k8n")
