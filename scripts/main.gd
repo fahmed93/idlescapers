@@ -343,12 +343,10 @@ func _create_store_ui() -> void:
 	store_items_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(store_items_list)
 	
-	# Add to main content (after inventory panel)
+	# Add to main content (store panel will be positioned after inventory panel)
 	main_content.add_child(store_panel)
-	# Move after inventory panel if it exists in the tree
-	var inventory_index := inventory_panel.get_index()
-	if inventory_index >= 0:
-		main_content.move_child(store_panel, inventory_index + 1)
+	# Note: inventory_panel is a @onready var, so it's guaranteed to be in tree at this point
+	main_content.move_child(store_panel, inventory_panel.get_index() + 1)
 
 ## Create Store button
 func _create_store_button() -> void:
@@ -388,7 +386,7 @@ func _populate_store_items() -> void:
 	
 	# Clear existing items
 	for child in store_items_list.get_children():
-		child.free()
+		child.queue_free()
 	
 	var items := Inventory.get_all_items()
 	if items.is_empty():
