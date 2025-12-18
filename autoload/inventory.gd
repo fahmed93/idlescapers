@@ -119,6 +119,12 @@ func _load_items() -> void:
 	_add_item("adamantite_ore", "Adamantite Ore", "A greenish ore.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("runite_ore", "Runite Ore", "A rare cyan ore.", ItemData.ItemType.RAW_MATERIAL, 500)
 	
+	# Gems
+	_add_item("sapphire", "Sapphire", "A brilliant blue gem.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("emerald", "Emerald", "A lustrous green gem.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("ruby", "Ruby", "A precious red gem.", ItemData.ItemType.RAW_MATERIAL, 400)
+	_add_item("diamond", "Diamond", "A rare and valuable gem.", ItemData.ItemType.RAW_MATERIAL, 800)
+	
 	# Bars (smelted from ores)
 	_add_item("bronze_bar", "Bronze Bar", "A bar of bronze metal.", ItemData.ItemType.PROCESSED, 15)
 	_add_item("iron_bar", "Iron Bar", "A bar of iron metal.", ItemData.ItemType.PROCESSED, 30)

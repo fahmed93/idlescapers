@@ -311,6 +311,13 @@ func _complete_action(method: TrainingMethodData) -> void:
 			var amount: int = method.produced_items[item_id]
 			Inventory.add_item(item_id, amount)
 	
+	# Check for bonus items (independent random roll for each)
+	if not method.bonus_items.is_empty():
+		for item_id in method.bonus_items:
+			var chance: float = method.bonus_items[item_id]
+			if randf() <= chance:
+				Inventory.add_item(item_id, 1)
+	
 	action_completed.emit(current_skill_id, method.id, success)
 
 ## Get total XP across all skills

@@ -14,6 +14,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	copper.xp_per_action = 17.5
 	copper.action_time = 2.5
 	copper.produced_items = {"copper_ore": 1}
+	copper.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(copper)
 	
 	var tin := TrainingMethodData.new()
@@ -24,6 +25,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	tin.xp_per_action = 17.5
 	tin.action_time = 2.5
 	tin.produced_items = {"tin_ore": 1}
+	tin.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(tin)
 	
 	var iron := TrainingMethodData.new()
@@ -34,6 +36,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron.xp_per_action = 35.0
 	iron.action_time = 3.0
 	iron.produced_items = {"iron_ore": 1}
+	iron.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(iron)
 	
 	var silver := TrainingMethodData.new()
@@ -44,6 +47,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	silver.xp_per_action = 40.0
 	silver.action_time = 4.0
 	silver.produced_items = {"silver_ore": 1}
+	silver.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(silver)
 	
 	var coal_ore := TrainingMethodData.new()
@@ -54,6 +58,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	coal_ore.xp_per_action = 50.0
 	coal_ore.action_time = 3.5
 	coal_ore.produced_items = {"coal": 1}
+	coal_ore.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(coal_ore)
 	
 	var gold := TrainingMethodData.new()
@@ -64,6 +69,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	gold.xp_per_action = 65.0
 	gold.action_time = 4.0
 	gold.produced_items = {"gold_ore": 1}
+	gold.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(gold)
 	
 	var mithril := TrainingMethodData.new()
@@ -74,6 +80,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril.xp_per_action = 80.0
 	mithril.action_time = 5.0
 	mithril.produced_items = {"mithril_ore": 1}
+	mithril.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(mithril)
 	
 	var adamantite := TrainingMethodData.new()
@@ -84,6 +91,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite.xp_per_action = 95.0
 	adamantite.action_time = 6.0
 	adamantite.produced_items = {"adamantite_ore": 1}
+	adamantite.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(adamantite)
 	
 	var runite := TrainingMethodData.new()
@@ -94,6 +102,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite.xp_per_action = 125.0
 	runite.action_time = 8.0
 	runite.produced_items = {"runite_ore": 1}
+	runite.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(runite)
 	
 	return methods
