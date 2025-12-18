@@ -500,10 +500,10 @@ func _create_toast_container() -> void:
 	toast_container.z_index = 200  # Ensure it's on top of everything
 	toast_container.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Allow clicks to pass through
 	
-	# Position at bottom center of screen
+	# Position at bottom center of screen, closer to the bottom
 	toast_container.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_WIDE)
-	toast_container.offset_top = -300  # Above the bottom
-	toast_container.offset_bottom = -60  # Some padding from the bottom
+	toast_container.offset_top = -400  # Above the bottom
+	toast_container.offset_bottom = -20  # Closer padding from the bottom
 	
 	add_child(toast_container)
 
@@ -516,12 +516,16 @@ func _show_toast_notification(skill_id: String, xp_gained: float, items_gained: 
 	var toast: PanelContainer = ToastNotificationScene.instantiate()
 	toast_container.add_child(toast)
 	
+	# Move the new toast to the top (index 0) so it appears above older toasts
+	toast_container.move_child(toast, 0)
+	
 	# Show the action completion
 	toast.show_action_completion(skill_id, xp_gained, items_gained)
 	
 	# Remove old toasts if there are too many (keep max 3)
+	# Remove from the end since new toasts are now at the beginning
 	while toast_container.get_child_count() > 3:
-		var oldest_toast := toast_container.get_child(0)
+		var oldest_toast := toast_container.get_child(toast_container.get_child_count() - 1)
 		toast_container.remove_child(oldest_toast)
 		oldest_toast.queue_free()
 
