@@ -10,8 +10,8 @@ static func create_methods() -> Array[TrainingMethodData]:
 	# Level 1: Prospect Copper/Tin for Sapphires
 	var prospect_copper := TrainingMethodData.new()
 	prospect_copper.id = "prospect_copper"
-	prospect_copper.name = "Prospect Copper/Tin"
-	prospect_copper.description = "Prospect copper and tin ore to find sapphires."
+	prospect_copper.name = "Prospect Bronze Ore"
+	prospect_copper.description = "Prospect copper and tin ore together to find sapphires."
 	prospect_copper.level_required = 1
 	prospect_copper.xp_per_action = 10.0
 	prospect_copper.action_time = 3.0
