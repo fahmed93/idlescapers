@@ -49,7 +49,20 @@ jobs:
       - name: Build HTML5 export
         run: |
           mkdir -p build/web
-          godot --headless --export-release "${{ env.EXPORT_PRESET_NAME }}" build/web/index.html
+          echo "Exporting project to HTML5..."
+          if ! godot --headless --export-release "${{ env.EXPORT_PRESET_NAME }}" build/web/index.html; then
+            echo "Error: Export failed with exit code $?"
+            exit 1
+          fi
+          echo "Export completed successfully"
+          
+      - name: Verify export
+        run: |
+          if [ ! -f "build/web/index.html" ]; then
+            echo "Error: index.html not found in build output"
+            exit 1
+          fi
+          echo "Build verification passed"
 
       - name: Add .nojekyll file
         run: |
