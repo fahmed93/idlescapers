@@ -43,7 +43,10 @@ jobs:
           wget -q "https://github.com/godotengine/godot/releases/download/${TEMPLATE_VERSION}-stable/Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to download export templates"; exit 1; }
           unzip -q "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to extract export templates"; exit 1; }
           if [ -d templates ]; then
+            # Move all files including hidden ones
+            shopt -s dotglob
             mv templates/* . || { echo "Error: Failed to move template files"; exit 1; }
+            shopt -u dotglob
             rm -rf templates
           fi
           rm "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz"
