@@ -78,15 +78,19 @@ func _run_tests() -> void:
 	# Test 7: Verify skill buttons also exist
 	print("Test 7: Verify skill buttons exist")
 	var skill_button_count := 0
+	var total_button_count := 0
 	for child in sidebar.get_children():
 		if child is Button:
+			total_button_count += 1
 			var text := child.text
-			# Skill buttons have format like "Fishing\nLv. 1"
-			if "\n" in text and text not in ["Equipment", "Inventory", "Upgrades"]:
+			# Special buttons have single-word text without newlines
+			# Skill buttons have format like "Fishing\nLv. 1" (multiline with level)
+			if text not in ["Equipment", "Inventory", "Upgrades"]:
 				skill_button_count += 1
 	
-	print("  Found %d skill buttons" % skill_button_count)
+	print("  Found %d total buttons (%d skill + 3 special)" % [total_button_count, skill_button_count])
 	assert(skill_button_count > 0, "Should have at least one skill button")
+	assert(total_button_count == skill_button_count + 3, "Total buttons should equal skill buttons + 3 special buttons")
 	print("  ✓ Skill buttons are present alongside special buttons\n")
 	
 	print("=== All Sidebar Button Tests Passed! ===\n")
