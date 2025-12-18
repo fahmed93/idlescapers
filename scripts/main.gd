@@ -10,6 +10,7 @@ const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
+@onready var change_character_button: Button = $ChangeCharacterButton
 @onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContent/SelectedSkillHeader
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
 @onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
@@ -79,6 +80,7 @@ func _setup_signals() -> void:
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
 	menu_button.pressed.connect(_on_sidebar_toggle_pressed)
+	change_character_button.pressed.connect(_on_change_character_pressed)
 
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
@@ -815,3 +817,21 @@ func _set_sidebar_collapsed(collapsed: bool) -> void:
 		menu_button.text = "☰"
 	else:
 		menu_button.text = "✕"
+
+## Handle change character button pressed
+func _on_change_character_pressed() -> void:
+	# Stop any active training
+	if GameManager.is_training:
+		GameManager.stop_training()
+	
+	# Save the current game state
+	SaveManager.save_game()
+	
+	# Disable auto-save while transitioning
+	SaveManager.auto_save_enabled = false
+	
+	# Reset current character slot
+	CharacterManager.current_slot = -1
+	
+	# Change back to startup scene
+	get_tree().change_scene_to_file("res://scenes/startup.tscn")
