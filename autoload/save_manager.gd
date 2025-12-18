@@ -18,10 +18,8 @@ var last_save_time: int = 0
 
 func _ready() -> void:
 	# Load game on startup - DISABLED to start fresh every time
-	# call_deferred("_delayed_load")
-
-func _delayed_load() -> void:
-	load_game()
+	# Previously called load_game() here, but now intentionally skipped
+	# to ensure each game launch starts with a new character
 
 func _process(delta: float) -> void:
 	_auto_save_timer += delta
