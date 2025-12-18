@@ -467,11 +467,13 @@ func _show_skill_view() -> void:
 		upgrades_panel.visible = false
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
-	inventory_panel.visible = true
+	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
+	inventory_panel.visible = false
 
 ## Hide skill view
 func _hide_skill_view() -> void:
-	inventory_panel.visible = false
+	# Nothing to hide - inventory panel is already hidden
+	pass
 
 ## Show store view
 func _show_store_view() -> void:
