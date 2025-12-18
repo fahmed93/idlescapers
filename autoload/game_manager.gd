@@ -142,6 +142,17 @@ func _load_skills() -> void:
 	skill_xp["firemaking"] = 0.0
 	skill_levels["firemaking"] = 1
 	
+	# Create Thieving skill
+	var thieving := SkillData.new()
+	thieving.id = "thieving"
+	thieving.name = "Thieving"
+	thieving.description = "Pickpocket NPCs and unlock chests for coins and valuables."
+	thieving.color = Color(0.6, 0.3, 0.7)
+	thieving.training_methods = preload("res://autoload/skills/thieving_skill.gd").create_methods()
+	skills["thieving"] = thieving
+	skill_xp["thieving"] = 0.0
+	skill_levels["thieving"] = 1
+	
 	# Create Astrology skill
 	var astrology := SkillData.new()
 	astrology.id = "astrology"

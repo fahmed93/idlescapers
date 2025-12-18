@@ -122,6 +122,9 @@ func _load_items() -> void:
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
 	
+	# Thieving rewards
+	_add_item("coins", "Coins", "Currency obtained from pickpocketing.", ItemData.ItemType.PROCESSED, 1)
+	
 	# Astrology materials
 	_add_item("stardust", "Stardust", "Shimmering dust from the cosmos.", ItemData.ItemType.RAW_MATERIAL, 10)
 	_add_item("celestial_essence", "Celestial Essence", "Pure essence of celestial bodies.", ItemData.ItemType.PROCESSED, 50)
