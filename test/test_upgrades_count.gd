@@ -21,7 +21,8 @@ func _ready() -> void:
 		var count := upgrades.size()
 		var status := "✓" if (count >= 5 and count <= 8) else "✗"
 		
-		print("%s %s: %d upgrades" % [status, skill_id.capitalize().pad_to_width(15), count])
+		var skill_name := skill_id.capitalize().rpad(15)
+		print("%s %s: %d upgrades" % [status, skill_name, count])
 		
 		if count < 5:
 			push_error("%s has too few upgrades: %d (minimum is 5)" % [skill_id, count])
