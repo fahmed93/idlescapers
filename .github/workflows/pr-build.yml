@@ -59,10 +59,16 @@ jobs:
           set -e
           if [ $EXIT_CODE -ne 0 ]; then
             echo "Warning: Godot import exited with code $EXIT_CODE. This is often normal during initial import or when assets are already cached."
-            echo "Proceeding with export step..."
+            echo "Proceeding with tests..."
           else
             echo "Import completed successfully"
           fi
+
+      - name: Run tests
+        run: |
+          echo "Running Godot tests..."
+          chmod +x run_tests.sh
+          ./run_tests.sh
 
       - name: Build HTML5 export
         run: |
