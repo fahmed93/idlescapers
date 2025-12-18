@@ -49,6 +49,30 @@ func _load_items() -> void:
 	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Fletching materials
+	_add_item("arrow_shafts", "Arrow Shafts", "Wooden shafts for arrows.", ItemData.ItemType.PROCESSED, 1)
+	_add_item("feather", "Feather", "A feather for fletching arrows.", ItemData.ItemType.RAW_MATERIAL, 2)
+	_add_item("bowstring", "Bowstring", "String for stringing bows.", ItemData.ItemType.PROCESSED, 10)
+	_add_item("bronze_arrowhead", "Bronze Arrowhead", "A bronze arrowhead.", ItemData.ItemType.PROCESSED, 3)
+	
+	# Bows
+	_add_item("shortbow", "Shortbow", "A basic shortbow.", ItemData.ItemType.TOOL, 50)
+	_add_item("longbow", "Longbow", "A basic longbow.", ItemData.ItemType.TOOL, 100)
+	_add_item("oak_shortbow", "Oak Shortbow", "A shortbow made of oak.", ItemData.ItemType.TOOL, 150)
+	_add_item("oak_longbow", "Oak Longbow", "A longbow made of oak.", ItemData.ItemType.TOOL, 200)
+	_add_item("willow_shortbow", "Willow Shortbow", "A shortbow made of willow.", ItemData.ItemType.TOOL, 300)
+	_add_item("willow_longbow", "Willow Longbow", "A longbow made of willow.", ItemData.ItemType.TOOL, 400)
+	_add_item("maple_shortbow", "Maple Shortbow", "A shortbow made of maple.", ItemData.ItemType.TOOL, 600)
+	_add_item("maple_longbow", "Maple Longbow", "A longbow made of maple.", ItemData.ItemType.TOOL, 800)
+	_add_item("yew_shortbow", "Yew Shortbow", "A shortbow made of yew.", ItemData.ItemType.TOOL, 1200)
+	_add_item("yew_longbow", "Yew Longbow", "A longbow made of yew.", ItemData.ItemType.TOOL, 1600)
+	_add_item("magic_shortbow", "Magic Shortbow", "A magical shortbow.", ItemData.ItemType.TOOL, 2500)
+	_add_item("magic_longbow", "Magic Longbow", "A magical longbow.", ItemData.ItemType.TOOL, 3500)
+	
+	# Arrows
+	_add_item("headless_arrow", "Headless Arrow", "An arrow without an arrowhead.", ItemData.ItemType.PROCESSED, 2)
+	_add_item("bronze_arrow", "Bronze Arrow", "An arrow with a bronze tip.", ItemData.ItemType.PROCESSED, 5)
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
