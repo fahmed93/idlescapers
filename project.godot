@@ -24,6 +24,7 @@ Inventory="*res://autoload/inventory.gd"
 SaveManager="*res://autoload/save_manager.gd"
 Store="*res://autoload/store.gd"
 UpgradeShop="*res://autoload/upgrade_shop.gd"
+Equipment="*res://autoload/equipment.gd"
 
 [display]
 
