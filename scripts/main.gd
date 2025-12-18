@@ -270,7 +270,7 @@ func _on_inventory_updated() -> void:
 		var count: int = items[item_id]
 		
 		var item_panel := PanelContainer.new()
-		item_panel.custom_minimum_size = Vector2(100, 60)
+		item_panel.custom_minimum_size = Vector2(100, 100)
 		
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -287,6 +287,21 @@ func _on_inventory_updated() -> void:
 		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		count_label.add_theme_font_size_override("font_size", 14)
 		vbox.add_child(count_label)
+		
+		# Add sell buttons
+		var sell_one_button := Button.new()
+		sell_one_button.text = "Sell 1"
+		sell_one_button.custom_minimum_size = Vector2(80, 20)
+		sell_one_button.add_theme_font_size_override("font_size", 9)
+		sell_one_button.pressed.connect(_on_sell_from_inventory.bind(item_id, 1))
+		vbox.add_child(sell_one_button)
+		
+		var sell_all_button := Button.new()
+		sell_all_button.text = "Sell All"
+		sell_all_button.custom_minimum_size = Vector2(80, 20)
+		sell_all_button.add_theme_font_size_override("font_size", 9)
+		sell_all_button.pressed.connect(_on_sell_all_from_inventory.bind(item_id))
+		vbox.add_child(sell_all_button)
 		
 		inventory_list.add_child(item_panel)
 
@@ -480,6 +495,17 @@ func _on_sell_all_item(item_id: String) -> void:
 	var count := Inventory.get_item_count(item_id)
 	if count > 0 and Store.sell_item(item_id, count):
 		_populate_store_items()
+
+## Handle selling items from inventory panel
+func _on_sell_from_inventory(item_id: String, amount: int) -> void:
+	if amount > 0 and Store.sell_item(item_id, amount):
+		_on_inventory_updated()
+
+## Handle selling all of an item from inventory panel
+func _on_sell_all_from_inventory(item_id: String) -> void:
+	var count := Inventory.get_item_count(item_id)
+	if count > 0 and Store.sell_item(item_id, count):
+		_on_inventory_updated()
 
 ## Update gold display when gold changes
 func _on_gold_changed(new_amount: int) -> void:
