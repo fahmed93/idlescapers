@@ -175,6 +175,17 @@ func _load_skills() -> void:
 	skill_xp["thieving"] = 0.0
 	skill_levels["thieving"] = 1
 	
+	# Create Agility skill
+	var agility := SkillData.new()
+	agility.id = "agility"
+	agility.name = "Agility"
+	agility.description = "Complete obstacle courses for XP and unlocks."
+	agility.color = Color(0.0, 0.8, 1.0)
+	agility.training_methods = preload("res://autoload/skills/agility_skill.gd").create_methods()
+	skills["agility"] = agility
+	skill_xp["agility"] = 0.0
+	skill_levels["agility"] = 1
+	
 	# Create Astrology skill
 	var astrology := SkillData.new()
 	astrology.id = "astrology"
