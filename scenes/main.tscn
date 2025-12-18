@@ -46,6 +46,11 @@ horizontal_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 
+[node name="SidebarToggleButton" type="Button" parent="HSplitContainer/MainContent"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "☰ Skills"
+
 [node name="SelectedSkillHeader" type="VBoxContainer" parent="HSplitContainer/MainContent"]
 layout_mode = 2
 
@@ -115,12 +120,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="InventoryLabel" type="Label" parent="HSplitContainer/MainContent"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Inventory"
 horizontal_alignment = 1
 
 [node name="InventoryPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+visible = false
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
