@@ -15,6 +15,7 @@ const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 @onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
 @onready var skill_xp_bar: ProgressBar = $HSplitContainer/MainContent/SelectedSkillHeader/XPProgressBar
 @onready var skill_xp_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/XPLabel
+@onready var skill_speed_bonus_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SpeedBonusLabel
 @onready var action_list_label: Label = $HSplitContainer/MainContent/ActionListLabel
 @onready var action_list_panel: PanelContainer = $HSplitContainer/MainContent/ActionList
 @onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
@@ -136,6 +137,14 @@ func _update_skill_display() -> void:
 		skill_xp_label.text = "MAX LEVEL - %.0f XP" % xp
 	else:
 		skill_xp_label.text = "%.0f / %.0f XP" % [xp - current_level_xp, next_level_xp - current_level_xp]
+	
+	# Show speed bonus from upgrades
+	var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
+	if speed_modifier > 0:
+		skill_speed_bonus_label.text = "+%.0f%% Speed Bonus" % (speed_modifier * 100)
+		skill_speed_bonus_label.visible = true
+	else:
+		skill_speed_bonus_label.visible = false
 
 func _populate_action_list() -> void:
 	# Clear existing action buttons
@@ -175,15 +184,6 @@ func _populate_action_list() -> void:
 		stats_label.add_theme_font_size_override("font_size", 12)
 		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		info_vbox.add_child(stats_label)
-		
-		# Show speed bonus from upgrades
-		var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
-		if speed_modifier > 0:
-			var bonus_label := Label.new()
-			bonus_label.text = "+%.0f%% Speed Bonus" % (speed_modifier * 100)
-			bonus_label.add_theme_font_size_override("font_size", 11)
-			bonus_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
-			info_vbox.add_child(bonus_label)
 		
 		# Show required/produced items
 		var items_text := ""
@@ -716,8 +716,9 @@ func _on_upgrade_purchased(upgrade_id: String) -> void:
 	var upgrade: UpgradeData = UpgradeShop.upgrades.get(upgrade_id)
 	if upgrade:
 		print("[Main] Purchased upgrade: %s for %s" % [upgrade.name, upgrade.skill_id])
-		# Refresh action list if viewing the skill that was upgraded
+		# Refresh skill display and action list if viewing the skill that was upgraded
 		if selected_skill_id == upgrade.skill_id:
+			_update_skill_display()
 			_populate_action_list()
 
 ## Handle upgrades updated signal
