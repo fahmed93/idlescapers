@@ -718,7 +718,6 @@ func _populate_equipment_slots() -> void:
 	# Define slot size and base center position
 	const SLOT_SIZE := Vector2(100, 80)
 	const CENTER_X := 275.0  # Center of available width (approx 550 / 2)
-	const SPACING_Y := 90.0  # Vertical spacing between rows
 	const SPACING_X := 120.0  # Horizontal spacing for side items
 	
 	# Define slot positions in human shape
