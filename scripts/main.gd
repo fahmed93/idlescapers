@@ -163,6 +163,15 @@ func _populate_action_list() -> void:
 		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		info_vbox.add_child(stats_label)
 		
+		# Show speed bonus from upgrades
+		var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
+		if speed_modifier > 0:
+			var bonus_label := Label.new()
+			bonus_label.text = "+%.0f%% Speed Bonus" % (speed_modifier * 100)
+			bonus_label.add_theme_font_size_override("font_size", 11)
+			bonus_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
+			info_vbox.add_child(bonus_label)
+		
 		# Show required/produced items
 		var items_text := ""
 		if not method.consumed_items.is_empty():
