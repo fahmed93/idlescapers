@@ -82,6 +82,23 @@ See [TODO.md](TODO.md) for planned skills and features including:
 - Crafting, Farming, Herblore
 - And many more!
 
+## Deployment
+
+This project is automatically deployed to GitHub Pages when changes are pushed to the main branch.
+
+**Live Demo**: [https://fahmed93.github.io/idlescapers](https://fahmed93.github.io/idlescapers)
+
+### Deployment Process
+- **Workflow**: `.github/workflows/deploy.yml`
+- **Trigger**: Automatically runs on push to `main` branch
+- **Build**: Uses Godot 4.5.0 to export HTML5 build
+- **Deploy**: Publishes to GitHub Pages
+
+### Manual Deployment Setup
+If deploying for the first time, ensure GitHub Pages is enabled in the repository settings:
+1. Go to Settings > Pages
+2. Set Source to "GitHub Actions"
+
 ## License
 
 This project is open source. See the license file for details.
