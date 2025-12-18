@@ -56,6 +56,7 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 │   └── main.tscn          # Main game scene
 ├── scripts/
 │   └── main.gd            # Main scene controller
+├── test/                  # Test scripts and scenes
 ├── docs/                  # Documentation
 │   ├── README.md          # This file
 │   ├── TODO.md            # Future development plans
