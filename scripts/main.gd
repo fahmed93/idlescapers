@@ -429,9 +429,7 @@ func _show_inventory_view() -> void:
 		inventory_panel_view.visible = true
 	
 	# Hide skill-related UI elements
-	selected_skill_header.visible = false
-	action_list_label.visible = false
-	action_list_panel.visible = false
+	_hide_skill_ui()
 
 ## Create Store UI
 func _create_store_ui() -> void:
@@ -504,14 +502,24 @@ func _show_skill_view() -> void:
 	inventory_panel.visible = false
 	
 	# Show skill-related UI elements
-	selected_skill_header.visible = true
-	action_list_label.visible = true
-	action_list_panel.visible = true
+	_show_skill_ui()
 
 ## Hide skill view
 func _hide_skill_view() -> void:
 	# Nothing to hide - inventory panel is already hidden
 	pass
+
+## Helper function to hide skill-related UI elements
+func _hide_skill_ui() -> void:
+	selected_skill_header.visible = false
+	action_list_label.visible = false
+	action_list_panel.visible = false
+
+## Helper function to show skill-related UI elements
+func _show_skill_ui() -> void:
+	selected_skill_header.visible = true
+	action_list_label.visible = true
+	action_list_panel.visible = true
 
 ## Show store view
 func _show_store_view() -> void:
@@ -525,9 +533,7 @@ func _show_store_view() -> void:
 		store_panel.visible = true
 	
 	# Hide skill-related UI elements
-	selected_skill_header.visible = false
-	action_list_label.visible = false
-	action_list_panel.visible = false
+	_hide_skill_ui()
 
 ## Populate store items list
 func _populate_store_items() -> void:
@@ -709,9 +715,7 @@ func _show_upgrades_view() -> void:
 		upgrades_panel.visible = true
 	
 	# Hide skill-related UI elements
-	selected_skill_header.visible = false
-	action_list_label.visible = false
-	action_list_panel.visible = false
+	_hide_skill_ui()
 
 ## Populate upgrades list
 func _populate_upgrades_list() -> void:
