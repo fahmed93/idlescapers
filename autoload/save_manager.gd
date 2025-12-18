@@ -40,6 +40,7 @@ func save_game() -> void:
 		"current_skill_id": GameManager.current_skill_id,
 		"current_method_id": GameManager.current_method_id,
 		"is_training": GameManager.is_training,
+		"gold": Store.gold,
 	}
 	
 	var file := FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -86,6 +87,10 @@ func load_game() -> void:
 		Inventory.inventory.clear()
 		for item_id in save_data["inventory"]:
 			Inventory.inventory[item_id] = int(save_data["inventory"][item_id])
+	
+	# Restore gold
+	if save_data.has("gold"):
+		Store.gold = int(save_data["gold"])
 	
 	# Calculate offline progress
 	if save_data.has("timestamp"):
