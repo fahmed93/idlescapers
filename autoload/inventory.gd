@@ -132,7 +132,6 @@ func _load_items() -> void:
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
 	
-<<<<<<< HEAD
 	# Herbs (grimy/clean)
 	_add_item("guam_leaf", "Guam Leaf", "A basic herb used in Attack potions.", ItemData.ItemType.RAW_MATERIAL, 8)
 	_add_item("marrentill", "Marrentill", "A herb used in Antipoison.", ItemData.ItemType.RAW_MATERIAL, 10)
@@ -181,7 +180,6 @@ func _load_items() -> void:
 	_add_item("magic_potion", "Magic Potion", "Boosts Magic level.", ItemData.ItemType.CONSUMABLE, 345)
 	_add_item("zamorak_brew", "Zamorak Brew", "A dark brew that boosts Attack and Strength.", ItemData.ItemType.CONSUMABLE, 350)
 	_add_item("overload", "Overload", "The ultimate combat potion.", ItemData.ItemType.CONSUMABLE, 2000)
-=======
 	# Thieving rewards
 	_add_item("coins", "Coins", "Currency obtained from pickpocketing.", ItemData.ItemType.PROCESSED, 1)
 	
@@ -190,7 +188,6 @@ func _load_items() -> void:
 	_add_item("celestial_essence", "Celestial Essence", "Pure essence of celestial bodies.", ItemData.ItemType.PROCESSED, 50)
 	_add_item("astral_shard", "Astral Shard", "A fragment of astral energy.", ItemData.ItemType.PROCESSED, 150)
 	_add_item("void_crystal", "Void Crystal", "A mysterious crystal from the void.", ItemData.ItemType.PROCESSED, 1000)
->>>>>>> fc1eb21eece04a48ffb2ebd06217681f8647bcfb
 
 
 ## Helper to add item definition
