@@ -182,10 +182,10 @@ func _migrate_old_save_if_exists() -> void:
 		print("[CharacterManager] Found old save file. Migrating to slot 0...")
 		
 		# Read old save to get actual total level and XP
-		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
 		var total_level := GameManager.skills.size()  # Default to initial level
 		var total_xp := 0.0
 		
+		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
 		if old_file:
 			var json_string := old_file.get_as_text()
 			old_file.close()
@@ -205,34 +205,40 @@ func _migrate_old_save_if_exists() -> void:
 					total_xp = 0.0
 					for skill_id in save_data["skill_xp"]:
 						total_xp += save_data["skill_xp"][skill_id]
-		
-		# Create a character in slot 0
-		var now := int(Time.get_unix_time_from_system())
-		var character_data := {
-			"slot": 0,
-			"name": "Legacy Character",
-			"created_at": now,
-			"last_played": now,
-			"total_level": total_level,
-			"total_xp": total_xp
-		}
-		
-		characters["0"] = character_data
-		save_characters()
-		
-		# Copy old save file to new slot 0 save file
-		var new_save_file := _get_save_file_path(0)
-		var copy_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
-		if copy_file:
-			var content := copy_file.get_as_text()
-			copy_file.close()
 			
-			var new_file := FileAccess.open(new_save_file, FileAccess.WRITE)
-			if new_file:
-				new_file.store_string(content)
-				new_file.close()
-				print("[CharacterManager] Successfully migrated old save to slot 0.")
+			# Create a character in slot 0
+			var now := int(Time.get_unix_time_from_system())
+			var character_data := {
+				"slot": 0,
+				"name": "Legacy Character",
+				"created_at": now,
+				"last_played": now,
+				"total_level": total_level,
+				"total_xp": total_xp
+			}
+			
+			characters["0"] = character_data
+			save_characters()
+			
+			# Copy old save file to new slot 0 save file
+			var new_save_file := _get_save_file_path(0)
+			var copy_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
+			if copy_file:
+				var content := copy_file.get_as_text()
+				copy_file.close()
 				
-				# Delete old save file
-				DirAccess.remove_absolute(OLD_SAVE_FILE)
-				print("[CharacterManager] Removed old save file.")
+				var new_file := FileAccess.open(new_save_file, FileAccess.WRITE)
+				if new_file:
+					new_file.store_string(content)
+					new_file.close()
+					print("[CharacterManager] Successfully migrated old save to slot 0.")
+					
+					# Only delete old save file after successful migration
+					DirAccess.remove_absolute(OLD_SAVE_FILE)
+					print("[CharacterManager] Removed old save file.")
+				else:
+					print("[CharacterManager] Warning: Failed to create new save file during migration.")
+			else:
+				print("[CharacterManager] Warning: Failed to read old save file during copy.")
+		else:
+			print("[CharacterManager] Warning: Could not open old save file for migration.")

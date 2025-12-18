@@ -16,6 +16,7 @@ var selected_slot: int = -1
 var slot_buttons: Array[Button] = []
 
 ## Helper function to format timestamp
+## Returns "Unknown" for zero timestamps, otherwise returns datetime string
 func _format_timestamp(timestamp: int) -> String:
 	if timestamp == 0:
 		return "Unknown"
@@ -135,6 +136,11 @@ func _on_create_confirmed() -> void:
 	
 	if character_name.is_empty():
 		print("[Startup] Character name cannot be empty.")
+		return
+	
+	# Enforce 20-character limit
+	if character_name.length() > 20:
+		print("[Startup] Character name too long (max 20 characters).")
 		return
 	
 	if CharacterManager.create_character(selected_slot, character_name):
