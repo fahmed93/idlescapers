@@ -110,6 +110,26 @@ If deploying for the first time, ensure GitHub Pages is enabled in the repositor
 1. Go to Settings > Pages
 2. Set Source to "GitHub Actions"
 
+## Testing
+
+The project includes automated tests for all major game systems. Tests run automatically on pull requests.
+
+### Running Tests Locally
+```bash
+./run_tests.sh
+```
+
+Or run individual tests:
+```bash
+godot --headless --path . test/test_<name>.tscn
+```
+
+### CI/CD Testing
+- **Workflow**: `.github/workflows/pr-build.yml`
+- **Coverage**: 17 automated tests covering skills, inventory, character system, and more
+- **When**: Runs on all pull requests before building
+- See [docs/TESTING.md](TESTING.md) for detailed information
+
 ## License
 
 This project is open source. See the license file for details.
