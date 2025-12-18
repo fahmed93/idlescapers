@@ -22,6 +22,7 @@ GameManager="*res://autoload/game_manager.gd"
 Inventory="*res://autoload/inventory.gd"
 SaveManager="*res://autoload/save_manager.gd"
 Store="*res://autoload/store.gd"
+UpgradeShop="*res://autoload/upgrade_shop.gd"
 
 [display]
 

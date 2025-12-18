@@ -236,7 +236,11 @@ func _process(delta: float) -> void:
 				stop_training()
 				return
 	
-	training_progress += delta
+	# Apply speed modifier from upgrades
+	var speed_modifier := UpgradeShop.get_skill_speed_modifier(current_skill_id)
+	var modified_delta := delta * (1.0 + speed_modifier)
+	
+	training_progress += modified_delta
 	
 	if training_progress >= method.action_time:
 		training_progress -= method.action_time

@@ -23,15 +23,22 @@ var selected_skill_id: String = ""
 var skill_buttons: Dictionary = {}
 var action_buttons: Dictionary = {}
 var is_store_view: bool = false
+var is_upgrades_view: bool = false
 var store_button: Button = null
 var store_panel: PanelContainer = null
 var store_items_list: VBoxContainer = null
 var store_gold_label: Label = null
+var upgrades_button: Button = null
+var upgrades_panel: PanelContainer = null
+var upgrades_list: VBoxContainer = null
+var upgrades_gold_label: Label = null
 
 func _ready() -> void:
 	_setup_signals()
 	_create_store_ui()
 	_create_store_button()
+	_create_upgrades_ui()
+	_create_upgrades_button()
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
@@ -52,6 +59,8 @@ func _setup_signals() -> void:
 	Inventory.inventory_updated.connect(_on_inventory_updated)
 	Store.gold_changed.connect(_on_gold_changed)
 	Store.item_sold.connect(_on_item_sold)
+	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
+	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
 
 func _process(_delta: float) -> void:
@@ -85,6 +94,7 @@ func _populate_skill_sidebar() -> void:
 
 func _on_skill_selected(skill_id: String) -> void:
 	is_store_view = false
+	is_upgrades_view = false
 	selected_skill_id = skill_id
 	_show_skill_view()
 	_update_skill_display()
@@ -360,6 +370,7 @@ func _create_store_button() -> void:
 ## Show store view
 func _on_store_selected() -> void:
 	is_store_view = true
+	is_upgrades_view = false
 	_hide_skill_view()
 	_show_store_view()
 	_populate_store_items()
@@ -368,6 +379,8 @@ func _on_store_selected() -> void:
 func _show_skill_view() -> void:
 	if store_panel:
 		store_panel.visible = false
+	if upgrades_panel:
+		upgrades_panel.visible = false
 	inventory_panel.visible = true
 
 ## Hide skill view
@@ -470,8 +483,169 @@ func _on_gold_changed(new_amount: int) -> void:
 	# Update gold label in store panel
 	if store_gold_label:
 		store_gold_label.text = "Gold: %d" % new_amount
+	
+	# Update gold label in upgrades panel
+	if upgrades_gold_label:
+		upgrades_gold_label.text = "Gold: %d" % new_amount
 
 ## Handle item sold signal
 func _on_item_sold(item_id: String, amount: int, gold_earned: int) -> void:
 	print("[Main] Sold %d x %s for %d gold" % [amount, item_id, gold_earned])
+
+## Create Upgrades Shop UI
+func _create_upgrades_ui() -> void:
+	# Create upgrades panel (hidden by default)
+	upgrades_panel = PanelContainer.new()
+	upgrades_panel.name = "UpgradesPanel"
+	upgrades_panel.visible = false
+	upgrades_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var upgrades_vbox := VBoxContainer.new()
+	upgrades_panel.add_child(upgrades_vbox)
+	
+	# Upgrades header
+	var upgrades_header := Label.new()
+	upgrades_header.text = "Upgrades Shop"
+	upgrades_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	upgrades_header.add_theme_font_size_override("font_size", 20)
+	upgrades_header.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
+	upgrades_vbox.add_child(upgrades_header)
+	
+	upgrades_gold_label = Label.new()
+	upgrades_gold_label.text = "Gold: %d" % Store.get_gold()
+	upgrades_gold_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	upgrades_gold_label.add_theme_font_size_override("font_size", 16)
+	upgrades_vbox.add_child(upgrades_gold_label)
+	
+	# Upgrades list
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	upgrades_vbox.add_child(scroll)
+	
+	upgrades_list = VBoxContainer.new()
+	upgrades_list.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(upgrades_list)
+	
+	# Add to main content
+	main_content.add_child(upgrades_panel)
+	main_content.move_child(upgrades_panel, inventory_panel.get_index() + 1)
+
+## Create Upgrades button
+func _create_upgrades_button() -> void:
+	upgrades_button = Button.new()
+	upgrades_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	upgrades_button.text = "Upgrades"
+	upgrades_button.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
+	upgrades_button.pressed.connect(_on_upgrades_selected)
+	skill_sidebar.add_child(upgrades_button)
+
+## Show upgrades view
+func _on_upgrades_selected() -> void:
+	is_store_view = false
+	is_upgrades_view = true
+	_hide_skill_view()
+	_show_upgrades_view()
+	_populate_upgrades_list()
+
+## Show upgrades view
+func _show_upgrades_view() -> void:
+	if upgrades_panel:
+		upgrades_panel.visible = true
+
+## Populate upgrades list
+func _populate_upgrades_list() -> void:
+	if not upgrades_list:
+		return
+	
+	# Clear existing items
+	for child in upgrades_list.get_children():
+		child.queue_free()
+	
+	# Group upgrades by skill
+	for skill_id in GameManager.skills:
+		var skill: SkillData = GameManager.skills[skill_id]
+		var skill_upgrades := UpgradeShop.get_upgrades_for_skill(skill_id)
+		
+		if skill_upgrades.is_empty():
+			continue
+		
+		# Add skill header
+		var skill_header := Label.new()
+		skill_header.text = skill.name
+		skill_header.add_theme_font_size_override("font_size", 16)
+		skill_header.add_theme_color_override("font_color", skill.color)
+		upgrades_list.add_child(skill_header)
+		
+		# Add upgrades for this skill
+		for upgrade in skill_upgrades:
+			var upgrade_panel := PanelContainer.new()
+			upgrade_panel.custom_minimum_size = Vector2(0, 80)
+			
+			var hbox := HBoxContainer.new()
+			upgrade_panel.add_child(hbox)
+			
+			# Upgrade info
+			var info_vbox := VBoxContainer.new()
+			info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			hbox.add_child(info_vbox)
+			
+			var name_label := Label.new()
+			name_label.text = upgrade.name
+			var is_purchased := UpgradeShop.is_purchased(upgrade.id)
+			if is_purchased:
+				name_label.add_theme_color_override("font_color", Color(0.3, 0.8, 0.3))
+				name_label.text += " ✓"
+			elif GameManager.get_skill_level(skill_id) < upgrade.level_required:
+				name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+			info_vbox.add_child(name_label)
+			
+			var desc_label := Label.new()
+			desc_label.text = upgrade.description
+			desc_label.add_theme_font_size_override("font_size", 11)
+			desc_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+			info_vbox.add_child(desc_label)
+			
+			var stats_label := Label.new()
+			stats_label.text = upgrade.get_stats_text()
+			stats_label.add_theme_font_size_override("font_size", 12)
+			stats_label.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
+			info_vbox.add_child(stats_label)
+			
+			# Purchase button
+			var button := Button.new()
+			button.custom_minimum_size = Vector2(80, 40)
+			
+			if is_purchased:
+				button.text = "Owned"
+				button.disabled = true
+			elif GameManager.get_skill_level(skill_id) < upgrade.level_required:
+				button.text = "Lv %d" % upgrade.level_required
+				button.disabled = true
+			elif not Store.has_gold(upgrade.cost):
+				button.text = "Buy"
+				button.disabled = true
+			else:
+				button.text = "Buy"
+				button.pressed.connect(_on_purchase_upgrade.bind(upgrade.id))
+			
+			hbox.add_child(button)
+			upgrades_list.add_child(upgrade_panel)
+
+## Handle purchasing an upgrade
+func _on_purchase_upgrade(upgrade_id: String) -> void:
+	if UpgradeShop.purchase_upgrade(upgrade_id):
+		_populate_upgrades_list()
+
+## Handle upgrade purchased signal
+func _on_upgrade_purchased(upgrade_id: String) -> void:
+	var upgrade: UpgradeData = UpgradeShop.upgrades.get(upgrade_id)
+	if upgrade:
+		print("[Main] Purchased upgrade: %s for %s" % [upgrade.name, upgrade.skill_id])
+
+## Handle upgrades updated signal
+func _on_upgrades_updated() -> void:
+	if is_upgrades_view:
+		_populate_upgrades_list()
+
 
