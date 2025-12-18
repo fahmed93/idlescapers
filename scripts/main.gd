@@ -7,6 +7,16 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 
+# Equipment layout constants
+# Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
+# available width is ~560px, so center is approximately 280px from left edge of content area.
+const EQUIPMENT_SLOT_SIZE := Vector2(100, 80)
+const EQUIPMENT_CENTER_X := 280.0  # Center of content area
+const EQUIPMENT_SPACING_X := 120.0  # Horizontal spacing for side items
+const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from center
+const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
+const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
+
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
@@ -47,7 +57,7 @@ var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
 var equipment_button: Button = null
 var equipment_panel_view: PanelContainer = null
-var equipment_slots_container: VBoxContainer = null
+var equipment_slots_container: Control = null
 var is_sidebar_expanded: bool = false
 var item_detail_popup: PanelContainer = null
 var toast_container: VBoxContainer = null
@@ -660,13 +670,16 @@ func _create_equipment_ui() -> void:
 	equipment_header.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
 	equipment_vbox.add_child(equipment_header)
 	
-	# Equipment slots list
+	# Equipment slots container - using Control for positioned layout
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	equipment_vbox.add_child(scroll)
 	
-	equipment_slots_container = VBoxContainer.new()
+	# Use a Control node to allow absolute positioning of slots
+	# Height is designed to fit all 11 slots in human-shaped layout
+	equipment_slots_container = Control.new()
+	equipment_slots_container.custom_minimum_size = Vector2(0, 650)
 	equipment_slots_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(equipment_slots_container)
 	
@@ -706,70 +719,75 @@ func _show_equipment_view() -> void:
 	# Hide skill-related UI elements
 	_hide_skill_ui()
 
-## Populate equipment slots display
+## Populate equipment slots display with human-shaped layout
 func _populate_equipment_slots() -> void:
 	if not equipment_slots_container:
 		return
 	
-	# Clear existing slots
+	# Clear existing slots (this also disconnects all old signal connections)
 	for child in equipment_slots_container.get_children():
 		child.queue_free()
 	
-	# Define slot order for display
-	var slot_order := [
-		ItemData.EquipmentSlot.HELM,
-		ItemData.EquipmentSlot.NECKLACE,
-		ItemData.EquipmentSlot.CHEST,
-		ItemData.EquipmentSlot.GLOVES,
-		ItemData.EquipmentSlot.RING_1,
-		ItemData.EquipmentSlot.RING_2,
-		ItemData.EquipmentSlot.MAIN_HAND,
-		ItemData.EquipmentSlot.OFF_HAND,
-		ItemData.EquipmentSlot.LEGS,
-		ItemData.EquipmentSlot.ARROWS,
-		ItemData.EquipmentSlot.BOOTS,
-	]
+	# Define slot positions in human shape
+	# Positions are absolute coordinates within the container
+	var slot_positions := {
+		ItemData.EquipmentSlot.HELM: Vector2(EQUIPMENT_CENTER_X, 20),  # Top - head
+		ItemData.EquipmentSlot.NECKLACE: Vector2(EQUIPMENT_CENTER_X, 110),  # Below helm - neck
+		ItemData.EquipmentSlot.ARROWS: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_SPACING_X, 110),  # Right side of necklace
+		ItemData.EquipmentSlot.MAIN_HAND: Vector2(EQUIPMENT_CENTER_X - EQUIPMENT_SPACING_X, 200),  # Left side - main hand
+		ItemData.EquipmentSlot.CHEST: Vector2(EQUIPMENT_CENTER_X, 200),  # Center - body
+		ItemData.EquipmentSlot.OFF_HAND: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_SPACING_X, 200),  # Right side - off hand
+		ItemData.EquipmentSlot.GLOVES: Vector2(EQUIPMENT_CENTER_X, 290),  # Below chest - gloves
+		ItemData.EquipmentSlot.RING_1: Vector2(EQUIPMENT_CENTER_X - EQUIPMENT_RING_OFFSET, 380),  # Below gloves left - ring 1
+		ItemData.EquipmentSlot.RING_2: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_RING_OFFSET, 380),  # Below gloves right - ring 2
+		ItemData.EquipmentSlot.LEGS: Vector2(EQUIPMENT_CENTER_X, 470),  # Below rings - legs
+		ItemData.EquipmentSlot.BOOTS: Vector2(EQUIPMENT_CENTER_X, 560),  # Bottom - boots
+	}
 	
-	for slot in slot_order:
-		var slot_panel := PanelContainer.new()
-		slot_panel.custom_minimum_size = Vector2(0, 80)
+	# Create a slot panel for each equipment slot
+	# Note: Iteration order doesn't matter since we use absolute positioning
+	for slot in slot_positions:
+		var position: Vector2 = slot_positions[slot]
+		var slot_button := Button.new()
+		slot_button.custom_minimum_size = EQUIPMENT_SLOT_SIZE
+		slot_button.position = position - EQUIPMENT_SLOT_SIZE / 2  # Center the panel on position
 		
-		var hbox := HBoxContainer.new()
-		slot_panel.add_child(hbox)
-		
-		# Slot info
-		var info_vbox := VBoxContainer.new()
-		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.add_child(info_vbox)
+		# Create VBox for slot content
+		var vbox := VBoxContainer.new()
+		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot_button.add_child(vbox)
 		
 		var slot_name := _get_equipment_slot_name(slot)
 		var slot_label := Label.new()
 		slot_label.text = slot_name
-		slot_label.add_theme_font_size_override("font_size", 16)
+		slot_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		slot_label.add_theme_font_size_override("font_size", EQUIPMENT_SLOT_LABEL_FONT_SIZE)
 		slot_label.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
-		info_vbox.add_child(slot_label)
+		slot_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_child(slot_label)
 		
 		var equipped_item_id := Equipment.get_equipped_item(slot)
 		var equipped_label := Label.new()
+		equipped_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		equipped_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
 		if equipped_item_id != "":
 			var item_data := Inventory.get_item_data(equipped_item_id)
 			equipped_label.text = item_data.name if item_data else equipped_item_id
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
+			equipped_label.add_theme_font_size_override("font_size", EQUIPMENT_ITEM_LABEL_FONT_SIZE)
+			# Make button clickable to unequip
+			slot_button.pressed.connect(_on_unequip_from_slot.bind(slot))
 		else:
 			equipped_label.text = "Empty"
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-		equipped_label.add_theme_font_size_override("font_size", 14)
-		info_vbox.add_child(equipped_label)
+			equipped_label.add_theme_font_size_override("font_size", EQUIPMENT_ITEM_LABEL_FONT_SIZE)
+			slot_button.disabled = true
 		
-		# Unequip button (only shown if item is equipped)
-		if equipped_item_id != "":
-			var unequip_button := Button.new()
-			unequip_button.custom_minimum_size = Vector2(80, 40)
-			unequip_button.text = "Unequip"
-			unequip_button.pressed.connect(_on_unequip_from_slot.bind(slot))
-			hbox.add_child(unequip_button)
-		
-		equipment_slots_container.add_child(slot_panel)
+		vbox.add_child(equipped_label)
+		equipment_slots_container.add_child(slot_button)
 
 ## Get human-readable equipment slot name
 func _get_equipment_slot_name(slot: ItemData.EquipmentSlot) -> String:

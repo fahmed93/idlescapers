@@ -83,9 +83,19 @@ Equipment data is serialized as part of save files:
 
 **Equipment Tab** (`scripts/main.gd`)
 - Accessible from sidebar button
-- Displays all 11 equipment slots
+- Displays all 11 equipment slots in a human-shaped layout
+- Slot positioning mimics a character's body:
+  - Helm at top (head)
+  - Necklace below helm (neck area)
+  - Main Hand (left), Chest (center), Off Hand (right) in middle row
+  - Gloves below chest (hands)
+  - Ring 1 and Ring 2 symmetrically below gloves
+  - Legs in lower section
+  - Boots at bottom (feet)
+  - Arrows positioned on right side (back/quiver)
 - Shows equipped item name or "Empty"
-- Provides unequip buttons for equipped items
+- Clickable slots to unequip items (disabled when empty)
+- **Note**: Changed from previous implementation where separate "Unequip" buttons were shown next to each slot
 
 **Item Detail Popup** (`scripts/item_detail_popup.gd`)
 - Shows equipment slot for equippable items
