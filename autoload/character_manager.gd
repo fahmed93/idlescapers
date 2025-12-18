@@ -182,8 +182,10 @@ func _migrate_old_save_if_exists() -> void:
 		print("[CharacterManager] Found old save file. Migrating to slot 0...")
 		
 		# Read old save to get actual total level and XP
-		var total_level := GameManager.skills.size()  # Default to initial level
-		var total_xp := 0.0
+		var default_total_level := GameManager.skills.size()
+		var default_total_xp := 0.0
+		var migrated_total_level := default_total_level
+		var migrated_total_xp := default_total_xp
 		
 		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
 		if old_file:
@@ -196,15 +198,15 @@ func _migrate_old_save_if_exists() -> void:
 				
 				# Calculate total level from old save
 				if save_data.has("skill_levels"):
-					total_level = 0
+					migrated_total_level = 0
 					for skill_id in save_data["skill_levels"]:
-						total_level += int(save_data["skill_levels"][skill_id])
+						migrated_total_level += int(save_data["skill_levels"][skill_id])
 				
 				# Calculate total XP from old save
 				if save_data.has("skill_xp"):
-					total_xp = 0.0
+					migrated_total_xp = 0.0
 					for skill_id in save_data["skill_xp"]:
-						total_xp += save_data["skill_xp"][skill_id]
+						migrated_total_xp += save_data["skill_xp"][skill_id]
 			
 			# Create a character in slot 0
 			var now := int(Time.get_unix_time_from_system())
@@ -213,8 +215,8 @@ func _migrate_old_save_if_exists() -> void:
 				"name": "Legacy Character",
 				"created_at": now,
 				"last_played": now,
-				"total_level": total_level,
-				"total_xp": total_xp
+				"total_level": migrated_total_level,
+				"total_xp": migrated_total_xp
 			}
 			
 			characters["0"] = character_data

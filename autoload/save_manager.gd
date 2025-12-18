@@ -66,10 +66,8 @@ func save_game() -> void:
 		)
 		
 		save_completed.emit()
-		print("[SaveManager] Game saved to slot %d at %s" % [
-			CharacterManager.current_slot,
-			Time.get_datetime_string_from_unix_time(last_save_time)
-		])
+		var timestamp_str := Time.get_datetime_string_from_unix_time(last_save_time)
+		print("[SaveManager] Game saved to slot %d at %s" % [CharacterManager.current_slot, timestamp_str])
 
 ## Load the game for the current character
 func load_game() -> void:
