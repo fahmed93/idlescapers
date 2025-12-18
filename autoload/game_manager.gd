@@ -229,6 +229,17 @@ func _load_skills() -> void:
 	skills["foraging"] = foraging
 	skill_xp["foraging"] = 0.0
 	skill_levels["foraging"] = 1
+	
+	# Create Crafting skill
+	var crafting := SkillData.new()
+	crafting.id = "crafting"
+	crafting.name = "Crafting"
+	crafting.description = "Create leather armor and dragonhide equipment from hides."
+	crafting.color = Color(0.6, 0.4, 0.3)
+	crafting.training_methods = preload("res://autoload/skills/crafting_skill.gd").create_methods()
+	skills["crafting"] = crafting
+	skill_xp["crafting"] = 0.0
+	skill_levels["crafting"] = 1
 
 ## Get current skill level
 func get_skill_level(skill_id: String) -> int:

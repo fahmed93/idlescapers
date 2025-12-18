@@ -314,6 +314,49 @@ func _load_items() -> void:
 	_add_item("royal_dragonhide", "Royal Dragonhide", "Platinum scales from a royal dragon.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("chimera_hide", "Chimera Hide", "Multi-textured hide from a chimera.", ItemData.ItemType.RAW_MATERIAL, 750)
 	_add_item("phoenix_feather", "Phoenix Feather", "Radiant feather from a phoenix.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Crafted leather armor (from Crafting skill)
+	_add_item("leather_gloves", "Leather Gloves", "Gloves made from soft rabbit hide.", ItemData.ItemType.TOOL, 15)
+	_add_item("leather_boots", "Leather Boots", "Boots made from soft rabbit hide.", ItemData.ItemType.TOOL, 20)
+	_add_item("leather_cowl", "Leather Cowl", "A leather hood for head protection.", ItemData.ItemType.TOOL, 30)
+	_add_item("leather_vambraces", "Leather Vambraces", "Leather arm guards.", ItemData.ItemType.TOOL, 40)
+	_add_item("leather_body", "Leather Body", "A leather chest piece.", ItemData.ItemType.TOOL, 80)
+	_add_item("leather_chaps", "Leather Chaps", "Leather leg armor.", ItemData.ItemType.TOOL, 70)
+	_add_item("hard_leather_body", "Hard Leather Body", "A reinforced leather body.", ItemData.ItemType.TOOL, 120)
+	_add_item("studded_body", "Studded Body", "A studded leather body.", ItemData.ItemType.TOOL, 160)
+	_add_item("studded_chaps", "Studded Chaps", "Studded leather leg armor.", ItemData.ItemType.TOOL, 140)
+	_add_item("snake_skin_body", "Snake Skin Body", "Body armor made from snake skin.", ItemData.ItemType.TOOL, 200)
+	_add_item("snake_skin_chaps", "Snake Skin Chaps", "Leg armor made from snake skin.", ItemData.ItemType.TOOL, 180)
+	
+	# Green dragonhide armor
+	_add_item("green_dhide_vambraces", "Green D'hide Vambraces", "Green dragonhide vambraces.", ItemData.ItemType.TOOL, 400)
+	_add_item("green_dhide_chaps", "Green D'hide Chaps", "Green dragonhide chaps.", ItemData.ItemType.TOOL, 800)
+	_add_item("green_dhide_body", "Green D'hide Body", "Green dragonhide body armor.", ItemData.ItemType.TOOL, 1200)
+	
+	# Blue dragonhide armor
+	_add_item("blue_dhide_vambraces", "Blue D'hide Vambraces", "Blue dragonhide vambraces.", ItemData.ItemType.TOOL, 500)
+	_add_item("blue_dhide_chaps", "Blue D'hide Chaps", "Blue dragonhide chaps.", ItemData.ItemType.TOOL, 1000)
+	_add_item("blue_dhide_body", "Blue D'hide Body", "Blue dragonhide body armor.", ItemData.ItemType.TOOL, 1500)
+	
+	# Red dragonhide armor
+	_add_item("red_dhide_vambraces", "Red D'hide Vambraces", "Red dragonhide vambraces.", ItemData.ItemType.TOOL, 600)
+	_add_item("red_dhide_chaps", "Red D'hide Chaps", "Red dragonhide chaps.", ItemData.ItemType.TOOL, 1200)
+	_add_item("red_dhide_body", "Red D'hide Body", "Red dragonhide body armor.", ItemData.ItemType.TOOL, 1800)
+	
+	# Black dragonhide armor
+	_add_item("black_dhide_vambraces", "Black D'hide Vambraces", "Black dragonhide vambraces.", ItemData.ItemType.TOOL, 800)
+	_add_item("black_dhide_chaps", "Black D'hide Chaps", "Black dragonhide chaps.", ItemData.ItemType.TOOL, 1600)
+	_add_item("black_dhide_body", "Black D'hide Body", "Black dragonhide body armor.", ItemData.ItemType.TOOL, 2400)
+	
+	# Frost dragonhide armor
+	_add_item("frost_dhide_vambraces", "Frost D'hide Vambraces", "Frost dragonhide vambraces.", ItemData.ItemType.TOOL, 1000)
+	_add_item("frost_dhide_chaps", "Frost D'hide Chaps", "Frost dragonhide chaps.", ItemData.ItemType.TOOL, 2000)
+	_add_item("frost_dhide_body", "Frost D'hide Body", "Frost dragonhide body armor.", ItemData.ItemType.TOOL, 3000)
+	
+	# Royal dragonhide armor
+	_add_item("royal_dhide_vambraces", "Royal D'hide Vambraces", "Royal dragonhide vambraces.", ItemData.ItemType.TOOL, 1200)
+	_add_item("royal_dhide_chaps", "Royal D'hide Chaps", "Royal dragonhide chaps.", ItemData.ItemType.TOOL, 2400)
+	_add_item("royal_dhide_body", "Royal D'hide Body", "Royal dragonhide body armor.", ItemData.ItemType.TOOL, 3600)
 
 
 ## Helper to add item definition
