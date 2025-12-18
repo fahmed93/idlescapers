@@ -643,7 +643,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_cod.id = "cook_cod"
 	cook_cod.name = "Cook Cod"
 	cook_cod.description = "Cook cod into a delicious white fish dish."
-	cook_cod.level_required = 15
+	cook_cod.level_required = 13
 	cook_cod.xp_per_action = 60.0
 	cook_cod.action_time = 2.2
 	cook_cod.consumed_items = {"raw_cod": 1}
@@ -655,7 +655,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_pike.id = "cook_pike"
 	cook_pike.name = "Cook Pike"
 	cook_pike.description = "Cook pike into a hearty meal."
-	cook_pike.level_required = 22
+	cook_pike.level_required = 18
 	cook_pike.xp_per_action = 75.0
 	cook_pike.action_time = 2.5
 	cook_pike.consumed_items = {"raw_pike": 1}
@@ -667,7 +667,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_bass.id = "cook_bass"
 	cook_bass.name = "Cook Bass"
 	cook_bass.description = "Cook bass into a premium fish dish."
-	cook_bass.level_required = 28
+	cook_bass.level_required = 25
 	cook_bass.xp_per_action = 95.0
 	cook_bass.action_time = 2.8
 	cook_bass.consumed_items = {"raw_bass": 1}
@@ -679,7 +679,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_tuna.id = "cook_tuna"
 	cook_tuna.name = "Cook Tuna"
 	cook_tuna.description = "Cook tuna into a protein-rich meal."
-	cook_tuna.level_required = 38
+	cook_tuna.level_required = 35
 	cook_tuna.xp_per_action = 110.0
 	cook_tuna.action_time = 3.0
 	cook_tuna.consumed_items = {"raw_tuna": 1}
@@ -691,7 +691,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_manta_ray.id = "cook_manta_ray"
 	cook_manta_ray.name = "Cook Manta Ray"
 	cook_manta_ray.description = "Cook manta ray into an exotic delicacy."
-	cook_manta_ray.level_required = 58
+	cook_manta_ray.level_required = 55
 	cook_manta_ray.xp_per_action = 160.0
 	cook_manta_ray.action_time = 3.2
 	cook_manta_ray.consumed_items = {"raw_manta_ray": 1}
@@ -703,7 +703,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_sea_turtle.id = "cook_sea_turtle"
 	cook_sea_turtle.name = "Cook Sea Turtle"
 	cook_sea_turtle.description = "Cook sea turtle into a rare delicacy."
-	cook_sea_turtle.level_required = 70
+	cook_sea_turtle.level_required = 68
 	cook_sea_turtle.xp_per_action = 180.0
 	cook_sea_turtle.action_time = 3.5
 	cook_sea_turtle.consumed_items = {"raw_sea_turtle": 1}
@@ -715,7 +715,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_sailfish.id = "cook_sailfish"
 	cook_sailfish.name = "Cook Sailfish"
 	cook_sailfish.description = "Cook sailfish into a premium oceanic feast."
-	cook_sailfish.level_required = 88
+	cook_sailfish.level_required = 85
 	cook_sailfish.xp_per_action = 250.0
 	cook_sailfish.action_time = 4.0
 	cook_sailfish.consumed_items = {"raw_sailfish": 1}
@@ -727,7 +727,7 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_kraken_tentacle.id = "cook_kraken_tentacle"
 	cook_kraken_tentacle.name = "Cook Kraken Tentacle"
 	cook_kraken_tentacle.description = "Cook a legendary kraken tentacle into an ultimate feast."
-	cook_kraken_tentacle.level_required = 95
+	cook_kraken_tentacle.level_required = 92
 	cook_kraken_tentacle.xp_per_action = 300.0
 	cook_kraken_tentacle.action_time = 5.0
 	cook_kraken_tentacle.consumed_items = {"kraken_tentacle": 1}
