@@ -60,6 +60,10 @@ func _load_items() -> void:
 	_add_item("mithril_ore", "Mithril Ore", "A light blue ore.", ItemData.ItemType.RAW_MATERIAL, 100)
 	_add_item("adamantite_ore", "Adamantite Ore", "A greenish ore.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("runite_ore", "Runite Ore", "A rare cyan ore.", ItemData.ItemType.RAW_MATERIAL, 500)
+  
+	# Firemaking products
+	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
