@@ -209,6 +209,7 @@ func _populate_action_list() -> void:
 		
 		if not items_text.is_empty():
 			var items_label := Label.new()
+			items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
 			items_label.text = items_text.strip_edges()
 			items_label.add_theme_font_size_override("font_size", 11)
 			items_label.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
@@ -281,14 +282,59 @@ func _update_sidebar_button(skill_id: String) -> void:
 func _on_action_completed(_skill_id: String, _method_id: String, _success: bool) -> void:
 	_on_inventory_updated()
 
+## Update only item count labels in action list (performance optimization)
+func _update_action_item_counts() -> void:
+	if selected_skill_id.is_empty():
+		return
+	
+	var skill: SkillData = GameManager.skills.get(selected_skill_id)
+	if skill == null:
+		return
+	
+	# Update item count labels for each training method
+	for method in skill.training_methods:
+		if method.consumed_items.is_empty():
+			continue
+		
+		# Find the items label for this method
+		var label_name := "ItemsLabel_%s" % method.id
+		var items_label: Label = null
+		
+		# Search through action list panels to find the label
+		for panel in action_list.get_children():
+			if panel is PanelContainer:
+				items_label = panel.find_child(label_name, true, false)
+				if items_label:
+					break
+		
+		if items_label == null:
+			continue
+		
+		# Rebuild the items text with updated counts
+		var items_text := ""
+		for item_id in method.consumed_items:
+			var item_data := Inventory.get_item_data(item_id)
+			var item_name: String = item_data.name if item_data else item_id
+			var player_count := Inventory.get_item_count(item_id)
+			items_text += "Uses: %s x%d (%d owned) " % [item_name, method.consumed_items[item_id], player_count]
+		
+		# Add produced items
+		if not method.produced_items.is_empty():
+			for item_id in method.produced_items:
+				var item_data := Inventory.get_item_data(item_id)
+				var item_name: String = item_data.name if item_data else item_id
+				items_text += "→ %s " % item_name
+		
+		items_label.text = items_text.strip_edges()
+
 func _on_inventory_updated() -> void:
 	# Update the inventory display in the dedicated inventory screen
 	if inventory_items_list:
 		_update_inventory_display(inventory_items_list)
 	
-	# Update action list to reflect new item counts if viewing a skill
+	# Update item counts in action list if viewing a skill (targeted update for performance)
 	if not selected_skill_id.is_empty() and not is_store_view and not is_upgrades_view and not is_inventory_view:
-		_populate_action_list()
+		_update_action_item_counts()
 
 func _update_inventory_display(grid: GridContainer) -> void:
 	# Clear inventory grid

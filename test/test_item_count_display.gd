@@ -72,8 +72,22 @@ func _ready() -> void:
 	GameManager.start_training("herblore", "attack_potion")
 	print("  Started training: Attack Potion")
 	
-	# Wait for one action to complete
-	await get_tree().create_timer(2.5).timeout
+	# Wait for action_completed signal instead of hardcoded timeout
+	var action_completed := false
+	var on_action_complete = func(_skill: String, _method: String, _success: bool):
+		action_completed = true
+	
+	GameManager.action_completed.connect(on_action_complete)
+	
+	# Wait for action to complete (with timeout safety)
+	var max_wait := 5.0
+	var elapsed := 0.0
+	while not action_completed and elapsed < max_wait:
+		await get_tree().create_timer(0.1).timeout
+		elapsed += 0.1
+	
+	GameManager.action_completed.disconnect(on_action_complete)
+	assert(action_completed, "Action should have completed within timeout")
 	
 	var after_guam = Inventory.get_item_count("guam_leaf")
 	var after_newt = Inventory.get_item_count("eye_of_newt")
@@ -103,6 +117,6 @@ func _ready() -> void:
 	print("Item count display feature is working correctly!\n")
 	
 	# Only quit if running in headless mode (automated tests)
-	if DisplayServer.get_name() == "headless":
+	if OS.has_feature("dedicated_server") or DisplayServer.get_name() == "headless":
 		await get_tree().create_timer(1.0).timeout
 		get_tree().quit()
