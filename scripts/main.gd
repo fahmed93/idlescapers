@@ -7,6 +7,7 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
+@onready var sidebar_toggle_button: Button = $HSplitContainer/MainContent/SidebarToggleButton
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
 @onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
 @onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
@@ -38,6 +39,7 @@ var upgrades_gold_label: Label = null
 var inventory_button: Button = null
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
+var is_sidebar_expanded: bool = false
 
 func _ready() -> void:
 	_setup_signals()
@@ -50,6 +52,9 @@ func _ready() -> void:
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
+	
+	# Set sidebar to collapsed by default
+	_set_sidebar_collapsed(true)
 	
 	# Select first skill by default
 	if not GameManager.skills.is_empty():
@@ -70,6 +75,7 @@ func _setup_signals() -> void:
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
+	sidebar_toggle_button.pressed.connect(_on_sidebar_toggle_pressed)
 
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
@@ -771,4 +777,18 @@ func _on_upgrades_updated() -> void:
 	if is_upgrades_view:
 		_populate_upgrades_list()
 
+## Toggle sidebar visibility
+func _on_sidebar_toggle_pressed() -> void:
+	_set_sidebar_collapsed(not skill_sidebar.visible)
+
+## Set sidebar collapsed/expanded state
+func _set_sidebar_collapsed(collapsed: bool) -> void:
+	skill_sidebar.visible = not collapsed
+	is_sidebar_expanded = not collapsed
+	
+	# Update toggle button text
+	if collapsed:
+		sidebar_toggle_button.text = "☰ Skills"
+	else:
+		sidebar_toggle_button.text = "✕ Close"
 
