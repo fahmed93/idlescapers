@@ -498,7 +498,7 @@ func _on_sell_all_item(item_id: String) -> void:
 
 ## Handle selling items from inventory panel
 func _on_sell_from_inventory(item_id: String, amount: int) -> void:
-	if Store.sell_item(item_id, amount):
+	if amount > 0 and Store.sell_item(item_id, amount):
 		_on_inventory_updated()
 
 ## Handle selling all of an item from inventory panel
