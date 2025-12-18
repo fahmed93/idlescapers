@@ -199,7 +199,8 @@ func _populate_action_list() -> void:
 			for item_id in method.consumed_items:
 				var item_data := Inventory.get_item_data(item_id)
 				var item_name: String = item_data.name if item_data else item_id
-				items_text += "Uses: %s x%d " % [item_name, method.consumed_items[item_id]]
+				var available := Inventory.get_item_count(item_id)
+				items_text += "Uses: %s x%d (%d) " % [item_name, method.consumed_items[item_id], available]
 		if not method.produced_items.is_empty():
 			for item_id in method.produced_items:
 				var item_data := Inventory.get_item_data(item_id)
@@ -212,6 +213,21 @@ func _populate_action_list() -> void:
 			items_label.add_theme_font_size_override("font_size", 11)
 			items_label.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
 			info_vbox.add_child(items_label)
+		
+		# Show time until items run out (if method consumes items)
+		if not method.consumed_items.is_empty():
+			var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
+			if time_remaining >= 0:
+				var time_label := Label.new()
+				time_label.text = TrainingMethodData.format_time_remaining(time_remaining)
+				time_label.add_theme_font_size_override("font_size", 11)
+				if time_remaining == 0:
+					time_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+				elif time_remaining < 60:
+					time_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+				else:
+					time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.3))
+				info_vbox.add_child(time_label)
 		
 		var train_button := Button.new()
 		train_button.custom_minimum_size = Vector2(80, 40)
@@ -252,6 +268,18 @@ func _update_training_progress() -> void:
 	if method:
 		var progress := (GameManager.training_progress / method.action_time) * 100.0
 		training_progress.value = progress
+		
+		# Update training label with time remaining if method consumes items
+		if not method.consumed_items.is_empty():
+			var speed_modifier := UpgradeShop.get_skill_speed_modifier(GameManager.current_skill_id)
+			var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
+			if time_remaining >= 0:
+				var time_text := TrainingMethodData.format_time_remaining(time_remaining)
+				training_label.text = "Training: %s (%s)" % [method.name, time_text]
+			else:
+				training_label.text = "Training: %s" % method.name
+		else:
+			training_label.text = "Training: %s" % method.name
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:
