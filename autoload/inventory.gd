@@ -49,6 +49,27 @@ func _load_items() -> void:
 	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Ores
+	_add_item("copper_ore", "Copper Ore", "A basic ore used in bronze.", ItemData.ItemType.RAW_MATERIAL, 3)
+	_add_item("tin_ore", "Tin Ore", "A basic ore used in bronze.", ItemData.ItemType.RAW_MATERIAL, 3)
+	_add_item("iron_ore", "Iron Ore", "Common ore for iron and steel.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("coal", "Coal", "Used to smelt better ores.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("silver_ore", "Silver Ore", "Shiny ore for silver bars.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("gold_ore", "Gold Ore", "Precious ore for gold bars.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("mithril_ore", "Mithril Ore", "A rare blue ore.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("adamantite_ore", "Adamantite Ore", "A green ore of great strength.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("runite_ore", "Runite Ore", "The rarest and strongest ore.", ItemData.ItemType.RAW_MATERIAL, 500)
+	
+	# Bars
+	_add_item("bronze_bar", "Bronze Bar", "A bar of bronze metal.", ItemData.ItemType.PROCESSED, 10)
+	_add_item("iron_bar", "Iron Bar", "A bar of iron metal.", ItemData.ItemType.PROCESSED, 25)
+	_add_item("steel_bar", "Steel Bar", "A bar of steel metal.", ItemData.ItemType.PROCESSED, 50)
+	_add_item("silver_bar", "Silver Bar", "A bar of silver metal.", ItemData.ItemType.PROCESSED, 60)
+	_add_item("gold_bar", "Gold Bar", "A bar of gold metal.", ItemData.ItemType.PROCESSED, 100)
+	_add_item("mithril_bar", "Mithril Bar", "A bar of mithril metal.", ItemData.ItemType.PROCESSED, 200)
+	_add_item("adamantite_bar", "Adamantite Bar", "A bar of adamantite metal.", ItemData.ItemType.PROCESSED, 400)
+	_add_item("runite_bar", "Runite Bar", "A bar of runite metal.", ItemData.ItemType.PROCESSED, 1000)
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
