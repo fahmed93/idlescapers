@@ -22,6 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       EXPORT_PRESET_NAME: "Web"
+      GODOT_VERSION: "4.5.0"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,21 +30,23 @@ jobs:
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
         with:
-          version: 4.5.0
+          version: ${{ env.GODOT_VERSION }}
           use-dotnet: false
 
       - name: Install Godot Export Templates
         run: |
-          echo "Installing Godot export templates..."
-          mkdir -p ~/.local/share/godot/export_templates/4.5.stable
-          cd ~/.local/share/godot/export_templates/4.5.stable
-          wget -q https://github.com/godotengine/godot/releases/download/4.5-stable/Godot_v4.5-stable_export_templates.tpz || { echo "Error: Failed to download export templates"; exit 1; }
-          unzip -q Godot_v4.5-stable_export_templates.tpz || { echo "Error: Failed to extract export templates"; exit 1; }
+          echo "Installing Godot export templates for version ${{ env.GODOT_VERSION }}..."
+          TEMPLATE_VERSION=$(echo "${{ env.GODOT_VERSION }}" | sed 's/\.0$//')
+          TEMPLATE_DIR="$HOME/.local/share/godot/export_templates/${TEMPLATE_VERSION}.stable"
+          mkdir -p "$TEMPLATE_DIR"
+          cd "$TEMPLATE_DIR"
+          wget -q "https://github.com/godotengine/godot/releases/download/${TEMPLATE_VERSION}-stable/Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to download export templates"; exit 1; }
+          unzip -q "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to extract export templates"; exit 1; }
           if [ -d templates ]; then
             mv templates/* . || { echo "Error: Failed to move template files"; exit 1; }
-            rmdir templates
+            rm -rf templates
           fi
-          rm Godot_v4.5-stable_export_templates.tpz
+          rm "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz"
           echo "Export templates installed successfully"
           ls -la
 
