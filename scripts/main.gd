@@ -179,7 +179,7 @@ func _populate_action_list() -> void:
 		info_vbox.add_child(name_label)
 		
 		var stats_label := Label.new()
-		stats_label.text = method.get_stats_text()
+		stats_label.text = method.get_stats_text(selected_skill_id)
 		stats_label.add_theme_font_size_override("font_size", 12)
 		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
 		info_vbox.add_child(stats_label)
@@ -818,6 +818,9 @@ func _on_upgrade_purchased(upgrade_id: String) -> void:
 	var upgrade: UpgradeData = UpgradeShop.upgrades.get(upgrade_id)
 	if upgrade:
 		print("[Main] Purchased upgrade: %s for %s" % [upgrade.name, upgrade.skill_id])
+		# Refresh action list if viewing the skill that was upgraded
+		if selected_skill_id == upgrade.skill_id:
+			_populate_action_list()
 
 ## Handle upgrades updated signal
 func _on_upgrades_updated() -> void:
