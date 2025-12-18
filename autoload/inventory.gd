@@ -132,6 +132,22 @@ func _load_items() -> void:
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
 	
+	# Dirty herbs (from Foraging)
+	_add_item("dirty_guam_leaf", "Dirty Guam Leaf", "An unclean guam leaf that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("dirty_marrentill", "Dirty Marrentill", "An unclean marrentill that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 7)
+	_add_item("dirty_tarromin", "Dirty Tarromin", "An unclean tarromin that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 9)
+	_add_item("dirty_harralander", "Dirty Harralander", "An unclean harralander that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 11)
+	_add_item("dirty_ranarr_weed", "Dirty Ranarr Weed", "An unclean ranarr weed that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 18)
+	_add_item("dirty_toadflax", "Dirty Toadflax", "An unclean toadflax that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 22)
+	_add_item("dirty_irit_leaf", "Dirty Irit Leaf", "An unclean irit leaf that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("dirty_avantoe", "Dirty Avantoe", "An unclean avantoe that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 38)
+	_add_item("dirty_kwuarm", "Dirty Kwuarm", "An unclean kwuarm that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("dirty_snapdragon", "Dirty Snapdragon", "An unclean snapdragon that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 65)
+	_add_item("dirty_cadantine", "Dirty Cadantine", "An unclean cadantine that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 75)
+	_add_item("dirty_lantadyme", "Dirty Lantadyme", "An unclean lantadyme that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 90)
+	_add_item("dirty_dwarf_weed", "Dirty Dwarf Weed", "An unclean dwarf weed that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 105)
+	_add_item("dirty_torstol", "Dirty Torstol", "An unclean torstol that needs cleaning.", ItemData.ItemType.RAW_MATERIAL, 150)
+	
 	# Herbs (grimy/clean)
 	_add_item("guam_leaf", "Guam Leaf", "A basic herb used in Attack potions.", ItemData.ItemType.RAW_MATERIAL, 8)
 	_add_item("marrentill", "Marrentill", "A herb used in Antipoison.", ItemData.ItemType.RAW_MATERIAL, 10)
