@@ -14,7 +14,9 @@ func _ready() -> void:
 	print("  Smithing skill name: %s" % smithing_skill.name)
 	print("  Smithing skill description: %s" % smithing_skill.description)
 	print("  Training methods count: %d" % smithing_skill.training_methods.size())
-	assert(smithing_skill.training_methods.size() == 44, "Should have 44 smithing methods (8 bars + 36 craftables)")
+	# Expected: 8 bars + 36 craftables (6 each of: arrowheads, daggers, swords, helms, platelegs, platebodies)
+	var expected_method_count := 44
+	assert(smithing_skill.training_methods.size() == expected_method_count, "Should have %d smithing methods (8 bars + 36 craftables)" % expected_method_count)
 	print("  ✓ Smithing skill loaded with correct method count")
 	
 	# Test 2: Check initial skill level

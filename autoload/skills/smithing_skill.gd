@@ -513,7 +513,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_full_helm.produced_items = {"runite_full_helm": 1}
 	methods.append(runite_full_helm)
 	
-	# Level 96: Runite Platelegs (Note: In OSRS this is 99, but we'll use 96 for balance)
+	# Level 96: Runite Platelegs
 	var runite_platelegs := TrainingMethodData.new()
 	runite_platelegs.id = "runite_platelegs"
 	runite_platelegs.name = "Runite Platelegs"
