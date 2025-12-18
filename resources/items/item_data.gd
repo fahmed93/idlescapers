@@ -4,6 +4,19 @@ class_name ItemData
 extends Resource
 
 enum ItemType { RAW_MATERIAL, PROCESSED, TOOL, CONSUMABLE }
+enum EquipmentSlot { 
+	NONE,
+	HELM, 
+	NECKLACE, 
+	CHEST, 
+	GLOVES, 
+	RING, 
+	MAIN_HAND, 
+	OFF_HAND, 
+	LEGS, 
+	ARROWS, 
+	BOOTS 
+}
 
 @export var id: String = ""
 @export var name: String = ""
@@ -13,3 +26,4 @@ enum ItemType { RAW_MATERIAL, PROCESSED, TOOL, CONSUMABLE }
 @export var value: int = 1  # Base sell value
 @export var stackable: bool = true
 @export var max_stack: int = -1  # -1 = unlimited
+@export var equipment_slot: EquipmentSlot = EquipmentSlot.NONE  # Which slot this item can be equipped in

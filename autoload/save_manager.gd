@@ -50,6 +50,7 @@ func save_game() -> void:
 		"is_training": GameManager.is_training,
 		"gold": Store.gold,
 		"purchased_upgrades": UpgradeShop.purchased_upgrades.duplicate(),
+		"equipment": Equipment.to_dict(),
 	}
 	
 	var file := FileAccess.open(save_file, FileAccess.WRITE)
@@ -123,6 +124,10 @@ func load_game() -> void:
 		UpgradeShop.purchased_upgrades.clear()
 		for upgrade_id in save_data["purchased_upgrades"]:
 			UpgradeShop.purchased_upgrades.append(upgrade_id)
+	
+	# Restore equipment
+	if save_data.has("equipment"):
+		Equipment.from_dict(save_data["equipment"])
 	
 	# Calculate offline progress
 	if save_data.has("timestamp"):
