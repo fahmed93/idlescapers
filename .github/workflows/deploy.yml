@@ -39,8 +39,12 @@ jobs:
       - name: Import project
         run: |
           echo "Importing project assets..."
-          godot --headless --import --quit || echo "Warning: Asset import returned non-zero exit code. This is often normal if some assets are already imported. Proceeding with export..."
-          echo "Import completed"
+          if ! godot --headless --import --quit; then
+            echo "Warning: Godot import exited with code $?. This is often normal during initial import or when assets are already cached."
+            echo "Proceeding with export step..."
+          else
+            echo "Import completed successfully"
+          fi
 
       - name: Build HTML5 export
         run: |
