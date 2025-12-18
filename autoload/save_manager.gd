@@ -41,6 +41,7 @@ func save_game() -> void:
 		"current_method_id": GameManager.current_method_id,
 		"is_training": GameManager.is_training,
 		"gold": Store.gold,
+		"purchased_upgrades": UpgradeShop.purchased_upgrades.duplicate(),
 	}
 	
 	var file := FileAccess.open(SAVE_FILE, FileAccess.WRITE)
@@ -91,6 +92,12 @@ func load_game() -> void:
 	# Restore gold
 	if save_data.has("gold"):
 		Store.gold = int(save_data["gold"])
+	
+	# Restore purchased upgrades
+	if save_data.has("purchased_upgrades"):
+		UpgradeShop.purchased_upgrades.clear()
+		for upgrade_id in save_data["purchased_upgrades"]:
+			UpgradeShop.purchased_upgrades.append(upgrade_id)
 	
 	# Calculate offline progress
 	if save_data.has("timestamp"):
@@ -146,8 +153,13 @@ func _calculate_offline_progress(skill_id: String, method_id: String, time_away:
 	if GameManager.get_skill_level(skill_id) < method.level_required:
 		return
 	
+	# Apply speed modifier from upgrades to increase effective offline time
+	# This makes training faster by simulating more time passing (conceptually different from real-time)
+	var speed_modifier := UpgradeShop.get_skill_speed_modifier(skill_id)
+	var effective_time := time_away * (1.0 + speed_modifier)
+	
 	# Calculate how many actions could have been completed
-	var max_actions := int(time_away / method.action_time)
+	var max_actions := int(effective_time / method.action_time)
 	
 	# Cap to 10,000 actions to prevent crashes and excessive processing
 	const MAX_ACTIONS := 10000
