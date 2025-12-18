@@ -779,7 +779,7 @@ func _on_upgrades_updated() -> void:
 
 ## Toggle sidebar visibility
 func _on_sidebar_toggle_pressed() -> void:
-	_set_sidebar_collapsed(not skill_sidebar.visible)
+	_set_sidebar_collapsed(skill_sidebar.visible)
 
 ## Set sidebar collapsed/expanded state
 func _set_sidebar_collapsed(collapsed: bool) -> void:
