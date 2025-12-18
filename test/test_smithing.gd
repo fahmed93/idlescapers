@@ -14,7 +14,7 @@ func _ready() -> void:
 	print("  Smithing skill name: %s" % smithing_skill.name)
 	print("  Smithing skill description: %s" % smithing_skill.description)
 	print("  Training methods count: %d" % smithing_skill.training_methods.size())
-	assert(smithing_skill.training_methods.size() == 8, "Should have 8 smelting methods")
+	assert(smithing_skill.training_methods.size() == 50, "Should have 50 smithing methods (8 bars + 42 craftable items)")
 	
 	# Test 2: Check initial skill level
 	print("\nTest 2: Checking initial skill level...")
@@ -102,6 +102,56 @@ func _ready() -> void:
 	print("  Iron bars produced: %d" % iron_bars)
 	print("  Success rate: %.1f%%" % ((float(iron_bars) / iron_consumed) * 100))
 	assert(iron_bars < iron_consumed, "Should have produced fewer bars than ore consumed due to 50% success rate")
+	
+	GameManager.stop_training()
+	
+	# Test 7: Test crafting bronze items from bars
+	print("\nTest 7: Testing bronze item crafting...")
+	GameManager.skill_levels["smithing"] = 1  # Reset to level 1
+	Inventory.add_item("bronze_bar", 20)
+	print("  Set smithing level to 1 and added 20 bronze bars")
+	
+	# Test bronze dagger crafting
+	GameManager.start_training("smithing", "bronze_dagger")
+	print("  Started bronze dagger crafting")
+	
+	var dagger_method: TrainingMethodData = null
+	for method in smithing_skill.training_methods:
+		if method.id == "bronze_dagger":
+			dagger_method = method
+			break
+	
+	assert(dagger_method != null, "Bronze dagger method should exist")
+	
+	# Complete one dagger
+	for i in range(int(dagger_method.action_time * 60)):
+		GameManager._process(1.0 / 60.0)
+	
+	var daggers := Inventory.get_item_count("bronze_dagger")
+	print("  Bronze daggers produced: %d" % daggers)
+	assert(daggers > 0, "Should have produced at least one bronze dagger")
+	
+	GameManager.stop_training()
+	
+	# Test bronze arrowheads (15 per bar)
+	print("\n  Testing bronze arrowheads...")
+	GameManager.start_training("smithing", "bronze_arrowheads")
+	
+	var arrowhead_method: TrainingMethodData = null
+	for method in smithing_skill.training_methods:
+		if method.id == "bronze_arrowheads":
+			arrowhead_method = method
+			break
+	
+	assert(arrowhead_method != null, "Bronze arrowheads method should exist")
+	
+	# Complete one batch
+	for i in range(int(arrowhead_method.action_time * 60)):
+		GameManager._process(1.0 / 60.0)
+	
+	var arrowheads := Inventory.get_item_count("bronze_arrowhead")
+	print("  Bronze arrowheads produced: %d" % arrowheads)
+	assert(arrowheads >= 15, "Should have produced at least 15 bronze arrowheads per bar")
 	
 	GameManager.stop_training()
 	

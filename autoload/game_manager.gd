@@ -175,6 +175,17 @@ func _load_skills() -> void:
 	skill_xp["thieving"] = 0.0
 	skill_levels["thieving"] = 1
 	
+	# Create Agility skill
+	var agility := SkillData.new()
+	agility.id = "agility"
+	agility.name = "Agility"
+	agility.description = "Complete obstacle courses for XP and unlocks."
+	agility.color = Color(0.0, 0.8, 1.0)
+	agility.training_methods = preload("res://autoload/skills/agility_skill.gd").create_methods()
+	skills["agility"] = agility
+	skill_xp["agility"] = 0.0
+	skill_levels["agility"] = 1
+	
 	# Create Astrology skill
 	var astrology := SkillData.new()
 	astrology.id = "astrology"
@@ -196,6 +207,17 @@ func _load_skills() -> void:
 	skills["skinning"] = skinning
 	skill_xp["skinning"] = 0.0
 	skill_levels["skinning"] = 1
+  
+	# Create Foraging skill
+	var foraging := SkillData.new()
+	foraging.id = "foraging"
+	foraging.name = "Foraging"
+	foraging.description = "Gather herbs and natural materials from the wilderness."
+	foraging.color = Color(0.45, 0.6, 0.3)
+	foraging.training_methods = preload("res://autoload/skills/foraging_skill.gd").create_methods()
+	skills["foraging"] = foraging
+	skill_xp["foraging"] = 0.0
+	skill_levels["foraging"] = 1
 
 ## Get current skill level
 func get_skill_level(skill_id: String) -> int:
@@ -321,6 +343,13 @@ func _complete_action(method: TrainingMethodData) -> void:
 		for item_id in method.produced_items:
 			var amount: int = method.produced_items[item_id]
 			Inventory.add_item(item_id, amount)
+	
+	# Check for bonus items on success (independent random roll for each)
+	if success and not method.bonus_items.is_empty():
+		for item_id in method.bonus_items:
+			var chance: float = method.bonus_items[item_id]
+			if randf() <= chance:
+				Inventory.add_item(item_id, 1)
 	
 	action_completed.emit(current_skill_id, method.id, success)
 

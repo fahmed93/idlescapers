@@ -14,6 +14,7 @@ extends Resource
 @export var produced_items: Dictionary = {}  # item_id: quantity produced per action
 @export var consumed_items: Dictionary = {}  # item_id: quantity consumed per action
 @export var success_rate: float = 1.0  # 0.0 to 1.0 chance of success
+@export var bonus_items: Dictionary = {}  # item_id: chance (0.0 to 1.0) for random bonus items
 
 ## Calculate effective action time with speed modifiers
 ## If skill_id is provided, applies speed bonuses from purchased upgrades
