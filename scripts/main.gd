@@ -719,7 +719,8 @@ func _populate_equipment_slots() -> void:
 		ItemData.EquipmentSlot.NECKLACE,
 		ItemData.EquipmentSlot.CHEST,
 		ItemData.EquipmentSlot.GLOVES,
-		ItemData.EquipmentSlot.RING,
+		ItemData.EquipmentSlot.RING_1,
+		ItemData.EquipmentSlot.RING_2,
 		ItemData.EquipmentSlot.MAIN_HAND,
 		ItemData.EquipmentSlot.OFF_HAND,
 		ItemData.EquipmentSlot.LEGS,
@@ -775,7 +776,8 @@ func _get_equipment_slot_name(slot: ItemData.EquipmentSlot) -> String:
 		ItemData.EquipmentSlot.NECKLACE: return "Necklace"
 		ItemData.EquipmentSlot.CHEST: return "Chest"
 		ItemData.EquipmentSlot.GLOVES: return "Gloves"
-		ItemData.EquipmentSlot.RING: return "Ring"
+		ItemData.EquipmentSlot.RING_1: return "Ring 1"
+		ItemData.EquipmentSlot.RING_2: return "Ring 2"
 		ItemData.EquipmentSlot.MAIN_HAND: return "Main Hand"
 		ItemData.EquipmentSlot.OFF_HAND: return "Off Hand"
 		ItemData.EquipmentSlot.LEGS: return "Legs"

@@ -63,15 +63,17 @@ func _run_tests() -> void:
 	
 	# Test 6: Equip ring and necklace
 	print("Test 6: Equip jewelry")
-	Inventory.add_item("sapphire_ring", 1)
+	Inventory.add_item("sapphire_ring", 2)
 	Inventory.add_item("sapphire_necklace", 1)
 	
-	assert(Equipment.equip_item("sapphire_ring"), "Should equip ring")
+	assert(Equipment.equip_item("sapphire_ring"), "Should equip first ring")
+	assert(Equipment.equip_item("sapphire_ring"), "Should equip second ring")
 	assert(Equipment.equip_item("sapphire_necklace"), "Should equip necklace")
 	
-	assert(Equipment.get_equipped_item(ItemData.EquipmentSlot.RING) == "sapphire_ring", "Ring should be equipped")
+	assert(Equipment.get_equipped_item(ItemData.EquipmentSlot.RING_1) == "sapphire_ring", "Ring 1 should be equipped")
+	assert(Equipment.get_equipped_item(ItemData.EquipmentSlot.RING_2) == "sapphire_ring", "Ring 2 should be equipped")
 	assert(Equipment.get_equipped_item(ItemData.EquipmentSlot.NECKLACE) == "sapphire_necklace", "Necklace should be equipped")
-	print("  ✓ Jewelry equipped\n")
+	print("  ✓ Jewelry equipped (including 2 rings)\n")
 	
 	# Test 7: Replace equipped item
 	print("Test 7: Replace equipped helm")

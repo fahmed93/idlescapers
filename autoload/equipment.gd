@@ -97,15 +97,15 @@ func get_equipped_slot(item_id: String) -> ItemData.EquipmentSlot:
 	return ItemData.EquipmentSlot.NONE
 
 ## Helper to find an available ring slot
-## Returns RING (slot 5) or NONE if both slots are full
+## Returns RING_1, RING_2, or NONE if both slots are full
 func _get_available_ring_slot() -> ItemData.EquipmentSlot:
-	# We'll use slot RING (5) as first ring slot
-	# For second ring, we need to track it separately
-	# Let's use a simple approach: check if RING slot is empty first
-	if equipped_items.get(ItemData.EquipmentSlot.RING, "") == "":
-		return ItemData.EquipmentSlot.RING
-	# For simplicity, we'll only support one ring for now
-	# Can be extended later to support ring1/ring2
+	# Check if RING_1 slot is empty first
+	if equipped_items.get(ItemData.EquipmentSlot.RING_1, "") == "":
+		return ItemData.EquipmentSlot.RING_1
+	# Then check RING_2
+	if equipped_items.get(ItemData.EquipmentSlot.RING_2, "") == "":
+		return ItemData.EquipmentSlot.RING_2
+	# Both slots are full
 	return ItemData.EquipmentSlot.NONE
 
 ## Get all equipped items as a dictionary

@@ -10,12 +10,15 @@ enum EquipmentSlot {
 	NECKLACE, 
 	CHEST, 
 	GLOVES, 
-	RING, 
+	RING_1, 
+	RING_2, 
 	MAIN_HAND, 
 	OFF_HAND, 
 	LEGS, 
 	ARROWS, 
-	BOOTS 
+	BOOTS,
+	# Special value for items that can go in either ring slot
+	RING = RING_1
 }
 
 @export var id: String = ""
