@@ -92,6 +92,7 @@ custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 placeholder_text = "Enter character name..."
 max_length = 20
+virtual_keyboard_enabled = true
 
 [node name="Spacer2" type="Control" parent="CreateCharacterDialog/VBoxContainer"]
 custom_minimum_size = Vector2(0, 20)
