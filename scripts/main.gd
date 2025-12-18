@@ -3,7 +3,7 @@ extends Control
 
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
 const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
-const ITEM_PANEL_HEIGHT := 60  # Height of inventory item panels
+const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
@@ -302,6 +302,21 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		count_label.add_theme_font_size_override("font_size", 14)
 		vbox.add_child(count_label)
 		
+		# Add sell buttons
+		var sell_one_button := Button.new()
+		sell_one_button.text = "Sell 1"
+		sell_one_button.custom_minimum_size = Vector2(80, 20)
+		sell_one_button.add_theme_font_size_override("font_size", 9)
+		sell_one_button.pressed.connect(_on_sell_from_inventory.bind(item_id, 1))
+		vbox.add_child(sell_one_button)
+		
+		var sell_all_button := Button.new()
+		sell_all_button.text = "Sell All"
+		sell_all_button.custom_minimum_size = Vector2(80, 20)
+		sell_all_button.add_theme_font_size_override("font_size", 9)
+		sell_all_button.pressed.connect(_on_sell_all_from_inventory.bind(item_id))
+		vbox.add_child(sell_all_button)
+		
 		grid.add_child(item_panel)
 
 func _update_total_stats() -> void:
@@ -564,6 +579,17 @@ func _on_sell_all_item(item_id: String) -> void:
 	var count := Inventory.get_item_count(item_id)
 	if count > 0 and Store.sell_item(item_id, count):
 		_populate_store_items()
+
+## Handle selling items from inventory panel
+func _on_sell_from_inventory(item_id: String, amount: int) -> void:
+	if amount > 0 and Store.sell_item(item_id, amount):
+		_on_inventory_updated()
+
+## Handle selling all of an item from inventory panel
+func _on_sell_all_from_inventory(item_id: String) -> void:
+	var count := Inventory.get_item_count(item_id)
+	if count > 0 and Store.sell_item(item_id, count):
+		_on_inventory_updated()
 
 ## Update gold display when gold changes
 func _on_gold_changed(new_amount: int) -> void:
