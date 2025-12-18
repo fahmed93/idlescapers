@@ -39,6 +39,8 @@ var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
 var upgrades_gold_label: Label = null
+var upgrades_hide_owned_checkbox: CheckBox = null
+var hide_owned_upgrades: bool = false
 var inventory_button: Button = null
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
@@ -645,13 +647,26 @@ func _create_upgrades_ui() -> void:
 	var upgrades_vbox := VBoxContainer.new()
 	upgrades_panel.add_child(upgrades_vbox)
 	
-	# Upgrades header
+	# Upgrades header with checkbox
+	var header_hbox := HBoxContainer.new()
+	header_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	upgrades_vbox.add_child(header_hbox)
+	
+	# Hide owned checkbox on the left
+	upgrades_hide_owned_checkbox = CheckBox.new()
+	upgrades_hide_owned_checkbox.text = "Hide Owned"
+	upgrades_hide_owned_checkbox.button_pressed = hide_owned_upgrades
+	upgrades_hide_owned_checkbox.toggled.connect(_on_hide_owned_toggled)
+	header_hbox.add_child(upgrades_hide_owned_checkbox)
+	
+	# Upgrades title in the center
 	var upgrades_header := Label.new()
-	upgrades_header.text = "Upgrades Shop"
+	upgrades_header.text = "Upgrades"
 	upgrades_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	upgrades_header.add_theme_font_size_override("font_size", 20)
 	upgrades_header.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
-	upgrades_vbox.add_child(upgrades_header)
+	upgrades_header.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	header_hbox.add_child(upgrades_header)
 	
 	upgrades_gold_label = Label.new()
 	upgrades_gold_label.text = "Gold: %d" % Store.get_gold()
@@ -719,6 +734,17 @@ func _populate_upgrades_list() -> void:
 		if skill_upgrades.is_empty():
 			continue
 		
+		# Filter out owned upgrades if hide_owned_upgrades is true
+		var filtered_upgrades: Array[UpgradeData] = []
+		for upgrade in skill_upgrades:
+			if hide_owned_upgrades and UpgradeShop.is_purchased(upgrade.id):
+				continue
+			filtered_upgrades.append(upgrade)
+		
+		# Skip this skill if all upgrades are filtered out
+		if filtered_upgrades.is_empty():
+			continue
+		
 		# Add skill header
 		var skill_header := Label.new()
 		skill_header.text = skill.name
@@ -727,7 +753,7 @@ func _populate_upgrades_list() -> void:
 		upgrades_list.add_child(skill_header)
 		
 		# Add upgrades for this skill
-		for upgrade in skill_upgrades:
+		for upgrade in filtered_upgrades:
 			var upgrade_panel := PanelContainer.new()
 			upgrade_panel.custom_minimum_size = Vector2(0, 80)
 			
@@ -784,6 +810,11 @@ func _populate_upgrades_list() -> void:
 func _on_purchase_upgrade(upgrade_id: String) -> void:
 	if UpgradeShop.purchase_upgrade(upgrade_id):
 		_populate_upgrades_list()
+
+## Handle hide owned checkbox toggled
+func _on_hide_owned_toggled(button_pressed: bool) -> void:
+	hide_owned_upgrades = button_pressed
+	_populate_upgrades_list()
 
 ## Handle upgrade purchased signal
 func _on_upgrade_purchased(upgrade_id: String) -> void:
