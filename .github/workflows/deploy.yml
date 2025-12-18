@@ -20,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      EXPORT_PRESET_NAME: "Web"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -37,13 +39,13 @@ jobs:
       - name: Import project
         run: |
           echo "Importing project assets..."
-          godot --headless --import --quit || echo "Warning: Import process completed with errors, but continuing with export"
+          godot --headless --import --quit || echo "Warning: Asset import returned non-zero exit code. This is often normal if some assets are already imported. Proceeding with export..."
           echo "Import completed"
 
       - name: Build HTML5 export
         run: |
           mkdir -p build/web
-          godot --headless --export-release "Web" build/web/index.html
+          godot --headless --export-release "${{ env.EXPORT_PRESET_NAME }}" build/web/index.html
 
       - name: Add .nojekyll file
         run: |
