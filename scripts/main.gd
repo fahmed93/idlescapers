@@ -302,27 +302,20 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through to button
 		item_button.add_child(vbox)
 		
-		var name_label := Label.new()
-		name_label.text = item_data.name if item_data else item_id
-		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		name_label.add_theme_font_size_override("font_size", 11)
-		name_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(name_label)
+		# Helper function to create labels with mouse filter ignored
+		var create_label := func(text: String, font_size: int, color: Color = Color.WHITE) -> Label:
+			var label := Label.new()
+			label.text = text
+			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.add_theme_font_size_override("font_size", font_size)
+			if color != Color.WHITE:
+				label.add_theme_color_override("font_color", color)
+			label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			return label
 		
-		var count_label := Label.new()
-		count_label.text = "x%d" % count
-		count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		count_label.add_theme_font_size_override("font_size", 14)
-		count_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(count_label)
-		
-		var hint_label := Label.new()
-		hint_label.text = "Tap for details"
-		hint_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		hint_label.add_theme_font_size_override("font_size", 9)
-		hint_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
-		hint_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		vbox.add_child(hint_label)
+		vbox.add_child(create_label.call(item_data.name if item_data else item_id, 11))
+		vbox.add_child(create_label.call("x%d" % count, 14))
+		vbox.add_child(create_label.call("Tap for details", 9, Color(0.7, 0.7, 0.7)))
 		
 		grid.add_child(item_button)
 
