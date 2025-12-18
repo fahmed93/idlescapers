@@ -123,6 +123,7 @@ func _ready() -> void:
 	print("\n=== ALL TESTS PASSED ===")
 	print("Herblore skill implementation is working correctly!\n")
 	
-	# Quit after tests
-	await get_tree().create_timer(1.0).timeout
-	get_tree().quit()
+	# Only quit if running in headless mode (automated tests)
+	if DisplayServer.get_name() == "headless":
+		await get_tree().create_timer(1.0).timeout
+		get_tree().quit()

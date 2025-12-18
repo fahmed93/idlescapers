@@ -138,7 +138,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	super_defence.produced_items = {"super_defence": 1}
 	methods.append(super_defence)
 	
-	# Level 66: Saradomin Brew
+	# Level 66: Saradomin Brew (same level as Super Defence, matching OSRS)
 	var saradomin_brew := TrainingMethodData.new()
 	saradomin_brew.id = "saradomin_brew"
 	saradomin_brew.name = "Saradomin Brew"
