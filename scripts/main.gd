@@ -388,7 +388,7 @@ func _populate_store_items() -> void:
 	
 	# Clear existing items
 	for child in store_items_list.get_children():
-		child.queue_free()
+		child.free()
 	
 	var items := Inventory.get_all_items()
 	if items.is_empty():
@@ -445,7 +445,7 @@ func _populate_store_items() -> void:
 		var sell_all_button := Button.new()
 		sell_all_button.text = "Sell All"
 		sell_all_button.custom_minimum_size = Vector2(80, 30)
-		sell_all_button.pressed.connect(_on_sell_item.bind(item_id, count))
+		sell_all_button.pressed.connect(_on_sell_all_item.bind(item_id))
 		button_vbox.add_child(sell_all_button)
 		
 		store_items_list.add_child(item_panel)
@@ -453,6 +453,12 @@ func _populate_store_items() -> void:
 ## Handle selling an item
 func _on_sell_item(item_id: String, amount: int) -> void:
 	if Store.sell_item(item_id, amount):
+		_populate_store_items()
+
+## Handle selling all of an item
+func _on_sell_all_item(item_id: String) -> void:
+	var count := Inventory.get_item_count(item_id)
+	if count > 0 and Store.sell_item(item_id, count):
 		_populate_store_items()
 
 ## Update gold display when gold changes
