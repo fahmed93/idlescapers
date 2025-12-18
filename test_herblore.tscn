@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://byxdj3jx3fuhm"]
+
+[ext_resource type="Script" path="res://test_herblore.gd" id="1_abc12"]
+
+[node name="TestHerblore" type="Node"]
+script = ExtResource("1_abc12")
