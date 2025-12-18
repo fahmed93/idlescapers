@@ -91,7 +91,7 @@ This project is automatically deployed to GitHub Pages when changes are pushed t
 ### Deployment Process
 - **Workflow**: `.github/workflows/deploy.yml`
 - **Trigger**: Automatically runs on push to `main` branch
-- **Build**: Uses Godot 4.3.0 to export HTML5 build
+- **Build**: Uses Godot 4.5.0 to export HTML5 build
 - **Deploy**: Publishes to GitHub Pages
 
 ### Manual Deployment Setup
