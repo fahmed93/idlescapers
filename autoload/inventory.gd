@@ -91,22 +91,22 @@ func _load_items() -> void:
 	_add_item("bronze_arrowhead", "Bronze Arrowhead", "A bronze arrowhead.", ItemData.ItemType.PROCESSED, 3)
 	
 	# Bows
-	_add_item("shortbow", "Shortbow", "A basic shortbow.", ItemData.ItemType.TOOL, 50)
-	_add_item("longbow", "Longbow", "A basic longbow.", ItemData.ItemType.TOOL, 100)
-	_add_item("oak_shortbow", "Oak Shortbow", "A shortbow made of oak.", ItemData.ItemType.TOOL, 150)
-	_add_item("oak_longbow", "Oak Longbow", "A longbow made of oak.", ItemData.ItemType.TOOL, 200)
-	_add_item("willow_shortbow", "Willow Shortbow", "A shortbow made of willow.", ItemData.ItemType.TOOL, 300)
-	_add_item("willow_longbow", "Willow Longbow", "A longbow made of willow.", ItemData.ItemType.TOOL, 400)
-	_add_item("maple_shortbow", "Maple Shortbow", "A shortbow made of maple.", ItemData.ItemType.TOOL, 600)
-	_add_item("maple_longbow", "Maple Longbow", "A longbow made of maple.", ItemData.ItemType.TOOL, 800)
-	_add_item("yew_shortbow", "Yew Shortbow", "A shortbow made of yew.", ItemData.ItemType.TOOL, 1200)
-	_add_item("yew_longbow", "Yew Longbow", "A longbow made of yew.", ItemData.ItemType.TOOL, 1600)
-	_add_item("magic_shortbow", "Magic Shortbow", "A magical shortbow.", ItemData.ItemType.TOOL, 2500)
-	_add_item("magic_longbow", "Magic Longbow", "A magical longbow.", ItemData.ItemType.TOOL, 3500)
+	_add_item("shortbow", "Shortbow", "A basic shortbow.", ItemData.ItemType.TOOL, 50, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("longbow", "Longbow", "A basic longbow.", ItemData.ItemType.TOOL, 100, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("oak_shortbow", "Oak Shortbow", "A shortbow made of oak.", ItemData.ItemType.TOOL, 150, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("oak_longbow", "Oak Longbow", "A longbow made of oak.", ItemData.ItemType.TOOL, 200, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("willow_shortbow", "Willow Shortbow", "A shortbow made of willow.", ItemData.ItemType.TOOL, 300, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("willow_longbow", "Willow Longbow", "A longbow made of willow.", ItemData.ItemType.TOOL, 400, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("maple_shortbow", "Maple Shortbow", "A shortbow made of maple.", ItemData.ItemType.TOOL, 600, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("maple_longbow", "Maple Longbow", "A longbow made of maple.", ItemData.ItemType.TOOL, 800, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("yew_shortbow", "Yew Shortbow", "A shortbow made of yew.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("yew_longbow", "Yew Longbow", "A longbow made of yew.", ItemData.ItemType.TOOL, 1600, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("magic_shortbow", "Magic Shortbow", "A magical shortbow.", ItemData.ItemType.TOOL, 2500, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("magic_longbow", "Magic Longbow", "A magical longbow.", ItemData.ItemType.TOOL, 3500, ItemData.EquipmentSlot.MAIN_HAND)
 	
 	# Arrows
-	_add_item("headless_arrow", "Headless Arrow", "An arrow without an arrowhead.", ItemData.ItemType.PROCESSED, 2)
-	_add_item("bronze_arrow", "Bronze Arrow", "An arrow with a bronze tip.", ItemData.ItemType.PROCESSED, 5)
+	_add_item("headless_arrow", "Headless Arrow", "An arrow without an arrowhead.", ItemData.ItemType.PROCESSED, 2, ItemData.EquipmentSlot.ARROWS)
+	_add_item("bronze_arrow", "Bronze Arrow", "An arrow with a bronze tip.", ItemData.ItemType.PROCESSED, 5, ItemData.EquipmentSlot.ARROWS)
   
 	# Ores
 	_add_item("copper_ore", "Copper Ore", "A soft reddish ore.", ItemData.ItemType.RAW_MATERIAL, 5)
@@ -143,52 +143,52 @@ func _load_items() -> void:
 	_add_item("runite_arrowhead", "Runite Arrowhead", "A runite arrowhead.", ItemData.ItemType.PROCESSED, 100)
 	
 	# Smithed items - Daggers
-	_add_item("bronze_dagger", "Bronze Dagger", "A bronze dagger.", ItemData.ItemType.TOOL, 20)
-	_add_item("iron_dagger", "Iron Dagger", "An iron dagger.", ItemData.ItemType.TOOL, 40)
-	_add_item("steel_dagger", "Steel Dagger", "A steel dagger.", ItemData.ItemType.TOOL, 100)
-	_add_item("mithril_dagger", "Mithril Dagger", "A mithril dagger.", ItemData.ItemType.TOOL, 200)
-	_add_item("adamantite_dagger", "Adamantite Dagger", "An adamantite dagger.", ItemData.ItemType.TOOL, 400)
-	_add_item("runite_dagger", "Runite Dagger", "A runite dagger.", ItemData.ItemType.TOOL, 1000)
+	_add_item("bronze_dagger", "Bronze Dagger", "A bronze dagger.", ItemData.ItemType.TOOL, 20, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("iron_dagger", "Iron Dagger", "An iron dagger.", ItemData.ItemType.TOOL, 40, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("steel_dagger", "Steel Dagger", "A steel dagger.", ItemData.ItemType.TOOL, 100, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("mithril_dagger", "Mithril Dagger", "A mithril dagger.", ItemData.ItemType.TOOL, 200, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("adamantite_dagger", "Adamantite Dagger", "An adamantite dagger.", ItemData.ItemType.TOOL, 400, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("runite_dagger", "Runite Dagger", "A runite dagger.", ItemData.ItemType.TOOL, 1000, ItemData.EquipmentSlot.MAIN_HAND)
 	
 	# Smithed items - Swords
-	_add_item("bronze_sword", "Bronze Sword", "A bronze sword.", ItemData.ItemType.TOOL, 40)
-	_add_item("iron_sword", "Iron Sword", "An iron sword.", ItemData.ItemType.TOOL, 80)
-	_add_item("steel_sword", "Steel Sword", "A steel sword.", ItemData.ItemType.TOOL, 200)
-	_add_item("mithril_sword", "Mithril Sword", "A mithril sword.", ItemData.ItemType.TOOL, 400)
-	_add_item("adamantite_sword", "Adamantite Sword", "An adamantite sword.", ItemData.ItemType.TOOL, 800)
-	_add_item("runite_sword", "Runite Sword", "A runite sword.", ItemData.ItemType.TOOL, 2000)
+	_add_item("bronze_sword", "Bronze Sword", "A bronze sword.", ItemData.ItemType.TOOL, 40, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("iron_sword", "Iron Sword", "An iron sword.", ItemData.ItemType.TOOL, 80, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("steel_sword", "Steel Sword", "A steel sword.", ItemData.ItemType.TOOL, 200, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("mithril_sword", "Mithril Sword", "A mithril sword.", ItemData.ItemType.TOOL, 400, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("adamantite_sword", "Adamantite Sword", "An adamantite sword.", ItemData.ItemType.TOOL, 800, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("runite_sword", "Runite Sword", "A runite sword.", ItemData.ItemType.TOOL, 2000, ItemData.EquipmentSlot.MAIN_HAND)
 	
 	# Smithed items - Scimitars
-	_add_item("bronze_scimitar", "Bronze Scimitar", "A bronze scimitar.", ItemData.ItemType.TOOL, 50)
-	_add_item("iron_scimitar", "Iron Scimitar", "An iron scimitar.", ItemData.ItemType.TOOL, 100)
-	_add_item("steel_scimitar", "Steel Scimitar", "A steel scimitar.", ItemData.ItemType.TOOL, 250)
-	_add_item("mithril_scimitar", "Mithril Scimitar", "A mithril scimitar.", ItemData.ItemType.TOOL, 500)
-	_add_item("adamantite_scimitar", "Adamantite Scimitar", "An adamantite scimitar.", ItemData.ItemType.TOOL, 1000)
-	_add_item("runite_scimitar", "Runite Scimitar", "A runite scimitar.", ItemData.ItemType.TOOL, 2500)
+	_add_item("bronze_scimitar", "Bronze Scimitar", "A bronze scimitar.", ItemData.ItemType.TOOL, 50, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("iron_scimitar", "Iron Scimitar", "An iron scimitar.", ItemData.ItemType.TOOL, 100, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("steel_scimitar", "Steel Scimitar", "A steel scimitar.", ItemData.ItemType.TOOL, 250, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("mithril_scimitar", "Mithril Scimitar", "A mithril scimitar.", ItemData.ItemType.TOOL, 500, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("adamantite_scimitar", "Adamantite Scimitar", "An adamantite scimitar.", ItemData.ItemType.TOOL, 1000, ItemData.EquipmentSlot.MAIN_HAND)
+	_add_item("runite_scimitar", "Runite Scimitar", "A runite scimitar.", ItemData.ItemType.TOOL, 2500, ItemData.EquipmentSlot.MAIN_HAND)
 	
 	# Smithed items - Armor (Helmets)
-	_add_item("bronze_full_helm", "Bronze Full Helm", "A bronze full helmet.", ItemData.ItemType.TOOL, 60)
-	_add_item("iron_full_helm", "Iron Full Helm", "An iron full helmet.", ItemData.ItemType.TOOL, 120)
-	_add_item("steel_full_helm", "Steel Full Helm", "A steel full helmet.", ItemData.ItemType.TOOL, 300)
-	_add_item("mithril_full_helm", "Mithril Full Helm", "A mithril full helmet.", ItemData.ItemType.TOOL, 600)
-	_add_item("adamantite_full_helm", "Adamantite Full Helm", "An adamantite full helmet.", ItemData.ItemType.TOOL, 1200)
-	_add_item("runite_full_helm", "Runite Full Helm", "A runite full helmet.", ItemData.ItemType.TOOL, 3000)
+	_add_item("bronze_full_helm", "Bronze Full Helm", "A bronze full helmet.", ItemData.ItemType.TOOL, 60, ItemData.EquipmentSlot.HELM)
+	_add_item("iron_full_helm", "Iron Full Helm", "An iron full helmet.", ItemData.ItemType.TOOL, 120, ItemData.EquipmentSlot.HELM)
+	_add_item("steel_full_helm", "Steel Full Helm", "A steel full helmet.", ItemData.ItemType.TOOL, 300, ItemData.EquipmentSlot.HELM)
+	_add_item("mithril_full_helm", "Mithril Full Helm", "A mithril full helmet.", ItemData.ItemType.TOOL, 600, ItemData.EquipmentSlot.HELM)
+	_add_item("adamantite_full_helm", "Adamantite Full Helm", "An adamantite full helmet.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.HELM)
+	_add_item("runite_full_helm", "Runite Full Helm", "A runite full helmet.", ItemData.ItemType.TOOL, 3000, ItemData.EquipmentSlot.HELM)
 	
 	# Smithed items - Armor (Platebodies)
-	_add_item("bronze_platebody", "Bronze Platebody", "A bronze platebody.", ItemData.ItemType.TOOL, 150)
-	_add_item("iron_platebody", "Iron Platebody", "An iron platebody.", ItemData.ItemType.TOOL, 300)
-	_add_item("steel_platebody", "Steel Platebody", "A steel platebody.", ItemData.ItemType.TOOL, 750)
-	_add_item("mithril_platebody", "Mithril Platebody", "A mithril platebody.", ItemData.ItemType.TOOL, 1500)
-	_add_item("adamantite_platebody", "Adamantite Platebody", "An adamantite platebody.", ItemData.ItemType.TOOL, 3000)
-	_add_item("runite_platebody", "Runite Platebody", "A runite platebody.", ItemData.ItemType.TOOL, 7500)
+	_add_item("bronze_platebody", "Bronze Platebody", "A bronze platebody.", ItemData.ItemType.TOOL, 150, ItemData.EquipmentSlot.CHEST)
+	_add_item("iron_platebody", "Iron Platebody", "An iron platebody.", ItemData.ItemType.TOOL, 300, ItemData.EquipmentSlot.CHEST)
+	_add_item("steel_platebody", "Steel Platebody", "A steel platebody.", ItemData.ItemType.TOOL, 750, ItemData.EquipmentSlot.CHEST)
+	_add_item("mithril_platebody", "Mithril Platebody", "A mithril platebody.", ItemData.ItemType.TOOL, 1500, ItemData.EquipmentSlot.CHEST)
+	_add_item("adamantite_platebody", "Adamantite Platebody", "An adamantite platebody.", ItemData.ItemType.TOOL, 3000, ItemData.EquipmentSlot.CHEST)
+	_add_item("runite_platebody", "Runite Platebody", "A runite platebody.", ItemData.ItemType.TOOL, 7500, ItemData.EquipmentSlot.CHEST)
 	
 	# Smithed items - Armor (Platelegs)
-	_add_item("bronze_platelegs", "Bronze Platelegs", "Bronze platelegs.", ItemData.ItemType.TOOL, 120)
-	_add_item("iron_platelegs", "Iron Platelegs", "Iron platelegs.", ItemData.ItemType.TOOL, 240)
-	_add_item("steel_platelegs", "Steel Platelegs", "Steel platelegs.", ItemData.ItemType.TOOL, 600)
-	_add_item("mithril_platelegs", "Mithril Platelegs", "Mithril platelegs.", ItemData.ItemType.TOOL, 1200)
-	_add_item("adamantite_platelegs", "Adamantite Platelegs", "Adamantite platelegs.", ItemData.ItemType.TOOL, 2400)
-	_add_item("runite_platelegs", "Runite Platelegs", "Runite platelegs.", ItemData.ItemType.TOOL, 6000)
+	_add_item("bronze_platelegs", "Bronze Platelegs", "Bronze platelegs.", ItemData.ItemType.TOOL, 120, ItemData.EquipmentSlot.LEGS)
+	_add_item("iron_platelegs", "Iron Platelegs", "Iron platelegs.", ItemData.ItemType.TOOL, 240, ItemData.EquipmentSlot.LEGS)
+	_add_item("steel_platelegs", "Steel Platelegs", "Steel platelegs.", ItemData.ItemType.TOOL, 600, ItemData.EquipmentSlot.LEGS)
+	_add_item("mithril_platelegs", "Mithril Platelegs", "Mithril platelegs.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.LEGS)
+	_add_item("adamantite_platelegs", "Adamantite Platelegs", "Adamantite platelegs.", ItemData.ItemType.TOOL, 2400, ItemData.EquipmentSlot.LEGS)
+	_add_item("runite_platelegs", "Runite Platelegs", "Runite platelegs.", ItemData.ItemType.TOOL, 6000, ItemData.EquipmentSlot.LEGS)
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
@@ -278,20 +278,20 @@ func _load_items() -> void:
 	_add_item("onyx", "Onyx", "An extremely valuable black gem.", ItemData.ItemType.RAW_MATERIAL, 2000)
 	
 	# Jewelry - Rings
-	_add_item("sapphire_ring", "Sapphire Ring", "A gold ring with a sapphire.", ItemData.ItemType.PROCESSED, 250)
-	_add_item("emerald_ring", "Emerald Ring", "A gold ring with an emerald.", ItemData.ItemType.PROCESSED, 450)
-	_add_item("ruby_ring", "Ruby Ring", "A gold ring with a ruby.", ItemData.ItemType.PROCESSED, 800)
-	_add_item("diamond_ring", "Diamond Ring", "A gold ring with a diamond.", ItemData.ItemType.PROCESSED, 1400)
-	_add_item("dragonstone_ring", "Dragonstone Ring", "A gold ring with a dragonstone.", ItemData.ItemType.PROCESSED, 2500)
-	_add_item("onyx_ring", "Onyx Ring", "A gold ring with an onyx.", ItemData.ItemType.PROCESSED, 5000)
+	_add_item("sapphire_ring", "Sapphire Ring", "A gold ring with a sapphire.", ItemData.ItemType.PROCESSED, 250, ItemData.EquipmentSlot.RING)
+	_add_item("emerald_ring", "Emerald Ring", "A gold ring with an emerald.", ItemData.ItemType.PROCESSED, 450, ItemData.EquipmentSlot.RING)
+	_add_item("ruby_ring", "Ruby Ring", "A gold ring with a ruby.", ItemData.ItemType.PROCESSED, 800, ItemData.EquipmentSlot.RING)
+	_add_item("diamond_ring", "Diamond Ring", "A gold ring with a diamond.", ItemData.ItemType.PROCESSED, 1400, ItemData.EquipmentSlot.RING)
+	_add_item("dragonstone_ring", "Dragonstone Ring", "A gold ring with a dragonstone.", ItemData.ItemType.PROCESSED, 2500, ItemData.EquipmentSlot.RING)
+	_add_item("onyx_ring", "Onyx Ring", "A gold ring with an onyx.", ItemData.ItemType.PROCESSED, 5000, ItemData.EquipmentSlot.RING)
 	
 	# Jewelry - Necklaces
-	_add_item("sapphire_necklace", "Sapphire Necklace", "A gold necklace with a sapphire.", ItemData.ItemType.PROCESSED, 300)
-	_add_item("emerald_necklace", "Emerald Necklace", "A gold necklace with an emerald.", ItemData.ItemType.PROCESSED, 550)
-	_add_item("ruby_necklace", "Ruby Necklace", "A gold necklace with a ruby.", ItemData.ItemType.PROCESSED, 950)
-	_add_item("diamond_necklace", "Diamond Necklace", "A gold necklace with a diamond.", ItemData.ItemType.PROCESSED, 1600)
-	_add_item("dragonstone_necklace", "Dragonstone Necklace", "A gold necklace with a dragonstone.", ItemData.ItemType.PROCESSED, 2800)
-	_add_item("onyx_necklace", "Onyx Necklace", "A gold necklace with an onyx.", ItemData.ItemType.PROCESSED, 5500)
+	_add_item("sapphire_necklace", "Sapphire Necklace", "A gold necklace with a sapphire.", ItemData.ItemType.PROCESSED, 300, ItemData.EquipmentSlot.NECKLACE)
+	_add_item("emerald_necklace", "Emerald Necklace", "A gold necklace with an emerald.", ItemData.ItemType.PROCESSED, 550, ItemData.EquipmentSlot.NECKLACE)
+	_add_item("ruby_necklace", "Ruby Necklace", "A gold necklace with a ruby.", ItemData.ItemType.PROCESSED, 950, ItemData.EquipmentSlot.NECKLACE)
+	_add_item("diamond_necklace", "Diamond Necklace", "A gold necklace with a diamond.", ItemData.ItemType.PROCESSED, 1600, ItemData.EquipmentSlot.NECKLACE)
+	_add_item("dragonstone_necklace", "Dragonstone Necklace", "A gold necklace with a dragonstone.", ItemData.ItemType.PROCESSED, 2800, ItemData.EquipmentSlot.NECKLACE)
+	_add_item("onyx_necklace", "Onyx Necklace", "A gold necklace with an onyx.", ItemData.ItemType.PROCESSED, 5500, ItemData.EquipmentSlot.NECKLACE)
   
 	# Animal hides and skins (for Skinning skill)
 	_add_item("rabbit_hide", "Rabbit Hide", "Soft hide from a rabbit.", ItemData.ItemType.RAW_MATERIAL, 5)
@@ -316,57 +316,58 @@ func _load_items() -> void:
 	_add_item("phoenix_feather", "Phoenix Feather", "Radiant feather from a phoenix.", ItemData.ItemType.RAW_MATERIAL, 1000)
 	
 	# Crafted leather armor (from Crafting skill)
-	_add_item("leather_gloves", "Leather Gloves", "Gloves made from soft rabbit hide.", ItemData.ItemType.TOOL, 15)
-	_add_item("leather_boots", "Leather Boots", "Boots made from soft rabbit hide.", ItemData.ItemType.TOOL, 20)
-	_add_item("leather_cowl", "Leather Cowl", "A leather hood for head protection.", ItemData.ItemType.TOOL, 30)
-	_add_item("leather_vambraces", "Leather Vambraces", "Leather arm guards.", ItemData.ItemType.TOOL, 40)
-	_add_item("leather_body", "Leather Body", "A leather chest piece.", ItemData.ItemType.TOOL, 80)
-	_add_item("leather_chaps", "Leather Chaps", "Leather leg armor.", ItemData.ItemType.TOOL, 70)
-	_add_item("hard_leather_body", "Hard Leather Body", "A reinforced leather body.", ItemData.ItemType.TOOL, 120)
-	_add_item("studded_body", "Studded Body", "A studded leather body.", ItemData.ItemType.TOOL, 160)
-	_add_item("studded_chaps", "Studded Chaps", "Studded leather leg armor.", ItemData.ItemType.TOOL, 140)
-	_add_item("snake_skin_body", "Snake Skin Body", "Body armor made from snake skin.", ItemData.ItemType.TOOL, 200)
-	_add_item("snake_skin_chaps", "Snake Skin Chaps", "Leg armor made from snake skin.", ItemData.ItemType.TOOL, 180)
+	_add_item("leather_gloves", "Leather Gloves", "Gloves made from soft rabbit hide.", ItemData.ItemType.TOOL, 15, ItemData.EquipmentSlot.GLOVES)
+	_add_item("leather_boots", "Leather Boots", "Boots made from soft rabbit hide.", ItemData.ItemType.TOOL, 20, ItemData.EquipmentSlot.BOOTS)
+	_add_item("leather_cowl", "Leather Cowl", "A leather hood for head protection.", ItemData.ItemType.TOOL, 30, ItemData.EquipmentSlot.HELM)
+	_add_item("leather_vambraces", "Leather Vambraces", "Leather arm guards.", ItemData.ItemType.TOOL, 40, ItemData.EquipmentSlot.GLOVES)
+	_add_item("leather_body", "Leather Body", "A leather chest piece.", ItemData.ItemType.TOOL, 80, ItemData.EquipmentSlot.CHEST)
+	_add_item("leather_chaps", "Leather Chaps", "Leather leg armor.", ItemData.ItemType.TOOL, 70, ItemData.EquipmentSlot.LEGS)
+	_add_item("hard_leather_body", "Hard Leather Body", "A reinforced leather body.", ItemData.ItemType.TOOL, 120, ItemData.EquipmentSlot.CHEST)
+	_add_item("studded_body", "Studded Body", "A studded leather body.", ItemData.ItemType.TOOL, 160, ItemData.EquipmentSlot.CHEST)
+	_add_item("studded_chaps", "Studded Chaps", "Studded leather leg armor.", ItemData.ItemType.TOOL, 140, ItemData.EquipmentSlot.LEGS)
+	_add_item("snake_skin_body", "Snake Skin Body", "Body armor made from snake skin.", ItemData.ItemType.TOOL, 200, ItemData.EquipmentSlot.CHEST)
+	_add_item("snake_skin_chaps", "Snake Skin Chaps", "Leg armor made from snake skin.", ItemData.ItemType.TOOL, 180, ItemData.EquipmentSlot.LEGS)
 	
 	# Green dragonhide armor
-	_add_item("green_dhide_vambraces", "Green D'hide Vambraces", "Green dragonhide vambraces.", ItemData.ItemType.TOOL, 400)
-	_add_item("green_dhide_chaps", "Green D'hide Chaps", "Green dragonhide chaps.", ItemData.ItemType.TOOL, 800)
-	_add_item("green_dhide_body", "Green D'hide Body", "Green dragonhide body armor.", ItemData.ItemType.TOOL, 1200)
+	_add_item("green_dhide_vambraces", "Green D'hide Vambraces", "Green dragonhide vambraces.", ItemData.ItemType.TOOL, 400, ItemData.EquipmentSlot.GLOVES)
+	_add_item("green_dhide_chaps", "Green D'hide Chaps", "Green dragonhide chaps.", ItemData.ItemType.TOOL, 800, ItemData.EquipmentSlot.LEGS)
+	_add_item("green_dhide_body", "Green D'hide Body", "Green dragonhide body armor.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.CHEST)
 	
 	# Blue dragonhide armor
-	_add_item("blue_dhide_vambraces", "Blue D'hide Vambraces", "Blue dragonhide vambraces.", ItemData.ItemType.TOOL, 500)
-	_add_item("blue_dhide_chaps", "Blue D'hide Chaps", "Blue dragonhide chaps.", ItemData.ItemType.TOOL, 1000)
-	_add_item("blue_dhide_body", "Blue D'hide Body", "Blue dragonhide body armor.", ItemData.ItemType.TOOL, 1500)
+	_add_item("blue_dhide_vambraces", "Blue D'hide Vambraces", "Blue dragonhide vambraces.", ItemData.ItemType.TOOL, 500, ItemData.EquipmentSlot.GLOVES)
+	_add_item("blue_dhide_chaps", "Blue D'hide Chaps", "Blue dragonhide chaps.", ItemData.ItemType.TOOL, 1000, ItemData.EquipmentSlot.LEGS)
+	_add_item("blue_dhide_body", "Blue D'hide Body", "Blue dragonhide body armor.", ItemData.ItemType.TOOL, 1500, ItemData.EquipmentSlot.CHEST)
 	
 	# Red dragonhide armor
-	_add_item("red_dhide_vambraces", "Red D'hide Vambraces", "Red dragonhide vambraces.", ItemData.ItemType.TOOL, 600)
-	_add_item("red_dhide_chaps", "Red D'hide Chaps", "Red dragonhide chaps.", ItemData.ItemType.TOOL, 1200)
-	_add_item("red_dhide_body", "Red D'hide Body", "Red dragonhide body armor.", ItemData.ItemType.TOOL, 1800)
+	_add_item("red_dhide_vambraces", "Red D'hide Vambraces", "Red dragonhide vambraces.", ItemData.ItemType.TOOL, 600, ItemData.EquipmentSlot.GLOVES)
+	_add_item("red_dhide_chaps", "Red D'hide Chaps", "Red dragonhide chaps.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.LEGS)
+	_add_item("red_dhide_body", "Red D'hide Body", "Red dragonhide body armor.", ItemData.ItemType.TOOL, 1800, ItemData.EquipmentSlot.CHEST)
 	
 	# Black dragonhide armor
-	_add_item("black_dhide_vambraces", "Black D'hide Vambraces", "Black dragonhide vambraces.", ItemData.ItemType.TOOL, 800)
-	_add_item("black_dhide_chaps", "Black D'hide Chaps", "Black dragonhide chaps.", ItemData.ItemType.TOOL, 1600)
-	_add_item("black_dhide_body", "Black D'hide Body", "Black dragonhide body armor.", ItemData.ItemType.TOOL, 2400)
+	_add_item("black_dhide_vambraces", "Black D'hide Vambraces", "Black dragonhide vambraces.", ItemData.ItemType.TOOL, 800, ItemData.EquipmentSlot.GLOVES)
+	_add_item("black_dhide_chaps", "Black D'hide Chaps", "Black dragonhide chaps.", ItemData.ItemType.TOOL, 1600, ItemData.EquipmentSlot.LEGS)
+	_add_item("black_dhide_body", "Black D'hide Body", "Black dragonhide body armor.", ItemData.ItemType.TOOL, 2400, ItemData.EquipmentSlot.CHEST)
 	
 	# Frost dragonhide armor
-	_add_item("frost_dhide_vambraces", "Frost D'hide Vambraces", "Frost dragonhide vambraces.", ItemData.ItemType.TOOL, 1000)
-	_add_item("frost_dhide_chaps", "Frost D'hide Chaps", "Frost dragonhide chaps.", ItemData.ItemType.TOOL, 2000)
-	_add_item("frost_dhide_body", "Frost D'hide Body", "Frost dragonhide body armor.", ItemData.ItemType.TOOL, 3000)
+	_add_item("frost_dhide_vambraces", "Frost D'hide Vambraces", "Frost dragonhide vambraces.", ItemData.ItemType.TOOL, 1000, ItemData.EquipmentSlot.GLOVES)
+	_add_item("frost_dhide_chaps", "Frost D'hide Chaps", "Frost dragonhide chaps.", ItemData.ItemType.TOOL, 2000, ItemData.EquipmentSlot.LEGS)
+	_add_item("frost_dhide_body", "Frost D'hide Body", "Frost dragonhide body armor.", ItemData.ItemType.TOOL, 3000, ItemData.EquipmentSlot.CHEST)
 	
 	# Royal dragonhide armor
-	_add_item("royal_dhide_vambraces", "Royal D'hide Vambraces", "Royal dragonhide vambraces.", ItemData.ItemType.TOOL, 1200)
-	_add_item("royal_dhide_chaps", "Royal D'hide Chaps", "Royal dragonhide chaps.", ItemData.ItemType.TOOL, 2400)
-	_add_item("royal_dhide_body", "Royal D'hide Body", "Royal dragonhide body armor.", ItemData.ItemType.TOOL, 3600)
+	_add_item("royal_dhide_vambraces", "Royal D'hide Vambraces", "Royal dragonhide vambraces.", ItemData.ItemType.TOOL, 1200, ItemData.EquipmentSlot.GLOVES)
+	_add_item("royal_dhide_chaps", "Royal D'hide Chaps", "Royal dragonhide chaps.", ItemData.ItemType.TOOL, 2400, ItemData.EquipmentSlot.LEGS)
+	_add_item("royal_dhide_body", "Royal D'hide Body", "Royal dragonhide body armor.", ItemData.ItemType.TOOL, 3600, ItemData.EquipmentSlot.CHEST)
 
 
 ## Helper to add item definition
-func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
+func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int, equipment_slot: ItemData.EquipmentSlot = ItemData.EquipmentSlot.NONE) -> void:
 	var item := ItemData.new()
 	item.id = id
 	item.name = display_name
 	item.description = desc
 	item.type = type
 	item.value = value
+	item.equipment_slot = equipment_slot
 	items[id] = item
 
 ## Get item data by ID
