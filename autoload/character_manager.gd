@@ -79,7 +79,7 @@ func create_character(slot: int, character_name: String) -> bool:
 		"name": character_name.strip_edges(),
 		"created_at": now,
 		"last_played": now,
-		"total_level": 6,  # Starting total level (6 skills at level 1)
+		"total_level": GameManager.get_total_level(),  # Dynamic calculation
 		"total_xp": 0.0
 	}
 	
@@ -184,7 +184,7 @@ func _migrate_old_save_if_exists() -> void:
 			"name": "Legacy Character",
 			"created_at": now,
 			"last_played": now,
-			"total_level": 6,
+			"total_level": GameManager.get_total_level(),  # Dynamic calculation
 			"total_xp": 0.0
 		}
 		

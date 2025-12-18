@@ -84,7 +84,7 @@ func _populate_character_slots() -> void:
 			info_vbox.add_child(stats_label)
 			
 			var created_timestamp: int = character_data.get("created_at", 0)
-			var created_date := Time.get_datetime_string_from_unix_time(created_timestamp)
+			var created_date := "Unknown" if created_timestamp == 0 else Time.get_datetime_string_from_unix_time(created_timestamp)
 			var created_label := Label.new()
 			created_label.text = "Created: %s" % created_date
 			created_label.add_theme_font_size_override("font_size", 10)
@@ -92,7 +92,7 @@ func _populate_character_slots() -> void:
 			info_vbox.add_child(created_label)
 			
 			var last_played_timestamp: int = character_data.get("last_played", 0)
-			var last_played_date := Time.get_datetime_string_from_unix_time(last_played_timestamp)
+			var last_played_date := "Unknown" if last_played_timestamp == 0 else Time.get_datetime_string_from_unix_time(last_played_timestamp)
 			var last_played_label := Label.new()
 			last_played_label.text = "Last Played: %s" % last_played_date
 			last_played_label.add_theme_font_size_override("font_size", 10)
