@@ -74,12 +74,16 @@ func create_character(slot: int, character_name: String) -> bool:
 		return false
 	
 	var now := int(Time.get_unix_time_from_system())
+	
+	# Calculate initial total level (number of skills at level 1)
+	var initial_total_level := GameManager.skills.size()
+	
 	var character_data := {
 		"slot": slot,
 		"name": character_name.strip_edges(),
 		"created_at": now,
 		"last_played": now,
-		"total_level": GameManager.get_total_level(),  # Dynamic calculation
+		"total_level": initial_total_level,
 		"total_xp": 0.0
 	}
 	
@@ -177,6 +181,31 @@ func _migrate_old_save_if_exists() -> void:
 	if FileAccess.file_exists(OLD_SAVE_FILE) and characters.is_empty():
 		print("[CharacterManager] Found old save file. Migrating to slot 0...")
 		
+		# Read old save to get actual total level and XP
+		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
+		var total_level := GameManager.skills.size()  # Default to initial level
+		var total_xp := 0.0
+		
+		if old_file:
+			var json_string := old_file.get_as_text()
+			old_file.close()
+			
+			var json := JSON.new()
+			if json.parse(json_string) == OK:
+				var save_data: Dictionary = json.data
+				
+				# Calculate total level from old save
+				if save_data.has("skill_levels"):
+					total_level = 0
+					for skill_id in save_data["skill_levels"]:
+						total_level += int(save_data["skill_levels"][skill_id])
+				
+				# Calculate total XP from old save
+				if save_data.has("skill_xp"):
+					total_xp = 0.0
+					for skill_id in save_data["skill_xp"]:
+						total_xp += save_data["skill_xp"][skill_id]
+		
 		# Create a character in slot 0
 		var now := int(Time.get_unix_time_from_system())
 		var character_data := {
@@ -184,8 +213,8 @@ func _migrate_old_save_if_exists() -> void:
 			"name": "Legacy Character",
 			"created_at": now,
 			"last_played": now,
-			"total_level": GameManager.get_total_level(),  # Dynamic calculation
-			"total_xp": 0.0
+			"total_level": total_level,
+			"total_xp": total_xp
 		}
 		
 		characters["0"] = character_data
@@ -193,10 +222,10 @@ func _migrate_old_save_if_exists() -> void:
 		
 		# Copy old save file to new slot 0 save file
 		var new_save_file := _get_save_file_path(0)
-		var old_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
-		if old_file:
-			var content := old_file.get_as_text()
-			old_file.close()
+		var copy_file := FileAccess.open(OLD_SAVE_FILE, FileAccess.READ)
+		if copy_file:
+			var content := copy_file.get_as_text()
+			copy_file.close()
 			
 			var new_file := FileAccess.open(new_save_file, FileAccess.WRITE)
 			if new_file:

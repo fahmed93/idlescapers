@@ -253,14 +253,8 @@ func delete_save() -> void:
 
 ## Reset all game state to defaults
 func _reset_game_state() -> void:
-	# Reset GameManager
-	for skill_id in GameManager.skills:
-		GameManager.skill_xp[skill_id] = 0.0
-		GameManager.skill_levels[skill_id] = 1
-	GameManager.current_skill_id = ""
-	GameManager.current_method_id = ""
-	GameManager.training_progress = 0.0
-	GameManager.is_training = false
+	# Reset GameManager (uses encapsulated method)
+	GameManager.reset_all_skills()
 	
 	# Reset Inventory
 	Inventory.inventory.clear()
