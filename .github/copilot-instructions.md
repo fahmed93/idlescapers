@@ -123,4 +123,4 @@ extends Node
 - Mobile-first: 720x1280 viewport, touch emulation enabled
 
 ## Future Work
-See `TODO.md` for planned skills (Mining, Smithing, Combat, Crafting, Farming, etc.)
+See `docs/TODO.md` for planned skills (Mining, Smithing, Combat, Crafting, Farming, etc.)

@@ -131,6 +131,12 @@ func _load_items() -> void:
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+	
+	# Astrology materials
+	_add_item("stardust", "Stardust", "Shimmering dust from the cosmos.", ItemData.ItemType.RAW_MATERIAL, 10)
+	_add_item("celestial_essence", "Celestial Essence", "Pure essence of celestial bodies.", ItemData.ItemType.PROCESSED, 50)
+	_add_item("astral_shard", "Astral Shard", "A fragment of astral energy.", ItemData.ItemType.PROCESSED, 150)
+	_add_item("void_crystal", "Void Crystal", "A mysterious crystal from the void.", ItemData.ItemType.PROCESSED, 1000)
 
 
 ## Helper to add item definition
