@@ -36,7 +36,8 @@ jobs:
 
       - name: Import project
         run: |
-          godot --headless --import --quit || true
+          echo "Importing project assets..."
+          godot --headless --import --quit || echo "Warning: Import process completed with errors, but continuing with export"
           echo "Import completed"
 
       - name: Build HTML5 export
