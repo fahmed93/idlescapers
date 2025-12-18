@@ -1,6 +1,8 @@
 ## Main game scene controller
 extends Control
 
+const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
+
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
@@ -67,7 +69,7 @@ func _populate_skill_sidebar() -> void:
 	for skill_id in GameManager.skills:
 		var skill: SkillData = GameManager.skills[skill_id]
 		var button := Button.new()
-		button.custom_minimum_size = Vector2(0, 60)
+		button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
 		button.text = "%s\nLv. %d" % [skill.name, GameManager.get_skill_level(skill_id)]
 		button.add_theme_color_override("font_color", skill.color)
 		button.pressed.connect(_on_skill_selected.bind(skill_id))
@@ -343,12 +345,15 @@ func _create_store_ui() -> void:
 	
 	# Add to main content (after inventory panel)
 	main_content.add_child(store_panel)
-	main_content.move_child(store_panel, inventory_panel.get_index() + 1)
+	# Move after inventory panel if it exists in the tree
+	var inventory_index := inventory_panel.get_index()
+	if inventory_index >= 0:
+		main_content.move_child(store_panel, inventory_index + 1)
 
 ## Create Store button
 func _create_store_button() -> void:
 	store_button = Button.new()
-	store_button.custom_minimum_size = Vector2(0, 60)
+	store_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
 	store_button.text = "Store\n%d Gold" % Store.get_gold()
 	store_button.add_theme_color_override("font_color", Color(1.0, 0.84, 0.0))  # Gold color
 	store_button.pressed.connect(_on_store_selected)

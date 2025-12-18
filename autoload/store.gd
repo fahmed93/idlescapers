@@ -48,6 +48,7 @@ func sell_item(item_id: String, amount: int = 1) -> bool:
 	# Get item data to determine value
 	var item_data := Inventory.get_item_data(item_id)
 	if item_data == null:
+		push_warning("[Store] Cannot sell item '%s': Item data not found" % item_id)
 		return false
 	
 	# Calculate total value
