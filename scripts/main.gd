@@ -199,7 +199,8 @@ func _populate_action_list() -> void:
 			for item_id in method.consumed_items:
 				var item_data := Inventory.get_item_data(item_id)
 				var item_name: String = item_data.name if item_data else item_id
-				items_text += "Uses: %s x%d " % [item_name, method.consumed_items[item_id]]
+				var player_count := Inventory.get_item_count(item_id)
+				items_text += "Uses: %s x%d (%d owned) " % [item_name, method.consumed_items[item_id], player_count]
 		if not method.produced_items.is_empty():
 			for item_id in method.produced_items:
 				var item_data := Inventory.get_item_data(item_id)
@@ -284,6 +285,10 @@ func _on_inventory_updated() -> void:
 	# Update the inventory display in the dedicated inventory screen
 	if inventory_items_list:
 		_update_inventory_display(inventory_items_list)
+	
+	# Update action list to reflect new item counts if viewing a skill
+	if not selected_skill_id.is_empty() and not is_store_view and not is_upgrades_view and not is_inventory_view:
+		_populate_action_list()
 
 func _update_inventory_display(grid: GridContainer) -> void:
 	# Clear inventory grid
