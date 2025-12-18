@@ -17,8 +17,8 @@ var _auto_save_timer := 0.0
 var last_save_time: int = 0
 
 func _ready() -> void:
-	# Load game on startup
-	call_deferred("_delayed_load")
+	# Load game on startup - DISABLED to start fresh every time
+	# call_deferred("_delayed_load")
 
 func _delayed_load() -> void:
 	load_game()
