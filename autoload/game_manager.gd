@@ -142,6 +142,17 @@ func _load_skills() -> void:
 	skill_xp["firemaking"] = 0.0
 	skill_levels["firemaking"] = 1
 	
+	# Create Herblore skill
+	var herblore := SkillData.new()
+	herblore.id = "herblore"
+	herblore.name = "Herblore"
+	herblore.description = "Create potions from herbs and secondary ingredients."
+	herblore.color = Color(0.2, 0.8, 0.3)
+	herblore.training_methods = preload("res://autoload/skills/herblore_skill.gd").create_methods()
+	skills["herblore"] = herblore
+	skill_xp["herblore"] = 0.0
+	skill_levels["herblore"] = 1
+	
 	# Create Smithing skill
 	var smithing := SkillData.new()
 	smithing.id = "smithing"
