@@ -9,11 +9,15 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 - **Training Methods**: Unlock new training methods at skill milestones
 - **Offline Progress**: Automatically calculates progress while you're away
 - **Save/Load System**: Auto-saves every 30 seconds with JSON-based persistence
+- **Store & Economy**: Sell items for gold to track your wealth
 
 ### Current Skills
 - **Fishing**: Catch fish from shrimp to anglerfish (10 training methods)
 - **Cooking**: Cook raw fish with varying success rates (10 training methods)
 - **Woodcutting**: Chop trees from normal to redwood (7 training methods)
+- **Fletching**: Create bows and arrows from logs
+- **Mining**: Extract ores from rocks
+- **Firemaking**: Burn logs for XP
 
 ### UI Features
 - Mobile-first touch-friendly design
@@ -21,6 +25,8 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 - Training method list with requirements
 - Progress bars for XP and actions
 - Inventory display with item counts
+- Store interface for selling items
+- Gold tracking across all displays
 - Offline progress popup
 
 ## Getting Started
@@ -69,6 +75,7 @@ XP required for each level: `sum of floor((level + 300 * 2^(level/7)) / 4)`
 - **GameManager**: Manages skill XP, levels, and training state
 - **Inventory**: Handles item storage and retrieval
 - **SaveManager**: Saves/loads game state and calculates offline progress
+- **Store**: Manages gold currency and item selling
 
 ### Resource Classes
 - **SkillData**: Defines a skill with its training methods

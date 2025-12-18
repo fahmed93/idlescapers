@@ -398,6 +398,9 @@ func _populate_store_items() -> void:
 	
 	for item_id in items:
 		var item_data := Inventory.get_item_data(item_id)
+		if item_data == null:
+			continue  # Skip items without data
+		
 		var count: int = items[item_id]
 		
 		var item_panel := PanelContainer.new()
@@ -412,7 +415,7 @@ func _populate_store_items() -> void:
 		hbox.add_child(info_vbox)
 		
 		var name_label := Label.new()
-		name_label.text = item_data.name if item_data else item_id
+		name_label.text = item_data.name
 		info_vbox.add_child(name_label)
 		
 		var count_label := Label.new()
