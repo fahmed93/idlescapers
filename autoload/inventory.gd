@@ -269,6 +269,30 @@ func _load_items() -> void:
 	_add_item("astral_shard", "Astral Shard", "A fragment of astral energy.", ItemData.ItemType.PROCESSED, 150)
 	_add_item("void_crystal", "Void Crystal", "A mysterious crystal from the void.", ItemData.ItemType.PROCESSED, 1000)
 	
+	# Gems (uncut)
+	_add_item("sapphire", "Sapphire", "A beautiful blue gem.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("emerald", "Emerald", "A vibrant green gem.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("ruby", "Ruby", "A precious red gem.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("diamond", "Diamond", "A brilliant clear gem.", ItemData.ItemType.RAW_MATERIAL, 400)
+	_add_item("dragonstone", "Dragonstone", "A rare mystical gem.", ItemData.ItemType.RAW_MATERIAL, 800)
+	_add_item("onyx", "Onyx", "An extremely valuable black gem.", ItemData.ItemType.RAW_MATERIAL, 2000)
+	
+	# Jewelry - Rings
+	_add_item("sapphire_ring", "Sapphire Ring", "A gold ring with a sapphire.", ItemData.ItemType.PROCESSED, 250)
+	_add_item("emerald_ring", "Emerald Ring", "A gold ring with an emerald.", ItemData.ItemType.PROCESSED, 450)
+	_add_item("ruby_ring", "Ruby Ring", "A gold ring with a ruby.", ItemData.ItemType.PROCESSED, 800)
+	_add_item("diamond_ring", "Diamond Ring", "A gold ring with a diamond.", ItemData.ItemType.PROCESSED, 1400)
+	_add_item("dragonstone_ring", "Dragonstone Ring", "A gold ring with a dragonstone.", ItemData.ItemType.PROCESSED, 2500)
+	_add_item("onyx_ring", "Onyx Ring", "A gold ring with an onyx.", ItemData.ItemType.PROCESSED, 5000)
+	
+	# Jewelry - Necklaces
+	_add_item("sapphire_necklace", "Sapphire Necklace", "A gold necklace with a sapphire.", ItemData.ItemType.PROCESSED, 300)
+	_add_item("emerald_necklace", "Emerald Necklace", "A gold necklace with an emerald.", ItemData.ItemType.PROCESSED, 550)
+	_add_item("ruby_necklace", "Ruby Necklace", "A gold necklace with a ruby.", ItemData.ItemType.PROCESSED, 950)
+	_add_item("diamond_necklace", "Diamond Necklace", "A gold necklace with a diamond.", ItemData.ItemType.PROCESSED, 1600)
+	_add_item("dragonstone_necklace", "Dragonstone Necklace", "A gold necklace with a dragonstone.", ItemData.ItemType.PROCESSED, 2800)
+	_add_item("onyx_necklace", "Onyx Necklace", "A gold necklace with an onyx.", ItemData.ItemType.PROCESSED, 5500)
+  
 	# Animal hides and skins (for Skinning skill)
 	_add_item("rabbit_hide", "Rabbit Hide", "Soft hide from a rabbit.", ItemData.ItemType.RAW_MATERIAL, 5)
 	_add_item("chicken_hide", "Chicken Hide", "Hide from a chicken.", ItemData.ItemType.RAW_MATERIAL, 8)
