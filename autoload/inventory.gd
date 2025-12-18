@@ -49,6 +49,10 @@ func _load_items() -> void:
 	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Firemaking products
+	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
