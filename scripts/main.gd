@@ -7,7 +7,7 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
-@onready var sidebar_toggle_button: Button = $HSplitContainer/MainContent/SidebarToggleButton
+@onready var menu_button: Button = $MenuButton
 @onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContent/SelectedSkillHeader
 @onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
 @onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
@@ -78,7 +78,7 @@ func _setup_signals() -> void:
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
 	stop_button.pressed.connect(_on_stop_button_pressed)
-	sidebar_toggle_button.pressed.connect(_on_sidebar_toggle_pressed)
+	menu_button.pressed.connect(_on_sidebar_toggle_pressed)
 
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
@@ -813,7 +813,10 @@ func _on_upgrades_updated() -> void:
 
 ## Toggle sidebar visibility
 func _on_sidebar_toggle_pressed() -> void:
-	_set_sidebar_collapsed(skill_sidebar.visible)
+	print("Sidebar toggle pressed! Current state: ", is_sidebar_expanded)
+	is_sidebar_expanded = not is_sidebar_expanded
+	_set_sidebar_collapsed(not is_sidebar_expanded)
+	print("New state: ", is_sidebar_expanded)
 
 ## Set sidebar collapsed/expanded state
 func _set_sidebar_collapsed(collapsed: bool) -> void:
@@ -822,7 +825,6 @@ func _set_sidebar_collapsed(collapsed: bool) -> void:
 	
 	# Update toggle button text
 	if collapsed:
-		sidebar_toggle_button.text = "☰ Skills"
+		menu_button.text = "☰"
 	else:
-		sidebar_toggle_button.text = "✕ Close"
-
+		menu_button.text = "✕"
