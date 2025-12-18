@@ -303,6 +303,7 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through to button
+		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # Fill the button completely
 		item_button.add_child(vbox)
 		
 		# Helper function to create labels with mouse filter ignored
@@ -310,6 +311,7 @@ func _update_inventory_display(grid: GridContainer) -> void:
 			var label := Label.new()
 			label.text = text
 			label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			label.size_flags_horizontal = Control.SIZE_EXPAND_FILL  # Expand to fill width
 			label.add_theme_font_size_override("font_size", font_size)
 			if color != Color.WHITE:
 				label.add_theme_color_override("font_color", color)
