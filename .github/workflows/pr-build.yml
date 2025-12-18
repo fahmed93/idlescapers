@@ -1,0 +1,87 @@
+name: Build Godot Project on PR
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      EXPORT_PRESET_NAME: "Web"
+      GODOT_VERSION: "4.5.0"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: ${{ env.GODOT_VERSION }}
+          use-dotnet: false
+
+      - name: Install Godot Export Templates
+        run: |
+          echo "Installing Godot export templates for version ${{ env.GODOT_VERSION }}..."
+          TEMPLATE_VERSION=$(echo "${{ env.GODOT_VERSION }}" | sed 's/\.0$//')
+          TEMPLATE_DIR="$HOME/.local/share/godot/export_templates/${TEMPLATE_VERSION}.stable"
+          mkdir -p "$TEMPLATE_DIR"
+          cd "$TEMPLATE_DIR"
+          wget -q "https://github.com/godotengine/godot/releases/download/${TEMPLATE_VERSION}-stable/Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to download export templates"; exit 1; }
+          unzip -q "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz" || { echo "Error: Failed to extract export templates"; exit 1; }
+          if [ -d templates ]; then
+            # Move all files including hidden ones
+            shopt -s dotglob
+            mv templates/* . || { echo "Error: Failed to move template files"; exit 1; }
+            shopt -u dotglob
+            rm -rf templates
+          fi
+          rm "Godot_v${TEMPLATE_VERSION}-stable_export_templates.tpz"
+          echo "Export templates installed successfully"
+          ls -la
+
+      - name: Verify Setup
+        run: |
+          godot --version
+
+      - name: Import project
+        run: |
+          echo "Importing project assets..."
+          set +e
+          godot --headless --import --quit
+          EXIT_CODE=$?
+          set -e
+          if [ $EXIT_CODE -ne 0 ]; then
+            echo "Warning: Godot import exited with code $EXIT_CODE. This is often normal during initial import or when assets are already cached."
+            echo "Proceeding with export step..."
+          else
+            echo "Import completed successfully"
+          fi
+
+      - name: Build HTML5 export
+        run: |
+          mkdir -p build/web
+          echo "Exporting project to HTML5..."
+          if ! godot --headless --export-release "${{ env.EXPORT_PRESET_NAME }}" build/web/index.html; then
+            echo "Error: Export failed with exit code $?"
+            exit 1
+          fi
+          echo "Export completed successfully"
+          
+      - name: Verify export
+        run: |
+          if [ ! -f "build/web/index.html" ]; then
+            echo "Error: index.html not found in build output"
+            exit 1
+          fi
+          echo "Build verification passed"
+          echo "✅ Godot project built successfully!"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: godot-web-build
+          path: build/web
+          retention-days: 7
