@@ -192,7 +192,8 @@ func _populate_action_list() -> void:
 				var item_data := Inventory.get_item_data(item_id)
 				var item_name: String = item_data.name if item_data else item_id
 				var player_count := Inventory.get_item_count(item_id)
-				items_text += "Uses: %s x%d (%d owned) " % [item_name, method.consumed_items[item_id], player_count]
+				var count_color := "green" if player_count > 0 else "red"
+				items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
 		if not method.produced_items.is_empty():
 			for item_id in method.produced_items:
 				var item_data := Inventory.get_item_data(item_id)
@@ -200,11 +201,15 @@ func _populate_action_list() -> void:
 				items_text += "→ %s " % item_name
 		
 		if not items_text.is_empty():
-			var items_label := Label.new()
+			var items_label := RichTextLabel.new()
 			items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
+			items_label.bbcode_enabled = true
 			items_label.text = items_text.strip_edges()
-			items_label.add_theme_font_size_override("font_size", 11)
-			items_label.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
+			items_label.fit_content = true
+			items_label.scroll_active = false
+			items_label.custom_minimum_size = Vector2(0, 20)
+			items_label.add_theme_font_size_override("normal_font_size", 11)
+			items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
 			info_vbox.add_child(items_label)
 		
 		var train_button := Button.new()
@@ -294,7 +299,7 @@ func _update_action_item_counts() -> void:
 		
 		# Find the items label for this method
 		var label_name := "ItemsLabel_%s" % method.id
-		var items_label: Label = null
+		var items_label: RichTextLabel = null
 		
 		# Search through action list panels to find the label
 		for panel in action_list.get_children():
@@ -312,7 +317,8 @@ func _update_action_item_counts() -> void:
 			var item_data := Inventory.get_item_data(item_id)
 			var item_name: String = item_data.name if item_data else item_id
 			var player_count := Inventory.get_item_count(item_id)
-			items_text += "Uses: %s x%d (%d owned) " % [item_name, method.consumed_items[item_id], player_count]
+			var count_color := "green" if player_count > 0 else "red"
+			items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
 		
 		# Add produced items
 		if not method.produced_items.is_empty():

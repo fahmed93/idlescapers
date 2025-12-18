@@ -49,7 +49,8 @@ func _ready() -> void:
 			var item_data := Inventory.get_item_data(item_id)
 			var item_name: String = item_data.name if item_data else item_id
 			var player_count := Inventory.get_item_count(item_id)
-			items_text += "Uses: %s x%d (%d owned) " % [item_name, method.consumed_items[item_id], player_count]
+			var count_color := "green" if player_count > 0 else "red"
+			items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
 		
 		print("  %s: %s" % [method.name, items_text.strip_edges()])
 	
@@ -109,9 +110,11 @@ func _ready() -> void:
 	var item_data := Inventory.get_item_data(item_id)
 	assert(item_data != null, "Raw shrimp item data should exist")
 	var player_count := Inventory.get_item_count(item_id)
-	item_text_zero = "Uses: %s x%d (%d owned)" % [item_data.name, 1, player_count]
+	var count_color := "green" if player_count > 0 else "red"
+	item_text_zero = "Uses: %s x%d [color=%s](%d owned)[/color]" % [item_data.name, 1, count_color, player_count]
 	print("  Display text: %s" % item_text_zero)
 	assert("(0 owned)" in item_text_zero, "Should show 0 owned when player has none")
+	assert("red" in item_text_zero, "Should be colored red when count is 0")
 	print("  ✓ Zero count displayed correctly")
 	
 	print("\n=== ALL TESTS PASSED ===")

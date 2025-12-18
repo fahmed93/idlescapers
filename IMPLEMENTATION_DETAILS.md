@@ -49,30 +49,33 @@ Uses: Raw Shrimp x1 (15 owned) → Cooked Shrimp
 [Train]
 ```
 
-### Cooking Skill - After (without items)
+### Cooking Skill - After (without items - RED)
 ```
 Cook Shrimp
 Level 1 | 30.0 XP | 2.0s | 70% success
 Uses: Raw Shrimp x1 (0 owned) → Cooked Shrimp
+                    ^^^^^^^^^ (displayed in RED)
 
 [Train]
 ```
 
-### Herblore Skill - Multiple Ingredients
+### Herblore Skill - Multiple Ingredients (GREEN)
 ```
 Attack Potion
 Level 1 | 25.0 XP | 2.0s
 Uses: Guam Leaf x1 (3 owned) Uses: Eye of Newt x1 (7 owned) → Attack Potion
+                   ^^^^^^^^^ (GREEN)                ^^^^^^^^^ (GREEN)
 
 [Train]
 ```
 
 ## Benefits
 
-1. **User Experience**: Players can immediately see if they have enough materials
+1. **User Experience**: Players can immediately see if they have enough materials, with color-coded visual feedback
 2. **Performance**: Targeted label updates avoid recreating entire UI on every inventory change
 3. **Maintainability**: Minimal code changes, consistent with existing patterns
 4. **Universal**: Works automatically with all skills that consume items
+5. **Visual Clarity**: Red/green color coding provides instant visual feedback
 
 ## Skills Affected
 
