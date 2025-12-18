@@ -13,6 +13,9 @@ const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 const EQUIPMENT_SLOT_SIZE := Vector2(100, 80)
 const EQUIPMENT_CENTER_X := 280.0  # Center of content area
 const EQUIPMENT_SPACING_X := 120.0  # Horizontal spacing for side items
+const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from center
+const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
+const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
@@ -733,8 +736,8 @@ func _populate_equipment_slots() -> void:
 		ItemData.EquipmentSlot.CHEST: Vector2(EQUIPMENT_CENTER_X, 200),  # Center - body
 		ItemData.EquipmentSlot.OFF_HAND: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_SPACING_X, 200),  # Right side - off hand
 		ItemData.EquipmentSlot.GLOVES: Vector2(EQUIPMENT_CENTER_X, 290),  # Below chest - gloves
-		ItemData.EquipmentSlot.RING_1: Vector2(EQUIPMENT_CENTER_X - 60, 380),  # Below gloves left - ring 1
-		ItemData.EquipmentSlot.RING_2: Vector2(EQUIPMENT_CENTER_X + 60, 380),  # Below gloves right - ring 2
+		ItemData.EquipmentSlot.RING_1: Vector2(EQUIPMENT_CENTER_X - EQUIPMENT_RING_OFFSET, 380),  # Below gloves left - ring 1
+		ItemData.EquipmentSlot.RING_2: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_RING_OFFSET, 380),  # Below gloves right - ring 2
 		ItemData.EquipmentSlot.LEGS: Vector2(EQUIPMENT_CENTER_X, 470),  # Below rings - legs
 		ItemData.EquipmentSlot.BOOTS: Vector2(EQUIPMENT_CENTER_X, 560),  # Bottom - boots
 	}
@@ -758,7 +761,7 @@ func _populate_equipment_slots() -> void:
 		var slot_label := Label.new()
 		slot_label.text = slot_name
 		slot_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		slot_label.add_theme_font_size_override("font_size", 11)
+		slot_label.add_theme_font_size_override("font_size", EQUIPMENT_SLOT_LABEL_FONT_SIZE)
 		slot_label.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
 		slot_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		vbox.add_child(slot_label)
@@ -772,13 +775,13 @@ func _populate_equipment_slots() -> void:
 			var item_data := Inventory.get_item_data(equipped_item_id)
 			equipped_label.text = item_data.name if item_data else equipped_item_id
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
-			equipped_label.add_theme_font_size_override("font_size", 10)
+			equipped_label.add_theme_font_size_override("font_size", EQUIPMENT_ITEM_LABEL_FONT_SIZE)
 			# Make button clickable to unequip
 			slot_button.pressed.connect(_on_unequip_from_slot.bind(slot))
 		else:
 			equipped_label.text = "Empty"
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-			equipped_label.add_theme_font_size_override("font_size", 10)
+			equipped_label.add_theme_font_size_override("font_size", EQUIPMENT_ITEM_LABEL_FONT_SIZE)
 			slot_button.disabled = true
 		
 		vbox.add_child(equipped_label)
