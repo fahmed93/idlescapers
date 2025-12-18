@@ -180,8 +180,8 @@ func _load_items() -> void:
 	_add_item("magic_potion", "Magic Potion", "Boosts Magic level.", ItemData.ItemType.CONSUMABLE, 345)
 	_add_item("zamorak_brew", "Zamorak Brew", "A dark brew that boosts Attack and Strength.", ItemData.ItemType.CONSUMABLE, 350)
 	_add_item("overload", "Overload", "The ultimate combat potion.", ItemData.ItemType.CONSUMABLE, 2000)
-	
-	# Thieving rewards
+ 
+ # Thieving rewards
 	_add_item("coins", "Coins", "Currency obtained from pickpocketing.", ItemData.ItemType.PROCESSED, 1)
 	
 	# Astrology materials
