@@ -13,6 +13,12 @@ Three autoloads registered in `project.godot` provide global access:
 
 Access anywhere: `GameManager.get_skill_level("fishing")`, `Inventory.add_item("raw_shrimp", 1)`
 
+### Skill Organization
+Skills are organized in separate files under `autoload/skills/`:
+- Each skill has its own file (e.g., `fishing_skill.gd`, `woodcutting_skill.gd`)
+- Each skill file contains a static `create_methods()` function that returns training methods
+- Skills are loaded in `GameManager._load_skills()` using `preload()`
+
 ### Resource Classes (Data Definitions)
 All game content uses custom Resource classes in `resources/`:
 - `SkillData`: Skill definition with array of training methods
@@ -36,9 +42,33 @@ signal inventory_updated()
 ## Key Patterns
 
 ### Adding a New Skill
-1. Create training methods in `GameManager._create_<skill>_methods() -> Array[TrainingMethodData]`
-2. Register skill in `GameManager._load_skills()` with unique `id`, `name`, `color`
+1. Create a new file `autoload/skills/<skill>_skill.gd` with a static `create_methods()` function
+2. Register skill in `GameManager._load_skills()` with unique `id`, `name`, `color`, and preload the skill file
 3. Add related items in `Inventory._load_items()` using `_add_item()` helper
+
+Example skill file (`autoload/skills/fishing_skill.gd`):
+```gdscript
+## Fishing Skill
+## Contains training methods for the Fishing skill
+extends Node
+
+## Create and return all fishing training methods
+static func create_methods() -> Array[TrainingMethodData]:
+	var methods: Array[TrainingMethodData] = []
+	# Add training methods here
+	return methods
+```
+
+Register in `GameManager._load_skills()`:
+```gdscript
+var fishing := SkillData.new()
+fishing.id = "fishing"
+fishing.name = "Fishing"
+fishing.description = "Catch fish from waters around the world."
+fishing.color = Color(0.2, 0.6, 0.8)
+fishing.training_methods = preload("res://autoload/skills/fishing_skill.gd").create_methods()
+skills["fishing"] = fishing
+```
 
 ### Adding a New Item
 ```gdscript
