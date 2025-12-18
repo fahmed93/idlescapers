@@ -188,6 +188,28 @@ func _load_items() -> void:
 	_add_item("celestial_essence", "Celestial Essence", "Pure essence of celestial bodies.", ItemData.ItemType.PROCESSED, 50)
 	_add_item("astral_shard", "Astral Shard", "A fragment of astral energy.", ItemData.ItemType.PROCESSED, 150)
 	_add_item("void_crystal", "Void Crystal", "A mysterious crystal from the void.", ItemData.ItemType.PROCESSED, 1000)
+	
+	# Animal hides and skins (for Skinning skill)
+	_add_item("rabbit_hide", "Rabbit Hide", "Soft hide from a rabbit.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("chicken_hide", "Chicken Hide", "Leather from a chicken.", ItemData.ItemType.RAW_MATERIAL, 8)
+	_add_item("cowhide", "Cowhide", "Tough hide from a cow.", ItemData.ItemType.RAW_MATERIAL, 10)
+	_add_item("bear_hide", "Bear Hide", "Thick fur from a bear.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("wolf_hide", "Wolf Hide", "Durable pelt from a wolf.", ItemData.ItemType.RAW_MATERIAL, 20)
+	_add_item("snake_skin", "Snake Skin", "Scaled skin from a snake.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("crocodile_hide", "Crocodile Hide", "Tough scaled hide from a crocodile.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("yak_hide", "Yak Hide", "Wooly hide from a yak.", ItemData.ItemType.RAW_MATERIAL, 35)
+	_add_item("polar_bear_hide", "Polar Bear Hide", "Pristine white fur from a polar bear.", ItemData.ItemType.RAW_MATERIAL, 40)
+	_add_item("lion_hide", "Lion Hide", "Golden pelt from a lion.", ItemData.ItemType.RAW_MATERIAL, 45)
+	_add_item("tiger_hide", "Tiger Hide", "Striped fur from a tiger.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("black_bear_hide", "Black Bear Hide", "Sleek dark fur from a black bear.", ItemData.ItemType.RAW_MATERIAL, 55)
+	_add_item("blue_dragonhide", "Blue Dragonhide", "Azure scales from a blue dragon.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("red_dragonhide", "Red Dragonhide", "Crimson scales from a red dragon.", ItemData.ItemType.RAW_MATERIAL, 150)
+	_add_item("black_dragonhide", "Black Dragonhide", "Obsidian scales from a black dragon.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("green_dragonhide", "Green Dragonhide", "Emerald scales from a green dragon.", ItemData.ItemType.RAW_MATERIAL, 250)
+	_add_item("frost_dragonhide", "Frost Dragonhide", "Crystalline scales from a frost dragon.", ItemData.ItemType.RAW_MATERIAL, 350)
+	_add_item("royal_dragonhide", "Royal Dragonhide", "Platinum scales from a royal dragon.", ItemData.ItemType.RAW_MATERIAL, 500)
+	_add_item("chimera_hide", "Chimera Hide", "Multi-textured hide from a chimera.", ItemData.ItemType.RAW_MATERIAL, 750)
+	_add_item("phoenix_feather", "Phoenix Feather", "Radiant feather from a phoenix.", ItemData.ItemType.RAW_MATERIAL, 1000)
 
 
 ## Helper to add item definition
