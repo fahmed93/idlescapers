@@ -312,6 +312,10 @@ func _on_inventory_updated() -> void:
 	# Update the inventory display in the dedicated inventory screen
 	if inventory_items_list:
 		_update_inventory_display(inventory_items_list)
+	
+	# Refresh action list if viewing a skill to update time remaining displays
+	if not selected_skill_id.is_empty() and not is_store_view and not is_upgrades_view and not is_inventory_view:
+		_populate_action_list()
 
 func _update_inventory_display(grid: GridContainer) -> void:
 	# Clear inventory grid

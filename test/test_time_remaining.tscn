@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmv5kp2yqo7ew"]
+
+[ext_resource type="Script" path="res://test/test_time_remaining.gd" id="1_abc12"]
+
+[node name="TestTimeRemaining" type="Node"]
+script = ExtResource("1_abc12")
