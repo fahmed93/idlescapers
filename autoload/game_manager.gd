@@ -723,6 +723,18 @@ func _create_cooking_methods() -> Array[TrainingMethodData]:
 	cook_sailfish.success_rate = 0.93
 	methods.append(cook_sailfish)
 	
+	var cook_kraken_tentacle := TrainingMethodData.new()
+	cook_kraken_tentacle.id = "cook_kraken_tentacle"
+	cook_kraken_tentacle.name = "Cook Kraken Tentacle"
+	cook_kraken_tentacle.description = "Cook a legendary kraken tentacle into an ultimate feast."
+	cook_kraken_tentacle.level_required = 95
+	cook_kraken_tentacle.xp_per_action = 300.0
+	cook_kraken_tentacle.action_time = 5.0
+	cook_kraken_tentacle.consumed_items = {"kraken_tentacle": 1}
+	cook_kraken_tentacle.produced_items = {"cooked_kraken_tentacle": 1}
+	cook_kraken_tentacle.success_rate = 0.96
+	methods.append(cook_kraken_tentacle)
+	
 	return methods
 
 ## Get current skill level

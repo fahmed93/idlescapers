@@ -63,6 +63,7 @@ func _load_items() -> void:
 	_add_item("cooked_manta_ray", "Cooked Manta Ray", "An exotic cooked manta ray.", ItemData.ItemType.CONSUMABLE, 440)
 	_add_item("cooked_sea_turtle", "Cooked Sea Turtle", "A rare cooked sea turtle.", ItemData.ItemType.CONSUMABLE, 700)
 	_add_item("cooked_sailfish", "Cooked Sailfish", "A premium cooked sailfish.", ItemData.ItemType.CONSUMABLE, 1100)
+	_add_item("cooked_kraken_tentacle", "Cooked Kraken Tentacle", "An ultimate cooked kraken feast.", ItemData.ItemType.CONSUMABLE, 1600)
 	
 	# Logs
 	_add_item("logs", "Logs", "Standard wooden logs.", ItemData.ItemType.RAW_MATERIAL, 5)
