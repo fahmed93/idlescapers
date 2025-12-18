@@ -121,6 +121,55 @@ func _load_items() -> void:
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+	
+	# Herbs (grimy/clean)
+	_add_item("guam_leaf", "Guam Leaf", "A basic herb used in Attack potions.", ItemData.ItemType.RAW_MATERIAL, 8)
+	_add_item("marrentill", "Marrentill", "A herb used in Antipoison.", ItemData.ItemType.RAW_MATERIAL, 10)
+	_add_item("tarromin", "Tarromin", "A herb used in Strength potions.", ItemData.ItemType.RAW_MATERIAL, 12)
+	_add_item("harralander", "Harralander", "A herb used in various potions.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("ranarr_weed", "Ranarr Weed", "A valuable herb used in Prayer potions.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("toadflax", "Toadflax", "A herb used in Saradomin brews.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("irit_leaf", "Irit Leaf", "A herb used in Super Attack potions.", ItemData.ItemType.RAW_MATERIAL, 40)
+	_add_item("avantoe", "Avantoe", "A herb used in fishing potions.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("kwuarm", "Kwuarm", "A herb used in Super Strength potions.", ItemData.ItemType.RAW_MATERIAL, 65)
+	_add_item("snapdragon", "Snapdragon", "A valuable herb used in Super Restore.", ItemData.ItemType.RAW_MATERIAL, 85)
+	_add_item("cadantine", "Cadantine", "A herb used in Super Defence potions.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("lantadyme", "Lantadyme", "A herb used in Antifire potions.", ItemData.ItemType.RAW_MATERIAL, 120)
+	_add_item("dwarf_weed", "Dwarf Weed", "A herb used in Ranging potions.", ItemData.ItemType.RAW_MATERIAL, 140)
+	_add_item("torstol", "Torstol", "The most powerful herb for extreme potions.", ItemData.ItemType.RAW_MATERIAL, 200)
+	
+	# Secondary ingredients
+	_add_item("eye_of_newt", "Eye of Newt", "A common potion ingredient.", ItemData.ItemType.RAW_MATERIAL, 3)
+	_add_item("unicorn_horn_dust", "Unicorn Horn Dust", "Powdered unicorn horn.", ItemData.ItemType.PROCESSED, 15)
+	_add_item("limpwurt_root", "Limpwurt Root", "A root from the limpwurt plant.", ItemData.ItemType.RAW_MATERIAL, 20)
+	_add_item("red_spiders_eggs", "Red Spiders' Eggs", "Eggs from red spiders.", ItemData.ItemType.RAW_MATERIAL, 18)
+	_add_item("chocolate_dust", "Chocolate Dust", "Ground chocolate.", ItemData.ItemType.PROCESSED, 10)
+	_add_item("white_berries", "White Berries", "Rare white berries.", ItemData.ItemType.RAW_MATERIAL, 12)
+	_add_item("snape_grass", "Snape Grass", "A plant used in Prayer potions.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("crushed_nest", "Crushed Nest", "A ground bird's nest.", ItemData.ItemType.PROCESSED, 40)
+	_add_item("wine_of_zamorak", "Wine of Zamorak", "A dark wine blessed by Zamorak.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("dragon_scale_dust", "Dragon Scale Dust", "Powdered dragon scales.", ItemData.ItemType.PROCESSED, 80)
+	_add_item("potato_cactus", "Potato Cactus", "A prickly desert plant.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("jangerberries", "Jangerberries", "Dark berries used in Zamorak brew.", ItemData.ItemType.RAW_MATERIAL, 35)
+	
+	# Potions
+	_add_item("attack_potion", "Attack Potion", "Temporarily boosts Attack.", ItemData.ItemType.CONSUMABLE, 50)
+	_add_item("antipoison", "Antipoison", "Cures and prevents poison.", ItemData.ItemType.CONSUMABLE, 75)
+	_add_item("strength_potion", "Strength Potion", "Temporarily boosts Strength.", ItemData.ItemType.CONSUMABLE, 100)
+	_add_item("restore_potion", "Restore Potion", "Restores lowered stats.", ItemData.ItemType.CONSUMABLE, 125)
+	_add_item("energy_potion", "Energy Potion", "Restores run energy.", ItemData.ItemType.CONSUMABLE, 135)
+	_add_item("defence_potion", "Defence Potion", "Temporarily boosts Defence.", ItemData.ItemType.CONSUMABLE, 150)
+	_add_item("prayer_potion", "Prayer Potion", "Restores Prayer points.", ItemData.ItemType.CONSUMABLE, 175)
+	_add_item("super_attack", "Super Attack", "Greatly boosts Attack.", ItemData.ItemType.CONSUMABLE, 200)
+	_add_item("super_strength", "Super Strength", "Greatly boosts Strength.", ItemData.ItemType.CONSUMABLE, 250)
+	_add_item("super_restore", "Super Restore", "Fully restores lowered stats.", ItemData.ItemType.CONSUMABLE, 285)
+	_add_item("super_defence", "Super Defence", "Greatly boosts Defence.", ItemData.ItemType.CONSUMABLE, 300)
+	_add_item("saradomin_brew", "Saradomin Brew", "A holy brew that heals and boosts Defence.", ItemData.ItemType.CONSUMABLE, 360)
+	_add_item("ranging_potion", "Ranging Potion", "Boosts Ranged level.", ItemData.ItemType.CONSUMABLE, 325)
+	_add_item("antifire", "Antifire Potion", "Protects against dragonfire.", ItemData.ItemType.CONSUMABLE, 315)
+	_add_item("magic_potion", "Magic Potion", "Boosts Magic level.", ItemData.ItemType.CONSUMABLE, 345)
+	_add_item("zamorak_brew", "Zamorak Brew", "A dark brew that boosts Attack and Strength.", ItemData.ItemType.CONSUMABLE, 350)
+	_add_item("overload", "Overload", "The ultimate combat potion.", ItemData.ItemType.CONSUMABLE, 2000)
 
 
 ## Helper to add item definition
