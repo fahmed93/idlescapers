@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://br3nqnsgb64ub"]
+
+[ext_resource type="Script" path="res://test/test_fishing_order.gd" id="1_vrvhv"]
+
+[node name="TestFishingOrder" type="Node"]
+script = ExtResource("1_vrvhv")

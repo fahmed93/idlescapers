@@ -6,6 +6,7 @@ extends Node
 static func create_methods() -> Array[TrainingMethodData]:
 	var methods: Array[TrainingMethodData] = []
 	
+	# Level 1
 	var shrimp := TrainingMethodData.new()
 	shrimp.id = "shrimp"
 	shrimp.name = "Shrimp"
@@ -16,97 +17,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	shrimp.produced_items = {"raw_shrimp": 1}
 	methods.append(shrimp)
 	
-	var sardine := TrainingMethodData.new()
-	sardine.id = "sardine"
-	sardine.name = "Sardine"
-	sardine.description = "A small oily fish."
-	sardine.level_required = 5
-	sardine.xp_per_action = 20.0
-	sardine.action_time = 3.5
-	sardine.produced_items = {"raw_sardine": 1}
-	methods.append(sardine)
-	
-	var herring := TrainingMethodData.new()
-	herring.id = "herring"
-	herring.name = "Herring"
-	herring.description = "A silver fish found in open waters."
-	herring.level_required = 10
-	herring.xp_per_action = 30.0
-	herring.action_time = 4.0
-	herring.produced_items = {"raw_herring": 1}
-	methods.append(herring)
-	
-	var trout := TrainingMethodData.new()
-	trout.id = "trout"
-	trout.name = "Trout"
-	trout.description = "A freshwater fish caught with a fly fishing rod."
-	trout.level_required = 20
-	trout.xp_per_action = 50.0
-	trout.action_time = 4.5
-	trout.produced_items = {"raw_trout": 1}
-	methods.append(trout)
-	
-	var salmon := TrainingMethodData.new()
-	salmon.id = "salmon"
-	salmon.name = "Salmon"
-	salmon.description = "A large pink fish from rivers."
-	salmon.level_required = 30
-	salmon.xp_per_action = 70.0
-	salmon.action_time = 5.0
-	salmon.produced_items = {"raw_salmon": 1}
-	methods.append(salmon)
-	
-	var lobster := TrainingMethodData.new()
-	lobster.id = "lobster"
-	lobster.name = "Lobster"
-	lobster.description = "A valuable crustacean."
-	lobster.level_required = 40
-	lobster.xp_per_action = 90.0
-	lobster.action_time = 5.5
-	lobster.produced_items = {"raw_lobster": 1}
-	methods.append(lobster)
-	
-	var swordfish := TrainingMethodData.new()
-	swordfish.id = "swordfish"
-	swordfish.name = "Swordfish"
-	swordfish.description = "A large fish with a distinctive bill."
-	swordfish.level_required = 50
-	swordfish.xp_per_action = 100.0
-	swordfish.action_time = 6.0
-	swordfish.produced_items = {"raw_swordfish": 1}
-	methods.append(swordfish)
-	
-	var monkfish := TrainingMethodData.new()
-	monkfish.id = "monkfish"
-	monkfish.name = "Monkfish"
-	monkfish.description = "A strange looking but nutritious fish."
-	monkfish.level_required = 62
-	monkfish.xp_per_action = 120.0
-	monkfish.action_time = 5.0
-	monkfish.produced_items = {"raw_monkfish": 1}
-	methods.append(monkfish)
-	
-	var shark := TrainingMethodData.new()
-	shark.id = "shark"
-	shark.name = "Shark"
-	shark.description = "A dangerous apex predator of the sea."
-	shark.level_required = 76
-	shark.xp_per_action = 110.0
-	shark.action_time = 6.0
-	shark.produced_items = {"raw_shark": 1}
-	methods.append(shark)
-	
-	var anglerfish := TrainingMethodData.new()
-	anglerfish.id = "anglerfish"
-	anglerfish.name = "Anglerfish"
-	anglerfish.description = "A deep sea fish with incredible healing properties."
-	anglerfish.level_required = 82
-	anglerfish.xp_per_action = 120.0
-	anglerfish.action_time = 7.0
-	anglerfish.produced_items = {"raw_anglerfish": 1}
-	methods.append(anglerfish)
-	
-	# Additional training methods
+	# Level 3
 	var anchovy := TrainingMethodData.new()
 	anchovy.id = "anchovy"
 	anchovy.name = "Anchovy"
@@ -117,6 +28,18 @@ static func create_methods() -> Array[TrainingMethodData]:
 	anchovy.produced_items = {"raw_anchovy": 1}
 	methods.append(anchovy)
 	
+	# Level 5
+	var sardine := TrainingMethodData.new()
+	sardine.id = "sardine"
+	sardine.name = "Sardine"
+	sardine.description = "A small oily fish."
+	sardine.level_required = 5
+	sardine.xp_per_action = 20.0
+	sardine.action_time = 3.5
+	sardine.produced_items = {"raw_sardine": 1}
+	methods.append(sardine)
+	
+	# Level 8
 	var mackerel := TrainingMethodData.new()
 	mackerel.id = "mackerel"
 	mackerel.name = "Mackerel"
@@ -127,6 +50,18 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mackerel.produced_items = {"raw_mackerel": 1}
 	methods.append(mackerel)
 	
+	# Level 10
+	var herring := TrainingMethodData.new()
+	herring.id = "herring"
+	herring.name = "Herring"
+	herring.description = "A silver fish found in open waters."
+	herring.level_required = 10
+	herring.xp_per_action = 30.0
+	herring.action_time = 4.0
+	herring.produced_items = {"raw_herring": 1}
+	methods.append(herring)
+	
+	# Level 13
 	var cod := TrainingMethodData.new()
 	cod.id = "cod"
 	cod.name = "Cod"
@@ -137,6 +72,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cod.produced_items = {"raw_cod": 1}
 	methods.append(cod)
 	
+	# Level 18
 	var pike := TrainingMethodData.new()
 	pike.id = "pike"
 	pike.name = "Pike"
@@ -147,6 +83,18 @@ static func create_methods() -> Array[TrainingMethodData]:
 	pike.produced_items = {"raw_pike": 1}
 	methods.append(pike)
 	
+	# Level 20
+	var trout := TrainingMethodData.new()
+	trout.id = "trout"
+	trout.name = "Trout"
+	trout.description = "A freshwater fish caught with a fly fishing rod."
+	trout.level_required = 20
+	trout.xp_per_action = 50.0
+	trout.action_time = 4.5
+	trout.produced_items = {"raw_trout": 1}
+	methods.append(trout)
+	
+	# Level 25
 	var bass := TrainingMethodData.new()
 	bass.id = "bass"
 	bass.name = "Bass"
@@ -157,6 +105,18 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bass.produced_items = {"raw_bass": 1}
 	methods.append(bass)
 	
+	# Level 30
+	var salmon := TrainingMethodData.new()
+	salmon.id = "salmon"
+	salmon.name = "Salmon"
+	salmon.description = "A large pink fish from rivers."
+	salmon.level_required = 30
+	salmon.xp_per_action = 70.0
+	salmon.action_time = 5.0
+	salmon.produced_items = {"raw_salmon": 1}
+	methods.append(salmon)
+	
+	# Level 35
 	var tuna := TrainingMethodData.new()
 	tuna.id = "tuna"
 	tuna.name = "Tuna"
@@ -167,6 +127,29 @@ static func create_methods() -> Array[TrainingMethodData]:
 	tuna.produced_items = {"raw_tuna": 1}
 	methods.append(tuna)
 	
+	# Level 40
+	var lobster := TrainingMethodData.new()
+	lobster.id = "lobster"
+	lobster.name = "Lobster"
+	lobster.description = "A valuable crustacean."
+	lobster.level_required = 40
+	lobster.xp_per_action = 90.0
+	lobster.action_time = 5.5
+	lobster.produced_items = {"raw_lobster": 1}
+	methods.append(lobster)
+	
+	# Level 50
+	var swordfish := TrainingMethodData.new()
+	swordfish.id = "swordfish"
+	swordfish.name = "Swordfish"
+	swordfish.description = "A large fish with a distinctive bill."
+	swordfish.level_required = 50
+	swordfish.xp_per_action = 100.0
+	swordfish.action_time = 6.0
+	swordfish.produced_items = {"raw_swordfish": 1}
+	methods.append(swordfish)
+	
+	# Level 55
 	var manta_ray := TrainingMethodData.new()
 	manta_ray.id = "manta_ray"
 	manta_ray.name = "Manta Ray"
@@ -177,6 +160,18 @@ static func create_methods() -> Array[TrainingMethodData]:
 	manta_ray.produced_items = {"raw_manta_ray": 1}
 	methods.append(manta_ray)
 	
+	# Level 62
+	var monkfish := TrainingMethodData.new()
+	monkfish.id = "monkfish"
+	monkfish.name = "Monkfish"
+	monkfish.description = "A strange looking but nutritious fish."
+	monkfish.level_required = 62
+	monkfish.xp_per_action = 120.0
+	monkfish.action_time = 5.0
+	monkfish.produced_items = {"raw_monkfish": 1}
+	methods.append(monkfish)
+	
+	# Level 68
 	var sea_turtle := TrainingMethodData.new()
 	sea_turtle.id = "sea_turtle"
 	sea_turtle.name = "Sea Turtle"
@@ -187,6 +182,29 @@ static func create_methods() -> Array[TrainingMethodData]:
 	sea_turtle.produced_items = {"raw_sea_turtle": 1}
 	methods.append(sea_turtle)
 	
+	# Level 76
+	var shark := TrainingMethodData.new()
+	shark.id = "shark"
+	shark.name = "Shark"
+	shark.description = "A dangerous apex predator of the sea."
+	shark.level_required = 76
+	shark.xp_per_action = 110.0
+	shark.action_time = 6.0
+	shark.produced_items = {"raw_shark": 1}
+	methods.append(shark)
+	
+	# Level 82
+	var anglerfish := TrainingMethodData.new()
+	anglerfish.id = "anglerfish"
+	anglerfish.name = "Anglerfish"
+	anglerfish.description = "A deep sea fish with incredible healing properties."
+	anglerfish.level_required = 82
+	anglerfish.xp_per_action = 120.0
+	anglerfish.action_time = 7.0
+	anglerfish.produced_items = {"raw_anglerfish": 1}
+	methods.append(anglerfish)
+	
+	# Level 85
 	var sailfish := TrainingMethodData.new()
 	sailfish.id = "sailfish"
 	sailfish.name = "Sailfish"
@@ -197,6 +215,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	sailfish.produced_items = {"raw_sailfish": 1}
 	methods.append(sailfish)
 	
+	# Level 92
 	var kraken_tentacle := TrainingMethodData.new()
 	kraken_tentacle.id = "kraken_tentacle"
 	kraken_tentacle.name = "Kraken Tentacle"
