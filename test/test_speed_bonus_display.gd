@@ -68,7 +68,7 @@ func _ready() -> void:
 	print("      not in individual training methods.\n")
 	
 	# Clean up
-	UpgradeShop.purchased_upgrades.clear()
+	UpgradeShop.clear_purchased()
 	Store.gold = 0
 	
 	# Only quit if running in headless mode (automated tests)

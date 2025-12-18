@@ -138,7 +138,9 @@ func _update_skill_display() -> void:
 	else:
 		skill_xp_label.text = "%.0f / %.0f XP" % [xp - current_level_xp, next_level_xp - current_level_xp]
 	
-	# Show speed bonus from upgrades
+	# Show speed bonus from upgrades in skill header
+	# Note: Speed modifier is also calculated in _populate_action_list() for time remaining
+	# This is intentional to keep the functions decoupled
 	var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
 	if speed_modifier > 0:
 		skill_speed_bonus_label.text = "+%.0f%% Speed Bonus" % (speed_modifier * 100)
