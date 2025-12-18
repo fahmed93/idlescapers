@@ -90,7 +90,7 @@ This implementation adds an "upgrades shop" feature where players can purchase u
 
 ## Testing
 
-A test script (`test_upgrades.gd`) was created to verify:
+A test script (`test/test_upgrades.gd`) was created to verify:
 1. Upgrades load correctly
 2. Upgrade properties are correct
 3. Purchase validation works (insufficient gold fails)

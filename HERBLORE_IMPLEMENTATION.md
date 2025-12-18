@@ -48,7 +48,7 @@ Created a new skill file containing 17 training methods (potions):
 - All finished potion items as CONSUMABLE type
 - Values ranging from 50 (Attack Potion) to 2000 (Overload)
 
-### 4. Testing (`test_herblore.gd` and `test_herblore.tscn`)
+### 4. Testing (`test/test_herblore.gd` and `test/test_herblore.tscn`)
 Created comprehensive test suite that validates:
 - Skill is properly registered
 - All 17 training methods load correctly
@@ -64,8 +64,8 @@ Created comprehensive test suite that validates:
 
 ### Files Created:
 1. `autoload/skills/herblore_skill.gd` - Skill definition with 17 training methods
-2. `test_herblore.gd` - Test script
-3. `test_herblore.tscn` - Test scene
+2. `test/test_herblore.gd` - Test script
+3. `test/test_herblore.tscn` - Test scene
 
 ### Design Patterns Followed:
 - Static `create_methods()` function returning `Array[TrainingMethodData]`
