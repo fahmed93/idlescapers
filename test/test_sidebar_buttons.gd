@@ -64,7 +64,7 @@ func _run_tests() -> void:
 	var special_buttons := []
 	for child in sidebar.get_children():
 		if child is Button:
-			var text := child.text
+			var text: String = child.text
 			if text == "Equipment" or text == "Inventory" or text == "Upgrades":
 				special_buttons.append(text)
 	
@@ -82,7 +82,7 @@ func _run_tests() -> void:
 	for child in sidebar.get_children():
 		if child is Button:
 			total_button_count += 1
-			var text := child.text
+			var text: String = child.text
 			# Special buttons have single-word text without newlines
 			# Skill buttons have format like "Fishing\nLv. 1" (multiline with level)
 			if text not in ["Equipment", "Inventory", "Upgrades"]:

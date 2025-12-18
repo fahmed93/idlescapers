@@ -67,11 +67,9 @@ func _ready() -> void:
 	_create_item_detail_popup()
 	_create_toast_container()
 	_create_inventory_ui()
-	_create_inventory_button()
 	_create_equipment_ui()
-	_create_equipment_button()
 	_create_upgrades_ui()
-	_create_upgrades_button()
+	_create_player_section_buttons()
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
@@ -105,10 +103,60 @@ func _process(_delta: float) -> void:
 	if GameManager.is_training:
 		_update_training_progress()
 
+## Create all buttons for the Player section
+func _create_player_section_buttons() -> void:
+	# Find the PlayerHeader node to insert buttons after it
+	var player_header := skill_sidebar.get_node_or_null("PlayerHeader")
+	if not player_header:
+		push_error("PlayerHeader not found in sidebar")
+		return
+	
+	var insert_index := player_header.get_index() + 1
+	
+	# Create Equipment button
+	equipment_button = Button.new()
+	equipment_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	equipment_button.text = "Equipment"
+	equipment_button.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
+	equipment_button.pressed.connect(_on_equipment_selected)
+	skill_sidebar.add_child(equipment_button)
+	skill_sidebar.move_child(equipment_button, insert_index)
+	insert_index += 1
+	
+	# Create Inventory button
+	inventory_button = Button.new()
+	inventory_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	inventory_button.text = "Inventory"
+	inventory_button.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
+	inventory_button.pressed.connect(_on_inventory_selected)
+	skill_sidebar.add_child(inventory_button)
+	skill_sidebar.move_child(inventory_button, insert_index)
+	insert_index += 1
+	
+	# Create Upgrades button
+	upgrades_button = Button.new()
+	upgrades_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	upgrades_button.text = "Upgrades"
+	upgrades_button.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
+	upgrades_button.pressed.connect(_on_upgrades_selected)
+	skill_sidebar.add_child(upgrades_button)
+	skill_sidebar.move_child(upgrades_button, insert_index)
+
 func _populate_skill_sidebar() -> void:
-	# Clear existing buttons (but not the header, upgrades button, inventory button, or equipment button)
+	# Find the SkillsHeader node to insert skill buttons after it
+	var skills_header := skill_sidebar.get_node_or_null("SkillsHeader")
+	if not skills_header:
+		push_error("SkillsHeader not found in sidebar")
+		return
+	
+	var insert_index := skills_header.get_index() + 1
+	
+	# Clear existing skill buttons (but not the headers or player section buttons)
 	for child in skill_sidebar.get_children():
 		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button:
+			child.queue_free()
+		# Also remove TotalLevelLabel if it exists to recreate it
+		elif child.name == "TotalLevelLabel":
 			child.queue_free()
 	skill_buttons.clear()
 	
@@ -121,7 +169,9 @@ func _populate_skill_sidebar() -> void:
 		button.add_theme_color_override("font_color", skill.color)
 		button.pressed.connect(_on_skill_selected.bind(skill_id))
 		skill_sidebar.add_child(button)
+		skill_sidebar.move_child(button, insert_index)
 		skill_buttons[skill_id] = button
+		insert_index += 1
 	
 	# Add total level display at bottom
 	var total_label := Label.new()
@@ -581,70 +631,6 @@ func _create_inventory_ui() -> void:
 	main_content.add_child(inventory_panel_view)
 	main_content.move_child(inventory_panel_view, inventory_panel.get_index() + 1)
 
-## Create Inventory button
-func _create_inventory_button() -> void:
-	inventory_button = Button.new()
-	inventory_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
-	inventory_button.text = "Inventory"
-	inventory_button.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
-	inventory_button.pressed.connect(_on_inventory_selected)
-	skill_sidebar.add_child(inventory_button)
-
-## Handle inventory button click
-func _on_inventory_selected() -> void:
-	is_upgrades_view = false
-	is_inventory_view = true
-	is_equipment_view = false
-	_hide_skill_view()
-	_show_inventory_view()
-	_on_inventory_updated()
-
-## Show inventory view
-func _show_inventory_view() -> void:
-	# Hide other special panels
-	if upgrades_panel:
-		upgrades_panel.visible = false
-	if equipment_panel_view:
-		equipment_panel_view.visible = false
-	# Show inventory panel
-	if inventory_panel_view:
-		inventory_panel_view.visible = true
-	
-	# Hide skill-related UI elements
-	_hide_skill_ui()
-
-## Show skill view
-func _show_skill_view() -> void:
-	# Hide special panels
-	if upgrades_panel:
-		upgrades_panel.visible = false
-	if inventory_panel_view:
-		inventory_panel_view.visible = false
-	if equipment_panel_view:
-		equipment_panel_view.visible = false
-	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
-	inventory_panel.visible = false
-	
-	# Show skill-related UI elements
-	_show_skill_ui()
-
-## Hide skill view
-func _hide_skill_view() -> void:
-	# Nothing to hide - inventory panel is already hidden
-	pass
-
-## Helper function to hide skill-related UI elements
-func _hide_skill_ui() -> void:
-	selected_skill_header.visible = false
-	action_list_label.visible = false
-	action_list_panel.visible = false
-
-## Helper function to show skill-related UI elements
-func _show_skill_ui() -> void:
-	selected_skill_header.visible = true
-	action_list_label.visible = true
-	action_list_panel.visible = true
-
 ## Create Equipment UI
 func _create_equipment_ui() -> void:
 	# Create equipment panel (hidden by default)
@@ -680,15 +666,6 @@ func _create_equipment_ui() -> void:
 	# Add to main content
 	main_content.add_child(equipment_panel_view)
 	main_content.move_child(equipment_panel_view, inventory_panel.get_index() + 1)
-
-## Create Equipment button
-func _create_equipment_button() -> void:
-	equipment_button = Button.new()
-	equipment_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
-	equipment_button.text = "Equipment"
-	equipment_button.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
-	equipment_button.pressed.connect(_on_equipment_selected)
-	skill_sidebar.add_child(equipment_button)
 
 ## Handle equipment button click
 func _on_equipment_selected() -> void:
@@ -808,6 +785,61 @@ func _on_equipment_changed(_slot: ItemData.EquipmentSlot) -> void:
 	if is_equipment_view:
 		_populate_equipment_slots()
 
+## Handle inventory button click
+func _on_inventory_selected() -> void:
+	is_upgrades_view = false
+	is_inventory_view = true
+	is_equipment_view = false
+	_hide_skill_view()
+	_show_inventory_view()
+	_on_inventory_updated()
+
+## Show inventory view
+func _show_inventory_view() -> void:
+	# Hide other special panels
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
+	# Show inventory panel
+	if inventory_panel_view:
+		inventory_panel_view.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
+
+## Show skill view
+func _show_skill_view() -> void:
+	# Hide special panels
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
+	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
+	inventory_panel.visible = false
+	
+	# Show skill-related UI elements
+	_show_skill_ui()
+
+## Hide skill view
+func _hide_skill_view() -> void:
+	# Nothing to hide - inventory panel is already hidden
+	pass
+
+## Helper function to hide skill-related UI elements
+func _hide_skill_ui() -> void:
+	selected_skill_header.visible = false
+	action_list_label.visible = false
+	action_list_panel.visible = false
+
+## Helper function to show skill-related UI elements
+func _show_skill_ui() -> void:
+	selected_skill_header.visible = true
+	action_list_label.visible = true
+	action_list_panel.visible = true
+
 ## Update gold display when gold changes
 func _on_gold_changed(new_amount: int) -> void:
 	_update_total_stats()
@@ -866,15 +898,6 @@ func _create_upgrades_ui() -> void:
 	# Add to main content
 	main_content.add_child(upgrades_panel)
 	main_content.move_child(upgrades_panel, inventory_panel.get_index() + 1)
-
-## Create Upgrades button
-func _create_upgrades_button() -> void:
-	upgrades_button = Button.new()
-	upgrades_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
-	upgrades_button.text = "Upgrades"
-	upgrades_button.add_theme_color_override("font_color", Color(0.5, 0.8, 1.0))
-	upgrades_button.pressed.connect(_on_upgrades_selected)
-	skill_sidebar.add_child(upgrades_button)
 
 ## Show upgrades view
 func _on_upgrades_selected() -> void:
