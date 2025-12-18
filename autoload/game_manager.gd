@@ -141,6 +141,50 @@ func _load_skills() -> void:
 	skills["firemaking"] = firemaking
 	skill_xp["firemaking"] = 0.0
 	skill_levels["firemaking"] = 1
+	
+	# Create Herblore skill
+	var herblore := SkillData.new()
+	herblore.id = "herblore"
+	herblore.name = "Herblore"
+	herblore.description = "Create potions from herbs and secondary ingredients."
+	herblore.color = Color(0.2, 0.8, 0.3)
+	herblore.training_methods = preload("res://autoload/skills/herblore_skill.gd").create_methods()
+	skills["herblore"] = herblore
+	skill_xp["herblore"] = 0.0
+	skill_levels["herblore"] = 1
+	
+	# Create Smithing skill
+	var smithing := SkillData.new()
+	smithing.id = "smithing"
+	smithing.name = "Smithing"
+	smithing.description = "Smelt ores into bars and forge equipment."
+	smithing.color = Color(0.7, 0.5, 0.3)
+	smithing.training_methods = preload("res://autoload/skills/smithing_skill.gd").create_methods()
+	skills["smithing"] = smithing
+	skill_xp["smithing"] = 0.0
+	skill_levels["smithing"] = 1
+	
+	# Create Thieving skill
+	var thieving := SkillData.new()
+	thieving.id = "thieving"
+	thieving.name = "Thieving"
+	thieving.description = "Pickpocket NPCs and unlock chests for coins and valuables."
+	thieving.color = Color(0.6, 0.3, 0.7)
+	thieving.training_methods = preload("res://autoload/skills/thieving_skill.gd").create_methods()
+	skills["thieving"] = thieving
+	skill_xp["thieving"] = 0.0
+	skill_levels["thieving"] = 1
+	
+	# Create Astrology skill
+	var astrology := SkillData.new()
+	astrology.id = "astrology"
+	astrology.name = "Astrology"
+	astrology.description = "Study celestial bodies and constellations to unlock cosmic powers."
+	astrology.color = Color(0.3, 0.2, 0.7)
+	astrology.training_methods = preload("res://autoload/skills/astrology_skill.gd").create_methods()
+	skills["astrology"] = astrology
+	skill_xp["astrology"] = 0.0
+	skill_levels["astrology"] = 1
 
 ## Get current skill level
 func get_skill_level(skill_id: String) -> int:
