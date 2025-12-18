@@ -5,6 +5,7 @@ const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
 const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
 const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
+const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
@@ -42,10 +43,12 @@ var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
 var is_sidebar_expanded: bool = false
 var item_detail_popup: PanelContainer = null
+var toast_container: VBoxContainer = null
 
 func _ready() -> void:
 	_setup_signals()
 	_create_item_detail_popup()
+	_create_toast_container()
 	_create_inventory_ui()
 	_create_inventory_button()
 	_create_upgrades_ui()
@@ -311,8 +314,33 @@ func _update_sidebar_button(skill_id: String) -> void:
 	if total_label:
 		total_label.text = "Total: %d" % GameManager.get_total_level()
 
-func _on_action_completed(_skill_id: String, _method_id: String, _success: bool) -> void:
+func _on_action_completed(skill_id: String, method_id: String, success: bool) -> void:
 	_on_inventory_updated()
+	
+	# Get the training method to determine XP and items gained
+	var skill: SkillData = GameManager.skills.get(skill_id)
+	if skill == null:
+		return
+	
+	var method: TrainingMethodData = null
+	for m in skill.training_methods:
+		if m.id == method_id:
+			method = m
+			break
+	
+	if method == null:
+		return
+	
+	# Build items gained dictionary (only if action was successful)
+	var items_gained: Dictionary = {}
+	if success:
+		# Add produced items
+		for item_id in method.produced_items:
+			var amount: int = method.produced_items[item_id]
+			items_gained[item_id] = items_gained.get(item_id, 0) + amount
+	
+	# Show toast notification
+	_show_toast_notification(skill_id, method.xp_per_action, items_gained)
 
 ## Update only item count labels in action list (performance optimization)
 func _update_action_item_counts() -> void:
@@ -463,6 +491,40 @@ func _on_item_detail_closed() -> void:
 	# Refresh inventory display if in inventory view
 	if is_inventory_view:
 		_on_inventory_updated()
+
+## Create Toast Container
+func _create_toast_container() -> void:
+	# Create a VBoxContainer to hold toast notifications
+	toast_container = VBoxContainer.new()
+	toast_container.name = "ToastContainer"
+	toast_container.z_index = 200  # Ensure it's on top of everything
+	toast_container.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Allow clicks to pass through
+	
+	# Position at top center of screen
+	toast_container.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	toast_container.offset_top = 60  # Below menu button
+	toast_container.offset_bottom = 300
+	
+	add_child(toast_container)
+
+## Show a toast notification
+func _show_toast_notification(skill_id: String, xp_gained: float, items_gained: Dictionary) -> void:
+	if toast_container == null:
+		return
+	
+	# Create a new toast instance
+	var toast: PanelContainer = ToastNotificationScene.instantiate()
+	toast_container.add_child(toast)
+	
+	# Show the action completion
+	toast.show_action_completion(skill_id, xp_gained, items_gained)
+	
+	# Remove old toasts if there are too many (keep max 3)
+	while toast_container.get_child_count() > 3:
+		var oldest_toast := toast_container.get_child(0)
+		toast_container.remove_child(oldest_toast)
+		oldest_toast.queue_free()
+
 
 ## Create Inventory UI
 func _create_inventory_ui() -> void:
