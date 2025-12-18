@@ -45,7 +45,7 @@ var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
 var equipment_button: Button = null
 var equipment_panel_view: PanelContainer = null
-var equipment_slots_container: VBoxContainer = null
+var equipment_slots_container: Control = null
 var is_sidebar_expanded: bool = false
 var item_detail_popup: PanelContainer = null
 var toast_container: VBoxContainer = null
@@ -658,13 +658,15 @@ func _create_equipment_ui() -> void:
 	equipment_header.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
 	equipment_vbox.add_child(equipment_header)
 	
-	# Equipment slots list
+	# Equipment slots container - using Control for positioned layout
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	equipment_vbox.add_child(scroll)
 	
-	equipment_slots_container = VBoxContainer.new()
+	# Use a Control node to allow absolute positioning of slots
+	equipment_slots_container = Control.new()
+	equipment_slots_container.custom_minimum_size = Vector2(0, 800)  # Tall enough for human shape
 	equipment_slots_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(equipment_slots_container)
 	
@@ -704,7 +706,7 @@ func _show_equipment_view() -> void:
 	# Hide skill-related UI elements
 	_hide_skill_ui()
 
-## Populate equipment slots display
+## Populate equipment slots display with human-shaped layout
 func _populate_equipment_slots() -> void:
 	if not equipment_slots_container:
 		return
@@ -713,61 +715,71 @@ func _populate_equipment_slots() -> void:
 	for child in equipment_slots_container.get_children():
 		child.queue_free()
 	
-	# Define slot order for display
-	var slot_order := [
-		ItemData.EquipmentSlot.HELM,
-		ItemData.EquipmentSlot.NECKLACE,
-		ItemData.EquipmentSlot.CHEST,
-		ItemData.EquipmentSlot.GLOVES,
-		ItemData.EquipmentSlot.RING_1,
-		ItemData.EquipmentSlot.RING_2,
-		ItemData.EquipmentSlot.MAIN_HAND,
-		ItemData.EquipmentSlot.OFF_HAND,
-		ItemData.EquipmentSlot.LEGS,
-		ItemData.EquipmentSlot.ARROWS,
-		ItemData.EquipmentSlot.BOOTS,
-	]
+	# Define slot size and base center position
+	const SLOT_SIZE := Vector2(100, 80)
+	const CENTER_X := 275.0  # Center of available width (approx 550 / 2)
+	const SPACING_Y := 90.0  # Vertical spacing between rows
+	const SPACING_X := 120.0  # Horizontal spacing for side items
 	
-	for slot in slot_order:
-		var slot_panel := PanelContainer.new()
-		slot_panel.custom_minimum_size = Vector2(0, 80)
+	# Define slot positions in human shape
+	# Position format: [slot, Vector2(x_offset_from_center, y_position)]
+	var slot_positions := {
+		ItemData.EquipmentSlot.HELM: Vector2(CENTER_X, 20),  # Top - head
+		ItemData.EquipmentSlot.NECKLACE: Vector2(CENTER_X, 110),  # Below helm - neck
+		ItemData.EquipmentSlot.ARROWS: Vector2(CENTER_X + SPACING_X, 110),  # Right side of necklace
+		ItemData.EquipmentSlot.MAIN_HAND: Vector2(CENTER_X - SPACING_X, 200),  # Left side - main hand
+		ItemData.EquipmentSlot.CHEST: Vector2(CENTER_X, 200),  # Center - body
+		ItemData.EquipmentSlot.OFF_HAND: Vector2(CENTER_X + SPACING_X, 200),  # Right side - off hand
+		ItemData.EquipmentSlot.GLOVES: Vector2(CENTER_X, 290),  # Below chest - gloves
+		ItemData.EquipmentSlot.RING_1: Vector2(CENTER_X - 60, 380),  # Below gloves left - ring 1
+		ItemData.EquipmentSlot.RING_2: Vector2(CENTER_X + 60, 380),  # Below gloves right - ring 2
+		ItemData.EquipmentSlot.LEGS: Vector2(CENTER_X, 470),  # Below rings - legs
+		ItemData.EquipmentSlot.BOOTS: Vector2(CENTER_X, 560),  # Bottom - boots
+	}
+	
+	# Create a slot panel for each equipment slot
+	for slot in slot_positions:
+		var position: Vector2 = slot_positions[slot]
+		var slot_button := Button.new()
+		slot_button.custom_minimum_size = SLOT_SIZE
+		slot_button.position = position - SLOT_SIZE / 2  # Center the panel on position
 		
-		var hbox := HBoxContainer.new()
-		slot_panel.add_child(hbox)
-		
-		# Slot info
-		var info_vbox := VBoxContainer.new()
-		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.add_child(info_vbox)
+		# Create VBox for slot content
+		var vbox := VBoxContainer.new()
+		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		slot_button.add_child(vbox)
 		
 		var slot_name := _get_equipment_slot_name(slot)
 		var slot_label := Label.new()
 		slot_label.text = slot_name
-		slot_label.add_theme_font_size_override("font_size", 16)
+		slot_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		slot_label.add_theme_font_size_override("font_size", 11)
 		slot_label.add_theme_color_override("font_color", Color(0.9, 0.8, 0.5))
-		info_vbox.add_child(slot_label)
+		slot_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_child(slot_label)
 		
 		var equipped_item_id := Equipment.get_equipped_item(slot)
 		var equipped_label := Label.new()
+		equipped_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		equipped_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		
 		if equipped_item_id != "":
 			var item_data := Inventory.get_item_data(equipped_item_id)
 			equipped_label.text = item_data.name if item_data else equipped_item_id
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 1.0, 0.5))
+			equipped_label.add_theme_font_size_override("font_size", 10)
+			# Make button clickable to unequip
+			slot_button.pressed.connect(_on_unequip_from_slot.bind(slot))
 		else:
 			equipped_label.text = "Empty"
 			equipped_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-		equipped_label.add_theme_font_size_override("font_size", 14)
-		info_vbox.add_child(equipped_label)
+			equipped_label.add_theme_font_size_override("font_size", 10)
+			slot_button.disabled = true
 		
-		# Unequip button (only shown if item is equipped)
-		if equipped_item_id != "":
-			var unequip_button := Button.new()
-			unequip_button.custom_minimum_size = Vector2(80, 40)
-			unequip_button.text = "Unequip"
-			unequip_button.pressed.connect(_on_unequip_from_slot.bind(slot))
-			hbox.add_child(unequip_button)
-		
-		equipment_slots_container.add_child(slot_panel)
+		vbox.add_child(equipped_label)
+		equipment_slots_container.add_child(slot_button)
 
 ## Get human-readable equipment slot name
 func _get_equipment_slot_name(slot: ItemData.EquipmentSlot) -> String:
