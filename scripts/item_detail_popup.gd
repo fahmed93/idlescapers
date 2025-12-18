@@ -71,7 +71,7 @@ func _on_sell_one_pressed() -> void:
 ## Handle sell X button
 func _on_sell_x_pressed() -> void:
 	# Sell SELL_X_AMOUNT items or all if less
-	var amount_to_sell := min(SELL_X_AMOUNT, current_item_count)
+	var amount_to_sell: int = min(SELL_X_AMOUNT, current_item_count)
 	if amount_to_sell > 0 and Store.sell_item(current_item_id, amount_to_sell):
 		current_item_count = Inventory.get_item_count(current_item_id)
 		_refresh_display()
