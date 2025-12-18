@@ -185,6 +185,17 @@ func _load_skills() -> void:
 	skills["astrology"] = astrology
 	skill_xp["astrology"] = 0.0
 	skill_levels["astrology"] = 1
+	
+	# Create Jewelcrafting skill
+	var jewelcrafting := SkillData.new()
+	jewelcrafting.id = "jewelcrafting"
+	jewelcrafting.name = "Jewelcrafting"
+	jewelcrafting.description = "Prospect ores for gems and craft jewelry."
+	jewelcrafting.color = Color(0.7, 0.3, 0.8)
+	jewelcrafting.training_methods = preload("res://autoload/skills/jewelcrafting_skill.gd").create_methods()
+	skills["jewelcrafting"] = jewelcrafting
+	skill_xp["jewelcrafting"] = 0.0
+	skill_levels["jewelcrafting"] = 1
 
 ## Get current skill level
 func get_skill_level(skill_id: String) -> int:
