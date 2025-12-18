@@ -49,6 +49,17 @@ func _load_items() -> void:
 	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
 	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
+	
+	# Ores
+	_add_item("copper_ore", "Copper Ore", "A soft reddish ore.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("tin_ore", "Tin Ore", "A silvery ore.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("iron_ore", "Iron Ore", "A common metallic ore.", ItemData.ItemType.RAW_MATERIAL, 15)
+	_add_item("silver_ore", "Silver Ore", "A shiny precious ore.", ItemData.ItemType.RAW_MATERIAL, 25)
+	_add_item("coal", "Coal", "Fuel for smelting.", ItemData.ItemType.RAW_MATERIAL, 30)
+	_add_item("gold_ore", "Gold Ore", "A valuable golden ore.", ItemData.ItemType.RAW_MATERIAL, 50)
+	_add_item("mithril_ore", "Mithril Ore", "A light blue ore.", ItemData.ItemType.RAW_MATERIAL, 100)
+	_add_item("adamantite_ore", "Adamantite Ore", "A greenish ore.", ItemData.ItemType.RAW_MATERIAL, 200)
+	_add_item("runite_ore", "Runite Ore", "A rare cyan ore.", ItemData.ItemType.RAW_MATERIAL, 500)
 
 ## Helper to add item definition
 func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int) -> void:
