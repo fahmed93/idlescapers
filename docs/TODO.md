@@ -74,8 +74,25 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 40: Lion (90 XP, 5.8s) → lion_hide
   - Level 55: Blue Dragon (120 XP, 6.5s) → blue_dragonhide
   - Level 90: Phoenix (225 XP, 9.5s) → phoenix_feather
-- **Special Mechanic**: No consumed items, produces raw materials for future Crafting
+- **Special Mechanic**: No consumed items, produces raw materials for Crafting
 - **Total Methods**: 20 different animals to skin
+
+### ✅ Crafting
+- **Description**: Create leather armor and dragonhide equipment from hides
+- **Training Methods**:
+  - Level 1: Leather items (gloves, boots from rabbit hide)
+  - Level 11: Leather body (from cowhide)
+  - Level 18: Hard leather items (from bear hide)
+  - Level 22: Studded leather (from wolf hide)
+  - Level 30: Snake skin armor
+  - Level 40: Green dragonhide armor
+  - Level 52: Blue dragonhide armor
+  - Level 60: Red dragonhide armor
+  - Level 70: Black dragonhide armor
+  - Level 78: Frost dragonhide armor
+  - Level 86: Royal dragonhide armor
+- **Special Mechanic**: Consumes hides from Skinning skill
+- **Total Methods**: 30 different crafting recipes
 
 ---
 
@@ -99,17 +116,7 @@ This document outlines planned skills, features, and improvements for IdleScaper
   - Level 50-70: Greater Demons, Black Dragons, Hellhounds
   - Level 70-99: TzHaar, Dagannoth Kings, God Wars Bosses
 
-### 🎨 Crafting
-- **Description**: Create jewelry, leather armor, and other items
-- **Training Methods**:
-  - Level 1: Leather items (gloves, boots)
-  - Level 20: Hard leather items
-  - Level 40: Dragonhide armor (green, blue, red, black)
-  - Level 5: Silver jewelry
-  - Level 40: Gold jewelry
-  - Level 63: Dragonstone jewelry
-  - Level 80: Onyx jewelry
-
+### 🌱 Farming
 ### 🌱 Farming
 - **Description**: Grow crops, herbs, and trees for resources
 - **Training Methods**:
