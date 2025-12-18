@@ -665,8 +665,9 @@ func _create_equipment_ui() -> void:
 	equipment_vbox.add_child(scroll)
 	
 	# Use a Control node to allow absolute positioning of slots
+	# Height is designed to fit all 11 slots in human-shaped layout
 	equipment_slots_container = Control.new()
-	equipment_slots_container.custom_minimum_size = Vector2(0, 800)  # Tall enough for human shape
+	equipment_slots_container.custom_minimum_size = Vector2(0, 650)
 	equipment_slots_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	scroll.add_child(equipment_slots_container)
 	
@@ -716,12 +717,14 @@ func _populate_equipment_slots() -> void:
 		child.queue_free()
 	
 	# Define slot size and base center position
+	# Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
+	# available width is ~560px, so center is approximately 280px from left edge of content area.
 	const SLOT_SIZE := Vector2(100, 80)
-	const CENTER_X := 275.0  # Center of available width (approx 550 / 2)
+	const CENTER_X := 280.0  # Center of content area
 	const SPACING_X := 120.0  # Horizontal spacing for side items
 	
 	# Define slot positions in human shape
-	# Position format: [slot, Vector2(x_offset_from_center, y_position)]
+	# Positions are absolute coordinates within the container
 	var slot_positions := {
 		ItemData.EquipmentSlot.HELM: Vector2(CENTER_X, 20),  # Top - head
 		ItemData.EquipmentSlot.NECKLACE: Vector2(CENTER_X, 110),  # Below helm - neck
