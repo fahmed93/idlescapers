@@ -290,12 +290,8 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		var count: int = items[item_id]
 		
 		var item_panel := PanelContainer.new()
-<<<<<<< HEAD
-		item_panel.custom_minimum_size = Vector2(100, 100)
-=======
 		item_panel.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
->>>>>>> d3ca07ff41b4b0fbe62fd599c9e69b38e44e7cf0
-		
+
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
 		item_panel.add_child(vbox)

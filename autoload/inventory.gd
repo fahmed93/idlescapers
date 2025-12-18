@@ -118,6 +118,16 @@ func _load_items() -> void:
 	_add_item("mithril_ore", "Mithril Ore", "A light blue ore.", ItemData.ItemType.RAW_MATERIAL, 100)
 	_add_item("adamantite_ore", "Adamantite Ore", "A greenish ore.", ItemData.ItemType.RAW_MATERIAL, 200)
 	_add_item("runite_ore", "Runite Ore", "A rare cyan ore.", ItemData.ItemType.RAW_MATERIAL, 500)
+	
+	# Bars (smelted from ores)
+	_add_item("bronze_bar", "Bronze Bar", "A bar of bronze metal.", ItemData.ItemType.PROCESSED, 15)
+	_add_item("iron_bar", "Iron Bar", "A bar of iron metal.", ItemData.ItemType.PROCESSED, 30)
+	_add_item("silver_bar", "Silver Bar", "A bar of silver metal.", ItemData.ItemType.PROCESSED, 50)
+	_add_item("steel_bar", "Steel Bar", "A bar of refined steel.", ItemData.ItemType.PROCESSED, 100)
+	_add_item("gold_bar", "Gold Bar", "A bar of gold metal.", ItemData.ItemType.PROCESSED, 150)
+	_add_item("mithril_bar", "Mithril Bar", "A bar of mithril metal.", ItemData.ItemType.PROCESSED, 300)
+	_add_item("adamantite_bar", "Adamantite Bar", "A bar of adamantite metal.", ItemData.ItemType.PROCESSED, 600)
+	_add_item("runite_bar", "Runite Bar", "A bar of runite metal.", ItemData.ItemType.PROCESSED, 1500)
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)

@@ -142,6 +142,17 @@ func _load_skills() -> void:
 	skill_xp["firemaking"] = 0.0
 	skill_levels["firemaking"] = 1
 	
+	# Create Smithing skill
+	var smithing := SkillData.new()
+	smithing.id = "smithing"
+	smithing.name = "Smithing"
+	smithing.description = "Smelt ores into bars and forge equipment."
+	smithing.color = Color(0.7, 0.5, 0.3)
+	smithing.training_methods = preload("res://autoload/skills/smithing_skill.gd").create_methods()
+	skills["smithing"] = smithing
+	skill_xp["smithing"] = 0.0
+	skill_levels["smithing"] = 1
+	
 	# Create Thieving skill
 	var thieving := SkillData.new()
 	thieving.id = "thieving"
