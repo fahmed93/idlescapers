@@ -649,7 +649,6 @@ func _create_upgrades_ui() -> void:
 	
 	# Upgrades header with checkbox
 	var header_hbox := HBoxContainer.new()
-	header_hbox.alignment = BoxContainer.ALIGNMENT_CENTER
 	upgrades_vbox.add_child(header_hbox)
 	
 	# Hide owned checkbox on the left
@@ -736,10 +735,10 @@ func _populate_upgrades_list() -> void:
 		
 		# Filter out owned upgrades if hide_owned_upgrades is true
 		var filtered_upgrades: Array[UpgradeData] = []
-		for upgrade in skill_upgrades:
-			if hide_owned_upgrades and UpgradeShop.is_purchased(upgrade.id):
-				continue
-			filtered_upgrades.append(upgrade)
+		if hide_owned_upgrades:
+			filtered_upgrades = skill_upgrades.filter(func(upgrade): return not UpgradeShop.is_purchased(upgrade.id))
+		else:
+			filtered_upgrades = skill_upgrades
 		
 		# Skip this skill if all upgrades are filtered out
 		if filtered_upgrades.is_empty():
