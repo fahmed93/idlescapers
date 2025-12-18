@@ -141,6 +141,17 @@ func _load_skills() -> void:
 	skills["firemaking"] = firemaking
 	skill_xp["firemaking"] = 0.0
 	skill_levels["firemaking"] = 1
+	
+	# Create Astrology skill
+	var astrology := SkillData.new()
+	astrology.id = "astrology"
+	astrology.name = "Astrology"
+	astrology.description = "Study celestial bodies and constellations to unlock cosmic powers."
+	astrology.color = Color(0.3, 0.2, 0.7)
+	astrology.training_methods = preload("res://autoload/skills/astrology_skill.gd").create_methods()
+	skills["astrology"] = astrology
+	skill_xp["astrology"] = 0.0
+	skill_levels["astrology"] = 1
 
 ## Get current skill level
 func get_skill_level(skill_id: String) -> int:
