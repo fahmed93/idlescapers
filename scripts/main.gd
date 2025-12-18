@@ -7,6 +7,13 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 
+# Equipment layout constants
+# Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
+# available width is ~560px, so center is approximately 280px from left edge of content area.
+const EQUIPMENT_SLOT_SIZE := Vector2(100, 80)
+const EQUIPMENT_CENTER_X := 280.0  # Center of content area
+const EQUIPMENT_SPACING_X := 120.0  # Horizontal spacing for side items
+
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
@@ -712,31 +719,24 @@ func _populate_equipment_slots() -> void:
 	if not equipment_slots_container:
 		return
 	
-	# Clear existing slots
+	# Clear existing slots (this also disconnects all old signal connections)
 	for child in equipment_slots_container.get_children():
 		child.queue_free()
-	
-	# Define slot size and base center position
-	# Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
-	# available width is ~560px, so center is approximately 280px from left edge of content area.
-	const SLOT_SIZE := Vector2(100, 80)
-	const CENTER_X := 280.0  # Center of content area
-	const SPACING_X := 120.0  # Horizontal spacing for side items
 	
 	# Define slot positions in human shape
 	# Positions are absolute coordinates within the container
 	var slot_positions := {
-		ItemData.EquipmentSlot.HELM: Vector2(CENTER_X, 20),  # Top - head
-		ItemData.EquipmentSlot.NECKLACE: Vector2(CENTER_X, 110),  # Below helm - neck
-		ItemData.EquipmentSlot.ARROWS: Vector2(CENTER_X + SPACING_X, 110),  # Right side of necklace
-		ItemData.EquipmentSlot.MAIN_HAND: Vector2(CENTER_X - SPACING_X, 200),  # Left side - main hand
-		ItemData.EquipmentSlot.CHEST: Vector2(CENTER_X, 200),  # Center - body
-		ItemData.EquipmentSlot.OFF_HAND: Vector2(CENTER_X + SPACING_X, 200),  # Right side - off hand
-		ItemData.EquipmentSlot.GLOVES: Vector2(CENTER_X, 290),  # Below chest - gloves
-		ItemData.EquipmentSlot.RING_1: Vector2(CENTER_X - 60, 380),  # Below gloves left - ring 1
-		ItemData.EquipmentSlot.RING_2: Vector2(CENTER_X + 60, 380),  # Below gloves right - ring 2
-		ItemData.EquipmentSlot.LEGS: Vector2(CENTER_X, 470),  # Below rings - legs
-		ItemData.EquipmentSlot.BOOTS: Vector2(CENTER_X, 560),  # Bottom - boots
+		ItemData.EquipmentSlot.HELM: Vector2(EQUIPMENT_CENTER_X, 20),  # Top - head
+		ItemData.EquipmentSlot.NECKLACE: Vector2(EQUIPMENT_CENTER_X, 110),  # Below helm - neck
+		ItemData.EquipmentSlot.ARROWS: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_SPACING_X, 110),  # Right side of necklace
+		ItemData.EquipmentSlot.MAIN_HAND: Vector2(EQUIPMENT_CENTER_X - EQUIPMENT_SPACING_X, 200),  # Left side - main hand
+		ItemData.EquipmentSlot.CHEST: Vector2(EQUIPMENT_CENTER_X, 200),  # Center - body
+		ItemData.EquipmentSlot.OFF_HAND: Vector2(EQUIPMENT_CENTER_X + EQUIPMENT_SPACING_X, 200),  # Right side - off hand
+		ItemData.EquipmentSlot.GLOVES: Vector2(EQUIPMENT_CENTER_X, 290),  # Below chest - gloves
+		ItemData.EquipmentSlot.RING_1: Vector2(EQUIPMENT_CENTER_X - 60, 380),  # Below gloves left - ring 1
+		ItemData.EquipmentSlot.RING_2: Vector2(EQUIPMENT_CENTER_X + 60, 380),  # Below gloves right - ring 2
+		ItemData.EquipmentSlot.LEGS: Vector2(EQUIPMENT_CENTER_X, 470),  # Below rings - legs
+		ItemData.EquipmentSlot.BOOTS: Vector2(EQUIPMENT_CENTER_X, 560),  # Bottom - boots
 	}
 	
 	# Create a slot panel for each equipment slot
@@ -744,8 +744,8 @@ func _populate_equipment_slots() -> void:
 	for slot in slot_positions:
 		var position: Vector2 = slot_positions[slot]
 		var slot_button := Button.new()
-		slot_button.custom_minimum_size = SLOT_SIZE
-		slot_button.position = position - SLOT_SIZE / 2  # Center the panel on position
+		slot_button.custom_minimum_size = EQUIPMENT_SLOT_SIZE
+		slot_button.position = position - EQUIPMENT_SLOT_SIZE / 2  # Center the panel on position
 		
 		# Create VBox for slot content
 		var vbox := VBoxContainer.new()
