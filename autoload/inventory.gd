@@ -121,6 +121,9 @@ func _load_items() -> void:
   
 	# Firemaking products
 	_add_item("ashes", "Ashes", "Remains of burnt logs.", ItemData.ItemType.PROCESSED, 1)
+	
+	# Thieving rewards
+	_add_item("coins", "Coins", "Currency obtained from pickpocketing.", ItemData.ItemType.PROCESSED, 1)
 
 
 ## Helper to add item definition
