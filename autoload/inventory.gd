@@ -477,7 +477,7 @@ func create_tab(tab_name: String) -> String:
 		"items": {}
 	}
 	tab_order.append(tab_id)
-	tab_created.emit(tab_id, tab_name)
+	tab_created.emit(tab_id, validated_name)
 	inventory_updated.emit()
 	return tab_id
 

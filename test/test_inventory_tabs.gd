@@ -102,14 +102,15 @@ func _ready() -> void:
 	
 	# Clean up test data
 	print("Cleaning up test data...")
-	Inventory.clear_inventory()
-	# Delete test tabs
+	# Delete test tabs (this will move items to main tab)
 	var tabs_to_delete := []
 	for tab_id in Inventory.tab_order:
 		if tab_id != Inventory.MAIN_TAB_ID:
 			tabs_to_delete.append(tab_id)
 	for tab_id in tabs_to_delete:
 		Inventory.delete_tab(tab_id)
+	# Now clear the main inventory
+	Inventory.clear_inventory()
 	print("Cleanup complete.\n")
 	
 	# Quit after tests

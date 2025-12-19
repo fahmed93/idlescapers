@@ -174,7 +174,7 @@ The test covers:
 1. Maximum of 10 tabs to prevent UI clutter
 2. When moving items, all of that item type is moved (no partial stack splitting)
 3. Main tab cannot be deleted or moved in the tab order
-4. Tab names are not validated for length or special characters
+4. Tab names are limited to 20 characters and cannot be empty
 
 ## Future Enhancements
 
