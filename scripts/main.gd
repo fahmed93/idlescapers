@@ -36,6 +36,7 @@ const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 @onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
 @onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
 @onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
+@onready var time_to_level_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TimeToLevelLabel
 @onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
 @onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
@@ -371,6 +372,7 @@ func _hide_training_panel() -> void:
 	training_panel.visible = false
 	training_progress.value = 0
 	training_time_label.text = "0.0s / 0.0s"
+	time_to_level_label.text = "Time to level: --"
 
 func _update_training_progress() -> void:
 	var method := GameManager.get_current_training_method()
@@ -393,6 +395,13 @@ func _update_training_progress() -> void:
 			training_label.text = "Training: %s" % method.name
 		# Update time label to show elapsed/total time with effective action time
 		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, effective_action_time]
+		
+		# Update time to level label
+		var time_to_level := GameManager.get_time_to_next_level()
+		if time_to_level > 0:
+			time_to_level_label.text = "Time to level: %s" % TrainingMethodData.format_time_remaining(time_to_level)
+		else:
+			time_to_level_label.text = "Time to level: MAX"
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:
