@@ -4,6 +4,8 @@ extends Node
 
 const VERSION_FILE_PATH := "res://version.txt"
 
+# Version stored as String to preserve formatting and simplify display
+# The actual increment happens in GitHub Actions workflow
 var version: String = "0"
 
 func _ready() -> void:
