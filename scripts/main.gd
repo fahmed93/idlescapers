@@ -490,6 +490,16 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # Fill the button completely
 		item_button.add_child(vbox)
 		
+		# Add icon if available
+		if item_data and item_data.icon:
+			var icon_texture := TextureRect.new()
+			icon_texture.texture = item_data.icon
+			icon_texture.custom_minimum_size = Vector2(48, 48)
+			icon_texture.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+			icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			vbox.add_child(icon_texture)
+		
 		# Helper function to create labels with mouse filter ignored
 		var create_label := func(text: String, font_size: int, color: Color = Color.WHITE) -> Label:
 			var label := Label.new()
