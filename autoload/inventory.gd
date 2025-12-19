@@ -458,13 +458,22 @@ func create_tab(tab_name: String) -> String:
 		push_error("Cannot create more than %d tabs" % MAX_TABS)
 		return ""
 	
+	# Validate tab name
+	var validated_name := tab_name.strip_edges()
+	if validated_name.is_empty():
+		validated_name = "Tab %d" % (tabs.size())
+	elif validated_name.length() > 20:
+		validated_name = validated_name.substr(0, 20)
+	
 	# Generate unique tab ID
-	var tab_id := "tab_%d" % (tabs.size())
+	var counter := 0
+	var tab_id := "tab_%d" % counter
 	while tabs.has(tab_id):
-		tab_id = "tab_%d" % (tabs.size() + randi() % 1000)
+		counter += 1
+		tab_id = "tab_%d" % counter
 	
 	tabs[tab_id] = {
-		"name": tab_name,
+		"name": validated_name,
 		"items": {}
 	}
 	tab_order.append(tab_id)
@@ -499,8 +508,15 @@ func rename_tab(tab_id: String, new_name: String) -> bool:
 	if not tabs.has(tab_id):
 		return false
 	
-	tabs[tab_id]["name"] = new_name
-	tab_renamed.emit(tab_id, new_name)
+	# Validate tab name
+	var validated_name := new_name.strip_edges()
+	if validated_name.is_empty():
+		return false
+	elif validated_name.length() > 20:
+		validated_name = validated_name.substr(0, 20)
+	
+	tabs[tab_id]["name"] = validated_name
+	tab_renamed.emit(tab_id, validated_name)
 	return true
 
 ## Get tab name

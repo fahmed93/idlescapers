@@ -8,6 +8,10 @@ const INVENTORY_ICON_SIZE := 48  # Size of item icons in inventory display
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 
+# Tab context menu options
+const TAB_MENU_RENAME := 0
+const TAB_MENU_DELETE := 1
+
 # Equipment layout constants
 # Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
 # available width is ~560px, so center is approximately 280px from left edge of content area.
@@ -1318,34 +1322,42 @@ func _on_tab_renamed(_tab_id: String, _new_name: String) -> void:
 func _show_tab_context_menu(tab_id: String) -> void:
 	# Create a simple popup menu
 	var popup := PopupMenu.new()
-	popup.add_item("Rename", 0)
-	popup.add_item("Delete", 1)
-	popup.id_pressed.connect(_on_tab_context_option.bind(tab_id, popup))
+	popup.add_item("Rename", TAB_MENU_RENAME)
+	popup.add_item("Delete", TAB_MENU_DELETE)
+	
+	# Use lambda to avoid memory leak from circular reference
+	popup.id_pressed.connect(func(option_id: int):
+		_on_tab_context_option(option_id, tab_id)
+		popup.queue_free()
+	)
+	
 	add_child(popup)
 	popup.popup_centered()
 
 ## Handle tab context menu option selected
-func _on_tab_context_option(option_id: int, tab_id: String, popup: PopupMenu) -> void:
-	if option_id == 0:  # Rename
+func _on_tab_context_option(option_id: int, tab_id: String) -> void:
+	if option_id == TAB_MENU_RENAME:
 		_show_rename_tab_dialog(tab_id)
-	elif option_id == 1:  # Delete
+	elif option_id == TAB_MENU_DELETE:
 		Inventory.delete_tab(tab_id)
-	popup.queue_free()
 
 ## Show rename tab dialog
 func _show_rename_tab_dialog(tab_id: String) -> void:
 	# Create a simple dialog with LineEdit
 	var dialog := AcceptDialog.new()
 	dialog.title = "Rename Tab"
-	dialog.dialog_text = "Enter new name for tab:"
+	dialog.dialog_text = "Enter new name for tab (max 20 characters):"
 	
 	var line_edit := LineEdit.new()
 	line_edit.text = Inventory.get_tab_name(tab_id)
+	line_edit.max_length = 20
 	line_edit.custom_minimum_size = Vector2(200, 0)
 	dialog.add_child(line_edit)
 	
-	dialog.confirmed.connect(func(): 
-		Inventory.rename_tab(tab_id, line_edit.text)
+	dialog.confirmed.connect(func():
+		var new_name := line_edit.text.strip_edges()
+		if not new_name.is_empty():
+			Inventory.rename_tab(tab_id, new_name)
 		dialog.queue_free()
 	)
 	dialog.canceled.connect(func(): dialog.queue_free())
