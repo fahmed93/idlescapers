@@ -32,26 +32,27 @@ const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
 const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
 
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
-@onready var main_content: VBoxContainer = $HSplitContainer/MainContent
+@onready var main_content_scroll: ScrollContainer = $HSplitContainer/MainContentScroll
+@onready var main_content: VBoxContainer = $HSplitContainer/MainContentScroll/MainContent
 @onready var menu_button: Button = $MenuButton
 @onready var change_character_button: Button = $ChangeCharacterButton
-@onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContent/SelectedSkillHeader
-@onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
-@onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
-@onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
-@onready var skill_xp_bar: ProgressBar = $HSplitContainer/MainContent/SelectedSkillHeader/XPProgressBar
-@onready var skill_xp_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/XPLabel
-@onready var skill_speed_bonus_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SpeedBonusLabel
-@onready var action_list_label: Label = $HSplitContainer/MainContent/ActionListLabel
-@onready var action_list_panel: PanelContainer = $HSplitContainer/MainContent/ActionList
-@onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
-@onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
-@onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
-@onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
-@onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
-@onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
-@onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
-@onready var total_stats_label: Label = $HSplitContainer/MainContent/TotalStatsPanel/TotalStatsLabel
+@onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader
+@onready var action_list: VBoxContainer = $HSplitContainer/MainContentScroll/MainContent/ActionList/ScrollContainer/ActionListContent
+@onready var selected_skill_label: Label = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader/SkillName
+@onready var skill_level_label: Label = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader/SkillLevel
+@onready var skill_xp_bar: ProgressBar = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader/XPProgressBar
+@onready var skill_xp_label: Label = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader/XPLabel
+@onready var skill_speed_bonus_label: Label = $HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader/SpeedBonusLabel
+@onready var action_list_label: Label = $HSplitContainer/MainContentScroll/MainContent/ActionListLabel
+@onready var action_list_panel: PanelContainer = $HSplitContainer/MainContentScroll/MainContent/ActionList
+@onready var training_panel: PanelContainer = $HSplitContainer/MainContentScroll/MainContent/TrainingPanel
+@onready var training_label: Label = $HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
+@onready var training_progress: ProgressBar = $HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
+@onready var training_time_label: Label = $HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
+@onready var stop_button: Button = $HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer/StopButton
+@onready var inventory_panel: PanelContainer = $HSplitContainer/MainContentScroll/MainContent/InventoryPanel
+@onready var inventory_list: GridContainer = $HSplitContainer/MainContentScroll/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
+@onready var total_stats_label: Label = $HSplitContainer/MainContentScroll/MainContent/TotalStatsPanel/TotalStatsLabel
 @onready var offline_popup: PanelContainer = $OfflineProgressPopup
 
 var selected_skill_id: String = ""
@@ -1368,6 +1369,12 @@ func _set_sidebar_collapsed(collapsed: bool) -> void:
 		menu_button.text = "☰"
 	else:
 		menu_button.text = "✕"
+	
+	# Scroll main content to top when expanding sidebar to ensure header is visible
+	if not collapsed and main_content_scroll:
+		# Wait for next frame to ensure layout is updated
+		await get_tree().process_frame
+		main_content_scroll.scroll_vertical = 0
 
 ## Handle change character button pressed
 func _on_change_character_pressed() -> void:
