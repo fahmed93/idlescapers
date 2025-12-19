@@ -7,6 +7,7 @@ const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for
 const INVENTORY_ICON_SIZE := 48  # Size of item icons in inventory display
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
+const PlaceholderIcon := preload("res://assets/icons/items/placeholder.svg")
 
 # Equipment layout constants
 # Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
@@ -517,15 +518,17 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # Fill the button completely
 		item_button.add_child(vbox)
 		
-		# Add icon if available
+		# Add icon (use placeholder if item has no dedicated icon)
+		var icon_texture := TextureRect.new()
 		if item_data and item_data.icon:
-			var icon_texture := TextureRect.new()
 			icon_texture.texture = item_data.icon
-			icon_texture.custom_minimum_size = Vector2(INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE)
-			icon_texture.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
-			icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-			icon_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
-			vbox.add_child(icon_texture)
+		else:
+			icon_texture.texture = PlaceholderIcon
+		icon_texture.custom_minimum_size = Vector2(INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE)
+		icon_texture.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
+		icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		vbox.add_child(icon_texture)
 		
 		# Helper function to create labels with mouse filter ignored
 		var create_label := func(text: String, font_size: int, color: Color = Color.WHITE) -> Label:
