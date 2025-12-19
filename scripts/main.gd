@@ -18,6 +18,7 @@ const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from cen
 const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
 const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 
+@onready var sidebar_scroll_container: ScrollContainer = $HSplitContainer/SidebarScrollContainer
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SidebarScrollContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
@@ -1199,7 +1200,7 @@ func _on_sidebar_toggle_pressed() -> void:
 
 ## Set sidebar collapsed/expanded state
 func _set_sidebar_collapsed(collapsed: bool) -> void:
-	skill_sidebar.visible = not collapsed
+	sidebar_scroll_container.visible = not collapsed
 	is_sidebar_expanded = not collapsed
 	
 	# Update toggle button text
