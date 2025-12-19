@@ -47,6 +47,7 @@ var action_buttons: Dictionary = {}
 var is_upgrades_view: bool = false
 var is_inventory_view: bool = false
 var is_equipment_view: bool = false
+var is_skill_summary_view: bool = false
 var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
@@ -62,6 +63,9 @@ var equipment_slots_container: Control = null
 var is_sidebar_expanded: bool = false
 var item_detail_popup: PanelContainer = null
 var toast_container: VBoxContainer = null
+var skill_summary_button: Button = null
+var skill_summary_panel: PanelContainer = null
+var skill_summary_grid: GridContainer = null
 
 func _ready() -> void:
 	_setup_signals()
@@ -70,7 +74,9 @@ func _ready() -> void:
 	_create_inventory_ui()
 	_create_equipment_ui()
 	_create_upgrades_ui()
+	_create_skill_summary_ui()
 	_create_player_section_buttons()
+	_create_info_section_buttons()
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
@@ -143,6 +149,25 @@ func _create_player_section_buttons() -> void:
 	skill_sidebar.add_child(upgrades_button)
 	skill_sidebar.move_child(upgrades_button, insert_index)
 
+## Create all buttons for the Info section
+func _create_info_section_buttons() -> void:
+	# Find the InfoHeader node to insert buttons after it
+	var info_header := skill_sidebar.get_node_or_null("InfoHeader")
+	if not info_header:
+		push_error("InfoHeader not found in sidebar")
+		return
+	
+	var insert_index := info_header.get_index() + 1
+	
+	# Create Skill Summary button
+	skill_summary_button = Button.new()
+	skill_summary_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	skill_summary_button.text = "Skill Summary"
+	skill_summary_button.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	skill_summary_button.pressed.connect(_on_skill_summary_selected)
+	skill_sidebar.add_child(skill_summary_button)
+	skill_sidebar.move_child(skill_summary_button, insert_index)
+
 func _populate_skill_sidebar() -> void:
 	# Find the SkillsHeader node to insert skill buttons after it
 	var skills_header := skill_sidebar.get_node_or_null("SkillsHeader")
@@ -185,6 +210,7 @@ func _on_skill_selected(skill_id: String) -> void:
 	is_upgrades_view = false
 	is_inventory_view = false
 	is_equipment_view = false
+	is_skill_summary_view = false
 	selected_skill_id = skill_id
 	_show_skill_view()
 	_update_skill_display()
@@ -683,6 +709,7 @@ func _on_equipment_selected() -> void:
 	is_upgrades_view = false
 	is_inventory_view = false
 	is_equipment_view = true
+	is_skill_summary_view = false
 	_hide_skill_view()
 	_show_equipment_view()
 	_populate_equipment_slots()
@@ -694,6 +721,8 @@ func _show_equipment_view() -> void:
 		upgrades_panel.visible = false
 	if inventory_panel_view:
 		inventory_panel_view.visible = false
+	if skill_summary_panel:
+		skill_summary_panel.visible = false
 	# Show equipment panel
 	if equipment_panel_view:
 		equipment_panel_view.visible = true
@@ -801,6 +830,7 @@ func _on_inventory_selected() -> void:
 	is_upgrades_view = false
 	is_inventory_view = true
 	is_equipment_view = false
+	is_skill_summary_view = false
 	_hide_skill_view()
 	_show_inventory_view()
 	_on_inventory_updated()
@@ -812,6 +842,8 @@ func _show_inventory_view() -> void:
 		upgrades_panel.visible = false
 	if equipment_panel_view:
 		equipment_panel_view.visible = false
+	if skill_summary_panel:
+		skill_summary_panel.visible = false
 	# Show inventory panel
 	if inventory_panel_view:
 		inventory_panel_view.visible = true
@@ -828,6 +860,8 @@ func _show_skill_view() -> void:
 		inventory_panel_view.visible = false
 	if equipment_panel_view:
 		equipment_panel_view.visible = false
+	if skill_summary_panel:
+		skill_summary_panel.visible = false
 	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
 	inventory_panel.visible = false
 	
@@ -910,11 +944,47 @@ func _create_upgrades_ui() -> void:
 	main_content.add_child(upgrades_panel)
 	main_content.move_child(upgrades_panel, inventory_panel.get_index() + 1)
 
+## Create Skill Summary UI
+func _create_skill_summary_ui() -> void:
+	# Create skill summary panel (hidden by default)
+	skill_summary_panel = PanelContainer.new()
+	skill_summary_panel.name = "SkillSummaryPanel"
+	skill_summary_panel.visible = false
+	skill_summary_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var summary_vbox := VBoxContainer.new()
+	skill_summary_panel.add_child(summary_vbox)
+	
+	# Skill Summary header
+	var summary_header := Label.new()
+	summary_header.text = "Skill Summary"
+	summary_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	summary_header.add_theme_font_size_override("font_size", 20)
+	summary_header.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
+	summary_vbox.add_child(summary_header)
+	
+	# Scroll container for grid
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	summary_vbox.add_child(scroll)
+	
+	# Grid container for skills
+	skill_summary_grid = GridContainer.new()
+	skill_summary_grid.columns = 3
+	skill_summary_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(skill_summary_grid)
+	
+	# Add to main content
+	main_content.add_child(skill_summary_panel)
+	main_content.move_child(skill_summary_panel, inventory_panel.get_index() + 1)
+
 ## Show upgrades view
 func _on_upgrades_selected() -> void:
 	is_upgrades_view = true
 	is_inventory_view = false
 	is_equipment_view = false
+	is_skill_summary_view = false
 	_hide_skill_view()
 	_show_upgrades_view()
 	_populate_upgrades_list()
@@ -926,6 +996,8 @@ func _show_upgrades_view() -> void:
 		inventory_panel_view.visible = false
 	if equipment_panel_view:
 		equipment_panel_view.visible = false
+	if skill_summary_panel:
+		skill_summary_panel.visible = false
 	# Show upgrades panel
 	if upgrades_panel:
 		upgrades_panel.visible = true
@@ -1046,6 +1118,71 @@ func _on_upgrade_purchased(upgrade_id: String) -> void:
 func _on_upgrades_updated() -> void:
 	if is_upgrades_view:
 		_populate_upgrades_list()
+
+## Handle skill summary button click
+func _on_skill_summary_selected() -> void:
+	is_upgrades_view = false
+	is_inventory_view = false
+	is_equipment_view = false
+	is_skill_summary_view = true
+	_hide_skill_view()
+	_show_skill_summary_view()
+	_populate_skill_summary()
+
+## Show skill summary panel and hide others
+func _show_skill_summary_view() -> void:
+	# Hide other special panels
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
+	# Show skill summary panel
+	if skill_summary_panel:
+		skill_summary_panel.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
+
+## Populate skill summary grid
+func _populate_skill_summary() -> void:
+	if not skill_summary_grid:
+		return
+	
+	# Clear existing items
+	for child in skill_summary_grid.get_children():
+		child.queue_free()
+	
+	# Add each skill to the grid
+	for skill_id in GameManager.skills:
+		var skill: SkillData = GameManager.skills[skill_id]
+		var level := GameManager.get_skill_level(skill_id)
+		
+		# Create a panel for each skill
+		var skill_panel := PanelContainer.new()
+		skill_panel.custom_minimum_size = Vector2(100, 80)
+		
+		var vbox := VBoxContainer.new()
+		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+		skill_panel.add_child(vbox)
+		
+		# Skill name
+		var name_label := Label.new()
+		name_label.text = skill.name
+		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		name_label.add_theme_font_size_override("font_size", 12)
+		name_label.add_theme_color_override("font_color", skill.color)
+		vbox.add_child(name_label)
+		
+		# Level display
+		var level_label := Label.new()
+		level_label.text = "%d/99" % level
+		level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		level_label.add_theme_font_size_override("font_size", 16)
+		vbox.add_child(level_label)
+		
+		skill_summary_grid.add_child(skill_panel)
 
 ## Toggle sidebar visibility
 func _on_sidebar_toggle_pressed() -> void:
