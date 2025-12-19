@@ -11,7 +11,6 @@ const MAX_CHARACTERS := 3
 @onready var create_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CreateButton
 @onready var cancel_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CancelButton
 @onready var delete_dialog: AcceptDialog = $DeleteConfirmDialog
-@onready var footer_label: Label = $Footer
 
 var selected_slot: int = -1
 var slot_buttons: Array[Button] = []
@@ -35,9 +34,6 @@ func _ready() -> void:
 	
 	# Populate character slots
 	_populate_character_slots()
-	
-	# Update footer with version
-	_update_footer()
 	
 	# Connect to CharacterManager signals
 	CharacterManager.character_created.connect(_on_character_created)
@@ -181,8 +177,3 @@ func _on_character_created(slot: int, character_name: String) -> void:
 
 func _on_character_deleted(slot: int) -> void:
 	print("[Startup] Character deleted from slot %d" % slot)
-
-## Update footer with version information
-func _update_footer() -> void:
-	if footer_label:
-		footer_label.text = VersionManager.get_version_string()

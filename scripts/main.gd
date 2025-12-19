@@ -45,7 +45,6 @@ const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
 @onready var total_stats_label: Label = $HSplitContainer/MainContent/TotalStatsPanel/TotalStatsLabel
 @onready var offline_popup: PanelContainer = $OfflineProgressPopup
-@onready var footer_label: Label = $Footer
 
 var selected_skill_id: String = ""
 var skill_buttons: Dictionary = {}
@@ -91,9 +90,6 @@ func _ready() -> void:
 	_populate_skill_sidebar()
 	_update_total_stats()
 	_hide_training_panel()
-	
-	# Update footer with version
-	_update_footer()
 	
 	# Set sidebar to collapsed by default
 	_set_sidebar_collapsed(true)
@@ -1458,8 +1454,3 @@ func _input(event: InputEvent) -> void:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
 			if not dragging_item.is_empty():
 				_end_drag()
-        
-## Update footer with version information
-func _update_footer() -> void:
-	if footer_label:
-		footer_label.text = VersionManager.get_version_string()
