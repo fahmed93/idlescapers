@@ -52,36 +52,42 @@ layout_mode = 2
 text = "Info"
 horizontal_alignment = 1
 
-[node name="MainContent" type="VBoxContainer" parent="HSplitContainer"]
+[node name="MainContentScroll" type="ScrollContainer" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="MainContent" type="VBoxContainer" parent="HSplitContainer/MainContentScroll"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SelectedSkillHeader" type="VBoxContainer" parent="HSplitContainer/MainContent"]
+[node name="SelectedSkillHeader" type="VBoxContainer" parent="HSplitContainer/MainContentScroll/MainContent"]
 layout_mode = 2
 
-[node name="SkillName" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+[node name="SkillName" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "Select a Skill"
 horizontal_alignment = 1
 
-[node name="SkillLevel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+[node name="SkillLevel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader"]
 layout_mode = 2
 text = "Level 1"
 horizontal_alignment = 1
 
-[node name="XPProgressBar" type="ProgressBar" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+[node name="XPProgressBar" type="ProgressBar" parent="HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader"]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 show_percentage = false
 
-[node name="XPLabel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+[node name="XPLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0 / 83 XP"
 horizontal_alignment = 1
 
-[node name="SpeedBonusLabel" type="Label" parent="HSplitContainer/MainContent/SelectedSkillHeader"]
+[node name="SpeedBonusLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/SelectedSkillHeader"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 14
@@ -89,84 +95,84 @@ theme_override_colors/font_color = Color(0.5, 1, 0.5, 1)
 text = "+0% Speed Bonus"
 horizontal_alignment = 1
 
-[node name="TrainingPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+[node name="TrainingPanel" type="PanelContainer" parent="HSplitContainer/MainContentScroll/MainContent"]
 visible = false
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContent/TrainingPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContentScroll/MainContent/TrainingPanel"]
 layout_mode = 2
 
-[node name="TrainingLabel" type="Label" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+[node name="TrainingLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer"]
 layout_mode = 2
 text = "Training: None"
 horizontal_alignment = 1
 
-[node name="TrainingProgressBar" type="ProgressBar" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+[node name="TrainingProgressBar" type="ProgressBar" parent="HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 30)
 layout_mode = 2
 show_percentage = false
 
-[node name="TrainingTimeLabel" type="Label" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+[node name="TrainingTimeLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "0.0s / 0.0s"
 horizontal_alignment = 1
 
-[node name="StopButton" type="Button" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+[node name="StopButton" type="Button" parent="HSplitContainer/MainContentScroll/MainContent/TrainingPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 text = "Stop Training"
 
-[node name="ActionListLabel" type="Label" parent="HSplitContainer/MainContent"]
+[node name="ActionListLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Training Methods"
 horizontal_alignment = 1
 
-[node name="ActionList" type="PanelContainer" parent="HSplitContainer/MainContent"]
+[node name="ActionList" type="PanelContainer" parent="HSplitContainer/MainContentScroll/MainContent"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContent/ActionList"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContentScroll/MainContent/ActionList"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="ActionListContent" type="VBoxContainer" parent="HSplitContainer/MainContent/ActionList/ScrollContainer"]
+[node name="ActionListContent" type="VBoxContainer" parent="HSplitContainer/MainContentScroll/MainContent/ActionList/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="InventoryLabel" type="Label" parent="HSplitContainer/MainContent"]
+[node name="InventoryLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 text = "Inventory"
 horizontal_alignment = 1
 
-[node name="InventoryPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+[node name="InventoryPanel" type="PanelContainer" parent="HSplitContainer/MainContentScroll/MainContent"]
 visible = false
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContent/InventoryPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/MainContentScroll/MainContent/InventoryPanel"]
 layout_mode = 2
 
-[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContent/InventoryPanel/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/MainContentScroll/MainContent/InventoryPanel/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 horizontal_scroll_mode = 0
 
-[node name="InventoryGrid" type="GridContainer" parent="HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer"]
+[node name="InventoryGrid" type="GridContainer" parent="HSplitContainer/MainContentScroll/MainContent/InventoryPanel/VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 columns = 4
 
-[node name="TotalStatsPanel" type="PanelContainer" parent="HSplitContainer/MainContent"]
+[node name="TotalStatsPanel" type="PanelContainer" parent="HSplitContainer/MainContentScroll/MainContent"]
 layout_mode = 2
 
-[node name="TotalStatsLabel" type="Label" parent="HSplitContainer/MainContent/TotalStatsPanel"]
+[node name="TotalStatsLabel" type="Label" parent="HSplitContainer/MainContentScroll/MainContent/TotalStatsPanel"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 text = "Total Level: 3 | Total XP: 0 | Inventory Value: 0"
