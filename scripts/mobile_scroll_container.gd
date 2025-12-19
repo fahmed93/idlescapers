@@ -19,7 +19,8 @@ func _ready() -> void:
 func _input(event: InputEvent) -> void:
 	# Handle touch press/release
 	if event is InputEventScreenTouch:
-		var local_pos := get_local_mouse_position()
+		var global_pos := event.position
+		var local_pos := make_canvas_position_local(global_pos)
 		var is_in_bounds := Rect2(Vector2.ZERO, size).has_point(local_pos)
 		
 		if event.pressed and is_in_bounds:
@@ -51,7 +52,8 @@ func _input(event: InputEvent) -> void:
 		var is_drag := false
 		
 		if event is InputEventScreenDrag:
-			current_pos = get_local_mouse_position()
+			var global_pos := event.position
+			current_pos = make_canvas_position_local(global_pos)
 			is_drag = true
 		elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 			current_pos = get_local_mouse_position()
@@ -70,4 +72,5 @@ func _input(event: InputEvent) -> void:
 				
 				# Consume the event to prevent buttons from processing it
 				get_viewport().set_input_as_handled()
+
 
