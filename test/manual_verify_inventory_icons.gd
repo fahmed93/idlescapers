@@ -40,7 +40,7 @@ func _ready() -> void:
 	print("3. Verify that items without dedicated icons display a placeholder question mark icon")
 	print("4. Verify that all items are clickable and show details")
 	print("\nExpected behavior:")
-	print("- Log items should show a 32x32 icon at the top of each inventory slot")
+	print("- Log items should show a 48x48 icon at the top of each inventory slot")
 	print("- Items without dedicated icons should show a question mark placeholder icon")
 	print("- All items should remain clickable and functional")
 	print("\nTest complete! Keep this scene running to interact with the inventory.\n")
