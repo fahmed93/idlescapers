@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tdobuq1l8snq2r7n"
-path="res://.godot/imported/crystal_logs.png-95c2f6a770ee1adcc3dd68eca87f5bb7.ctex"
+uid="uid://dpfgh8c4ro2hp"
+path="res://.godot/imported/crystal_logs.png-7d2380d0b91a0c0a56c2defe42f64910.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/crystal_logs.png"
-dest_files=["res://.godot/imported/crystal_logs.png-95c2f6a770ee1adcc3dd68eca87f5bb7.ctex"]
+dest_files=["res://.godot/imported/crystal_logs.png-7d2380d0b91a0c0a56c2defe42f64910.ctex"]
 
 [params]
 

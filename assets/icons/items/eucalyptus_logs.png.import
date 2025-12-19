@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k0do4u3d36liwa0q"
-path="res://.godot/imported/eucalyptus_logs.png-6fd4f16617e7a4b16e5a0493a5fb5367.ctex"
+uid="uid://budf64ibx3e23"
+path="res://.godot/imported/eucalyptus_logs.png-09dfa7841f3b66fb02a47e1733fde769.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/eucalyptus_logs.png"
-dest_files=["res://.godot/imported/eucalyptus_logs.png-6fd4f16617e7a4b16e5a0493a5fb5367.ctex"]
+dest_files=["res://.godot/imported/eucalyptus_logs.png-09dfa7841f3b66fb02a47e1733fde769.ctex"]
 
 [params]
 

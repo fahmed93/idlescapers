@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://gjj2c1mtbya8kwwf"
-path="res://.godot/imported/spirit_logs.png-3dc7a5ab6f6e387e43b18f85928af256.ctex"
+uid="uid://beba1d688mkqr"
+path="res://.godot/imported/spirit_logs.png-d9a39232c7e65d3ff1fc534ae397ddcf.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/spirit_logs.png"
-dest_files=["res://.godot/imported/spirit_logs.png-3dc7a5ab6f6e387e43b18f85928af256.ctex"]
+dest_files=["res://.godot/imported/spirit_logs.png-d9a39232c7e65d3ff1fc534ae397ddcf.ctex"]
 
 [params]
 

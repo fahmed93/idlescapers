@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://p0xlwu69e2fnocs4"
-path="res://.godot/imported/mahogany_logs.png-f0e664dcaa39fe985d4ab1d12580f1b0.ctex"
+uid="uid://boxkgfbgdki5n"
+path="res://.godot/imported/mahogany_logs.png-2f0e67a706acbee8d24c19d622a20ed2.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/mahogany_logs.png"
-dest_files=["res://.godot/imported/mahogany_logs.png-f0e664dcaa39fe985d4ab1d12580f1b0.ctex"]
+dest_files=["res://.godot/imported/mahogany_logs.png-2f0e67a706acbee8d24c19d622a20ed2.ctex"]
 
 [params]
 

@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ww4omr6rppzb6xmw"
-path="res://.godot/imported/oak_logs.png-db415f2a77c840f93261b4ec83b8cf49.ctex"
+uid="uid://suji6giv1rti"
+path="res://.godot/imported/oak_logs.png-203ea6ca70122524dd5d8271ed887261.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/oak_logs.png"
-dest_files=["res://.godot/imported/oak_logs.png-db415f2a77c840f93261b4ec83b8cf49.ctex"]
+dest_files=["res://.godot/imported/oak_logs.png-203ea6ca70122524dd5d8271ed887261.ctex"]
 
 [params]
 

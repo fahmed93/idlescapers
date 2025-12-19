@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://4hw2dee3qqtu6ywz"
-path="res://.godot/imported/achey_logs.png-44d533678cf8cd4359fc87d6b40b9a93.ctex"
+uid="uid://dxoj7mqe4lkbl"
+path="res://.godot/imported/achey_logs.png-fe353a043ce5564419b3645375c00f13.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/achey_logs.png"
-dest_files=["res://.godot/imported/achey_logs.png-44d533678cf8cd4359fc87d6b40b9a93.ctex"]
+dest_files=["res://.godot/imported/achey_logs.png-fe353a043ce5564419b3645375c00f13.ctex"]
 
 [params]
 

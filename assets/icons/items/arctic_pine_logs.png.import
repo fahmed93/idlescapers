@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q72s7oawvxpt72fl"
-path="res://.godot/imported/arctic_pine_logs.png-63c73930a11f69f3273f41e06dfb92a6.ctex"
+uid="uid://b7x2emdbuvwy8"
+path="res://.godot/imported/arctic_pine_logs.png-2e7dfbe8b7ef38d6e43d52d97dad01bc.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/arctic_pine_logs.png"
-dest_files=["res://.godot/imported/arctic_pine_logs.png-63c73930a11f69f3273f41e06dfb92a6.ctex"]
+dest_files=["res://.godot/imported/arctic_pine_logs.png-2e7dfbe8b7ef38d6e43d52d97dad01bc.ctex"]
 
 [params]
 
