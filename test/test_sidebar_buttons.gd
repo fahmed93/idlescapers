@@ -1,5 +1,5 @@
 ## Test Sidebar Buttons
-## Verifies that all special buttons (Equipment, Inventory, Upgrades) are present in the sidebar
+## Verifies that all special buttons (Equipment, Inventory, Upgrades, Progress, Settings) are present in the sidebar
 extends Control
 
 var main_scene = preload("res://scenes/main.tscn")

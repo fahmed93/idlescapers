@@ -42,6 +42,8 @@ func _run_tests() -> void:
 	print("  ✓ Stored button references\n")
 	
 	# Test 5: Call _populate_skill_sidebar() to simulate repopulation
+	# Note: Calling this "private" method directly is intentional for testing internal behavior.
+	# This ensures the button persistence logic works correctly when skills are dynamically updated.
 	print("Test 5: Repopulate sidebar")
 	main_instance._populate_skill_sidebar()
 	await get_tree().process_frame
