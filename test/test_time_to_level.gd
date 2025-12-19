@@ -50,11 +50,11 @@ func _ready() -> void:
 	# Test 2: Test with speed modifier
 	print("\nTest 2: Testing with speed modifier...")
 	var speed_modifier := 0.5  # 50% speed bonus
-	var effective_action_time := catch_shrimp.get_effective_action_time("fishing")
+	
+	# Note: Without actually purchasing an upgrade, we can't use get_effective_action_time
+	# with the UpgradeShop, so we calculate manually for testing purposes
 	print("  Base action time: %.1fs" % catch_shrimp.action_time)
 	
-	# Simulate having a 50% speed bonus (would need to purchase upgrade)
-	# For now, just calculate manually
 	var modified_time := catch_shrimp.action_time / (1.0 + speed_modifier)
 	var time_with_bonus := actions_needed * modified_time
 	print("  With 50%% speed bonus: %.1fs (%.1f minutes)" % [time_with_bonus, time_with_bonus / 60.0])
