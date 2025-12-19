@@ -1108,7 +1108,7 @@ func _on_upgrades_updated() -> void:
 	if is_upgrades_view:
 		_populate_upgrades_list()
 
-## Show skill summary view
+## Handle skill summary button click
 func _on_skill_summary_selected() -> void:
 	is_upgrades_view = false
 	is_inventory_view = false
@@ -1118,7 +1118,7 @@ func _on_skill_summary_selected() -> void:
 	_show_skill_summary_view()
 	_populate_skill_summary()
 
-## Show skill summary view
+## Show skill summary panel and hide others
 func _show_skill_summary_view() -> void:
 	# Hide other special panels
 	if upgrades_panel:
