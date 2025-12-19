@@ -208,9 +208,9 @@ func _populate_skill_sidebar() -> void:
 	
 	var insert_index := skills_header.get_index() + 1
 	
-	# Clear existing skill buttons (but not the headers or player section buttons)
+	# Clear existing skill buttons (but not the headers or player section buttons or info section buttons)
 	for child in skill_sidebar.get_children():
-		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button:
+		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button and child != skill_summary_button and child != settings_button:
 			child.queue_free()
 		# Also remove TotalLevelLabel if it exists to recreate it
 		elif child.name == "TotalLevelLabel":
