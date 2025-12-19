@@ -43,6 +43,13 @@ jobs:
           
           # Display new version
           echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          
+          # Commit and push the version increment
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add version.txt
+          git commit -m "Auto-increment version to $NEW_VERSION" || echo "No changes to commit"
+          git push || echo "Failed to push version increment"
 
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
