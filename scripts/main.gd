@@ -9,6 +9,10 @@ const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 const PlaceholderIcon := preload("res://assets/icons/items/placeholder.svg")
 
+# Tab context menu options
+const TAB_MENU_RENAME := 0
+const TAB_MENU_DELETE := 1
+
 # Equipment layout constants
 # Note: Mobile viewport is 720px wide. After sidebar (~120px) and padding (~40px),
 # available width is ~560px, so center is approximately 280px from left edge of content area.
@@ -42,6 +46,7 @@ const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
 @onready var total_stats_label: Label = $HSplitContainer/MainContent/TotalStatsPanel/TotalStatsLabel
 @onready var offline_popup: PanelContainer = $OfflineProgressPopup
+@onready var footer_label: Label = $Footer
 
 var selected_skill_id: String = ""
 var skill_buttons: Dictionary = {}
@@ -59,6 +64,11 @@ var hide_owned_upgrades: bool = false
 var inventory_button: Button = null
 var inventory_panel_view: PanelContainer = null
 var inventory_items_list: GridContainer = null
+var inventory_tab_bar: HBoxContainer = null
+var inventory_current_tab: String = ""
+var inventory_tab_buttons: Dictionary = {}  # tab_id: Button
+var dragging_item: Dictionary = {}  # { item_id: String, from_tab: String, amount: int }
+var drag_preview: Control = null
 var equipment_button: Button = null
 var equipment_panel_view: PanelContainer = null
 var equipment_slots_container: Control = null
@@ -83,6 +93,9 @@ func _ready() -> void:
 	_update_total_stats()
 	_hide_training_panel()
 	
+	# Update footer with version
+	_update_footer()
+	
 	# Set sidebar to collapsed by default
 	_set_sidebar_collapsed(true)
 	
@@ -100,6 +113,9 @@ func _setup_signals() -> void:
 	GameManager.training_stopped.connect(_on_training_stopped)
 	GameManager.action_completed.connect(_on_action_completed)
 	Inventory.inventory_updated.connect(_on_inventory_updated)
+	Inventory.tab_created.connect(_on_tab_created)
+	Inventory.tab_deleted.connect(_on_tab_deleted)
+	Inventory.tab_renamed.connect(_on_tab_renamed)
 	Store.gold_changed.connect(_on_gold_changed)
 	UpgradeShop.upgrade_purchased.connect(_on_upgrade_purchased)
 	UpgradeShop.upgrades_updated.connect(_on_upgrades_updated)
@@ -111,6 +127,10 @@ func _setup_signals() -> void:
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
 		_update_training_progress()
+	
+	# Update drag preview position
+	if drag_preview and not dragging_item.is_empty():
+		drag_preview.global_position = get_global_mouse_position() - drag_preview.size / 2
 
 ## Create all buttons for the Player section
 func _create_player_section_buttons() -> void:
@@ -515,15 +535,19 @@ func _update_inventory_display(grid: GridContainer) -> void:
 	for child in grid.get_children():
 		child.queue_free()
 	
-	var items := Inventory.get_all_items()
+	# Get items from current tab
+	var items := Inventory.get_tab_items(inventory_current_tab)
 	for item_id in items:
 		var item_data := Inventory.get_item_data(item_id)
 		var count: int = items[item_id]
 		
-		# Create a button instead of panel to make it clickable
+		# Create a button instead of panel to make it clickable and draggable
 		var item_button := Button.new()
 		item_button.custom_minimum_size = Vector2(ITEM_PANEL_WIDTH, ITEM_PANEL_HEIGHT)
 		item_button.pressed.connect(_on_item_clicked.bind(item_id))
+		# Enable drag detection
+		item_button.mouse_filter = Control.MOUSE_FILTER_PASS
+		item_button.gui_input.connect(_on_item_gui_input.bind(item_id, inventory_current_tab))
 
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -668,6 +692,27 @@ func _create_inventory_ui() -> void:
 	inventory_header.add_theme_font_size_override("font_size", 20)
 	inventory_header.add_theme_color_override("font_color", Color(0.6, 0.8, 0.6))
 	inventory_vbox.add_child(inventory_header)
+	
+	# Tab bar container
+	var tab_bar_container := HBoxContainer.new()
+	tab_bar_container.custom_minimum_size = Vector2(0, 40)
+	inventory_vbox.add_child(tab_bar_container)
+	
+	# Scrollable tab bar
+	var tab_scroll := ScrollContainer.new()
+	tab_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	tab_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	tab_bar_container.add_child(tab_scroll)
+	
+	inventory_tab_bar = HBoxContainer.new()
+	tab_scroll.add_child(inventory_tab_bar)
+	
+	# Add tab button
+	var add_tab_button := Button.new()
+	add_tab_button.text = "+"
+	add_tab_button.custom_minimum_size = Vector2(40, 40)
+	add_tab_button.pressed.connect(_on_add_tab_pressed)
+	tab_bar_container.add_child(add_tab_button)
 	
 	# Inventory items list
 	var scroll := ScrollContainer.new()
@@ -849,6 +894,10 @@ func _on_inventory_selected() -> void:
 	is_skill_summary_view = false
 	_hide_skill_view()
 	_show_inventory_view()
+	# Set to main tab if no tab selected
+	if inventory_current_tab.is_empty():
+		inventory_current_tab = Inventory.MAIN_TAB_ID
+	_populate_inventory_tabs()
 	_on_inventory_updated()
 
 ## Show inventory view
@@ -1235,3 +1284,191 @@ func _on_change_character_pressed() -> void:
 	
 	# Change back to startup scene
 	get_tree().change_scene_to_file("res://scenes/startup.tscn")
+
+## Populate inventory tabs
+func _populate_inventory_tabs() -> void:
+	if not inventory_tab_bar:
+		return
+	
+	# Clear existing tab buttons
+	for child in inventory_tab_bar.get_children():
+		child.queue_free()
+	inventory_tab_buttons.clear()
+	
+	# Create button for each tab
+	for tab_id in Inventory.tab_order:
+		var tab_button := Button.new()
+		tab_button.custom_minimum_size = Vector2(80, 30)
+		tab_button.text = Inventory.get_tab_name(tab_id)
+		tab_button.toggle_mode = true
+		tab_button.button_pressed = (tab_id == inventory_current_tab)
+		tab_button.pressed.connect(_on_tab_selected.bind(tab_id))
+		
+		# Enable drop detection for moving items between tabs and right-click menu
+		tab_button.mouse_filter = Control.MOUSE_FILTER_PASS
+		tab_button.gui_input.connect(_on_tab_gui_input.bind(tab_id))
+		
+		inventory_tab_bar.add_child(tab_button)
+		inventory_tab_buttons[tab_id] = tab_button
+
+## Handle tab selection
+func _on_tab_selected(tab_id: String) -> void:
+	inventory_current_tab = tab_id
+	_populate_inventory_tabs()  # Refresh tab buttons to update pressed state
+	_on_inventory_updated()
+
+## Handle add tab button pressed
+func _on_add_tab_pressed() -> void:
+	var tab_name := "Tab %d" % (Inventory.tab_order.size())
+	Inventory.create_tab(tab_name)
+
+## Handle tab created signal
+func _on_tab_created(_tab_id: String, _tab_name: String) -> void:
+	_populate_inventory_tabs()
+
+## Handle tab deleted signal
+func _on_tab_deleted(tab_id: String) -> void:
+	# Switch to main tab if current tab was deleted
+	if inventory_current_tab == tab_id:
+		inventory_current_tab = Inventory.MAIN_TAB_ID
+	_populate_inventory_tabs()
+	_on_inventory_updated()
+
+## Handle tab renamed signal
+func _on_tab_renamed(_tab_id: String, _new_name: String) -> void:
+	_populate_inventory_tabs()
+
+## Show tab context menu
+func _show_tab_context_menu(tab_id: String) -> void:
+	# Create a simple popup menu
+	var popup := PopupMenu.new()
+	popup.add_item("Rename", TAB_MENU_RENAME)
+	popup.add_item("Delete", TAB_MENU_DELETE)
+	
+	# Use lambda to avoid memory leak from circular reference
+	popup.id_pressed.connect(func(option_id: int):
+		_on_tab_context_option(option_id, tab_id)
+		popup.queue_free()
+	)
+	
+	add_child(popup)
+	popup.popup_centered()
+
+## Handle tab context menu option selected
+func _on_tab_context_option(option_id: int, tab_id: String) -> void:
+	if option_id == TAB_MENU_RENAME:
+		_show_rename_tab_dialog(tab_id)
+	elif option_id == TAB_MENU_DELETE:
+		Inventory.delete_tab(tab_id)
+
+## Show rename tab dialog
+func _show_rename_tab_dialog(tab_id: String) -> void:
+	# Create a simple dialog with LineEdit
+	var dialog := AcceptDialog.new()
+	dialog.title = "Rename Tab"
+	dialog.dialog_text = "Enter new name for tab (max 20 characters):"
+	
+	var line_edit := LineEdit.new()
+	line_edit.text = Inventory.get_tab_name(tab_id)
+	line_edit.max_length = 20
+	line_edit.custom_minimum_size = Vector2(200, 0)
+	dialog.add_child(line_edit)
+	
+	dialog.confirmed.connect(func():
+		var new_name := line_edit.text.strip_edges()
+		if not new_name.is_empty():
+			Inventory.rename_tab(tab_id, new_name)
+		dialog.queue_free()
+	)
+	dialog.canceled.connect(func(): dialog.queue_free())
+	
+	add_child(dialog)
+	dialog.popup_centered()
+
+## Handle GUI input on items for drag detection
+func _on_item_gui_input(event: InputEvent, item_id: String, from_tab: String) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			# Start drag
+			var amount := Inventory.get_item_count_in_tab(from_tab, item_id)
+			dragging_item = {
+				"item_id": item_id,
+				"from_tab": from_tab,
+				"amount": amount
+			}
+			_create_drag_preview(item_id)
+	elif event is InputEventMouseMotion and not dragging_item.is_empty():
+		# Update drag preview position
+		if drag_preview:
+			drag_preview.global_position = get_global_mouse_position() - drag_preview.size / 2
+
+## Handle GUI input on tabs for drop detection and right-click menu
+func _on_tab_gui_input(event: InputEvent, to_tab: String) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			# Drop item on tab
+			if not dragging_item.is_empty():
+				var item_id: String = dragging_item["item_id"]
+				var from_tab: String = dragging_item["from_tab"]
+				var amount: int = dragging_item["amount"]
+				
+				if Inventory.move_item_between_tabs(item_id, from_tab, to_tab, amount):
+					print("[Main] Moved %d x %s from %s to %s" % [amount, item_id, from_tab, to_tab])
+				
+				_end_drag()
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			# Show context menu for non-main tabs
+			if to_tab != Inventory.MAIN_TAB_ID:
+				_show_tab_context_menu(to_tab)
+
+## Create drag preview visual
+func _create_drag_preview(item_id: String) -> void:
+	if drag_preview:
+		drag_preview.queue_free()
+	
+	var item_data := Inventory.get_item_data(item_id)
+	if not item_data:
+		return
+	
+	drag_preview = PanelContainer.new()
+	drag_preview.z_index = 1000
+	drag_preview.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	var vbox := VBoxContainer.new()
+	vbox.alignment = BoxContainer.ALIGNMENT_CENTER
+	drag_preview.add_child(vbox)
+	
+	if item_data.icon:
+		var icon := TextureRect.new()
+		icon.texture = item_data.icon
+		icon.custom_minimum_size = Vector2(48, 48)
+		icon.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		vbox.add_child(icon)
+	
+	var label := Label.new()
+	label.text = item_data.name
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	vbox.add_child(label)
+	
+	add_child(drag_preview)
+	drag_preview.global_position = get_global_mouse_position() - Vector2(24, 24)
+
+## End drag operation
+func _end_drag() -> void:
+	dragging_item.clear()
+	if drag_preview:
+		drag_preview.queue_free()
+		drag_preview = null
+
+## Handle input for global drag end
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+			if not dragging_item.is_empty():
+				_end_drag()
+        
+## Update footer with version information
+func _update_footer() -> void:
+	if footer_label:
+		footer_label.text = VersionManager.get_version_string()
