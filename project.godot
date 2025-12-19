@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-VersionManager="*res://autoload/version_manager.gd"
 CharacterManager="*res://autoload/character_manager.gd"
 GameManager="*res://autoload/game_manager.gd"
 Inventory="*res://autoload/inventory.gd"
