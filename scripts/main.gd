@@ -4,7 +4,7 @@ extends Control
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
 const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
 const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
-const INVENTORY_ICON_SIZE := 48  # Size of item icons in inventory display
+const INVENTORY_ICON_SIZE := 32  # Size of item icons in inventory display
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 const PlaceholderIcon := preload("res://assets/icons/items/placeholder.svg")
@@ -1428,7 +1428,7 @@ func _create_drag_preview(item_id: String) -> void:
 	if item_data.icon:
 		var icon := TextureRect.new()
 		icon.texture = item_data.icon
-		icon.custom_minimum_size = Vector2(48, 48)
+		icon.custom_minimum_size = Vector2(INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE)
 		icon.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		vbox.add_child(icon)
