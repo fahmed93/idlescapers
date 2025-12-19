@@ -66,23 +66,23 @@ func _load_items() -> void:
 	_add_item("cooked_kraken_tentacle", "Cooked Kraken Tentacle", "An ultimate cooked kraken feast.", ItemData.ItemType.CONSUMABLE, 1600)
 	
 	# Logs
-	_add_item("logs", "Logs", "Standard wooden logs.", ItemData.ItemType.RAW_MATERIAL, 5)
-	_add_item("oak_logs", "Oak Logs", "Sturdy oak logs.", ItemData.ItemType.RAW_MATERIAL, 20)
-	_add_item("willow_logs", "Willow Logs", "Flexible willow logs.", ItemData.ItemType.RAW_MATERIAL, 40)
-	_add_item("maple_logs", "Maple Logs", "Quality maple logs.", ItemData.ItemType.RAW_MATERIAL, 80)
-	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200)
-	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500)
-	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000)
-	_add_item("achey_logs", "Achey Logs", "Flexible achey logs.", ItemData.ItemType.RAW_MATERIAL, 15)
-	_add_item("teak_logs", "Teak Logs", "Durable teak logs.", ItemData.ItemType.RAW_MATERIAL, 90)
-	_add_item("mahogany_logs", "Mahogany Logs", "Rich mahogany logs.", ItemData.ItemType.RAW_MATERIAL, 150)
-	_add_item("arctic_pine_logs", "Arctic Pine Logs", "Hardy arctic pine logs.", ItemData.ItemType.RAW_MATERIAL, 170)
-	_add_item("eucalyptus_logs", "Eucalyptus Logs", "Fragrant eucalyptus logs.", ItemData.ItemType.RAW_MATERIAL, 220)
-	_add_item("elder_logs", "Elder Logs", "Mystical elder logs.", ItemData.ItemType.RAW_MATERIAL, 280)
-	_add_item("blisterwood_logs", "Blisterwood Logs", "Cursed blisterwood logs.", ItemData.ItemType.RAW_MATERIAL, 350)
-	_add_item("bloodwood_logs", "Bloodwood Logs", "Crimson bloodwood logs.", ItemData.ItemType.RAW_MATERIAL, 450)
-	_add_item("crystal_logs", "Crystal Logs", "Shimmering crystal logs.", ItemData.ItemType.RAW_MATERIAL, 600)
-	_add_item("spirit_logs", "Spirit Logs", "Ancient spirit tree logs.", ItemData.ItemType.RAW_MATERIAL, 750)
+	_add_item("logs", "Logs", "Standard wooden logs.", ItemData.ItemType.RAW_MATERIAL, 5, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/logs.png")
+	_add_item("oak_logs", "Oak Logs", "Sturdy oak logs.", ItemData.ItemType.RAW_MATERIAL, 20, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/oak_logs.png")
+	_add_item("willow_logs", "Willow Logs", "Flexible willow logs.", ItemData.ItemType.RAW_MATERIAL, 40, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/willow_logs.png")
+	_add_item("maple_logs", "Maple Logs", "Quality maple logs.", ItemData.ItemType.RAW_MATERIAL, 80, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/maple_logs.png")
+	_add_item("yew_logs", "Yew Logs", "Valuable yew logs.", ItemData.ItemType.RAW_MATERIAL, 200, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/yew_logs.png")
+	_add_item("magic_logs", "Magic Logs", "Magical logs.", ItemData.ItemType.RAW_MATERIAL, 500, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/magic_logs.png")
+	_add_item("redwood_logs", "Redwood Logs", "Massive redwood logs.", ItemData.ItemType.RAW_MATERIAL, 1000, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/redwood_logs.png")
+	_add_item("achey_logs", "Achey Logs", "Flexible achey logs.", ItemData.ItemType.RAW_MATERIAL, 15, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/achey_logs.png")
+	_add_item("teak_logs", "Teak Logs", "Durable teak logs.", ItemData.ItemType.RAW_MATERIAL, 90, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/teak_logs.png")
+	_add_item("mahogany_logs", "Mahogany Logs", "Rich mahogany logs.", ItemData.ItemType.RAW_MATERIAL, 150, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/mahogany_logs.png")
+	_add_item("arctic_pine_logs", "Arctic Pine Logs", "Hardy arctic pine logs.", ItemData.ItemType.RAW_MATERIAL, 170, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/arctic_pine_logs.png")
+	_add_item("eucalyptus_logs", "Eucalyptus Logs", "Fragrant eucalyptus logs.", ItemData.ItemType.RAW_MATERIAL, 220, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/eucalyptus_logs.png")
+	_add_item("elder_logs", "Elder Logs", "Mystical elder logs.", ItemData.ItemType.RAW_MATERIAL, 280, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/elder_logs.png")
+	_add_item("blisterwood_logs", "Blisterwood Logs", "Cursed blisterwood logs.", ItemData.ItemType.RAW_MATERIAL, 350, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/blisterwood_logs.png")
+	_add_item("bloodwood_logs", "Bloodwood Logs", "Crimson bloodwood logs.", ItemData.ItemType.RAW_MATERIAL, 450, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/bloodwood_logs.png")
+	_add_item("crystal_logs", "Crystal Logs", "Shimmering crystal logs.", ItemData.ItemType.RAW_MATERIAL, 600, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/crystal_logs.png")
+	_add_item("spirit_logs", "Spirit Logs", "Ancient spirit tree logs.", ItemData.ItemType.RAW_MATERIAL, 750, ItemData.EquipmentSlot.NONE, "res://assets/icons/items/spirit_logs.png")
   
 	# Fletching materials
 	_add_item("arrow_shafts", "Arrow Shafts", "Wooden shafts for arrows.", ItemData.ItemType.PROCESSED, 1)
@@ -360,7 +360,7 @@ func _load_items() -> void:
 
 
 ## Helper to add item definition
-func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int, equipment_slot: ItemData.EquipmentSlot = ItemData.EquipmentSlot.NONE) -> void:
+func _add_item(id: String, display_name: String, desc: String, type: ItemData.ItemType, value: int, equipment_slot: ItemData.EquipmentSlot = ItemData.EquipmentSlot.NONE, icon_path: String = "") -> void:
 	var item := ItemData.new()
 	item.id = id
 	item.name = display_name
@@ -368,6 +368,8 @@ func _add_item(id: String, display_name: String, desc: String, type: ItemData.It
 	item.type = type
 	item.value = value
 	item.equipment_slot = equipment_slot
+	if icon_path != "":
+		item.icon = load(icon_path)
 	items[id] = item
 
 ## Get item data by ID
