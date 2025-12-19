@@ -217,6 +217,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.5)
 mouse_filter = 0
+z_index = 5
 
 [node name="SkillSidebar" type="PanelContainer" parent="."]
 visible = false
@@ -226,21 +227,27 @@ anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 200.0
 grow_vertical = 2
+z_index = 10
 
-[node name="SidebarContent" type="VBoxContainer" parent="SkillSidebar"]
+[node name="ScrollContainer" type="ScrollContainer" parent="SkillSidebar"]
 layout_mode = 2
+horizontal_scroll_mode = 0
 
-[node name="PlayerHeader" type="Label" parent="SkillSidebar/SidebarContent"]
+[node name="SidebarContent" type="VBoxContainer" parent="SkillSidebar/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerHeader" type="Label" parent="SkillSidebar/ScrollContainer/SidebarContent"]
 layout_mode = 2
 text = "Player"
 horizontal_alignment = 1
 
-[node name="SkillsHeader" type="Label" parent="SkillSidebar/SidebarContent"]
+[node name="SkillsHeader" type="Label" parent="SkillSidebar/ScrollContainer/SidebarContent"]
 layout_mode = 2
 text = "Skills"
 horizontal_alignment = 1
 
-[node name="InfoHeader" type="Label" parent="SkillSidebar/SidebarContent"]
+[node name="InfoHeader" type="Label" parent="SkillSidebar/ScrollContainer/SidebarContent"]
 layout_mode = 2
 text = "Info"
 horizontal_alignment = 1

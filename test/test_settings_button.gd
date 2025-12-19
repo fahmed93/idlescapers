@@ -22,7 +22,7 @@ func _run_tests() -> void:
 	
 	# Test 2: Verify sidebar exists
 	print("Test 2: Verify sidebar exists")
-	var sidebar = main_instance.get_node_or_null("SkillSidebar/SidebarContent")
+	var sidebar = main_instance.get_node_or_null("SkillSidebar/ScrollContainer/SidebarContent")
 	assert(sidebar != null, "SkillSidebar should exist")
 	print("  ✓ Sidebar exists\n")
 	

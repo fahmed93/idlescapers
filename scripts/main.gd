@@ -31,7 +31,7 @@ const PROGRESS_MARGIN := 20  # Margin around the grid
 const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
 const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
 
-@onready var skill_sidebar: VBoxContainer = $SkillSidebar/SidebarContent
+@onready var skill_sidebar: VBoxContainer = $SkillSidebar/ScrollContainer/SidebarContent
 @onready var sidebar_panel: PanelContainer = $SkillSidebar
 @onready var sidebar_dim_overlay: ColorRect = $SidebarDimOverlay
 @onready var main_content: VBoxContainer = $MainContent
