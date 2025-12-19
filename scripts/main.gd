@@ -18,8 +18,7 @@ const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from cen
 const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
 const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 
-@onready var sidebar_scroll_container: ScrollContainer = $HSplitContainer/SidebarScrollContainer
-@onready var skill_sidebar: VBoxContainer = $HSplitContainer/SidebarScrollContainer/SkillSidebar
+@onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
 @onready var change_character_button: Button = $ChangeCharacterButton
@@ -178,9 +177,9 @@ func _populate_skill_sidebar() -> void:
 	
 	var insert_index := skills_header.get_index() + 1
 	
-	# Clear existing skill buttons (but not the headers or player/info section buttons)
+	# Clear existing skill buttons (but not the headers or player section buttons)
 	for child in skill_sidebar.get_children():
-		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button and child != skill_summary_button:
+		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button:
 			child.queue_free()
 		# Also remove TotalLevelLabel if it exists to recreate it
 		elif child.name == "TotalLevelLabel":
@@ -194,12 +193,6 @@ func _populate_skill_sidebar() -> void:
 		button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
 		button.text = "%s\nLv. %d" % [skill.name, GameManager.get_skill_level(skill_id)]
 		button.add_theme_color_override("font_color", skill.color)
-		
-		# Add skill icon if available
-		if skill.icon:
-			button.icon = skill.icon
-			button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
-		
 		button.pressed.connect(_on_skill_selected.bind(skill_id))
 		skill_sidebar.add_child(button)
 		skill_sidebar.move_child(button, insert_index)
@@ -1200,7 +1193,7 @@ func _on_sidebar_toggle_pressed() -> void:
 
 ## Set sidebar collapsed/expanded state
 func _set_sidebar_collapsed(collapsed: bool) -> void:
-	sidebar_scroll_container.visible = not collapsed
+	skill_sidebar.visible = not collapsed
 	is_sidebar_expanded = not collapsed
 	
 	# Update toggle button text
