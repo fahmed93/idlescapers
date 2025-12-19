@@ -37,7 +37,8 @@ func _ready() -> void:
 	# Shrimp gives 10 XP per action, takes 3 seconds
 	# Expected: ceil(83 / 10) = 9 actions * 3s = 27s
 	# But with success rate, it's exactly: 83 / 10 * 3 = 24.9s
-	var expected_time := 24.9  # (83 XP needed / 10 XP per action) * 3s per action
+	var xp_needed := GameManager.get_xp_for_level(2) - GameManager.get_xp_for_level(1)
+	var expected_time := (xp_needed / 10.0) * 3.0  # (XP needed / XP per action) * time per action
 	
 	print("  Time to level 2: %.1fs (expected ~%.1fs)" % [time_to_level, expected_time])
 	assert(abs(time_to_level - expected_time) < 1.0, "Time calculation should be approximately correct")
@@ -48,7 +49,8 @@ func _ready() -> void:
 	
 	# Set fishing to level 30 (need 13,363 XP)
 	# Put player at 13,363 XP (exactly level 30)
-	GameManager.skill_xp["fishing"] = 13363.0
+	var level_30_xp := GameManager.get_xp_for_level(30)
+	GameManager.skill_xp["fishing"] = level_30_xp
 	GameManager.skill_levels["fishing"] = 30
 	
 	# Stop and restart training to update
@@ -58,10 +60,10 @@ func _ready() -> void:
 	
 	var time_to_31 := GameManager.get_time_to_next_level()
 	
-	# From level 30 to 31: need 368 XP (13,731 - 13,363)
+	# From level 30 to 31: XP difference
 	# Salmon gives 70 XP per action, takes 5 seconds
-	# Expected: 368 / 70 * 5 = 26.29s
-	var expected_time_31 := 26.28571  # (368 XP / 70 XP per action) * 5s
+	var xp_needed_31 := GameManager.get_xp_for_level(31) - GameManager.get_xp_for_level(30)
+	var expected_time_31 := (xp_needed_31 / 70.0) * 5.0  # (XP needed / XP per action) * time per action
 	
 	print("  Time to level 31: %.1fs (expected ~%.1fs)" % [time_to_31, expected_time_31])
 	assert(abs(time_to_31 - expected_time_31) < 1.0, "Time calculation at level 30 should be correct")
@@ -69,7 +71,8 @@ func _ready() -> void:
 	
 	# Test 5: Max level returns -1
 	print("\n[Test 5] Max level returns -1")
-	GameManager.skill_xp["fishing"] = 13034431.0  # Level 99
+	var max_level_xp := GameManager.get_xp_for_level(99)
+	GameManager.skill_xp["fishing"] = max_level_xp
 	GameManager.skill_levels["fishing"] = 99
 	
 	GameManager.stop_training()

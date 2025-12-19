@@ -100,6 +100,10 @@ func get_time_to_next_level() -> float:
 	# Calculate XP per action (accounting for success rate)
 	var xp_per_action := method.xp_per_action * method.success_rate
 	
+	# Guard against division by zero
+	if xp_per_action <= 0:
+		return -1.0
+	
 	# Calculate how many actions needed
 	var actions_needed := xp_remaining / xp_per_action
 	
