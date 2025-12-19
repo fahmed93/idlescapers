@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://b8r8x2p8r8n7k"]
+[gd_scene load_steps=3 format=3 uid="uid://b8r8x2p8r8n7k"]
 
 [ext_resource type="Script" uid="uid://dqm50uvkhmy3s" path="res://scripts/main.gd" id="1_main"]
+[ext_resource type="Script" uid="uid://c3027958a7fad55" path="res://scripts/mobile_scroll_container.gd" id="2_mobile_scroll"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -231,7 +232,9 @@ z_index = 10
 
 [node name="ScrollContainer" type="ScrollContainer" parent="SkillSidebar"]
 layout_mode = 2
+follow_focus = false
 horizontal_scroll_mode = 0
+script = ExtResource("2_mobile_scroll")
 
 [node name="SidebarContent" type="VBoxContainer" parent="SkillSidebar/ScrollContainer"]
 layout_mode = 2
