@@ -117,6 +117,10 @@ func _setup_signals() -> void:
 func _process(_delta: float) -> void:
 	if GameManager.is_training:
 		_update_training_progress()
+	
+	# Update drag preview position
+	if drag_preview and not dragging_item.is_empty():
+		drag_preview.global_position = get_global_mouse_position() - drag_preview.size / 2
 
 ## Create all buttons for the Player section
 func _create_player_section_buttons() -> void:
@@ -1276,13 +1280,9 @@ func _populate_inventory_tabs() -> void:
 		tab_button.button_pressed = (tab_id == inventory_current_tab)
 		tab_button.pressed.connect(_on_tab_selected.bind(tab_id))
 		
-		# Enable drop detection for moving items between tabs
+		# Enable drop detection for moving items between tabs and right-click menu
 		tab_button.mouse_filter = Control.MOUSE_FILTER_PASS
 		tab_button.gui_input.connect(_on_tab_gui_input.bind(tab_id))
-		
-		# Add context menu for non-main tabs
-		if tab_id != Inventory.MAIN_TAB_ID:
-			tab_button.mouse_entered.connect(_on_tab_mouse_entered.bind(tab_button, tab_id))
 		
 		inventory_tab_bar.add_child(tab_button)
 		inventory_tab_buttons[tab_id] = tab_button
@@ -1313,17 +1313,6 @@ func _on_tab_deleted(tab_id: String) -> void:
 ## Handle tab renamed signal
 func _on_tab_renamed(_tab_id: String, _new_name: String) -> void:
 	_populate_inventory_tabs()
-
-## Handle mouse entered on tab for context menu
-func _on_tab_mouse_entered(tab_button: Button, tab_id: String) -> void:
-	# Add right-click context menu for rename/delete
-	if not tab_button.is_connected("gui_input", _on_tab_context_menu):
-		tab_button.gui_input.connect(_on_tab_context_menu.bind(tab_id))
-
-## Handle tab context menu (right-click)
-func _on_tab_context_menu(event: InputEvent, tab_id: String) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-		_show_tab_context_menu(tab_id)
 
 ## Show tab context menu
 func _show_tab_context_menu(tab_id: String) -> void:
@@ -1381,7 +1370,7 @@ func _on_item_gui_input(event: InputEvent, item_id: String, from_tab: String) ->
 		if drag_preview:
 			drag_preview.global_position = get_global_mouse_position() - drag_preview.size / 2
 
-## Handle GUI input on tabs for drop detection
+## Handle GUI input on tabs for drop detection and right-click menu
 func _on_tab_gui_input(event: InputEvent, to_tab: String) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
@@ -1395,6 +1384,10 @@ func _on_tab_gui_input(event: InputEvent, to_tab: String) -> void:
 					print("[Main] Moved %d x %s from %s to %s" % [amount, item_id, from_tab, to_tab])
 				
 				_end_drag()
+		elif event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+			# Show context menu for non-main tabs
+			if to_tab != Inventory.MAIN_TAB_ID:
+				_show_tab_context_menu(to_tab)
 
 ## Create drag preview visual
 func _create_drag_preview(item_id: String) -> void:
