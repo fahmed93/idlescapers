@@ -193,6 +193,12 @@ func _populate_skill_sidebar() -> void:
 		button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
 		button.text = "%s\nLv. %d" % [skill.name, GameManager.get_skill_level(skill_id)]
 		button.add_theme_color_override("font_color", skill.color)
+		
+		# Add skill icon if available
+		if skill.icon:
+			button.icon = skill.icon
+			button.icon_alignment = HORIZONTAL_ALIGNMENT_LEFT
+		
 		button.pressed.connect(_on_skill_selected.bind(skill_id))
 		skill_sidebar.add_child(button)
 		skill_sidebar.move_child(button, insert_index)
