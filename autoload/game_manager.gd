@@ -74,6 +74,44 @@ func get_level_progress(skill_id: String) -> float:
 	
 	return xp_in_level / xp_needed if xp_needed > 0 else 0.0
 
+## Get time to next level in seconds based on current training method
+## Returns -1 if not training or already at max level
+func get_time_to_next_level() -> float:
+	if not is_training or current_skill_id.is_empty():
+		return -1.0
+	
+	var level := get_skill_level(current_skill_id)
+	if level >= MAX_LEVEL:
+		return -1.0
+	
+	var method := get_current_training_method()
+	if method == null:
+		return -1.0
+	
+	# Calculate XP remaining to next level
+	var current_xp := skill_xp.get(current_skill_id, 0.0)
+	var current_level_xp := get_xp_for_level(level)
+	var next_level_xp := get_xp_for_level(level + 1)
+	var xp_remaining := next_level_xp - current_xp
+	
+	# Get effective action time with speed modifiers
+	var effective_action_time := method.get_effective_action_time(current_skill_id)
+	
+	# Calculate XP per action (accounting for success rate)
+	var xp_per_action := method.xp_per_action * method.success_rate
+	
+	# Guard against division by zero
+	if xp_per_action <= 0:
+		return -1.0
+	
+	# Calculate how many actions needed
+	var actions_needed := xp_remaining / xp_per_action
+	
+	# Calculate total time
+	var time_to_level := actions_needed * effective_action_time
+	
+	return time_to_level
+
 ## Load all skill definitions
 func _load_skills() -> void:
 	# Create Fishing skill
