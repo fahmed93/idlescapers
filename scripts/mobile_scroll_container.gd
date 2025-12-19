@@ -8,7 +8,10 @@ var _drag_start_pos: Vector2 = Vector2.ZERO
 var _is_scrolling: bool = false
 var _scroll_start_v: int = 0
 var _is_touch_in_bounds: bool = false
-const SCROLL_THRESHOLD := 5.0  # Pixels to move before we consider it scrolling
+
+## Pixels to move before we consider it scrolling (vs a tap/click)
+## Lower values make scrolling more sensitive, higher values make buttons easier to click
+@export var scroll_threshold: float = 5.0
 
 func _ready() -> void:
 	# Disable follow_focus for predictable mobile behavior
@@ -63,14 +66,16 @@ func _input(event: InputEvent) -> void:
 			var drag_distance := _drag_start_pos.distance_to(current_pos)
 			
 			# If we've moved past the threshold, start scrolling
-			if drag_distance > SCROLL_THRESHOLD or _is_scrolling:
+			if drag_distance > scroll_threshold or _is_scrolling:
 				_is_scrolling = true
 				
 				# Calculate new scroll position
 				var delta_y := current_pos.y - _drag_start_pos.y
-				scroll_vertical = _scroll_start_v - int(delta_y)
+				var new_scroll := _scroll_start_v - int(delta_y)
+				
+				# Clamp to valid scroll range
+				var v_scrollbar := get_v_scroll_bar()
+				scroll_vertical = clampi(new_scroll, int(v_scrollbar.min_value), int(v_scrollbar.max_value))
 				
 				# Consume the event to prevent buttons from processing it
 				get_viewport().set_input_as_handled()
-
-
