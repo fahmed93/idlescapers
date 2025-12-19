@@ -82,7 +82,6 @@ func _load_skills() -> void:
 	fishing.name = "Fishing"
 	fishing.description = "Catch fish from waters around the world."
 	fishing.color = Color(0.2, 0.6, 0.8)
-	fishing.icon = load("res://assets/icons/skills/fishing.png")
 	fishing.training_methods = preload("res://autoload/skills/fishing_skill.gd").create_methods()
 	skills["fishing"] = fishing
 	skill_xp["fishing"] = 0.0
@@ -94,7 +93,6 @@ func _load_skills() -> void:
 	woodcutting.name = "Woodcutting"
 	woodcutting.description = "Chop down trees for logs and other resources."
 	woodcutting.color = Color(0.4, 0.25, 0.1)
-	woodcutting.icon = load("res://assets/icons/skills/woodcutting.png")
 	woodcutting.training_methods = preload("res://autoload/skills/woodcutting_skill.gd").create_methods()
 	skills["woodcutting"] = woodcutting
 	skill_xp["woodcutting"] = 0.0
@@ -106,7 +104,6 @@ func _load_skills() -> void:
 	cooking.name = "Cooking"
 	cooking.description = "Cook raw food to create edible meals."
 	cooking.color = Color(0.8, 0.4, 0.2)
-	cooking.icon = load("res://assets/icons/skills/cooking.png")
 	cooking.training_methods = preload("res://autoload/skills/cooking_skill.gd").create_methods()
 	skills["cooking"] = cooking
 	skill_xp["cooking"] = 0.0
@@ -118,7 +115,6 @@ func _load_skills() -> void:
 	fletching.name = "Fletching"
 	fletching.description = "Create bows, arrows, and bolts."
 	fletching.color = Color(0.5, 0.7, 0.3)
-	fletching.icon = load("res://assets/icons/skills/fletching.png")
 	fletching.training_methods = preload("res://autoload/skills/fletching_skill.gd").create_methods()
 	skills["fletching"] = fletching
 	skill_xp["fletching"] = 0.0
@@ -130,7 +126,6 @@ func _load_skills() -> void:
 	mining.name = "Mining"
 	mining.description = "Extract ores and gems from rocks."
 	mining.color = Color(0.6, 0.5, 0.4)
-	mining.icon = load("res://assets/icons/skills/mining.png")
 	mining.training_methods = preload("res://autoload/skills/mining_skill.gd").create_methods()
 	skills["mining"] = mining
 	skill_xp["mining"] = 0.0
@@ -142,7 +137,6 @@ func _load_skills() -> void:
 	firemaking.name = "Firemaking"
 	firemaking.description = "Burn logs for XP and unlock special fires."
 	firemaking.color = Color(0.9, 0.4, 0.1)
-	firemaking.icon = load("res://assets/icons/skills/firemaking.png")
 	firemaking.training_methods = preload("res://autoload/skills/firemaking_skill.gd").create_methods()
 	skills["firemaking"] = firemaking
 	skill_xp["firemaking"] = 0.0
@@ -154,7 +148,6 @@ func _load_skills() -> void:
 	herblore.name = "Herblore"
 	herblore.description = "Create potions from herbs and secondary ingredients."
 	herblore.color = Color(0.2, 0.8, 0.3)
-	herblore.icon = load("res://assets/icons/skills/herblore.png")
 	herblore.training_methods = preload("res://autoload/skills/herblore_skill.gd").create_methods()
 	skills["herblore"] = herblore
 	skill_xp["herblore"] = 0.0
@@ -166,7 +159,6 @@ func _load_skills() -> void:
 	smithing.name = "Smithing"
 	smithing.description = "Smelt ores into bars and forge equipment."
 	smithing.color = Color(0.7, 0.5, 0.3)
-	smithing.icon = load("res://assets/icons/skills/smithing.png")
 	smithing.training_methods = preload("res://autoload/skills/smithing_skill.gd").create_methods()
 	skills["smithing"] = smithing
 	skill_xp["smithing"] = 0.0
@@ -178,7 +170,6 @@ func _load_skills() -> void:
 	thieving.name = "Thieving"
 	thieving.description = "Pickpocket NPCs and unlock chests for coins and valuables."
 	thieving.color = Color(0.6, 0.3, 0.7)
-	thieving.icon = load("res://assets/icons/skills/thieving.png")
 	thieving.training_methods = preload("res://autoload/skills/thieving_skill.gd").create_methods()
 	skills["thieving"] = thieving
 	skill_xp["thieving"] = 0.0
@@ -190,7 +181,6 @@ func _load_skills() -> void:
 	agility.name = "Agility"
 	agility.description = "Complete obstacle courses for XP and unlocks."
 	agility.color = Color(0.0, 0.8, 1.0)
-	agility.icon = load("res://assets/icons/skills/agility.png")
 	agility.training_methods = preload("res://autoload/skills/agility_skill.gd").create_methods()
 	skills["agility"] = agility
 	skill_xp["agility"] = 0.0
@@ -202,7 +192,6 @@ func _load_skills() -> void:
 	astrology.name = "Astrology"
 	astrology.description = "Study celestial bodies and constellations to unlock cosmic powers."
 	astrology.color = Color(0.3, 0.2, 0.7)
-	astrology.icon = load("res://assets/icons/skills/astrology.png")
 	astrology.training_methods = preload("res://autoload/skills/astrology_skill.gd").create_methods()
 	skills["astrology"] = astrology
 	skill_xp["astrology"] = 0.0
@@ -214,7 +203,6 @@ func _load_skills() -> void:
 	jewelcrafting.name = "Jewelcrafting"
 	jewelcrafting.description = "Prospect ores for gems and craft jewelry."
 	jewelcrafting.color = Color(0.7, 0.3, 0.8)
-	jewelcrafting.icon = load("res://assets/icons/skills/jewelcrafting.png")
 	jewelcrafting.training_methods = preload("res://autoload/skills/jewelcrafting_skill.gd").create_methods()
 	skills["jewelcrafting"] = jewelcrafting
 	skill_xp["jewelcrafting"] = 0.0
@@ -226,7 +214,6 @@ func _load_skills() -> void:
 	skinning.name = "Skinning"
 	skinning.description = "Skin animals to collect hides to use in crafting."
 	skinning.color = Color(0.7, 0.5, 0.3)
-	skinning.icon = load("res://assets/icons/skills/skinning.png")
 	skinning.training_methods = preload("res://autoload/skills/skinning_skill.gd").create_methods()
 	skills["skinning"] = skinning
 	skill_xp["skinning"] = 0.0
@@ -238,7 +225,6 @@ func _load_skills() -> void:
 	foraging.name = "Foraging"
 	foraging.description = "Gather herbs and natural materials from the wilderness."
 	foraging.color = Color(0.45, 0.6, 0.3)
-	foraging.icon = load("res://assets/icons/skills/foraging.png")
 	foraging.training_methods = preload("res://autoload/skills/foraging_skill.gd").create_methods()
 	skills["foraging"] = foraging
 	skill_xp["foraging"] = 0.0
@@ -250,7 +236,6 @@ func _load_skills() -> void:
 	crafting.name = "Crafting"
 	crafting.description = "Create leather armor and dragonhide equipment from hides."
 	crafting.color = Color(0.6, 0.4, 0.3)
-	crafting.icon = load("res://assets/icons/skills/crafting.png")
 	crafting.training_methods = preload("res://autoload/skills/crafting_skill.gd").create_methods()
 	skills["crafting"] = crafting
 	skill_xp["crafting"] = 0.0
