@@ -82,8 +82,8 @@ func _ready() -> void:
 	_update_total_stats()
 	_hide_training_panel()
 	
-	# Set sidebar to collapsed by default
-	_set_sidebar_collapsed(true)
+	# Set sidebar to expanded by default so users can see the skills
+	_set_sidebar_collapsed(false)
 	
 	# Select first skill by default
 	if not GameManager.skills.is_empty():
@@ -206,12 +206,13 @@ func _populate_skill_sidebar() -> void:
 		skill_buttons[skill_id] = button
 		insert_index += 1
 	
-	# Add total level display at bottom
+	# Add total level display after skill buttons (before InfoHeader)
 	var total_label := Label.new()
 	total_label.name = "TotalLevelLabel"
 	total_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	total_label.text = "Total: %d" % GameManager.get_total_level()
 	skill_sidebar.add_child(total_label)
+	skill_sidebar.move_child(total_label, insert_index)
 
 func _on_skill_selected(skill_id: String) -> void:
 	is_upgrades_view = false
