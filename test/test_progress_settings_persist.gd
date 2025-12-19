@@ -1,5 +1,5 @@
 ## Test Progress and Settings Button Persistence
-## Verifies that Progress and Settings buttons are not cleared when sidebar is repopulated
+## Verifies that Progress and Settings buttons are not affected when skill buttons are recreated
 extends Control
 
 var main_scene = preload("res://scenes/main.tscn")
@@ -41,20 +41,20 @@ func _run_tests() -> void:
 	var settings_button_ref = settings_button
 	print("  ✓ Stored button references\n")
 	
-	# Test 5: Call _populate_skill_sidebar() to simulate repopulation
+	# Test 5: Call _create_skill_buttons() to simulate recreation
 	# Note: Calling this "private" method directly is intentional for testing internal behavior.
 	# This ensures the button persistence logic works correctly when skills are dynamically updated.
-	print("Test 5: Repopulate sidebar")
-	main_instance._populate_skill_sidebar()
+	print("Test 5: Recreate skill buttons")
+	main_instance._create_skill_buttons()
 	await get_tree().process_frame
-	print("  ✓ Sidebar repopulated\n")
+	print("  ✓ Skill buttons recreated\n")
 	
-	# Test 6: Verify Progress and Settings buttons still exist after repopulation
-	print("Test 6: Verify buttons persist after repopulation")
+	# Test 6: Verify Progress and Settings buttons still exist after recreation
+	print("Test 6: Verify buttons persist after recreation")
 	var progress_button_after = _find_button_by_text(sidebar, "Progress")
 	var settings_button_after = _find_button_by_text(sidebar, "Settings")
-	assert(progress_button_after != null, "Progress button should exist after repopulation")
-	assert(settings_button_after != null, "Settings button should exist after repopulation")
+	assert(progress_button_after != null, "Progress button should exist after recreation")
+	assert(settings_button_after != null, "Settings button should exist after recreation")
 	print("  ✓ Progress button persists")
 	print("  ✓ Settings button persists\n")
 	

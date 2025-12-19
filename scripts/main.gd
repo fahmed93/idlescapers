@@ -91,7 +91,7 @@ func _ready() -> void:
 	_create_settings_ui()
 	_create_player_section_buttons()
 	_create_info_section_buttons()
-	_populate_skill_sidebar()
+	_create_skill_buttons()
 	_update_total_stats()
 	_hide_training_panel()
 	
@@ -199,7 +199,9 @@ func _create_info_section_buttons() -> void:
 	skill_sidebar.add_child(settings_button)
 	skill_sidebar.move_child(settings_button, insert_index)
 
-func _populate_skill_sidebar() -> void:
+## Create skill buttons in the sidebar
+## Note: Skills are static (defined at startup), so buttons are created once and updated via _update_sidebar_button()
+func _create_skill_buttons() -> void:
 	# Find the SkillsHeader node to insert skill buttons after it
 	var skills_header := skill_sidebar.get_node_or_null("SkillsHeader")
 	if not skills_header:
@@ -207,15 +209,6 @@ func _populate_skill_sidebar() -> void:
 		return
 	
 	var insert_index := skills_header.get_index() + 1
-	
-	# Clear existing skill buttons (but not the headers or player section buttons or info section buttons)
-	for child in skill_sidebar.get_children():
-		if child is Button and child != upgrades_button and child != inventory_button and child != equipment_button and child != skill_summary_button and child != settings_button:
-			child.queue_free()
-		# Also remove TotalLevelLabel if it exists to recreate it
-		elif child.name == "TotalLevelLabel":
-			child.queue_free()
-	skill_buttons.clear()
 	
 	# Create a button for each skill
 	for skill_id in GameManager.skills:
