@@ -18,7 +18,7 @@ const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from cen
 const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
 const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 
-@onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
+@onready var skill_sidebar: VBoxContainer = $HSplitContainer/SidebarScrollContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
 @onready var change_character_button: Button = $ChangeCharacterButton
