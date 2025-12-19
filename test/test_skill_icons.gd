@@ -21,13 +21,14 @@ func _ready() -> void:
 	
 	assert(all_skills_have_icons, "All skills should have icons loaded")
 	
-	# Test 2: Verify icon properties
-	print("\nTest 2: Verifying icon properties...")
-	var fishing_skill: SkillData = GameManager.skills["fishing"]
-	assert(fishing_skill.icon != null, "Fishing skill should have an icon")
-	assert(fishing_skill.icon.get_width() == 64, "Icon width should be 64px")
-	assert(fishing_skill.icon.get_height() == 64, "Icon height should be 64px")
-	print("  ✓ Icon dimensions are correct (64x64)")
+	# Test 2: Verify icon properties for all skills
+	print("\nTest 2: Verifying icon dimensions for all skills...")
+	for skill_id in GameManager.skills:
+		var skill: SkillData = GameManager.skills[skill_id]
+		assert(skill.icon != null, "%s should have an icon" % skill.name)
+		assert(skill.icon.get_width() == 64, "%s icon width should be 64px" % skill.name)
+		assert(skill.icon.get_height() == 64, "%s icon height should be 64px" % skill.name)
+	print("  ✓ All skill icon dimensions are correct (64x64)")
 	
 	# Test 3: Check icon files exist for all skills
 	print("\nTest 3: Checking icon files exist...")
