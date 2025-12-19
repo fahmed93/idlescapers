@@ -4,6 +4,7 @@ extends Control
 const BUTTON_HEIGHT := 60  # Standard height for sidebar buttons
 const ITEM_PANEL_WIDTH := 100  # Width of inventory item panels
 const ITEM_PANEL_HEIGHT := 100  # Height of inventory item panels (increased for sell buttons)
+const INVENTORY_ICON_SIZE := 48  # Size of item icons in inventory display
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 
@@ -489,6 +490,16 @@ func _update_inventory_display(grid: GridContainer) -> void:
 		vbox.mouse_filter = Control.MOUSE_FILTER_IGNORE  # Let clicks pass through to button
 		vbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)  # Fill the button completely
 		item_button.add_child(vbox)
+		
+		# Add icon if available
+		if item_data and item_data.icon:
+			var icon_texture := TextureRect.new()
+			icon_texture.texture = item_data.icon
+			icon_texture.custom_minimum_size = Vector2(INVENTORY_ICON_SIZE, INVENTORY_ICON_SIZE)
+			icon_texture.expand_mode = TextureRect.EXPAND_FIT_HEIGHT
+			icon_texture.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon_texture.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			vbox.add_child(icon_texture)
 		
 		# Helper function to create labels with mouse filter ignored
 		var create_label := func(text: String, font_size: int, color: Color = Color.WHITE) -> Label:

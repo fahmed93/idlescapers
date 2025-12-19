@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ff7qyav9i2l4o5hf"
-path="res://.godot/imported/redwood_logs.png-6137df9e74b096903e81498940f89a59.ctex"
+uid="uid://wo78usddnlqh"
+path="res://.godot/imported/redwood_logs.png-7be5aab752b072abb6d078464600d30d.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/redwood_logs.png"
-dest_files=["res://.godot/imported/redwood_logs.png-6137df9e74b096903e81498940f89a59.ctex"]
+dest_files=["res://.godot/imported/redwood_logs.png-7be5aab752b072abb6d078464600d30d.ctex"]
 
 [params]
 

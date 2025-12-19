@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mdp0tdxfj0ala4ga"
-path="res://.godot/imported/bloodwood_logs.png-08305bc1af5901e58238ce09f12eb20c.ctex"
+uid="uid://bfsx5s4tdegbg"
+path="res://.godot/imported/bloodwood_logs.png-be00a5345cf8047f7247531f15e7237e.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/bloodwood_logs.png"
-dest_files=["res://.godot/imported/bloodwood_logs.png-08305bc1af5901e58238ce09f12eb20c.ctex"]
+dest_files=["res://.godot/imported/bloodwood_logs.png-be00a5345cf8047f7247531f15e7237e.ctex"]
 
 [params]
 
