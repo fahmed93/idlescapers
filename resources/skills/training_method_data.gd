@@ -43,7 +43,8 @@ func get_xp_per_hour(skill_id: String = "") -> float:
 ## If skill_id is provided, shows the effective action time with upgrades applied
 func get_stats_text(skill_id: String = "") -> String:
 	var effective_time := get_effective_action_time(skill_id)
-	var text := "Level %d | %.1f XP | %.1fs" % [level_required, xp_per_action, effective_time]
+	var xp_hour := get_xp_per_hour(skill_id)
+	var text := "Level %d | %.1f XP | %.1fs | %.0f XP/hr" % [level_required, xp_per_action, effective_time, xp_hour]
 	if success_rate < 1.0:
 		text += " | %d%% success" % int(success_rate * 100)
 	return text

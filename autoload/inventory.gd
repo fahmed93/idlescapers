@@ -5,15 +5,26 @@ extends Node
 signal item_added(item_id: String, amount: int, new_total: int)
 signal item_removed(item_id: String, amount: int, new_total: int)
 signal inventory_updated()
+signal tab_created(tab_id: String, tab_name: String)
+signal tab_deleted(tab_id: String)
+signal tab_renamed(tab_id: String, new_name: String)
+signal item_moved_between_tabs(item_id: String, from_tab: String, to_tab: String)
 
 ## Item data registry
 var items: Dictionary = {}  # item_id: ItemData
 
-## Player inventory
+## Player inventory (legacy - main tab)
 var inventory: Dictionary = {}  # item_id: quantity
+
+## Tab system
+var tabs: Dictionary = {}  # tab_id: { name: String, items: Dictionary }
+var tab_order: Array[String] = []  # Ordered list of tab IDs
+const MAIN_TAB_ID := "main"
+const MAX_TABS := 10
 
 func _ready() -> void:
 	_load_items()
+	_initialize_tabs()
 
 ## Load all item definitions
 func _load_items() -> void:
@@ -430,3 +441,174 @@ func get_total_value() -> int:
 		if item_data:
 			total += item_data.value * inventory[item_id]
 	return total
+
+## Initialize tab system
+func _initialize_tabs() -> void:
+	# Create main tab if it doesn't exist
+	if not tabs.has(MAIN_TAB_ID):
+		tabs[MAIN_TAB_ID] = {
+			"name": "Main",
+			"items": inventory
+		}
+		tab_order.append(MAIN_TAB_ID)
+
+## Create a new inventory tab
+func create_tab(tab_name: String) -> String:
+	if tab_order.size() >= MAX_TABS:
+		push_error("Cannot create more than %d tabs" % MAX_TABS)
+		return ""
+	
+	# Validate tab name
+	var validated_name := tab_name.strip_edges()
+	if validated_name.is_empty():
+		validated_name = "Tab %d" % (tabs.size())
+	elif validated_name.length() > 20:
+		validated_name = validated_name.substr(0, 20)
+	
+	# Generate unique tab ID
+	var counter := 0
+	var tab_id := "tab_%d" % counter
+	while tabs.has(tab_id):
+		counter += 1
+		tab_id = "tab_%d" % counter
+	
+	tabs[tab_id] = {
+		"name": validated_name,
+		"items": {}
+	}
+	tab_order.append(tab_id)
+	tab_created.emit(tab_id, validated_name)
+	inventory_updated.emit()
+	return tab_id
+
+## Delete a tab (cannot delete main tab)
+func delete_tab(tab_id: String) -> bool:
+	if tab_id == MAIN_TAB_ID:
+		push_error("Cannot delete main tab")
+		return false
+	
+	if not tabs.has(tab_id):
+		return false
+	
+	# Move all items from this tab to main tab
+	var tab_data: Dictionary = tabs[tab_id]
+	var tab_items: Dictionary = tab_data.get("items", {})
+	for item_id in tab_items:
+		var amount: int = tab_items[item_id]
+		add_item_to_tab(MAIN_TAB_ID, item_id, amount)
+	
+	tabs.erase(tab_id)
+	tab_order.erase(tab_id)
+	tab_deleted.emit(tab_id)
+	inventory_updated.emit()
+	return true
+
+## Rename a tab
+func rename_tab(tab_id: String, new_name: String) -> bool:
+	if not tabs.has(tab_id):
+		return false
+	
+	# Validate tab name
+	var validated_name := new_name.strip_edges()
+	if validated_name.is_empty():
+		return false
+	elif validated_name.length() > 20:
+		validated_name = validated_name.substr(0, 20)
+	
+	tabs[tab_id]["name"] = validated_name
+	tab_renamed.emit(tab_id, validated_name)
+	return true
+
+## Get tab name
+func get_tab_name(tab_id: String) -> String:
+	if tabs.has(tab_id):
+		return tabs[tab_id].get("name", "")
+	return ""
+
+## Get all items in a specific tab
+func get_tab_items(tab_id: String) -> Dictionary:
+	if tabs.has(tab_id):
+		return tabs[tab_id].get("items", {}).duplicate()
+	return {}
+
+## Add item to specific tab
+func add_item_to_tab(tab_id: String, item_id: String, amount: int = 1) -> bool:
+	if amount <= 0:
+		return false
+	
+	if not tabs.has(tab_id):
+		return false
+	
+	var tab_items: Dictionary = tabs[tab_id]["items"]
+	var current: int = tab_items.get(item_id, 0)
+	tab_items[item_id] = current + amount
+	
+	# Update legacy inventory if this is the main tab
+	if tab_id == MAIN_TAB_ID:
+		inventory = tab_items
+	
+	item_added.emit(item_id, amount, tab_items[item_id])
+	inventory_updated.emit()
+	return true
+
+## Remove item from specific tab
+func remove_item_from_tab(tab_id: String, item_id: String, amount: int = 1) -> bool:
+	if amount <= 0:
+		return false
+	
+	if not tabs.has(tab_id):
+		return false
+	
+	var tab_items: Dictionary = tabs[tab_id]["items"]
+	var current: int = tab_items.get(item_id, 0)
+	if current < amount:
+		return false
+	
+	tab_items[item_id] = current - amount
+	if tab_items[item_id] <= 0:
+		tab_items.erase(item_id)
+	
+	# Update legacy inventory if this is the main tab
+	if tab_id == MAIN_TAB_ID:
+		inventory = tab_items
+	
+	item_removed.emit(item_id, amount, tab_items.get(item_id, 0))
+	inventory_updated.emit()
+	return true
+
+## Move item between tabs
+func move_item_between_tabs(item_id: String, from_tab: String, to_tab: String, amount: int = 1) -> bool:
+	if from_tab == to_tab:
+		return false
+	
+	if not tabs.has(from_tab) or not tabs.has(to_tab):
+		return false
+	
+	var from_items: Dictionary = tabs[from_tab]["items"]
+	var current: int = from_items.get(item_id, 0)
+	
+	if current < amount:
+		return false
+	
+	# Remove from source tab
+	if remove_item_from_tab(from_tab, item_id, amount):
+		# Add to destination tab
+		if add_item_to_tab(to_tab, item_id, amount):
+			item_moved_between_tabs.emit(item_id, from_tab, to_tab)
+			return true
+		else:
+			# Rollback if add failed
+			add_item_to_tab(from_tab, item_id, amount)
+			return false
+	
+	return false
+
+## Get item count in specific tab
+func get_item_count_in_tab(tab_id: String, item_id: String) -> int:
+	if tabs.has(tab_id):
+		return tabs[tab_id].get("items", {}).get(item_id, 0)
+	return 0
+
+## Check if player has enough of an item in specific tab
+func has_item_in_tab(tab_id: String, item_id: String, amount: int = 1) -> bool:
+	return get_item_count_in_tab(tab_id, item_id) >= amount
