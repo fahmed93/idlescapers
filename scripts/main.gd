@@ -53,6 +53,7 @@ var is_upgrades_view: bool = false
 var is_inventory_view: bool = false
 var is_equipment_view: bool = false
 var is_skill_summary_view: bool = false
+var is_settings_view: bool = false
 var upgrades_button: Button = null
 var upgrades_panel: PanelContainer = null
 var upgrades_list: VBoxContainer = null
@@ -76,6 +77,8 @@ var toast_container: VBoxContainer = null
 var skill_summary_button: Button = null
 var skill_summary_panel: PanelContainer = null
 var skill_summary_grid: GridContainer = null
+var settings_button: Button = null
+var settings_panel: PanelContainer = null
 
 func _ready() -> void:
 	_setup_signals()
@@ -85,6 +88,7 @@ func _ready() -> void:
 	_create_equipment_ui()
 	_create_upgrades_ui()
 	_create_skill_summary_ui()
+	_create_settings_ui()
 	_create_player_section_buttons()
 	_create_info_section_buttons()
 	_populate_skill_sidebar()
@@ -176,14 +180,24 @@ func _create_info_section_buttons() -> void:
 	
 	var insert_index := info_header.get_index() + 1
 	
-	# Create Skill Summary button
+	# Create Progress button (renamed from Skill Summary)
 	skill_summary_button = Button.new()
 	skill_summary_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
-	skill_summary_button.text = "Skill Summary"
+	skill_summary_button.text = "Progress"
 	skill_summary_button.add_theme_color_override("font_color", Color(0.8, 0.8, 0.8))
 	skill_summary_button.pressed.connect(_on_skill_summary_selected)
 	skill_sidebar.add_child(skill_summary_button)
 	skill_sidebar.move_child(skill_summary_button, insert_index)
+	insert_index += 1
+	
+	# Create Settings button
+	settings_button = Button.new()
+	settings_button.custom_minimum_size = Vector2(0, BUTTON_HEIGHT)
+	settings_button.text = "Settings"
+	settings_button.add_theme_color_override("font_color", Color(0.7, 0.7, 0.9))
+	settings_button.pressed.connect(_on_settings_selected)
+	skill_sidebar.add_child(settings_button)
+	skill_sidebar.move_child(settings_button, insert_index)
 
 func _populate_skill_sidebar() -> void:
 	# Find the SkillsHeader node to insert skill buttons after it
@@ -228,6 +242,7 @@ func _on_skill_selected(skill_id: String) -> void:
 	is_inventory_view = false
 	is_equipment_view = false
 	is_skill_summary_view = false
+	is_settings_view = false
 	selected_skill_id = skill_id
 	_show_skill_view()
 	_update_skill_display()
@@ -758,6 +773,7 @@ func _on_equipment_selected() -> void:
 	is_inventory_view = false
 	is_equipment_view = true
 	is_skill_summary_view = false
+	is_settings_view = false
 	_hide_skill_view()
 	_show_equipment_view()
 	_populate_equipment_slots()
@@ -771,6 +787,8 @@ func _show_equipment_view() -> void:
 		inventory_panel_view.visible = false
 	if skill_summary_panel:
 		skill_summary_panel.visible = false
+	if settings_panel:
+		settings_panel.visible = false
 	# Show equipment panel
 	if equipment_panel_view:
 		equipment_panel_view.visible = true
@@ -879,6 +897,7 @@ func _on_inventory_selected() -> void:
 	is_inventory_view = true
 	is_equipment_view = false
 	is_skill_summary_view = false
+	is_settings_view = false
 	_hide_skill_view()
 	_show_inventory_view()
 	# Set to main tab if no tab selected
@@ -896,6 +915,8 @@ func _show_inventory_view() -> void:
 		equipment_panel_view.visible = false
 	if skill_summary_panel:
 		skill_summary_panel.visible = false
+	if settings_panel:
+		settings_panel.visible = false
 	# Show inventory panel
 	if inventory_panel_view:
 		inventory_panel_view.visible = true
@@ -914,6 +935,8 @@ func _show_skill_view() -> void:
 		equipment_panel_view.visible = false
 	if skill_summary_panel:
 		skill_summary_panel.visible = false
+	if settings_panel:
+		settings_panel.visible = false
 	# Inventory panel stays hidden in skill view - use dedicated inventory screen instead
 	inventory_panel.visible = false
 	
@@ -1037,6 +1060,7 @@ func _on_upgrades_selected() -> void:
 	is_inventory_view = false
 	is_equipment_view = false
 	is_skill_summary_view = false
+	is_settings_view = false
 	_hide_skill_view()
 	_show_upgrades_view()
 	_populate_upgrades_list()
@@ -1050,6 +1074,8 @@ func _show_upgrades_view() -> void:
 		equipment_panel_view.visible = false
 	if skill_summary_panel:
 		skill_summary_panel.visible = false
+	if settings_panel:
+		settings_panel.visible = false
 	# Show upgrades panel
 	if upgrades_panel:
 		upgrades_panel.visible = true
@@ -1177,6 +1203,7 @@ func _on_skill_summary_selected() -> void:
 	is_inventory_view = false
 	is_equipment_view = false
 	is_skill_summary_view = true
+	is_settings_view = false
 	_hide_skill_view()
 	_show_skill_summary_view()
 	_populate_skill_summary()
@@ -1190,6 +1217,8 @@ func _show_skill_summary_view() -> void:
 		inventory_panel_view.visible = false
 	if equipment_panel_view:
 		equipment_panel_view.visible = false
+	if settings_panel:
+		settings_panel.visible = false
 	# Show skill summary panel
 	if skill_summary_panel:
 		skill_summary_panel.visible = true
@@ -1235,6 +1264,76 @@ func _populate_skill_summary() -> void:
 		vbox.add_child(level_label)
 		
 		skill_summary_grid.add_child(skill_panel)
+
+## Create Settings UI
+func _create_settings_ui() -> void:
+	# Create settings panel (hidden by default)
+	settings_panel = PanelContainer.new()
+	settings_panel.name = "SettingsPanel"
+	settings_panel.visible = false
+	settings_panel.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	
+	var settings_vbox := VBoxContainer.new()
+	settings_panel.add_child(settings_vbox)
+	
+	# Settings header
+	var settings_header := Label.new()
+	settings_header.text = "Settings"
+	settings_header.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	settings_header.add_theme_font_size_override("font_size", 20)
+	settings_header.add_theme_color_override("font_color", Color(0.7, 0.7, 0.9))
+	settings_vbox.add_child(settings_header)
+	
+	# Scroll container for settings content
+	var scroll := ScrollContainer.new()
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	settings_vbox.add_child(scroll)
+	
+	# Settings content container
+	var settings_content := VBoxContainer.new()
+	settings_content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(settings_content)
+	
+	# Placeholder content
+	var placeholder_label := Label.new()
+	placeholder_label.text = "Settings coming soon..."
+	placeholder_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	placeholder_label.add_theme_font_size_override("font_size", 16)
+	placeholder_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+	settings_content.add_child(placeholder_label)
+	
+	# Add to main content
+	main_content.add_child(settings_panel)
+	main_content.move_child(settings_panel, inventory_panel.get_index() + 1)
+
+## Handle settings button click
+func _on_settings_selected() -> void:
+	is_upgrades_view = false
+	is_inventory_view = false
+	is_equipment_view = false
+	is_skill_summary_view = false
+	is_settings_view = true
+	_hide_skill_view()
+	_show_settings_view()
+
+## Show settings panel and hide others
+func _show_settings_view() -> void:
+	# Hide other special panels
+	if upgrades_panel:
+		upgrades_panel.visible = false
+	if inventory_panel_view:
+		inventory_panel_view.visible = false
+	if equipment_panel_view:
+		equipment_panel_view.visible = false
+	if skill_summary_panel:
+		skill_summary_panel.visible = false
+	# Show settings panel
+	if settings_panel:
+		settings_panel.visible = true
+	
+	# Hide skill-related UI elements
+	_hide_skill_ui()
 
 ## Toggle sidebar visibility
 func _on_sidebar_toggle_pressed() -> void:

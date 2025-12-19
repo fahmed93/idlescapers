@@ -51,11 +51,11 @@ func _run_tests() -> void:
 	
 	# Test 3: Verify the implementation details
 	print("Test 3: Verify implementation details")
-	assert('skill_summary_button.text = "Skill Summary"' in script_source, "Skill Summary button should have correct text")
+	assert('skill_summary_button.text = "Progress"' in script_source, "Progress button should have correct text")
 	assert('skill_summary_grid.columns = 3' in script_source, "Grid should have 3 columns")
 	assert('level_label.text = "%d/99" % level' in script_source, "Level label should show format X/99")
 	
-	print("  ✓ Skill Summary button has correct text")
+	print("  ✓ Progress button has correct text")
 	print("  ✓ Grid configured with 3 columns")
 	print("  ✓ Level display format is X/99\n")
 	
