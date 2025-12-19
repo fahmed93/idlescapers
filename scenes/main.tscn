@@ -33,21 +33,27 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 120
 
-[node name="SkillSidebar" type="VBoxContainer" parent="HSplitContainer"]
+[node name="SidebarScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
+horizontal_scroll_mode = 0  # SCROLL_MODE_DISABLED
 
-[node name="PlayerHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+[node name="SkillSidebar" type="VBoxContainer" parent="HSplitContainer/SidebarScrollContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerHeader" type="Label" parent="HSplitContainer/SidebarScrollContainer/SkillSidebar"]
 layout_mode = 2
 text = "Player"
 horizontal_alignment = 1
 
-[node name="SkillsHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+[node name="SkillsHeader" type="Label" parent="HSplitContainer/SidebarScrollContainer/SkillSidebar"]
 layout_mode = 2
 text = "Skills"
 horizontal_alignment = 1
 
-[node name="InfoHeader" type="Label" parent="HSplitContainer/SkillSidebar"]
+[node name="InfoHeader" type="Label" parent="HSplitContainer/SidebarScrollContainer/SkillSidebar"]
 layout_mode = 2
 text = "Info"
 horizontal_alignment = 1
@@ -188,6 +194,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MenuButton" type="Button" parent="."]
+z_index = 100
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 0
 offset_left = 8.0
@@ -198,6 +205,7 @@ theme_override_font_sizes/font_size = 24
 text = "☰"
 
 [node name="ChangeCharacterButton" type="Button" parent="."]
+z_index = 100
 custom_minimum_size = Vector2(120, 40)
 layout_mode = 1
 anchors_preset = 1
