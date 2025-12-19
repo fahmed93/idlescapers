@@ -35,6 +35,7 @@ const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 @onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
 @onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
 @onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
+@onready var time_to_level_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TimeToLevelLabel
 @onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
 @onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
 @onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
@@ -368,6 +369,7 @@ func _hide_training_panel() -> void:
 	training_panel.visible = false
 	training_progress.value = 0
 	training_time_label.text = "0.0s / 0.0s"
+	time_to_level_label.text = ""
 
 func _update_training_progress() -> void:
 	var method := GameManager.get_current_training_method()
@@ -388,6 +390,50 @@ func _update_training_progress() -> void:
 			training_label.text = "Training: %s" % method.name
 		# Update time label to show elapsed/total time
 		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, method.action_time]
+		
+		# Calculate and display time to next level
+		var current_level := GameManager.get_skill_level(GameManager.current_skill_id)
+		if current_level < GameManager.MAX_LEVEL:
+			var current_xp := GameManager.get_skill_xp(GameManager.current_skill_id)
+			var next_level_xp := GameManager.get_xp_for_level(current_level + 1)
+			var xp_needed := next_level_xp - current_xp
+			
+			# Calculate time based on XP per action and effective action time
+			var effective_action_time := method.get_effective_action_time(GameManager.current_skill_id)
+			var actions_needed := ceil(xp_needed / method.xp_per_action)
+			var time_to_level := actions_needed * effective_action_time
+			
+			# Format and display the time
+			var time_text := _format_time_to_level(time_to_level)
+			time_to_level_label.text = "Time to level %d: %s" % [current_level + 1, time_text]
+		else:
+			time_to_level_label.text = "Max level reached!"
+
+## Format time to level into a readable string
+func _format_time_to_level(seconds: float) -> String:
+	if seconds < 60:
+		return "%.0fs" % seconds
+	elif seconds < 3600:
+		var mins := int(seconds / 60)
+		var secs := int(seconds) % 60
+		if secs > 0:
+			return "%dm %ds" % [mins, secs]
+		else:
+			return "%dm" % mins
+	elif seconds < 86400:  # Less than 24 hours
+		var hours := int(seconds / 3600)
+		var mins := int((int(seconds) % 3600) / 60)
+		if mins > 0:
+			return "%dh %dm" % [hours, mins]
+		else:
+			return "%dh" % hours
+	else:  # Days
+		var days := int(seconds / 86400)
+		var hours := int((int(seconds) % 86400) / 3600)
+		if hours > 0:
+			return "%dd %dh" % [days, hours]
+		else:
+			return "%dd" % days
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:

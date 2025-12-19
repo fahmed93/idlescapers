@@ -112,6 +112,13 @@ theme_override_font_sizes/font_size = 12
 text = "0.0s / 0.0s"
 horizontal_alignment = 1
 
+[node name="TimeToLevelLabel" type="Label" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = ""
+horizontal_alignment = 1
+theme_override_colors/font_color = Color(0.6, 0.8, 1.0)
+
 [node name="StopButton" type="Button" parent="HSplitContainer/MainContent/TrainingPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
