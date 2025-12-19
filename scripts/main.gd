@@ -1037,11 +1037,25 @@ func _create_skill_summary_ui() -> void:
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
 	summary_vbox.add_child(scroll)
 	
+	# Center container to center the grid
+	var center_container := CenterContainer.new()
+	center_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.add_child(center_container)
+	
+	# Margin container for padding around the grid
+	var margin_container := MarginContainer.new()
+	margin_container.add_theme_constant_override("margin_left", 20)
+	margin_container.add_theme_constant_override("margin_right", 20)
+	margin_container.add_theme_constant_override("margin_top", 20)
+	margin_container.add_theme_constant_override("margin_bottom", 20)
+	center_container.add_child(margin_container)
+	
 	# Grid container for skills
 	skill_summary_grid = GridContainer.new()
 	skill_summary_grid.columns = 3
-	skill_summary_grid.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(skill_summary_grid)
+	skill_summary_grid.add_theme_constant_override("h_separation", 16)
+	skill_summary_grid.add_theme_constant_override("v_separation", 16)
+	margin_container.add_child(skill_summary_grid)
 	
 	# Add to main content
 	main_content.add_child(skill_summary_panel)
@@ -1234,8 +1248,10 @@ func _populate_skill_summary() -> void:
 		var level := GameManager.get_skill_level(skill_id)
 		
 		# Create a panel for each skill
+		# Larger panels to fill more of the screen (720px width - margins - spacing)
+		# With 3 columns, ~200px per panel fits nicely
 		var skill_panel := PanelContainer.new()
-		skill_panel.custom_minimum_size = Vector2(100, 80)
+		skill_panel.custom_minimum_size = Vector2(200, 140)
 		
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1245,7 +1261,7 @@ func _populate_skill_summary() -> void:
 		var name_label := Label.new()
 		name_label.text = skill.name
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		name_label.add_theme_font_size_override("font_size", 12)
+		name_label.add_theme_font_size_override("font_size", 16)
 		name_label.add_theme_color_override("font_color", skill.color)
 		vbox.add_child(name_label)
 		
@@ -1253,7 +1269,7 @@ func _populate_skill_summary() -> void:
 		var level_label := Label.new()
 		level_label.text = "%d/99" % level
 		level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		level_label.add_theme_font_size_override("font_size", 16)
+		level_label.add_theme_font_size_override("font_size", 24)
 		vbox.add_child(level_label)
 		
 		skill_summary_grid.add_child(skill_panel)
