@@ -23,6 +23,14 @@ const EQUIPMENT_RING_OFFSET := 60.0  # Horizontal offset for ring slots from cen
 const EQUIPMENT_SLOT_LABEL_FONT_SIZE := 11  # Font size for slot names
 const EQUIPMENT_ITEM_LABEL_FONT_SIZE := 10  # Font size for equipped item names
 
+# Progress page (skill summary) layout constants
+# Note: 3 columns × 200px + 2 × 16px spacing = 632px, centered in 720px width
+const PROGRESS_PANEL_SIZE := Vector2(200, 140)  # Size of each skill panel
+const PROGRESS_GRID_SPACING := 16  # Horizontal and vertical spacing between panels
+const PROGRESS_MARGIN := 20  # Margin around the grid
+const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
+const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
+
 @onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
 @onready var main_content: VBoxContainer = $HSplitContainer/MainContent
 @onready var menu_button: Button = $MenuButton
@@ -1044,17 +1052,17 @@ func _create_skill_summary_ui() -> void:
 	
 	# Margin container for padding around the grid
 	var margin_container := MarginContainer.new()
-	margin_container.add_theme_constant_override("margin_left", 20)
-	margin_container.add_theme_constant_override("margin_right", 20)
-	margin_container.add_theme_constant_override("margin_top", 20)
-	margin_container.add_theme_constant_override("margin_bottom", 20)
+	margin_container.add_theme_constant_override("margin_left", PROGRESS_MARGIN)
+	margin_container.add_theme_constant_override("margin_right", PROGRESS_MARGIN)
+	margin_container.add_theme_constant_override("margin_top", PROGRESS_MARGIN)
+	margin_container.add_theme_constant_override("margin_bottom", PROGRESS_MARGIN)
 	center_container.add_child(margin_container)
 	
 	# Grid container for skills
 	skill_summary_grid = GridContainer.new()
 	skill_summary_grid.columns = 3
-	skill_summary_grid.add_theme_constant_override("h_separation", 16)
-	skill_summary_grid.add_theme_constant_override("v_separation", 16)
+	skill_summary_grid.add_theme_constant_override("h_separation", PROGRESS_GRID_SPACING)
+	skill_summary_grid.add_theme_constant_override("v_separation", PROGRESS_GRID_SPACING)
 	margin_container.add_child(skill_summary_grid)
 	
 	# Add to main content
@@ -1251,7 +1259,7 @@ func _populate_skill_summary() -> void:
 		# Larger panels to fill more of the screen (720px width - margins - spacing)
 		# With 3 columns, ~200px per panel fits nicely
 		var skill_panel := PanelContainer.new()
-		skill_panel.custom_minimum_size = Vector2(200, 140)
+		skill_panel.custom_minimum_size = PROGRESS_PANEL_SIZE
 		
 		var vbox := VBoxContainer.new()
 		vbox.alignment = BoxContainer.ALIGNMENT_CENTER
@@ -1261,7 +1269,7 @@ func _populate_skill_summary() -> void:
 		var name_label := Label.new()
 		name_label.text = skill.name
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		name_label.add_theme_font_size_override("font_size", 16)
+		name_label.add_theme_font_size_override("font_size", PROGRESS_SKILL_NAME_FONT_SIZE)
 		name_label.add_theme_color_override("font_color", skill.color)
 		vbox.add_child(name_label)
 		
@@ -1269,7 +1277,7 @@ func _populate_skill_summary() -> void:
 		var level_label := Label.new()
 		level_label.text = "%d/99" % level
 		level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		level_label.add_theme_font_size_override("font_size", 24)
+		level_label.add_theme_font_size_override("font_size", PROGRESS_LEVEL_FONT_SIZE)
 		vbox.add_child(level_label)
 		
 		skill_summary_grid.add_child(skill_panel)
