@@ -36,7 +36,7 @@ split_offset = 120
 [node name="SidebarScrollContainer" type="ScrollContainer" parent="HSplitContainer"]
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
-horizontal_scroll_mode = 0
+horizontal_scroll_mode = 0  # SCROLL_MODE_DISABLED
 
 [node name="SkillSidebar" type="VBoxContainer" parent="HSplitContainer/SidebarScrollContainer"]
 custom_minimum_size = Vector2(120, 0)
