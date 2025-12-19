@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_999afd3960e8c657"
-path="res://.godot/imported/crafting.png-999afd3960e8c6573f084c210d1d7e96.ctex"
+uid="uid://ccsg1cppmkv43"
+path="res://.godot/imported/crafting.png-669a6881a75546e5013d6f245f6576a9.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/crafting.png"
-dest_files=["res://.godot/imported/crafting.png-999afd3960e8c6573f084c210d1d7e96.ctex"]
+dest_files=["res://.godot/imported/crafting.png-669a6881a75546e5013d6f245f6576a9.ctex"]
 
 [params]
 

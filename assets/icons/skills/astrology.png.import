@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_23ae512c2051b8e1"
-path="res://.godot/imported/astrology.png-23ae512c2051b8e189fbd993e70f23c3.ctex"
+uid="uid://ch7kswi6cwvcd"
+path="res://.godot/imported/astrology.png-96e8514e7d7e3de57cf698eaddd0ca54.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/astrology.png"
-dest_files=["res://.godot/imported/astrology.png-23ae512c2051b8e189fbd993e70f23c3.ctex"]
+dest_files=["res://.godot/imported/astrology.png-96e8514e7d7e3de57cf698eaddd0ca54.ctex"]
 
 [params]
 

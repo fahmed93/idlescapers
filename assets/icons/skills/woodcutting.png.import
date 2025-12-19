@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_469cf8f9ae5f2951"
-path="res://.godot/imported/woodcutting.png-469cf8f9ae5f2951afea288a5463d328.ctex"
+uid="uid://dbpeqiqi8aoo"
+path="res://.godot/imported/woodcutting.png-294e4e50f25d7e8a495deaa79861fb79.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/woodcutting.png"
-dest_files=["res://.godot/imported/woodcutting.png-469cf8f9ae5f2951afea288a5463d328.ctex"]
+dest_files=["res://.godot/imported/woodcutting.png-294e4e50f25d7e8a495deaa79861fb79.ctex"]
 
 [params]
 

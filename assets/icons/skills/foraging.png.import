@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_8a78b299cedfec0b"
-path="res://.godot/imported/foraging.png-8a78b299cedfec0b619ab6fa16ccbf41.ctex"
+uid="uid://qm4hq5g7k1au"
+path="res://.godot/imported/foraging.png-736bbb5b1d1516850652bddb576d01b8.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/foraging.png"
-dest_files=["res://.godot/imported/foraging.png-8a78b299cedfec0b619ab6fa16ccbf41.ctex"]
+dest_files=["res://.godot/imported/foraging.png-736bbb5b1d1516850652bddb576d01b8.ctex"]
 
 [params]
 

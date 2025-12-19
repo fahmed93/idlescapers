@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_358a5131c51787ee"
-path="res://.godot/imported/agility.png-358a5131c51787ee144708ea9cb079ef.ctex"
+uid="uid://1l65p566itoi"
+path="res://.godot/imported/agility.png-13a741159624cb67fbbcee485764a655.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/agility.png"
-dest_files=["res://.godot/imported/agility.png-358a5131c51787ee144708ea9cb079ef.ctex"]
+dest_files=["res://.godot/imported/agility.png-13a741159624cb67fbbcee485764a655.ctex"]
 
 [params]
 

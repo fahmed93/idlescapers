@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_bb6767338d989355"
-path="res://.godot/imported/thieving.png-bb6767338d989355b44b610ee02df02d.ctex"
+uid="uid://bng1fbtkofrkd"
+path="res://.godot/imported/thieving.png-b4a5d1df56000265d3bb57b591648060.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/thieving.png"
-dest_files=["res://.godot/imported/thieving.png-bb6767338d989355b44b610ee02df02d.ctex"]
+dest_files=["res://.godot/imported/thieving.png-b4a5d1df56000265d3bb57b591648060.ctex"]
 
 [params]
 

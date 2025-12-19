@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_99e3f7b213cce099"
-path="res://.godot/imported/fletching.png-99e3f7b213cce09930050d587593967d.ctex"
+uid="uid://b1nfsx22mpt3v"
+path="res://.godot/imported/fletching.png-4672f8d9a0ecef67f7cfe84f72ae4495.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/fletching.png"
-dest_files=["res://.godot/imported/fletching.png-99e3f7b213cce09930050d587593967d.ctex"]
+dest_files=["res://.godot/imported/fletching.png-4672f8d9a0ecef67f7cfe84f72ae4495.ctex"]
 
 [params]
 

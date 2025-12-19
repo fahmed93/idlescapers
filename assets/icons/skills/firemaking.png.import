@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_be1624794ffa933d"
-path="res://.godot/imported/firemaking.png-be1624794ffa933d04c19c622470141a.ctex"
+uid="uid://b24f7p61dw5v1"
+path="res://.godot/imported/firemaking.png-47b00018bb5204636cc658d50ce97270.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/firemaking.png"
-dest_files=["res://.godot/imported/firemaking.png-be1624794ffa933d04c19c622470141a.ctex"]
+dest_files=["res://.godot/imported/firemaking.png-47b00018bb5204636cc658d50ce97270.ctex"]
 
 [params]
 

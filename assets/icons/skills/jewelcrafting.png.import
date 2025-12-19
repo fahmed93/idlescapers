@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_f329ba349bab58f6"
-path="res://.godot/imported/jewelcrafting.png-f329ba349bab58f6afb6f6755f70d342.ctex"
+uid="uid://bno3hoadth2fp"
+path="res://.godot/imported/jewelcrafting.png-4b3134b52fa310a509ff1c22e38ad98f.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/jewelcrafting.png"
-dest_files=["res://.godot/imported/jewelcrafting.png-f329ba349bab58f6afb6f6755f70d342.ctex"]
+dest_files=["res://.godot/imported/jewelcrafting.png-4b3134b52fa310a509ff1c22e38ad98f.ctex"]
 
 [params]
 

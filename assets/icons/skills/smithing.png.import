@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_b7c13e3f4bf5bbaf"
-path="res://.godot/imported/smithing.png-b7c13e3f4bf5bbafb86cd484c36ec019.ctex"
+uid="uid://c1f4n1wkdel0y"
+path="res://.godot/imported/smithing.png-2457a7782438bf7100e8e371718a84ee.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/smithing.png"
-dest_files=["res://.godot/imported/smithing.png-b7c13e3f4bf5bbafb86cd484c36ec019.ctex"]
+dest_files=["res://.godot/imported/smithing.png-2457a7782438bf7100e8e371718a84ee.ctex"]
 
 [params]
 

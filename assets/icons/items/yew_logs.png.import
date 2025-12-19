@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v4orjbpdmhlhjli4"
-path="res://.godot/imported/yew_logs.png-cc004f0abb2d9026dc48bf3caf16d3e6.ctex"
+uid="uid://bafjecuh4xfun"
+path="res://.godot/imported/yew_logs.png-ec0f1f16a3947b18af40ed8c2943f807.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/yew_logs.png"
-dest_files=["res://.godot/imported/yew_logs.png-cc004f0abb2d9026dc48bf3caf16d3e6.ctex"]
+dest_files=["res://.godot/imported/yew_logs.png-ec0f1f16a3947b18af40ed8c2943f807.ctex"]
 
 [params]
 

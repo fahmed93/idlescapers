@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6qgh619gc9u9o6u"
-path="res://.godot/imported/elder_logs.png-0df95ec0fa4baf92b51f0120d4db6a12.ctex"
+uid="uid://deb5c157yc3hm"
+path="res://.godot/imported/elder_logs.png-dfde87470f837a5570b7bd1a3e846a2d.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/elder_logs.png"
-dest_files=["res://.godot/imported/elder_logs.png-0df95ec0fa4baf92b51f0120d4db6a12.ctex"]
+dest_files=["res://.godot/imported/elder_logs.png-dfde87470f837a5570b7bd1a3e846a2d.ctex"]
 
 [params]
 

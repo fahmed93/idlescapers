@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://tugyc97npamddlbd"
-path="res://.godot/imported/blisterwood_logs.png-91b776d0dd613c5bb63665006fbe4578.ctex"
+uid="uid://cmvoananocpt"
+path="res://.godot/imported/blisterwood_logs.png-f55400648f2bbba7d3f1ad1c6f37afbb.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/blisterwood_logs.png"
-dest_files=["res://.godot/imported/blisterwood_logs.png-91b776d0dd613c5bb63665006fbe4578.ctex"]
+dest_files=["res://.godot/imported/blisterwood_logs.png-f55400648f2bbba7d3f1ad1c6f37afbb.ctex"]
 
 [params]
 

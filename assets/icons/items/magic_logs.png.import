@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://02md3yi74unabw3i"
-path="res://.godot/imported/magic_logs.png-258cc57dee85ef8666930e4df0306ab6.ctex"
+uid="uid://b3f77pyqcht2g"
+path="res://.godot/imported/magic_logs.png-1754e8cefd47854ad1fbb7b5f002c853.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/magic_logs.png"
-dest_files=["res://.godot/imported/magic_logs.png-258cc57dee85ef8666930e4df0306ab6.ctex"]
+dest_files=["res://.godot/imported/magic_logs.png-1754e8cefd47854ad1fbb7b5f002c853.ctex"]
 
 [params]
 

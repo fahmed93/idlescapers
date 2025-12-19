@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_b49ee386d5a4fbbf"
-path="res://.godot/imported/cooking.png-b49ee386d5a4fbbf4c3c476954bb42ad.ctex"
+uid="uid://djrn5s1q382ih"
+path="res://.godot/imported/cooking.png-08c11bb8e1dc22db2098e6e2a90f5b05.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/cooking.png"
-dest_files=["res://.godot/imported/cooking.png-b49ee386d5a4fbbf4c3c476954bb42ad.ctex"]
+dest_files=["res://.godot/imported/cooking.png-08c11bb8e1dc22db2098e6e2a90f5b05.ctex"]
 
 [params]
 

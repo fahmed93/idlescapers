@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eh7ym9hhfk7k91rf"
-path="res://.godot/imported/willow_logs.png-ce84e166fe3e0abbe4bd1bbfa727e62a.ctex"
+uid="uid://d2rhqxsooff1p"
+path="res://.godot/imported/willow_logs.png-3406c318f3f60741eae32c7f18927cd5.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/items/willow_logs.png"
-dest_files=["res://.godot/imported/willow_logs.png-ce84e166fe3e0abbe4bd1bbfa727e62a.ctex"]
+dest_files=["res://.godot/imported/willow_logs.png-3406c318f3f60741eae32c7f18927cd5.ctex"]
 
 [params]
 

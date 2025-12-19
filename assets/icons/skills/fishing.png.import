@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://skill_4c8ef3ac3928e00c"
-path="res://.godot/imported/fishing.png-4c8ef3ac3928e00caa21aa242729900d.ctex"
+uid="uid://b8bbtnqfydstg"
+path="res://.godot/imported/fishing.png-331ca6a01dad5967127df320c25775f2.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://assets/icons/skills/fishing.png"
-dest_files=["res://.godot/imported/fishing.png-4c8ef3ac3928e00caa21aa242729900d.ctex"]
+dest_files=["res://.godot/imported/fishing.png-331ca6a01dad5967127df320c25775f2.ctex"]
 
 [params]
 
