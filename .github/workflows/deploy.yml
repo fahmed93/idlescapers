@@ -8,7 +8,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write  # Changed from 'read' to 'write' to allow version commit
   pages: write
   id-token: write
 
@@ -27,6 +27,56 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Increment version
+        run: |
+          # Validate version.txt exists
+          if [ ! -f version.txt ]; then
+            echo "version.txt not found, creating with initial version 0"
+            echo "0" > version.txt
+          fi
+          
+          # Read current version
+          CURRENT_VERSION=$(cat version.txt)
+          
+          # Validate version is a number
+          if ! [[ "$CURRENT_VERSION" =~ ^[0-9]+$ ]]; then
+            echo "Invalid version in version.txt: $CURRENT_VERSION"
+            echo "Resetting to 0"
+            CURRENT_VERSION=0
+          fi
+          
+          echo "Current version: $CURRENT_VERSION"
+          
+          # Increment version
+          NEW_VERSION=$((CURRENT_VERSION + 1))
+          echo "New version: $NEW_VERSION"
+          
+          # Write new version to file
+          echo "$NEW_VERSION" > version.txt
+          
+          # Display new version
+          echo "VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          
+          # Commit and push the version increment
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add version.txt
+          
+          # Only commit if there are changes
+          if git diff --staged --quiet; then
+            echo "No version changes to commit"
+          else
+            git commit -m "Auto-increment version to $NEW_VERSION [skip ci]"
+            
+            # Push with proper authentication and error handling
+            if git push; then
+              echo "Successfully pushed version increment"
+            else
+              echo "Warning: Failed to push version increment. This won't affect the build."
+              echo "The version will still be used in this deployment."
+            fi
+          fi
 
       - name: Setup Godot
         uses: chickensoft-games/setup-godot@v2
