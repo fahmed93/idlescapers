@@ -85,12 +85,13 @@ func _run_tests() -> void:
 			var text: String = child.text
 			# Special buttons have single-word text without newlines
 			# Skill buttons have format like "Fishing\nLv. 1" (multiline with level)
-			if text not in ["Equipment", "Inventory", "Upgrades"]:
+			# Also exclude Info section buttons (Progress, Settings)
+			if text not in ["Equipment", "Inventory", "Upgrades", "Progress", "Settings"]:
 				skill_button_count += 1
 	
-	print("  Found %d total buttons (%d skill + 3 special)" % [total_button_count, skill_button_count])
+	print("  Found %d total buttons (%d skill + 3 player + 2 info)" % [total_button_count, skill_button_count])
 	assert(skill_button_count > 0, "Should have at least one skill button")
-	assert(total_button_count == skill_button_count + 3, "Total buttons should equal skill buttons + 3 special buttons")
+	assert(total_button_count == skill_button_count + 3 + 2, "Total buttons should equal skill buttons + 3 player buttons + 2 info buttons")
 	print("  ✓ Skill buttons are present alongside special buttons\n")
 	
 	print("=== All Sidebar Button Tests Passed! ===\n")
