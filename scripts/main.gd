@@ -1256,8 +1256,7 @@ func _populate_skill_summary() -> void:
 		var level := GameManager.get_skill_level(skill_id)
 		
 		# Create a panel for each skill
-		# Larger panels to fill more of the screen (720px width - margins - spacing)
-		# With 3 columns, ~200px per panel fits nicely
+		# Panel size and spacing are defined by constants to fill most of the screen width
 		var skill_panel := PanelContainer.new()
 		skill_panel.custom_minimum_size = PROGRESS_PANEL_SIZE
 		
