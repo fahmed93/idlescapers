@@ -72,9 +72,10 @@ func _run_tests() -> void:
 	
 	# Test 9: Test sidebar visibility toggle
 	print("Test 9: Test sidebar visibility toggle")
-	# Simulate menu button press
+	# Simulate menu button press by calling the handler directly
 	var initial_visibility := scroll_container.visible
-	menu_button.pressed.emit()
+	# Get the main instance's script and call the handler
+	main_instance._on_sidebar_toggle_pressed()
 	await get_tree().process_frame
 	var after_toggle_visibility := scroll_container.visible
 	assert(initial_visibility != after_toggle_visibility, "Sidebar visibility should toggle")
