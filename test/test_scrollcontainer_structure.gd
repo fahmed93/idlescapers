@@ -27,8 +27,8 @@ func _run_tests() -> void:
 		
 		if node_name == "MainContentScroll":
 			scroll_container_found = true
-			var node_type: String = scene_state.get_node_type(i)
-			assert(node_type == "ScrollContainer", "MainContentScroll should be a ScrollContainer")
+			var node_type: StringName = scene_state.get_node_type(i)
+			assert(str(node_type) == "ScrollContainer", "MainContentScroll should be a ScrollContainer")
 			print("  ✓ Found MainContentScroll ScrollContainer")
 			
 		elif node_name == "MainContent":

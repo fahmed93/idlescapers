@@ -1371,7 +1371,7 @@ func _set_sidebar_collapsed(collapsed: bool) -> void:
 		menu_button.text = "✕"
 	
 	# Scroll main content to top when expanding sidebar to ensure header is visible
-	if not collapsed and main_content_scroll:
+	if not collapsed and main_content_scroll and main_content_scroll.is_inside_tree():
 		# Wait for next frame to ensure layout is updated
 		await get_tree().process_frame
 		main_content_scroll.scroll_vertical = 0
