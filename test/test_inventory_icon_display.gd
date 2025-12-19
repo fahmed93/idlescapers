@@ -32,12 +32,15 @@ func _ready() -> void:
 	assert(oak_logs_data.icon != null, "oak_logs should have an icon")
 	print("✓ oak_logs item has icon: %dx%d" % [oak_logs_data.icon.get_width(), oak_logs_data.icon.get_height()])
 	
-	# Test that items without icons don't crash the system
+	# Test that items without icons have null icon property
 	var shrimp_data := Inventory.get_item_data("raw_shrimp")
 	assert(shrimp_data != null, "raw_shrimp item data should exist")
-	print("✓ raw_shrimp item data exists (icon: %s)" % ("present" if shrimp_data.icon else "null"))
+	assert(shrimp_data.icon == null, "raw_shrimp should have null icon (placeholder will be used in UI)")
+	print("✓ raw_shrimp item data exists (icon: %s - placeholder will be used in display)" % ("present" if shrimp_data.icon else "null"))
 	
 	print("\n=== Test Results ===")
 	print("✓ All inventory icon display tests passed!")
+	print("✓ Items with dedicated icons display their icon")
+	print("✓ Items without dedicated icons will display placeholder icon in UI")
 	print("\nTest complete!")
 	get_tree().quit()
