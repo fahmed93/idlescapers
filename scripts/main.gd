@@ -31,27 +31,29 @@ const PROGRESS_MARGIN := 20  # Margin around the grid
 const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
 const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
 
-@onready var skill_sidebar: VBoxContainer = $HSplitContainer/SkillSidebar
-@onready var main_content: VBoxContainer = $HSplitContainer/MainContent
+@onready var skill_sidebar: VBoxContainer = $SkillSidebar/ScrollContainer/SidebarContent
+@onready var sidebar_panel: PanelContainer = $SkillSidebar
+@onready var sidebar_dim_overlay: ColorRect = $SidebarDimOverlay
+@onready var main_content: VBoxContainer = $MainContent
 @onready var menu_button: Button = $MenuButton
 @onready var change_character_button: Button = $ChangeCharacterButton
-@onready var selected_skill_header: VBoxContainer = $HSplitContainer/MainContent/SelectedSkillHeader
-@onready var action_list: VBoxContainer = $HSplitContainer/MainContent/ActionList/ScrollContainer/ActionListContent
-@onready var selected_skill_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillName
-@onready var skill_level_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SkillLevel
-@onready var skill_xp_bar: ProgressBar = $HSplitContainer/MainContent/SelectedSkillHeader/XPProgressBar
-@onready var skill_xp_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/XPLabel
-@onready var skill_speed_bonus_label: Label = $HSplitContainer/MainContent/SelectedSkillHeader/SpeedBonusLabel
-@onready var action_list_label: Label = $HSplitContainer/MainContent/ActionListLabel
-@onready var action_list_panel: PanelContainer = $HSplitContainer/MainContent/ActionList
-@onready var training_panel: PanelContainer = $HSplitContainer/MainContent/TrainingPanel
-@onready var training_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingLabel
-@onready var training_progress: ProgressBar = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
-@onready var training_time_label: Label = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
-@onready var stop_button: Button = $HSplitContainer/MainContent/TrainingPanel/VBoxContainer/StopButton
-@onready var inventory_panel: PanelContainer = $HSplitContainer/MainContent/InventoryPanel
-@onready var inventory_list: GridContainer = $HSplitContainer/MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
-@onready var total_stats_label: Label = $HSplitContainer/MainContent/TotalStatsPanel/TotalStatsLabel
+@onready var selected_skill_header: VBoxContainer = $MainContent/SelectedSkillHeader
+@onready var action_list: VBoxContainer = $MainContent/ActionList/ScrollContainer/ActionListContent
+@onready var selected_skill_label: Label = $MainContent/SelectedSkillHeader/SkillName
+@onready var skill_level_label: Label = $MainContent/SelectedSkillHeader/SkillLevel
+@onready var skill_xp_bar: ProgressBar = $MainContent/SelectedSkillHeader/XPProgressBar
+@onready var skill_xp_label: Label = $MainContent/SelectedSkillHeader/XPLabel
+@onready var skill_speed_bonus_label: Label = $MainContent/SelectedSkillHeader/SpeedBonusLabel
+@onready var action_list_label: Label = $MainContent/ActionListLabel
+@onready var action_list_panel: PanelContainer = $MainContent/ActionList
+@onready var training_panel: PanelContainer = $MainContent/TrainingPanel
+@onready var training_label: Label = $MainContent/TrainingPanel/VBoxContainer/TrainingLabel
+@onready var training_progress: ProgressBar = $MainContent/TrainingPanel/VBoxContainer/TrainingProgressBar
+@onready var training_time_label: Label = $MainContent/TrainingPanel/VBoxContainer/TrainingTimeLabel
+@onready var stop_button: Button = $MainContent/TrainingPanel/VBoxContainer/StopButton
+@onready var inventory_panel: PanelContainer = $MainContent/InventoryPanel
+@onready var inventory_list: GridContainer = $MainContent/InventoryPanel/VBoxContainer/ScrollContainer/InventoryGrid
+@onready var total_stats_label: Label = $MainContent/TotalStatsPanel/TotalStatsLabel
 @onready var offline_popup: PanelContainer = $OfflineProgressPopup
 
 var selected_skill_id: String = ""
@@ -129,6 +131,7 @@ func _setup_signals() -> void:
 	Equipment.equipment_changed.connect(_on_equipment_changed)
 	stop_button.pressed.connect(_on_stop_button_pressed)
 	menu_button.pressed.connect(_on_sidebar_toggle_pressed)
+	sidebar_dim_overlay.gui_input.connect(_on_dim_overlay_clicked)
 	change_character_button.pressed.connect(_on_change_character_pressed)
 
 func _process(_delta: float) -> void:
@@ -1358,9 +1361,16 @@ func _on_sidebar_toggle_pressed() -> void:
 	_set_sidebar_collapsed(not is_sidebar_expanded)
 	print("New state: ", is_sidebar_expanded)
 
+## Handle clicking the dim overlay to close sidebar
+func _on_dim_overlay_clicked(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		if is_sidebar_expanded:
+			_set_sidebar_collapsed(true)
+
 ## Set sidebar collapsed/expanded state
 func _set_sidebar_collapsed(collapsed: bool) -> void:
-	skill_sidebar.visible = not collapsed
+	sidebar_panel.visible = not collapsed
+	sidebar_dim_overlay.visible = not collapsed
 	is_sidebar_expanded = not collapsed
 	
 	# Update toggle button text
