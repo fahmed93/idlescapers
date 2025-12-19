@@ -357,7 +357,9 @@ func _on_training_started(_skill_id: String, method_id: String) -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
 		training_label.text = "Training: %s" % method.name
-		training_time_label.text = "0.0s / %.1fs" % method.action_time
+		# Use effective action time which accounts for speed modifiers from upgrades
+		var effective_action_time := method.get_effective_action_time(GameManager.current_skill_id)
+		training_time_label.text = "0.0s / %.1fs" % effective_action_time
 	training_panel.visible = true
 	training_progress.value = 0
 
@@ -372,7 +374,9 @@ func _hide_training_panel() -> void:
 func _update_training_progress() -> void:
 	var method := GameManager.get_current_training_method()
 	if method:
-		var progress := (GameManager.training_progress / method.action_time) * 100.0
+		# Use effective action time which accounts for speed modifiers from upgrades
+		var effective_action_time := method.get_effective_action_time(GameManager.current_skill_id)
+		var progress := (GameManager.training_progress / effective_action_time) * 100.0
 		training_progress.value = progress
 		
 		# Update training label with time remaining if method consumes items
@@ -386,8 +390,8 @@ func _update_training_progress() -> void:
 				training_label.text = "Training: %s" % method.name
 		else:
 			training_label.text = "Training: %s" % method.name
-		# Update time label to show elapsed/total time
-		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, method.action_time]
+		# Update time label to show elapsed/total time with effective action time
+		training_time_label.text = "%.1fs / %.1fs" % [GameManager.training_progress, effective_action_time]
 
 func _on_skill_xp_gained(skill_id: String, _xp: float) -> void:
 	if skill_id == selected_skill_id:
