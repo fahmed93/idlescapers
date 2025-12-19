@@ -51,6 +51,8 @@ func save_game() -> void:
 		"gold": Store.gold,
 		"purchased_upgrades": UpgradeShop.purchased_upgrades.duplicate(),
 		"equipment": Equipment.to_dict(),
+		"inventory_tabs": Inventory.tabs.duplicate(true),
+		"inventory_tab_order": Inventory.tab_order.duplicate(),
 	}
 	
 	var file := FileAccess.open(save_file, FileAccess.WRITE)
@@ -114,6 +116,25 @@ func load_game() -> void:
 		Inventory.inventory.clear()
 		for item_id in save_data["inventory"]:
 			Inventory.inventory[item_id] = int(save_data["inventory"][item_id])
+	
+	# Restore inventory tabs
+	if save_data.has("inventory_tabs"):
+		Inventory.tabs.clear()
+		for tab_id in save_data["inventory_tabs"]:
+			Inventory.tabs[tab_id] = save_data["inventory_tabs"][tab_id].duplicate(true)
+		
+		# Ensure main tab points to legacy inventory
+		if Inventory.tabs.has(Inventory.MAIN_TAB_ID):
+			Inventory.tabs[Inventory.MAIN_TAB_ID]["items"] = Inventory.inventory
+	
+	if save_data.has("inventory_tab_order"):
+		Inventory.tab_order.clear()
+		for tab_id in save_data["inventory_tab_order"]:
+			Inventory.tab_order.append(tab_id)
+	
+	# Initialize tabs if not loaded
+	if Inventory.tabs.is_empty():
+		Inventory._initialize_tabs()
 	
 	# Restore gold
 	if save_data.has("gold"):
