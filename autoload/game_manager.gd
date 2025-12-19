@@ -335,14 +335,14 @@ func _process(delta: float) -> void:
 				stop_training()
 				return
 	
-	# Apply speed modifier from upgrades
-	var speed_modifier := UpgradeShop.get_skill_speed_modifier(current_skill_id)
-	var modified_delta := delta * (1.0 + speed_modifier)
+	# Progress accumulates at normal rate
+	training_progress += delta
 	
-	training_progress += modified_delta
+	# Use effective action time which accounts for speed modifiers from upgrades
+	var effective_action_time := method.get_effective_action_time(current_skill_id)
 	
-	if training_progress >= method.action_time:
-		training_progress -= method.action_time
+	if training_progress >= effective_action_time:
+		training_progress -= effective_action_time
 		_complete_action(method)
 
 ## Complete a training action
