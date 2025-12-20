@@ -122,6 +122,7 @@ func _load_items() -> void:
 	# Ores
 	_add_item("copper_ore", "Copper Ore", "A soft reddish ore.", ItemData.ItemType.RAW_MATERIAL, 5)
 	_add_item("tin_ore", "Tin Ore", "A silvery ore.", ItemData.ItemType.RAW_MATERIAL, 5)
+	_add_item("limestone", "Limestone", "A sedimentary rock useful for construction.", ItemData.ItemType.RAW_MATERIAL, 8)
 	_add_item("iron_ore", "Iron Ore", "A common metallic ore.", ItemData.ItemType.RAW_MATERIAL, 15)
 	_add_item("silver_ore", "Silver Ore", "A shiny precious ore.", ItemData.ItemType.RAW_MATERIAL, 25)
 	_add_item("coal", "Coal", "Fuel for smelting.", ItemData.ItemType.RAW_MATERIAL, 30)
