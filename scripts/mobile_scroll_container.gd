@@ -65,7 +65,7 @@ func _find_button_recursive(node: Node, global_pos: Vector2) -> Button:
 	if node is Button:
 		var button := node as Button
 		# Check if global position is within button's global bounds
-		var button_rect := Rect2(button.global_position, button.size)
+		var button_rect := button.get_global_rect()
 		if button_rect.has_point(global_pos):
 			return button
 	
