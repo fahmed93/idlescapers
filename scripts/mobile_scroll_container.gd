@@ -49,15 +49,20 @@ func _handle_release(global_pos: Vector2) -> void:
 		var local_pos := global_pos - global_position
 		var button := _find_button_at_position(local_pos)
 		if button:
-			button.emit_signal("pressed")
+			button.pressed.emit()
 
 ## Find a button at the given local position within this ScrollContainer
 func _find_button_at_position(local_pos: Vector2) -> Button:
 	# Convert to global position for comparison
 	var global_pos := local_pos + global_position
 	
-	# Recursively search for buttons in child nodes
-	return _find_button_recursive(get_child(0), global_pos) if get_child_count() > 0 else null
+	# Search all children for buttons
+	for child in get_children():
+		var found := _find_button_recursive(child, global_pos)
+		if found:
+			return found
+	
+	return null
 
 ## Recursively search for a button at the given global position
 func _find_button_recursive(node: Node, global_pos: Vector2) -> Button:
