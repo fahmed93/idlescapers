@@ -53,31 +53,26 @@ func _handle_release(global_pos: Vector2) -> void:
 
 ## Find a button at the given local position within this ScrollContainer
 func _find_button_at_position(local_pos: Vector2) -> Button:
-	# Adjust position to account for scroll offset
-	var scroll_offset := Vector2(scroll_horizontal, scroll_vertical)
-	var adjusted_pos := local_pos + scroll_offset
+	# Convert to global position for comparison
+	var global_pos := local_pos + global_position
 	
 	# Recursively search for buttons in child nodes
-	return _find_button_recursive(get_child(0), adjusted_pos) if get_child_count() > 0 else null
+	return _find_button_recursive(get_child(0), global_pos) if get_child_count() > 0 else null
 
-## Recursively search for a button at the given position
-func _find_button_recursive(node: Node, pos: Vector2) -> Button:
+## Recursively search for a button at the given global position
+func _find_button_recursive(node: Node, global_pos: Vector2) -> Button:
 	if node is Button:
 		var button := node as Button
-		# Check if position is within button's bounds
-		var button_rect := Rect2(button.position, button.size)
-		if button_rect.has_point(pos):
+		# Check if global position is within button's global bounds
+		var button_rect := Rect2(button.global_position, button.size)
+		if button_rect.has_point(global_pos):
 			return button
 	
 	# Recursively search children
 	for child in node.get_children():
-		if child is Control:
-			var control := child as Control
-			# Adjust position relative to child's position
-			var child_pos := pos - control.position
-			var found := _find_button_recursive(child, child_pos)
-			if found:
-				return found
+		var found := _find_button_recursive(child, global_pos)
+		if found:
+			return found
 	
 	return null
 
