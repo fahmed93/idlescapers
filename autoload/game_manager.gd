@@ -355,16 +355,20 @@ func _process(delta: float) -> void:
 
 ## Complete a training action
 func _complete_action(method: TrainingMethodData) -> void:
+	# Calculate success rate with skill cape effects
+	var effective_success_rate := method.success_rate
+	
 	# Apply skill cape effect: perfect cooking (100% success rate)
-	var success := randf() <= method.success_rate
-	if not success and UpgradeShop.has_cape_effect("perfect_cooking") and current_skill_id == "cooking":
-		success = true  # Cooking cape makes all cooking attempts succeed
+	if UpgradeShop.has_cape_effect("perfect_cooking") and current_skill_id == "cooking":
+		effective_success_rate = 1.0
 	
 	# Apply skill cape effect: perfect iron smelting (100% success rate for iron)
-	if not success and UpgradeShop.has_cape_effect("perfect_iron_smelting") and current_skill_id == "smithing":
-		# Check if this is iron smelting
+	if UpgradeShop.has_cape_effect("perfect_iron_smelting") and current_skill_id == "smithing":
 		if method.id == "iron_bar":
-			success = true
+			effective_success_rate = 1.0
+	
+	# Determine success based on effective success rate
+	var success := randf() <= effective_success_rate
 	
 	# Consume items (with skill cape effects for saving materials)
 	if not method.consumed_items.is_empty():
