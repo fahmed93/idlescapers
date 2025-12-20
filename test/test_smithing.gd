@@ -155,6 +155,41 @@ func _ready() -> void:
 	
 	GameManager.stop_training()
 	
+	# Test 8: Verify all methods have categories assigned
+	print("\nTest 8: Checking category assignments...")
+	var categories: Dictionary = {}  # category_name -> count
+	
+	for method in smithing_skill.training_methods:
+		var category := method.category if method.category != "" else "General"
+		categories[category] = categories.get(category, 0) + 1
+	
+	print("  Categories found: %s" % ", ".join(categories.keys()))
+	assert(categories.size() == 7, "Should have exactly 7 categories")
+	assert(categories.has("Bars"), "Should have Bars category")
+	assert(categories.has("Bronze"), "Should have Bronze category")
+	assert(categories.has("Iron"), "Should have Iron category")
+	assert(categories.has("Steel"), "Should have Steel category")
+	assert(categories.has("Mithril"), "Should have Mithril category")
+	assert(categories.has("Adamantite"), "Should have Adamantite category")
+	assert(categories.has("Runite"), "Should have Runite category")
+	
+	# Verify counts
+	assert(categories["Bars"] == 8, "Bars should have 8 methods")
+	assert(categories["Bronze"] == 7, "Bronze should have 7 methods")
+	assert(categories["Iron"] == 7, "Iron should have 7 methods")
+	assert(categories["Steel"] == 7, "Steel should have 7 methods")
+	assert(categories["Mithril"] == 7, "Mithril should have 7 methods")
+	assert(categories["Adamantite"] == 7, "Adamantite should have 7 methods")
+	assert(categories["Runite"] == 7, "Runite should have 7 methods")
+	
+	print("  ✓ Bars: %d methods" % categories["Bars"])
+	print("  ✓ Bronze: %d methods" % categories["Bronze"])
+	print("  ✓ Iron: %d methods" % categories["Iron"])
+	print("  ✓ Steel: %d methods" % categories["Steel"])
+	print("  ✓ Mithril: %d methods" % categories["Mithril"])
+	print("  ✓ Adamantite: %d methods" % categories["Adamantite"])
+	print("  ✓ Runite: %d methods" % categories["Runite"])
+	
 	print("\n=== ALL TESTS PASSED ===\n")
 	
 	# Exit
