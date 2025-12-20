@@ -96,8 +96,6 @@ func _input(event: InputEvent) -> void:
 		if drag_distance > scroll_threshold or _is_scrolling:
 			if not _is_scrolling:
 				_is_scrolling = true
-				# Mark event as handled in the viewport to prevent buttons from getting click events
-				get_viewport().set_input_as_handled()
 			
 			# Calculate delta from last position for smooth incremental scrolling
 			var delta := current_pos - _last_drag_pos
@@ -119,3 +117,4 @@ func _input(event: InputEvent) -> void:
 			
 			# Mark event as handled to prevent buttons from processing it
 			get_viewport().set_input_as_handled()
+

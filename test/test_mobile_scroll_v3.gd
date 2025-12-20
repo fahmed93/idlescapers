@@ -85,3 +85,4 @@ func _run_tests() -> void:
 	print("2. Test quick taps on buttons (should activate, not scroll)")
 	print("3. Test scrolling in both sidebar and main screen")
 	print("4. Test on actual mobile device or with touch emulation\n")
+

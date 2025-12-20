@@ -118,3 +118,4 @@ func _process(_delta: float) -> void:
 			# Only update if scrolling (to not overwrite button click messages)
 			if abs(scroll_pos - last_scroll_pos) > 0:
 				last_scroll_pos = scroll_pos
+
