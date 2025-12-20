@@ -16,6 +16,16 @@ static func create_methods() -> Array[TrainingMethodData]:
 	normal_tree.produced_items = {"logs": 1}
 	methods.append(normal_tree)
 	
+	var achey := TrainingMethodData.new()
+	achey.id = "achey"
+	achey.name = "Achey Tree"
+	achey.description = "A thin, flexible tree good for crafting."
+	achey.level_required = 5
+	achey.xp_per_action = 30.0
+	achey.action_time = 3.5
+	achey.produced_items = {"achey_logs": 1}
+	methods.append(achey)
+	
 	var oak := TrainingMethodData.new()
 	oak.id = "oak"
 	oak.name = "Oak Tree"
@@ -36,57 +46,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	willow.produced_items = {"willow_logs": 1}
 	methods.append(willow)
 	
-	var maple := TrainingMethodData.new()
-	maple.id = "maple"
-	maple.name = "Maple Tree"
-	maple.description = "A tree with distinctive leaves."
-	maple.level_required = 45
-	maple.xp_per_action = 100.0
-	maple.action_time = 5.0
-	maple.produced_items = {"maple_logs": 1}
-	methods.append(maple)
-	
-	var yew := TrainingMethodData.new()
-	yew.id = "yew"
-	yew.name = "Yew Tree"
-	yew.description = "An ancient and valuable tree."
-	yew.level_required = 60
-	yew.xp_per_action = 175.0
-	yew.action_time = 6.0
-	yew.produced_items = {"yew_logs": 1}
-	methods.append(yew)
-	
-	var magic := TrainingMethodData.new()
-	magic.id = "magic"
-	magic.name = "Magic Tree"
-	magic.description = "A tree imbued with magical essence."
-	magic.level_required = 75
-	magic.xp_per_action = 250.0
-	magic.action_time = 8.0
-	magic.produced_items = {"magic_logs": 1}
-	methods.append(magic)
-	
-	var redwood := TrainingMethodData.new()
-	redwood.id = "redwood"
-	redwood.name = "Redwood Tree"
-	redwood.description = "A massive ancient tree."
-	redwood.level_required = 90
-	redwood.xp_per_action = 380.0
-	redwood.action_time = 10.0
-	redwood.produced_items = {"redwood_logs": 1}
-	methods.append(redwood)
-	
-	# Additional training methods
-	var achey := TrainingMethodData.new()
-	achey.id = "achey"
-	achey.name = "Achey Tree"
-	achey.description = "A thin, flexible tree good for crafting."
-	achey.level_required = 5
-	achey.xp_per_action = 30.0
-	achey.action_time = 3.5
-	achey.produced_items = {"achey_logs": 1}
-	methods.append(achey)
-	
 	var teak := TrainingMethodData.new()
 	teak.id = "teak"
 	teak.name = "Teak Tree"
@@ -96,6 +55,16 @@ static func create_methods() -> Array[TrainingMethodData]:
 	teak.action_time = 6.0
 	teak.produced_items = {"teak_logs": 1}
 	methods.append(teak)
+	
+	var maple := TrainingMethodData.new()
+	maple.id = "maple"
+	maple.name = "Maple Tree"
+	maple.description = "A tree with distinctive leaves."
+	maple.level_required = 45
+	maple.xp_per_action = 100.0
+	maple.action_time = 5.0
+	maple.produced_items = {"maple_logs": 1}
+	methods.append(maple)
 	
 	var mahogany := TrainingMethodData.new()
 	mahogany.id = "mahogany"
@@ -127,6 +96,16 @@ static func create_methods() -> Array[TrainingMethodData]:
 	eucalyptus.produced_items = {"eucalyptus_logs": 1}
 	methods.append(eucalyptus)
 	
+	var yew := TrainingMethodData.new()
+	yew.id = "yew"
+	yew.name = "Yew Tree"
+	yew.description = "An ancient and valuable tree."
+	yew.level_required = 60
+	yew.xp_per_action = 175.0
+	yew.action_time = 6.0
+	yew.produced_items = {"yew_logs": 1}
+	methods.append(yew)
+	
 	var elder := TrainingMethodData.new()
 	elder.id = "elder"
 	elder.name = "Elder Tree"
@@ -146,6 +125,16 @@ static func create_methods() -> Array[TrainingMethodData]:
 	blisterwood.action_time = 8.5
 	blisterwood.produced_items = {"blisterwood_logs": 1}
 	methods.append(blisterwood)
+	
+	var magic := TrainingMethodData.new()
+	magic.id = "magic"
+	magic.name = "Magic Tree"
+	magic.description = "A tree imbued with magical essence."
+	magic.level_required = 75
+	magic.xp_per_action = 250.0
+	magic.action_time = 8.0
+	magic.produced_items = {"magic_logs": 1}
+	methods.append(magic)
 	
 	var bloodwood := TrainingMethodData.new()
 	bloodwood.id = "bloodwood"
@@ -177,4 +166,14 @@ static func create_methods() -> Array[TrainingMethodData]:
 	spirit.produced_items = {"spirit_logs": 1}
 	methods.append(spirit)
 	
-	return methods
+	var redwood := TrainingMethodData.new()
+	redwood.id = "redwood"
+	redwood.name = "Redwood Tree"
+	redwood.description = "A massive ancient tree."
+	redwood.level_required = 90
+	redwood.xp_per_action = 380.0
+	redwood.action_time = 10.0
+	redwood.produced_items = {"redwood_logs": 1}
+	methods.append(redwood)
+	
+		return methods

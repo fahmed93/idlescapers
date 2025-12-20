@@ -17,6 +17,17 @@ static func create_methods() -> Array[TrainingMethodData]:
 	normal_logs.produced_items = {"ashes": 1}
 	methods.append(normal_logs)
 	
+	var achey_logs := TrainingMethodData.new()
+	achey_logs.id = "burn_achey_logs"
+	achey_logs.name = "Burn Achey Logs"
+	achey_logs.description = "Burn flexible achey logs for a quick fire."
+	achey_logs.level_required = 5
+	achey_logs.xp_per_action = 45.0
+	achey_logs.action_time = 2.8
+	achey_logs.consumed_items = {"achey_logs": 1}
+	achey_logs.produced_items = {"ashes": 1}
+	methods.append(achey_logs)
+	
 	var oak_logs := TrainingMethodData.new()
 	oak_logs.id = "burn_oak_logs"
 	oak_logs.name = "Burn Oak Logs"
@@ -39,6 +50,17 @@ static func create_methods() -> Array[TrainingMethodData]:
 	willow_logs.produced_items = {"ashes": 1}
 	methods.append(willow_logs)
 	
+	var teak_logs := TrainingMethodData.new()
+	teak_logs.id = "burn_teak_logs"
+	teak_logs.name = "Burn Teak Logs"
+	teak_logs.description = "Burn tropical teak logs for a long-lasting fire."
+	teak_logs.level_required = 35
+	teak_logs.xp_per_action = 105.0
+	teak_logs.action_time = 3.8
+	teak_logs.consumed_items = {"teak_logs": 1}
+	teak_logs.produced_items = {"ashes": 1}
+	methods.append(teak_logs)
+	
 	var maple_logs := TrainingMethodData.new()
 	maple_logs.id = "burn_maple_logs"
 	maple_logs.name = "Burn Maple Logs"
@@ -49,6 +71,17 @@ static func create_methods() -> Array[TrainingMethodData]:
 	maple_logs.consumed_items = {"maple_logs": 1}
 	maple_logs.produced_items = {"ashes": 1}
 	methods.append(maple_logs)
+	
+	var mahogany_logs := TrainingMethodData.new()
+	mahogany_logs.id = "burn_mahogany_logs"
+	mahogany_logs.name = "Burn Mahogany Logs"
+	mahogany_logs.description = "Burn valuable mahogany logs for an excellent fire."
+	mahogany_logs.level_required = 50
+	mahogany_logs.xp_per_action = 157.5
+	mahogany_logs.action_time = 4.3
+	mahogany_logs.consumed_items = {"mahogany_logs": 1}
+	mahogany_logs.produced_items = {"ashes": 1}
+	methods.append(mahogany_logs)
 	
 	var yew_logs := TrainingMethodData.new()
 	yew_logs.id = "burn_yew_logs"
