@@ -45,17 +45,13 @@ func _handle_release(global_pos: Vector2) -> void:
 	
 	# If we didn't actually scroll, trigger a button click
 	if not was_scrolling:
-		# Find the button under the release point
-		var local_pos := global_pos - global_position
-		var button := _find_button_at_position(local_pos)
+		# Find the button under the release point (using global position)
+		var button := _find_button_at_position(global_pos)
 		if button:
 			button.pressed.emit()
 
-## Find a button at the given local position within this ScrollContainer
-func _find_button_at_position(local_pos: Vector2) -> Button:
-	# Convert to global position for comparison
-	var global_pos := local_pos + global_position
-	
+## Find a button at the given global position within this ScrollContainer
+func _find_button_at_position(global_pos: Vector2) -> Button:
 	# Search all children for buttons
 	for child in get_children():
 		var found := _find_button_recursive(child, global_pos)
