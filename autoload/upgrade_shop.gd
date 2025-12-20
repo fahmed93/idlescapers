@@ -214,7 +214,7 @@ func _load_upgrades() -> void:
 	_add_skill_cape("herblore_cape", "Herblore Skillcape", "herblore",
 		"Mastery of herblore grants 10% chance to save ingredients.", 99, 99000, "save_herblore_ingredients")
 	_add_skill_cape("thieving_cape", "Thieving Skillcape", "thieving",
-		"Mastery of thieving grants 10% extra gold from pickpocketing.", 99, 99000, "extra_thieving_gold")
+		"Mastery of thieving grants 10% extra coins from pickpocketing.", 99, 99000, "extra_thieving_gold")
 	_add_skill_cape("agility_cape", "Agility Skillcape", "agility",
 		"Mastery of agility grants 5% extra XP from courses.", 99, 99000, "extra_agility_xp")
 	_add_skill_cape("astrology_cape", "Astrology Skillcape", "astrology",

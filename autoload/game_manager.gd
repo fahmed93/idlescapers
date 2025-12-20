@@ -433,14 +433,14 @@ func _complete_action(method: TrainingMethodData) -> void:
 			if randf() <= chance:
 				Inventory.add_item(item_id, 1)
 	
-	# Apply skill cape effect: extra thieving gold (10%)
+	# Apply skill cape effect: extra thieving coins (10%)
 	if success and UpgradeShop.has_cape_effect("extra_thieving_gold") and current_skill_id == "thieving":
-		# Check if this method produces gold by looking at produced_items
-		if method.produced_items.has("gold") or method.produced_items.has("coins"):
-			# Add 10% bonus gold
-			var bonus_gold := int(ceil(method.produced_items.get("gold", 0) * 0.10))
-			if bonus_gold > 0:
-				Store.add_gold(bonus_gold)
+		# Check if this method produces coins by looking at produced_items
+		if method.produced_items.has("coins"):
+			# Add 10% bonus coins
+			var bonus_coins := int(ceil(method.produced_items.get("coins", 0) * 0.10))
+			if bonus_coins > 0:
+				Inventory.add_item("coins", bonus_coins)
 	
 	action_completed.emit(current_skill_id, method.id, success)
 
