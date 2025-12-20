@@ -8,6 +8,7 @@ const INVENTORY_ICON_SIZE := 48  # Size of item icons in inventory display
 const ItemDetailPopupScene := preload("res://scenes/item_detail_popup.tscn")
 const ToastNotificationScene := preload("res://scenes/toast_notification.tscn")
 const PlaceholderIcon := preload("res://assets/icons/items/placeholder.svg")
+const MobileScrollScript := preload("res://scripts/mobile_scroll_container.gd")
 
 # Tab context menu options
 const TAB_MENU_RENAME := 0
@@ -708,6 +709,7 @@ func _create_inventory_ui() -> void:
 	var tab_scroll := ScrollContainer.new()
 	tab_scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	tab_scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	tab_scroll.set_script(MobileScrollScript)
 	tab_bar_container.add_child(tab_scroll)
 	
 	inventory_tab_bar = HBoxContainer.new()
@@ -724,6 +726,7 @@ func _create_inventory_ui() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.set_script(MobileScrollScript)
 	inventory_vbox.add_child(scroll)
 	
 	inventory_items_list = GridContainer.new()
@@ -758,6 +761,7 @@ func _create_equipment_ui() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.set_script(MobileScrollScript)
 	equipment_vbox.add_child(scroll)
 	
 	# Use a Control node to allow absolute positioning of slots
@@ -1013,6 +1017,7 @@ func _create_upgrades_ui() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.set_script(MobileScrollScript)
 	upgrades_vbox.add_child(scroll)
 	
 	upgrades_list = VBoxContainer.new()
@@ -1046,6 +1051,7 @@ func _create_skill_summary_ui() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.set_script(MobileScrollScript)
 	summary_vbox.add_child(scroll)
 	
 	# Center container to center the grid
@@ -1307,6 +1313,7 @@ func _create_settings_ui() -> void:
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.set_script(MobileScrollScript)
 	settings_vbox.add_child(scroll)
 	
 	# Settings content container

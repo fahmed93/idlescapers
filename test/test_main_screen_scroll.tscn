@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dxyab8f8n8h8k"]
+
+[ext_resource type="Script" path="res://test/test_main_screen_scroll.gd" id="1_main_scroll_test"]
+
+[node name="TestMainScreenScroll" type="Control"]
+script = ExtResource("1_main_scroll_test")
