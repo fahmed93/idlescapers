@@ -347,31 +347,100 @@ func _process(delta: float) -> void:
 
 ## Complete a training action
 func _complete_action(method: TrainingMethodData) -> void:
+	# Apply skill cape effect: perfect cooking (100% success rate)
 	var success := randf() <= method.success_rate
+	if not success and UpgradeShop.has_cape_effect("perfect_cooking") and current_skill_id == "cooking":
+		success = true  # Cooking cape makes all cooking attempts succeed
 	
-	# Consume items
+	# Apply skill cape effect: perfect iron smelting (100% success rate for iron)
+	if not success and UpgradeShop.has_cape_effect("perfect_iron_smelting") and current_skill_id == "smithing":
+		# Check if this is iron smelting (method ID contains "iron")
+		if "iron" in method.id.to_lower():
+			success = true
+	
+	# Consume items (with skill cape effects for saving materials)
 	if not method.consumed_items.is_empty():
 		for item_id in method.consumed_items:
 			var amount: int = method.consumed_items[item_id]
-			if not Inventory.remove_item(item_id, amount):
-				stop_training()
-				return
+			
+			# Apply skill cape effects: chance to save materials
+			var should_consume := true
+			if UpgradeShop.has_cape_effect("save_fletching_materials") and current_skill_id == "fletching":
+				if randf() <= 0.10:  # 10% chance to save
+					should_consume = false
+			elif UpgradeShop.has_cape_effect("save_herblore_ingredients") and current_skill_id == "herblore":
+				if randf() <= 0.10:  # 10% chance to save
+					should_consume = false
+			elif UpgradeShop.has_cape_effect("save_gems") and current_skill_id == "jewelcrafting":
+				if randf() <= 0.05:  # 5% chance to save
+					should_consume = false
+			elif UpgradeShop.has_cape_effect("save_crafting_hides") and current_skill_id == "crafting":
+				if randf() <= 0.10:  # 10% chance to save
+					should_consume = false
+			
+			if should_consume:
+				if not Inventory.remove_item(item_id, amount):
+					stop_training()
+					return
 	
-	# Always give XP
-	add_xp(current_skill_id, method.xp_per_action)
+	# Calculate XP with skill cape bonuses
+	var xp_to_grant := method.xp_per_action
+	
+	# Apply skill cape effect: double firemaking XP
+	if UpgradeShop.has_cape_effect("double_firemaking_xp") and current_skill_id == "firemaking":
+		xp_to_grant *= 2.0
+	
+	# Apply skill cape effect: extra agility XP (5%)
+	if UpgradeShop.has_cape_effect("extra_agility_xp") and current_skill_id == "agility":
+		xp_to_grant *= 1.05
+	
+	# Apply skill cape effect: extra astrology XP (5%)
+	if UpgradeShop.has_cape_effect("extra_astrology_xp") and current_skill_id == "astrology":
+		xp_to_grant *= 1.05
+	
+	# Always give XP (with cape bonuses applied)
+	add_xp(current_skill_id, xp_to_grant)
 	
 	# Produce items on success
 	if success and not method.produced_items.is_empty():
 		for item_id in method.produced_items:
 			var amount: int = method.produced_items[item_id]
 			Inventory.add_item(item_id, amount)
+			
+			# Apply skill cape effects: chance to get double items
+			var double_chance := 0.0
+			if UpgradeShop.has_cape_effect("double_fish") and current_skill_id == "fishing":
+				double_chance = 0.05
+			elif UpgradeShop.has_cape_effect("double_logs") and current_skill_id == "woodcutting":
+				double_chance = 0.05
+			elif UpgradeShop.has_cape_effect("double_hides") and current_skill_id == "skinning":
+				double_chance = 0.05
+			elif UpgradeShop.has_cape_effect("double_foraging") and current_skill_id == "foraging":
+				double_chance = 0.05
+			
+			if double_chance > 0.0 and randf() <= double_chance:
+				Inventory.add_item(item_id, amount)  # Add again for double
 	
 	# Check for bonus items on success (independent random roll for each)
 	if success and not method.bonus_items.is_empty():
 		for item_id in method.bonus_items:
 			var chance: float = method.bonus_items[item_id]
+			
+			# Apply skill cape effect: double gem chance for mining
+			if UpgradeShop.has_cape_effect("double_gem_chance") and current_skill_id == "mining":
+				chance *= 2.0
+			
 			if randf() <= chance:
 				Inventory.add_item(item_id, 1)
+	
+	# Apply skill cape effect: extra thieving gold (10%)
+	if success and UpgradeShop.has_cape_effect("extra_thieving_gold") and current_skill_id == "thieving":
+		# Check if this method produces gold by looking at produced_items
+		if method.produced_items.has("gold") or method.produced_items.has("coins"):
+			# Add 10% bonus gold
+			var bonus_gold := int(ceil(method.produced_items.get("gold", 0) * 0.10))
+			if bonus_gold > 0:
+				Store.add_gold(bonus_gold)
 	
 	action_completed.emit(current_skill_id, method.id, success)
 
