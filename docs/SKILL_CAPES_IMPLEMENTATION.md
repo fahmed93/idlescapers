@@ -186,9 +186,12 @@ Potential additions that could build on this system:
 
 The skill cape system is fully compatible with:
 - **Save/Load System**: Capes persist via `purchased_upgrades` array
-- **Offline Progress**: Cape effects apply to offline calculations
+- **Offline Progress**: Cape effects are NOT applied to offline calculations (only active effects)
 - **Multiple Characters**: Each character slot has independent cape ownership
 - **Existing Upgrades**: Capes work alongside regular speed-boost upgrades
+
+### Offline Progress Note
+Skill cape effects (like double drops, material saving, XP bonuses) are only applied during active training, not during offline progress calculations. This is intentional to keep offline calculations simple and deterministic. Regular upgrade speed bonuses ARE applied to offline progress.
 
 ## Notes
 
