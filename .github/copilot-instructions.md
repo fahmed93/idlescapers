@@ -6,13 +6,14 @@ Godot 4.5 idle game inspired by Melvor Idle/RuneScape. Mobile-first (720x1280), 
 ## Architecture
 
 ### Autoload Singletons (`project.godot`)
-Six autoloads provide global state—access anywhere without references:
+Seven autoloads provide global state—access anywhere without references:
 - **CharacterManager**: Multi-character slots (max 3), save file routing per slot
 - **GameManager**: Skills registry, XP/levels, training loop via `_process(delta)`
 - **Inventory**: Item registry + player inventory, signal-based updates
 - **SaveManager**: Auto-save (30s), offline progress calculation, JSON persistence
 - **Store**: Gold currency, item selling with `sell_item(id, amount)`
 - **UpgradeShop**: Purchasable speed modifiers per skill
+- **Equipment**: Equipment slots and stat bonuses management
 
 ```gdscript
 # Access patterns:
@@ -153,6 +154,97 @@ The workflow uses `chickensoft-games/setup-godot@v2` with Godot 4.5.0 and export
 
 **Live Demo**: https://fahmed93.github.io/idlescapers
 
+## Build & Test Commands
+
+### Local Development
+```bash
+# Run the project (requires Godot 4.5+ installed)
+godot --path . scenes/startup.tscn
+
+# Run tests
+./run_tests.sh
+
+# Run individual test
+godot --headless --path . test/test_<name>.tscn
+
+# Import project assets
+godot --headless --import --quit
+```
+
+### CI/CD Build
+```bash
+# Export HTML5 build (used by GitHub Actions)
+godot --headless --export-release "Web" build/web/index.html
+```
+
+The project uses GitHub Actions for:
+- **PR validation** (`.github/workflows/pr-build.yml`) - Builds on every PR
+- **Auto-deployment** (`.github/workflows/deploy.yml`) - Deploys to GitHub Pages on push to `main`
+
+## Security Best Practices
+
+### Critical Security Rules
+1. **Never commit secrets** - No API keys, credentials, or tokens in code
+2. **Sanitize user input** - Always validate and sanitize data before processing
+3. **Save file integrity** - Validate JSON structure when loading save files
+4. **XSS prevention** - Be cautious with dynamic UI text (though Godot's Label nodes are inherently safe)
+
+### What to Review Carefully
+- Save/load operations in `SaveManager`
+- User input handling in UI scripts
+- Any new autoload that handles external data
+- Item/skill ID validation to prevent injection attacks
+
+### What's Safe to Change
+- UI positioning and styling
+- XP formulas and game balance
+- Adding new skills/items following existing patterns
+- Documentation updates
+
+## Issue & PR Workflow
+
+### Approaching Tasks
+1. **Understand first** - Read the issue thoroughly, check related docs in `docs/`
+2. **Minimal changes** - Make the smallest possible change to fix the issue
+3. **Follow patterns** - Use existing code patterns (see Key Patterns section)
+4. **Test locally** - Run `./run_tests.sh` before committing
+5. **Update docs** - Add implementation docs to `docs/` for new features
+
+### PR Best Practices
+- Keep PRs focused on a single issue/feature
+- Run tests before pushing
+- Don't modify unrelated files
+- Document breaking changes
+- Update `docs/TODO.md` when completing planned features
+
+### Code Review Expectations
+- Changes should follow existing conventions
+- Type hints are required on all new code
+- Signals should be used for cross-component communication
+- No direct autoload modifications from scenes (use signals instead)
+
+## Development Workflow
+
+### Making Changes
+1. **Explore first** - Use `view` to understand related code
+2. **Test changes** - Run relevant test scenes
+3. **Verify in editor** - Open changed scenes in Godot to check visuals
+4. **Document** - Add `.md` files in `docs/` for new features
+5. **Commit** - Use descriptive commit messages
+
+### Debugging
+- Check console output with `print()` statements
+- Use `assert()` for validation in tests
+- Test with `godot --headless` for CI simulation
+- Check `user://` directory for save files during testing
+
+### Common Pitfalls
+- Forgetting to preload resources before using them
+- Not waiting for autoloads in `_ready()` (use `await get_tree().process_frame`)
+- Modifying `.gd.uid` files (these are auto-generated)
+- Putting docs in root instead of `docs/`
+- Not using type hints on new code
+
 ## Documentation Standards
 **All generated `.md` files go in `docs/`** — keep the project root clean.
 
@@ -170,3 +262,23 @@ docs/
 ├── <FEATURE>_IMPLEMENTATION.md  # Feature details
 └── <CONCEPT>.md                 # Architectural concepts
 ```
+
+## Tools & Ecosystem
+
+### Godot-Specific Tools
+- **Godot CLI** - Headless mode for testing and building
+- **GDScript** - Python-like scripting language (statically typed with hints)
+- **Scene system** - `.tscn` files for UI and game objects
+- **Resource system** - `.tres` and custom resources for data
+
+### File Types
+- `.gd` - GDScript source files
+- `.gd.uid` - Auto-generated unique IDs (don't modify)
+- `.tscn` - Scene files (can be text-edited but prefer Godot editor)
+- `.tres` - Resource files
+- `.import` - Asset import metadata (auto-generated)
+
+### No Additional Build Tools
+- No npm, pip, or other package managers needed
+- No linters beyond Godot's built-in parser
+- No external dependencies to manage
