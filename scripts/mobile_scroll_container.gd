@@ -7,11 +7,13 @@ extends ScrollContainer
 var _drag_start_pos: Vector2 = Vector2.ZERO
 var _is_scrolling: bool = false
 var _scroll_start_v: int = 0
-var _is_touch_in_bounds: bool = false
+var _scroll_start_h: int = 0
+var _is_dragging: bool = false
+var _last_drag_pos: Vector2 = Vector2.ZERO
 
 ## Pixels to move before we consider it scrolling (vs a tap/click)
 ## Lower values make scrolling more sensitive, higher values make buttons easier to click
-@export var scroll_threshold: float = 5.0
+@export var scroll_threshold: float = 10.0
 
 func _ready() -> void:
 	# Disable follow_focus for predictable mobile behavior
@@ -19,63 +21,73 @@ func _ready() -> void:
 	# Enable mouse filter to ensure we can process events
 	mouse_filter = Control.MOUSE_FILTER_STOP
 
-func _input(event: InputEvent) -> void:
+## Helper to start drag/press
+func _start_drag(position: Vector2) -> void:
+	_is_dragging = true
+	_is_scrolling = false
+	_drag_start_pos = position
+	_last_drag_pos = position
+	_scroll_start_v = scroll_vertical
+	_scroll_start_h = scroll_horizontal
+
+## Helper to end drag/press
+func _end_drag() -> void:
+	_is_dragging = false
+	_is_scrolling = false
+
+func _gui_input(event: InputEvent) -> void:
 	# Handle touch press/release
 	if event is InputEventScreenTouch:
-		var global_pos := event.position
-		var local_pos := make_canvas_position_local(global_pos)
-		var is_in_bounds := Rect2(Vector2.ZERO, size).has_point(local_pos)
-		
-		if event.pressed and is_in_bounds:
-			_is_touch_in_bounds = true
-			_drag_start_pos = local_pos
-			_scroll_start_v = scroll_vertical
-			_is_scrolling = false
-		elif not event.pressed:
-			_is_touch_in_bounds = false
-			_is_scrolling = false
+		if event.pressed:
+			_start_drag(event.position)
+		else:
+			_end_drag()
 	
-	# Also handle mouse for editor testing
+	# Handle mouse button for editor testing
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		var local_pos := get_local_mouse_position()
-		var is_in_bounds := Rect2(Vector2.ZERO, size).has_point(local_pos)
-		
-		if event.pressed and is_in_bounds:
-			_is_touch_in_bounds = true
-			_drag_start_pos = local_pos
-			_scroll_start_v = scroll_vertical
-			_is_scrolling = false
-		elif not event.pressed:
-			_is_touch_in_bounds = false
-			_is_scrolling = false
+		if event.pressed:
+			_start_drag(event.position)
+		else:
+			_end_drag()
 	
-	# Handle touch/mouse drag for scrolling (only if touch started in bounds)
-	elif _is_touch_in_bounds:
+	# Handle touch/mouse drag for scrolling
+	elif _is_dragging:
+		# Get current position based on event type
 		var current_pos: Vector2
-		var is_drag := false
-		
 		if event is InputEventScreenDrag:
-			var global_pos := event.position
-			current_pos = make_canvas_position_local(global_pos)
-			is_drag = true
+			current_pos = event.position
 		elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			current_pos = get_local_mouse_position()
-			is_drag = true
+			current_pos = event.position
+		else:
+			return  # Not a drag event we handle
 		
-		if is_drag:
-			var drag_distance := _drag_start_pos.distance_to(current_pos)
-			
-			# If we've moved past the threshold, start scrolling
-			if drag_distance > scroll_threshold or _is_scrolling:
+		# Process the drag
+		var drag_distance := _drag_start_pos.distance_to(current_pos)
+		
+		# If we've moved past the threshold, start scrolling
+		if drag_distance > scroll_threshold or _is_scrolling:
+			if not _is_scrolling:
 				_is_scrolling = true
-				
-				# Calculate new scroll position
-				var delta_y := current_pos.y - _drag_start_pos.y
-				var new_scroll := _scroll_start_v - int(delta_y)
-				
-				# Clamp to valid scroll range
+				# Accept the event to start scrolling mode
+				accept_event()
+			
+			# Calculate delta from last position for smooth incremental scrolling
+			var delta := current_pos - _last_drag_pos
+			_last_drag_pos = current_pos
+			
+			# Update vertical scroll if enabled
+			if vertical_scroll_mode != ScrollContainer.SCROLL_MODE_DISABLED:
 				var v_scrollbar := get_v_scroll_bar()
-				scroll_vertical = clampi(new_scroll, int(v_scrollbar.min_value), int(v_scrollbar.max_value))
-				
-				# Consume the event to prevent buttons from processing it
-				get_viewport().set_input_as_handled()
+				if v_scrollbar:
+					var new_scroll_v := scroll_vertical - int(delta.y)
+					scroll_vertical = clampi(new_scroll_v, int(v_scrollbar.min_value), int(v_scrollbar.max_value))
+			
+			# Update horizontal scroll if enabled
+			if horizontal_scroll_mode != ScrollContainer.SCROLL_MODE_DISABLED:
+				var h_scrollbar := get_h_scroll_bar()
+				if h_scrollbar:
+					var new_scroll_h := scroll_horizontal - int(delta.x)
+					scroll_horizontal = clampi(new_scroll_h, int(h_scrollbar.min_value), int(h_scrollbar.max_value))
+			
+			# Consume the event to prevent buttons from processing it
+			accept_event()
