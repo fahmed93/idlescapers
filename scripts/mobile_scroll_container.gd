@@ -10,6 +10,7 @@ var _scroll_start_v: int = 0
 var _scroll_start_h: int = 0
 var _is_dragging: bool = false
 var _last_drag_pos: Vector2 = Vector2.ZERO
+var _is_touch_in_bounds: bool = false
 
 ## Pixels to move before we consider it scrolling (vs a tap/click)
 ## Lower values make scrolling more sensitive, higher values make buttons easier to click
@@ -34,32 +35,59 @@ func _start_drag(position: Vector2) -> void:
 func _end_drag() -> void:
 	_is_dragging = false
 	_is_scrolling = false
+	_is_touch_in_bounds = false
 
-func _gui_input(event: InputEvent) -> void:
-	# Handle touch press/release
+## Check if a global position is within this control's bounds
+func _is_position_in_bounds(global_pos: Vector2) -> bool:
+	var local_pos := global_pos - global_position
+	var rect := Rect2(Vector2.ZERO, size)
+	return rect.has_point(local_pos)
+
+## Use _input to catch events BEFORE child controls (like buttons) consume them
+## This is key to making scroll work even when starting a drag on a button
+func _input(event: InputEvent) -> void:
+	# Handle touch press
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			_start_drag(event.position)
+			# Check if touch is within our bounds
+			if _is_position_in_bounds(event.position):
+				_is_touch_in_bounds = true
+				var local_pos := event.position - global_position
+				_start_drag(local_pos)
 		else:
-			_end_drag()
+			# Touch released
+			if _is_touch_in_bounds:
+				_end_drag()
 	
 	# Handle mouse button for editor testing
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			_start_drag(event.position)
+			if _is_position_in_bounds(event.position):
+				_is_touch_in_bounds = true
+				var local_pos := event.position - global_position
+				_start_drag(local_pos)
 		else:
-			_end_drag()
+			if _is_touch_in_bounds:
+				_end_drag()
 	
 	# Handle touch/mouse drag for scrolling
-	elif _is_dragging:
+	elif _is_dragging and _is_touch_in_bounds:
+		var global_pos: Vector2
+		var has_valid_event := false
+		
 		# Get current position based on event type
-		var current_pos: Vector2
 		if event is InputEventScreenDrag:
-			current_pos = event.position
+			global_pos = event.position
+			has_valid_event = true
 		elif event is InputEventMouseMotion and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-			current_pos = event.position
-		else:
-			return  # Not a drag event we handle
+			global_pos = event.position
+			has_valid_event = true
+		
+		if not has_valid_event:
+			return
+		
+		# Convert to local coordinates
+		var current_pos := global_pos - global_position
 		
 		# Process the drag
 		var drag_distance := _drag_start_pos.distance_to(current_pos)
@@ -68,8 +96,8 @@ func _gui_input(event: InputEvent) -> void:
 		if drag_distance > scroll_threshold or _is_scrolling:
 			if not _is_scrolling:
 				_is_scrolling = true
-				# Accept the event to start scrolling mode
-				accept_event()
+				# Mark event as handled in the viewport to prevent buttons from getting click events
+				get_viewport().set_input_as_handled()
 			
 			# Calculate delta from last position for smooth incremental scrolling
 			var delta := current_pos - _last_drag_pos
@@ -89,5 +117,5 @@ func _gui_input(event: InputEvent) -> void:
 					var new_scroll_h := scroll_horizontal - int(delta.x)
 					scroll_horizontal = clampi(new_scroll_h, int(h_scrollbar.min_value), int(h_scrollbar.max_value))
 			
-			# Consume the event to prevent buttons from processing it
-			accept_event()
+			# Mark event as handled to prevent buttons from processing it
+			get_viewport().set_input_as_handled()
