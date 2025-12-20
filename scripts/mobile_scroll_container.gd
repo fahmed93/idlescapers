@@ -37,18 +37,9 @@ func _end_drag() -> void:
 	_is_scrolling = false
 	_is_touch_in_bounds = false
 
-## Handle touch/mouse release
-## If we didn't scroll (below threshold), find and trigger the button under the release point
+## Handle touch/mouse release and clean up drag state
 func _handle_release(global_pos: Vector2) -> void:
-	var was_scrolling := _is_scrolling
 	_end_drag()
-	
-	# If we didn't actually scroll, trigger a button click
-	if not was_scrolling:
-		# Find the button under the release point (using global position)
-		var button := _find_button_at_position(global_pos)
-		if button:
-			button.pressed.emit()
 
 ## Find a button at the given global position within this ScrollContainer
 func _find_button_at_position(global_pos: Vector2) -> Button:
@@ -76,6 +67,27 @@ func _find_button_recursive(node: Node, global_pos: Vector2) -> Button:
 	
 	return null
 
+## Cancel any button press at the given position
+## Called when we start scrolling to ensure buttons don't trigger
+func _cancel_button_press(global_pos: Vector2) -> void:
+	var button := _find_button_at_position(global_pos)
+	if button:
+		# Reset pressed state to cancel any ongoing button interaction
+		# This works for both regular buttons and toggle buttons
+		button.set_pressed_no_signal(false)
+
+## Handle press event (touch or mouse)
+## Returns true if the press was within bounds and drag tracking started
+func _handle_press(global_pos: Vector2) -> bool:
+	if _is_position_in_bounds(global_pos):
+		_is_touch_in_bounds = true
+		var local_pos := global_pos - global_position
+		_start_drag(local_pos)
+		# Don't mark as handled yet - allow buttons to receive the press
+		# We'll mark it as handled only if dragging exceeds threshold
+		return true
+	return false
+
 ## Check if a global position is within this control's bounds
 func _is_position_in_bounds(global_pos: Vector2) -> bool:
 	var local_pos := global_pos - global_position
@@ -88,13 +100,7 @@ func _input(event: InputEvent) -> void:
 	# Handle touch press
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			# Check if touch is within our bounds
-			if _is_position_in_bounds(event.position):
-				_is_touch_in_bounds = true
-				var local_pos := event.position - global_position
-				_start_drag(local_pos)
-				# Mark event as handled immediately to prevent buttons from capturing input
-				get_viewport().set_input_as_handled()
+			_handle_press(event.position)
 		else:
 			# Touch released
 			if _is_touch_in_bounds:
@@ -103,12 +109,7 @@ func _input(event: InputEvent) -> void:
 	# Handle mouse button for editor testing
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
-			if _is_position_in_bounds(event.position):
-				_is_touch_in_bounds = true
-				var local_pos := event.position - global_position
-				_start_drag(local_pos)
-				# Mark event as handled immediately to prevent buttons from capturing input
-				get_viewport().set_input_as_handled()
+			_handle_press(event.position)
 		else:
 			if _is_touch_in_bounds:
 				_handle_release(event.position)
@@ -139,6 +140,9 @@ func _input(event: InputEvent) -> void:
 		if drag_distance > scroll_threshold or _is_scrolling:
 			if not _is_scrolling:
 				_is_scrolling = true
+				# Cancel any buttons that might be in pressed state
+				# since we're now scrolling instead of clicking
+				_cancel_button_press(global_pos)
 			
 			# Calculate delta from last position for smooth incremental scrolling
 			var delta := current_pos - _last_drag_pos
