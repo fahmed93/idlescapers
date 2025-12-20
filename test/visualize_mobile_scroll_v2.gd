@@ -89,10 +89,4 @@ func _on_scroll_input(event: InputEvent) -> void:
 		status_label.text = "Dragging... (scroll: %d)" % test_scroll.scroll_vertical
 		status_label.add_theme_color_override("font_color", Color.BLUE)
 
-func _process(_delta: float) -> void:
-	# Display current scroll position
-	if test_scroll and test_scroll.get_v_scroll_bar():
-		var scrollbar := test_scroll.get_v_scroll_bar()
-		var scroll_percent := 0.0
-		if scrollbar.max_value > 0:
-			scroll_percent = (test_scroll.scroll_vertical / scrollbar.max_value) * 100.0
+
