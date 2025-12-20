@@ -37,6 +37,50 @@ func _end_drag() -> void:
 	_is_scrolling = false
 	_is_touch_in_bounds = false
 
+## Handle touch/mouse release
+## If we didn't scroll (below threshold), find and trigger the button under the release point
+func _handle_release(global_pos: Vector2) -> void:
+	var was_scrolling := _is_scrolling
+	_end_drag()
+	
+	# If we didn't actually scroll, trigger a button click
+	if not was_scrolling:
+		# Find the button under the release point
+		var local_pos := global_pos - global_position
+		var button := _find_button_at_position(local_pos)
+		if button:
+			button.emit_signal("pressed")
+
+## Find a button at the given local position within this ScrollContainer
+func _find_button_at_position(local_pos: Vector2) -> Button:
+	# Adjust position to account for scroll offset
+	var scroll_offset := Vector2(scroll_horizontal, scroll_vertical)
+	var adjusted_pos := local_pos + scroll_offset
+	
+	# Recursively search for buttons in child nodes
+	return _find_button_recursive(get_child(0), adjusted_pos) if get_child_count() > 0 else null
+
+## Recursively search for a button at the given position
+func _find_button_recursive(node: Node, pos: Vector2) -> Button:
+	if node is Button:
+		var button := node as Button
+		# Check if position is within button's bounds
+		var button_rect := Rect2(button.position, button.size)
+		if button_rect.has_point(pos):
+			return button
+	
+	# Recursively search children
+	for child in node.get_children():
+		if child is Control:
+			var control := child as Control
+			# Adjust position relative to child's position
+			var child_pos := pos - control.position
+			var found := _find_button_recursive(child, child_pos)
+			if found:
+				return found
+	
+	return null
+
 ## Check if a global position is within this control's bounds
 func _is_position_in_bounds(global_pos: Vector2) -> bool:
 	var local_pos := global_pos - global_position
@@ -54,10 +98,12 @@ func _input(event: InputEvent) -> void:
 				_is_touch_in_bounds = true
 				var local_pos := event.position - global_position
 				_start_drag(local_pos)
+				# Mark event as handled immediately to prevent buttons from capturing input
+				get_viewport().set_input_as_handled()
 		else:
 			# Touch released
 			if _is_touch_in_bounds:
-				_end_drag()
+				_handle_release(event.position)
 	
 	# Handle mouse button for editor testing
 	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -66,9 +112,11 @@ func _input(event: InputEvent) -> void:
 				_is_touch_in_bounds = true
 				var local_pos := event.position - global_position
 				_start_drag(local_pos)
+				# Mark event as handled immediately to prevent buttons from capturing input
+				get_viewport().set_input_as_handled()
 		else:
 			if _is_touch_in_bounds:
-				_end_drag()
+				_handle_release(event.position)
 	
 	# Handle touch/mouse drag for scrolling
 	elif _is_dragging and _is_touch_in_bounds:
