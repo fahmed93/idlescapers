@@ -3,6 +3,7 @@
 extends Control
 
 const MAIN_SCENE := "res://scenes/main.tscn"
+const LOGIN_SCENE := "res://scenes/login.tscn"
 const MAX_CHARACTERS := 3
 
 @onready var character_slots_container: VBoxContainer = $CenterContainer/MainPanel/VBoxContainer/CharacterSlots
@@ -23,6 +24,14 @@ func _format_timestamp(timestamp: int) -> String:
 	return Time.get_datetime_string_from_unix_time(timestamp)
 
 func _ready() -> void:
+	# Check if user is logged in
+	if not AccountManager.is_logged_in():
+		print("[Startup] No user logged in, redirecting to login screen.")
+		get_tree().change_scene_to_file(LOGIN_SCENE)
+		return
+	
+	print("[Startup] User logged in: %s" % AccountManager.current_username)
+	
 	# Setup dialogs
 	create_dialog.visible = false
 	delete_dialog.visible = false
@@ -45,6 +54,9 @@ func _populate_character_slots() -> void:
 		child.queue_free()
 	slot_buttons.clear()
 	
+	# Get character slots for current account
+	var account_slots: Array = AccountManager.get_character_slots()
+	
 	# Create buttons for each slot
 	for slot in range(MAX_CHARACTERS):
 		var slot_panel := PanelContainer.new()
@@ -59,7 +71,9 @@ func _populate_character_slots() -> void:
 		hbox.add_child(info_vbox)
 		
 		var character_data := CharacterManager.get_character(slot)
+		var is_account_slot: bool = account_slots.has(slot)
 		
+		# Only show character if it belongs to the current account or slot is empty
 		if character_data.is_empty():
 			# Empty slot
 			var empty_label := Label.new()
@@ -74,8 +88,8 @@ func _populate_character_slots() -> void:
 			create_btn.custom_minimum_size = Vector2(100, 80)
 			create_btn.pressed.connect(_on_create_character_pressed.bind(slot))
 			hbox.add_child(create_btn)
-		else:
-			# Occupied slot
+		elif is_account_slot:
+			# Occupied slot belonging to current account
 			var name_label := Label.new()
 			name_label.text = character_data.get("name", "Unknown")
 			name_label.add_theme_font_size_override("font_size", 20)
@@ -122,6 +136,13 @@ func _populate_character_slots() -> void:
 			delete_btn.add_theme_color_override("font_color", Color(0.8, 0.3, 0.3))
 			delete_btn.pressed.connect(_on_delete_character_pressed.bind(slot))
 			buttons_vbox.add_child(delete_btn)
+		else:
+			# Slot occupied by another account - show as unavailable
+			var unavailable_label := Label.new()
+			unavailable_label.text = "Slot %d - Occupied by another user" % (slot + 1)
+			unavailable_label.add_theme_font_size_override("font_size", 16)
+			unavailable_label.add_theme_color_override("font_color", Color(0.7, 0.4, 0.4))
+			info_vbox.add_child(unavailable_label)
 		
 		character_slots_container.add_child(slot_panel)
 
@@ -144,6 +165,8 @@ func _on_create_confirmed() -> void:
 		return
 	
 	if CharacterManager.create_character(selected_slot, character_name):
+		# Link character slot to current account
+		AccountManager.add_character_slot(selected_slot)
 		create_dialog.visible = false
 		_populate_character_slots()
 
@@ -169,6 +192,8 @@ func _on_delete_character_pressed(slot: int) -> void:
 func _on_delete_confirmed() -> void:
 	if selected_slot >= 0:
 		CharacterManager.delete_character(selected_slot)
+		# Remove character slot from current account
+		AccountManager.remove_character_slot(selected_slot)
 		_populate_character_slots()
 		selected_slot = -1
 
