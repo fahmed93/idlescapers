@@ -79,7 +79,7 @@ func _populate_character_slots() -> void:
 		var character_data := CharacterManager.get_character(slot)
 		var is_account_slot: bool = account_slots.has(slot)
 		
-		# Only show character if it belongs to the current account or slot is empty
+		# Show character if it belongs to current account, or show empty slot if not occupied
 		if character_data.is_empty():
 			# Empty slot
 			var empty_label := Label.new()

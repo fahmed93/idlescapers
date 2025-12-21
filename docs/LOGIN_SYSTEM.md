@@ -85,9 +85,10 @@ Each account contains:
 ## Security Features
 
 ### Password Hashing
-- Passwords are hashed using SHA-256 before storage
+- Passwords are hashed using SHA-256 with a salt before storage
 - Plain-text passwords are never stored on disk
 - Hash comparison is used for authentication
+- Salt is application-wide (in production, per-user salts would be better)
 
 ### Character Isolation
 - Characters are linked to accounts via slot ownership
@@ -196,9 +197,8 @@ Potential improvements:
 - Remember me functionality
 
 ## Limitations
-- Password strength is basic (length only, no complexity requirements)
+- Password hashing uses a simple application-wide salt (per-user salts would be more secure)
 - No account recovery mechanism
-- Password stored as SHA-256 hash (not salted)
 - No protection against brute force attempts
 - All data is local (no cloud backup)
 

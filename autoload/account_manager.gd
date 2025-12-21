@@ -20,8 +20,15 @@ var accounts: Dictionary = {}  # username: account_data
 ## Currently logged in username (empty string means no one is logged in)
 var current_username: String = ""
 
+## Simple salt for password hashing (in a real production app, use per-user salts)
+const PASSWORD_SALT := "idlescapers_2024_salt"
+
 func _ready() -> void:
 	load_accounts()
+
+## Hash a password with salt for storage
+func _hash_password(password: String) -> String:
+	return (password + PASSWORD_SALT).sha256_text()
 
 ## Load accounts from file
 func load_accounts() -> void:
@@ -80,7 +87,7 @@ func create_account(username: String, password: String) -> bool:
 		return false
 	
 	var now := int(Time.get_unix_time_from_system())
-	var password_hash := password.sha256_text()  # Basic hashing for security
+	var password_hash := _hash_password(password)
 	
 	var account_data := {
 		"username": clean_username,
@@ -104,7 +111,7 @@ func login(username: String, password: String) -> bool:
 		return false
 	
 	var account_data: Dictionary = accounts[clean_username]
-	var password_hash := password.sha256_text()
+	var password_hash := _hash_password(password)
 	
 	if account_data["password_hash"] != password_hash:
 		print("[AccountManager] Invalid password for: %s" % clean_username)

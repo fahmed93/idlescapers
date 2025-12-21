@@ -106,6 +106,9 @@ func _on_create_pressed() -> void:
 		# Account created successfully, now login automatically
 		if AccountManager.login(username, password):
 			get_tree().change_scene_to_file(STARTUP_SCENE)
+		else:
+			# This should not happen, but handle it just in case
+			create_error.text = "Account created but login failed. Please try logging in manually."
 	else:
 		create_error.text = "Username already exists"
 
