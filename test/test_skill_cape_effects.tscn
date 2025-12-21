@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3k4l5m6n7o8p9q0"]
-
-[ext_resource type="Script" path="res://test/test_skill_cape_effects.gd" id="1"]
-
-[node name="TestSkillCapeEffects" type="Node"]
-script = ExtResource("1")

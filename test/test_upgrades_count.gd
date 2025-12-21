@@ -35,9 +35,7 @@ func _ready() -> void:
 		for upgrade in upgrades:
 			assert(upgrade.skill_id == skill_id, "Upgrade %s should be for skill %s" % [upgrade.id, skill_id])
 			assert(upgrade.cost > 0, "Upgrade %s should have positive cost" % upgrade.id)
-			# Skill capes have 0 speed modifier but provide other effects
-			if not upgrade.is_skill_cape:
-				assert(upgrade.speed_modifier > 0, "Upgrade %s should have positive speed modifier" % upgrade.id)
+			assert(upgrade.speed_modifier > 0, "Upgrade %s should have positive speed modifier" % upgrade.id)
 			assert(upgrade.level_required >= 1, "Upgrade %s should have valid level requirement" % upgrade.id)
 	
 	print("-" * 50)

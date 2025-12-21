@@ -195,38 +195,6 @@ func _load_upgrades() -> void:
 		"A versatile bench that makes crafting 55% faster.", 71, 15500, 0.55)
 	_add_upgrade("artificers_toolkit", "Artificer's Toolkit", "crafting",
 		"Magical tools that make crafting 75% faster.", 93, 38000, 0.75)
-	
-	# === SKILL CAPES (Level 99) ===
-	_add_skill_cape("fishing_cape", "Fishing Skillcape", "fishing",
-		"Mastery of fishing grants 5% chance to catch double fish.", 99, 99000, "double_fish")
-	_add_skill_cape("cooking_cape", "Cooking Skillcape", "cooking",
-		"Mastery of cooking grants 100% success rate - never burn food again!", 99, 99000, "perfect_cooking")
-	_add_skill_cape("woodcutting_cape", "Woodcutting Skillcape", "woodcutting",
-		"Mastery of woodcutting grants 5% chance to get double logs.", 99, 99000, "double_logs")
-	_add_skill_cape("fletching_cape", "Fletching Skillcape", "fletching",
-		"Mastery of fletching grants 10% chance to save materials.", 99, 99000, "save_fletching_materials")
-	_add_skill_cape("mining_cape", "Mining Skillcape", "mining",
-		"Mastery of mining grants double chance for bonus gem drops.", 99, 99000, "double_gem_chance")
-	_add_skill_cape("firemaking_cape", "Firemaking Skillcape", "firemaking",
-		"Mastery of firemaking grants double XP from all fires.", 99, 99000, "double_firemaking_xp")
-	_add_skill_cape("smithing_cape", "Smithing Skillcape", "smithing",
-		"Mastery of smithing grants 100% success rate for iron smelting.", 99, 99000, "perfect_iron_smelting")
-	_add_skill_cape("herblore_cape", "Herblore Skillcape", "herblore",
-		"Mastery of herblore grants 10% chance to save ingredients.", 99, 99000, "save_herblore_ingredients")
-	_add_skill_cape("thieving_cape", "Thieving Skillcape", "thieving",
-		"Mastery of thieving grants 10% extra coins from pickpocketing.", 99, 99000, "extra_thieving_gold")
-	_add_skill_cape("agility_cape", "Agility Skillcape", "agility",
-		"Mastery of agility grants 5% extra XP from courses.", 99, 99000, "extra_agility_xp")
-	_add_skill_cape("astrology_cape", "Astrology Skillcape", "astrology",
-		"Mastery of astrology grants 5% extra XP from celestial studies.", 99, 99000, "extra_astrology_xp")
-	_add_skill_cape("jewelcrafting_cape", "Jewelcrafting Skillcape", "jewelcrafting",
-		"Mastery of jewelcrafting grants 5% chance to save gems.", 99, 99000, "save_gems")
-	_add_skill_cape("skinning_cape", "Skinning Skillcape", "skinning",
-		"Mastery of skinning grants 5% chance to get double hides.", 99, 99000, "double_hides")
-	_add_skill_cape("foraging_cape", "Foraging Skillcape", "foraging",
-		"Mastery of foraging grants 5% chance to get double materials.", 99, 99000, "double_foraging")
-	_add_skill_cape("crafting_cape", "Crafting Skillcape", "crafting",
-		"Mastery of crafting grants 10% chance to save hides.", 99, 99000, "save_crafting_hides")
 
 ## Helper to add upgrade definition
 func _add_upgrade(id: String, display_name: String, skill_id: String, 
@@ -239,22 +207,6 @@ func _add_upgrade(id: String, display_name: String, skill_id: String,
 	upgrade.level_required = level_req
 	upgrade.cost = cost
 	upgrade.speed_modifier = speed_mod
-	upgrade.is_skill_cape = false
-	upgrades[id] = upgrade
-
-## Helper to add skill cape definition
-func _add_skill_cape(id: String, display_name: String, skill_id: String,
-	desc: String, level_req: int, cost: int, effect_id: String) -> void:
-	var upgrade := UpgradeData.new()
-	upgrade.id = id
-	upgrade.name = display_name
-	upgrade.skill_id = skill_id
-	upgrade.description = desc
-	upgrade.level_required = level_req
-	upgrade.cost = cost
-	upgrade.speed_modifier = 0.0  # Skill capes don't provide speed bonuses
-	upgrade.is_skill_cape = true
-	upgrade.cape_effect_id = effect_id
 	upgrades[id] = upgrade
 
 ## Get all upgrades for a specific skill
@@ -320,30 +272,3 @@ func get_purchased_upgrades() -> Array[String]:
 func clear_purchased() -> void:
 	purchased_upgrades.clear()
 	upgrades_updated.emit()
-
-## Check if a skill cape is owned for a specific skill
-func has_skill_cape(skill_id: String) -> bool:
-	for upgrade_id in purchased_upgrades:
-		if upgrades.has(upgrade_id):
-			var upgrade: UpgradeData = upgrades[upgrade_id]
-			if upgrade.is_skill_cape and upgrade.skill_id == skill_id:
-				return true
-	return false
-
-## Get cape effect ID for a skill if the cape is owned
-func get_cape_effect(skill_id: String) -> String:
-	for upgrade_id in purchased_upgrades:
-		if upgrades.has(upgrade_id):
-			var upgrade: UpgradeData = upgrades[upgrade_id]
-			if upgrade.is_skill_cape and upgrade.skill_id == skill_id:
-				return upgrade.cape_effect_id
-	return ""
-
-## Check if a specific cape effect is active
-func has_cape_effect(effect_id: String) -> bool:
-	for upgrade_id in purchased_upgrades:
-		if upgrades.has(upgrade_id):
-			var upgrade: UpgradeData = upgrades[upgrade_id]
-			if upgrade.is_skill_cape and upgrade.cape_effect_id == effect_id:
-				return true
-	return false
