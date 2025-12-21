@@ -441,6 +441,8 @@ func _populate_smithing_action_list(skill: SkillData, player_level: int, speed_m
 				if i < skill.training_methods.size():
 					var method: TrainingMethodData = skill.training_methods[i]
 					_create_action_panel(method, player_level, speed_modifier)
+				else:
+					push_warning("Smithing section '%s' has index %d out of bounds (total methods: %d)" % [section_name, i, skill.training_methods.size()])
 
 ## Handle smithing section toggle
 func _on_smithing_section_toggled(section_name: String) -> void:
