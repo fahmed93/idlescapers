@@ -7,7 +7,6 @@ extends Resource
 @export var name: String = ""
 @export var description: String = ""
 @export var icon: Texture2D
-@export var category: String = ""  # Optional category for grouping methods (e.g., "Bronze", "Iron", "Bars")
 @export var level_required: int = 1
 @export var xp_per_action: float = 10.0
 @export var action_time: float = 3.0  # Time in seconds per action
