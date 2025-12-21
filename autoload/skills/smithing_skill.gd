@@ -11,6 +11,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_bar.id = "bronze_bar"
 	bronze_bar.name = "Bronze Bar"
 	bronze_bar.description = "Smelt copper and tin into a bronze bar."
+	bronze_bar.category = "Bars"
 	bronze_bar.level_required = 1
 	bronze_bar.xp_per_action = 6.25
 	bronze_bar.action_time = 2.0
@@ -23,6 +24,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_bar.id = "iron_bar"
 	iron_bar.name = "Iron Bar"
 	iron_bar.description = "Smelt iron ore into an iron bar."
+	iron_bar.category = "Bars"
 	iron_bar.level_required = 15
 	iron_bar.xp_per_action = 12.5
 	iron_bar.action_time = 3.0
@@ -36,6 +38,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	silver_bar.id = "silver_bar"
 	silver_bar.name = "Silver Bar"
 	silver_bar.description = "Smelt silver ore into a silver bar."
+	silver_bar.category = "Bars"
 	silver_bar.level_required = 20
 	silver_bar.xp_per_action = 13.75
 	silver_bar.action_time = 3.0
@@ -48,6 +51,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_bar.id = "steel_bar"
 	steel_bar.name = "Steel Bar"
 	steel_bar.description = "Smelt iron and coal into a steel bar."
+	steel_bar.category = "Bars"
 	steel_bar.level_required = 30
 	steel_bar.xp_per_action = 17.5
 	steel_bar.action_time = 4.0
@@ -60,6 +64,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	gold_bar.id = "gold_bar"
 	gold_bar.name = "Gold Bar"
 	gold_bar.description = "Smelt gold ore into a gold bar."
+	gold_bar.category = "Bars"
 	gold_bar.level_required = 40
 	gold_bar.xp_per_action = 22.5
 	gold_bar.action_time = 3.0
@@ -72,6 +77,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_bar.id = "mithril_bar"
 	mithril_bar.name = "Mithril Bar"
 	mithril_bar.description = "Smelt mithril ore and coal into a mithril bar."
+	mithril_bar.category = "Bars"
 	mithril_bar.level_required = 50
 	mithril_bar.xp_per_action = 30.0
 	mithril_bar.action_time = 5.0
@@ -84,6 +90,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_bar.id = "adamantite_bar"
 	adamantite_bar.name = "Adamantite Bar"
 	adamantite_bar.description = "Smelt adamantite ore and coal into an adamantite bar."
+	adamantite_bar.category = "Bars"
 	adamantite_bar.level_required = 70
 	adamantite_bar.xp_per_action = 37.5
 	adamantite_bar.action_time = 6.0
@@ -96,6 +103,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_bar.id = "runite_bar"
 	runite_bar.name = "Runite Bar"
 	runite_bar.description = "Smelt runite ore and coal into a runite bar."
+	runite_bar.category = "Bars"
 	runite_bar.level_required = 85
 	runite_bar.xp_per_action = 50.0
 	runite_bar.action_time = 7.0
@@ -111,6 +119,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_arrowheads.id = "bronze_arrowheads"
 	bronze_arrowheads.name = "Bronze Arrowheads"
 	bronze_arrowheads.description = "Smith bronze arrowheads from a bronze bar."
+	bronze_arrowheads.category = "Bronze"
 	bronze_arrowheads.level_required = 1
 	bronze_arrowheads.xp_per_action = 12.5
 	bronze_arrowheads.action_time = 2.0
@@ -123,6 +132,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_dagger.id = "bronze_dagger"
 	bronze_dagger.name = "Bronze Dagger"
 	bronze_dagger.description = "Smith a bronze dagger."
+	bronze_dagger.category = "Bronze"
 	bronze_dagger.level_required = 1
 	bronze_dagger.xp_per_action = 12.5
 	bronze_dagger.action_time = 2.5
@@ -135,6 +145,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_full_helm.id = "bronze_full_helm"
 	bronze_full_helm.name = "Bronze Full Helm"
 	bronze_full_helm.description = "Smith a bronze full helmet."
+	bronze_full_helm.category = "Bronze"
 	bronze_full_helm.level_required = 3
 	bronze_full_helm.xp_per_action = 25.0
 	bronze_full_helm.action_time = 3.0
@@ -147,6 +158,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_sword.id = "bronze_sword"
 	bronze_sword.name = "Bronze Sword"
 	bronze_sword.description = "Smith a bronze sword."
+	bronze_sword.category = "Bronze"
 	bronze_sword.level_required = 4
 	bronze_sword.xp_per_action = 12.5
 	bronze_sword.action_time = 2.5
@@ -159,6 +171,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_scimitar.id = "bronze_scimitar"
 	bronze_scimitar.name = "Bronze Scimitar"
 	bronze_scimitar.description = "Smith a bronze scimitar."
+	bronze_scimitar.category = "Bronze"
 	bronze_scimitar.level_required = 5
 	bronze_scimitar.xp_per_action = 25.0
 	bronze_scimitar.action_time = 3.0
@@ -171,6 +184,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_platelegs.id = "bronze_platelegs"
 	bronze_platelegs.name = "Bronze Platelegs"
 	bronze_platelegs.description = "Smith bronze platelegs."
+	bronze_platelegs.category = "Bronze"
 	bronze_platelegs.level_required = 16
 	bronze_platelegs.xp_per_action = 37.5
 	bronze_platelegs.action_time = 4.0
@@ -183,6 +197,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	bronze_platebody.id = "bronze_platebody"
 	bronze_platebody.name = "Bronze Platebody"
 	bronze_platebody.description = "Smith a bronze platebody."
+	bronze_platebody.category = "Bronze"
 	bronze_platebody.level_required = 18
 	bronze_platebody.xp_per_action = 62.5
 	bronze_platebody.action_time = 5.0
@@ -196,6 +211,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_arrowheads.id = "iron_arrowheads"
 	iron_arrowheads.name = "Iron Arrowheads"
 	iron_arrowheads.description = "Smith iron arrowheads from an iron bar."
+	iron_arrowheads.category = "Iron"
 	iron_arrowheads.level_required = 15
 	iron_arrowheads.xp_per_action = 25.0
 	iron_arrowheads.action_time = 2.0
@@ -208,6 +224,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_dagger.id = "iron_dagger"
 	iron_dagger.name = "Iron Dagger"
 	iron_dagger.description = "Smith an iron dagger."
+	iron_dagger.category = "Iron"
 	iron_dagger.level_required = 15
 	iron_dagger.xp_per_action = 25.0
 	iron_dagger.action_time = 2.5
@@ -220,6 +237,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_full_helm.id = "iron_full_helm"
 	iron_full_helm.name = "Iron Full Helm"
 	iron_full_helm.description = "Smith an iron full helmet."
+	iron_full_helm.category = "Iron"
 	iron_full_helm.level_required = 17
 	iron_full_helm.xp_per_action = 50.0
 	iron_full_helm.action_time = 3.0
@@ -232,6 +250,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_sword.id = "iron_sword"
 	iron_sword.name = "Iron Sword"
 	iron_sword.description = "Smith an iron sword."
+	iron_sword.category = "Iron"
 	iron_sword.level_required = 19
 	iron_sword.xp_per_action = 25.0
 	iron_sword.action_time = 2.5
@@ -244,6 +263,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_scimitar.id = "iron_scimitar"
 	iron_scimitar.name = "Iron Scimitar"
 	iron_scimitar.description = "Smith an iron scimitar."
+	iron_scimitar.category = "Iron"
 	iron_scimitar.level_required = 20
 	iron_scimitar.xp_per_action = 50.0
 	iron_scimitar.action_time = 3.0
@@ -256,6 +276,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_platelegs.id = "iron_platelegs"
 	iron_platelegs.name = "Iron Platelegs"
 	iron_platelegs.description = "Smith iron platelegs."
+	iron_platelegs.category = "Iron"
 	iron_platelegs.level_required = 21
 	iron_platelegs.xp_per_action = 75.0
 	iron_platelegs.action_time = 4.0
@@ -268,6 +289,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	iron_platebody.id = "iron_platebody"
 	iron_platebody.name = "Iron Platebody"
 	iron_platebody.description = "Smith an iron platebody."
+	iron_platebody.category = "Iron"
 	iron_platebody.level_required = 23
 	iron_platebody.xp_per_action = 125.0
 	iron_platebody.action_time = 5.0
@@ -281,6 +303,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_arrowheads.id = "steel_arrowheads"
 	steel_arrowheads.name = "Steel Arrowheads"
 	steel_arrowheads.description = "Smith steel arrowheads from a steel bar."
+	steel_arrowheads.category = "Steel"
 	steel_arrowheads.level_required = 30
 	steel_arrowheads.xp_per_action = 37.5
 	steel_arrowheads.action_time = 2.0
@@ -293,6 +316,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_dagger.id = "steel_dagger"
 	steel_dagger.name = "Steel Dagger"
 	steel_dagger.description = "Smith a steel dagger."
+	steel_dagger.category = "Steel"
 	steel_dagger.level_required = 30
 	steel_dagger.xp_per_action = 37.5
 	steel_dagger.action_time = 2.5
@@ -305,6 +329,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_full_helm.id = "steel_full_helm"
 	steel_full_helm.name = "Steel Full Helm"
 	steel_full_helm.description = "Smith a steel full helmet."
+	steel_full_helm.category = "Steel"
 	steel_full_helm.level_required = 32
 	steel_full_helm.xp_per_action = 75.0
 	steel_full_helm.action_time = 3.0
@@ -317,6 +342,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_sword.id = "steel_sword"
 	steel_sword.name = "Steel Sword"
 	steel_sword.description = "Smith a steel sword."
+	steel_sword.category = "Steel"
 	steel_sword.level_required = 34
 	steel_sword.xp_per_action = 37.5
 	steel_sword.action_time = 2.5
@@ -329,6 +355,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_scimitar.id = "steel_scimitar"
 	steel_scimitar.name = "Steel Scimitar"
 	steel_scimitar.description = "Smith a steel scimitar."
+	steel_scimitar.category = "Steel"
 	steel_scimitar.level_required = 35
 	steel_scimitar.xp_per_action = 75.0
 	steel_scimitar.action_time = 3.0
@@ -341,6 +368,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_platelegs.id = "steel_platelegs"
 	steel_platelegs.name = "Steel Platelegs"
 	steel_platelegs.description = "Smith steel platelegs."
+	steel_platelegs.category = "Steel"
 	steel_platelegs.level_required = 36
 	steel_platelegs.xp_per_action = 112.5
 	steel_platelegs.action_time = 4.0
@@ -353,6 +381,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	steel_platebody.id = "steel_platebody"
 	steel_platebody.name = "Steel Platebody"
 	steel_platebody.description = "Smith a steel platebody."
+	steel_platebody.category = "Steel"
 	steel_platebody.level_required = 38
 	steel_platebody.xp_per_action = 187.5
 	steel_platebody.action_time = 5.0
@@ -366,6 +395,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_arrowheads.id = "mithril_arrowheads"
 	mithril_arrowheads.name = "Mithril Arrowheads"
 	mithril_arrowheads.description = "Smith mithril arrowheads from a mithril bar."
+	mithril_arrowheads.category = "Mithril"
 	mithril_arrowheads.level_required = 50
 	mithril_arrowheads.xp_per_action = 50.0
 	mithril_arrowheads.action_time = 2.0
@@ -378,6 +408,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_dagger.id = "mithril_dagger"
 	mithril_dagger.name = "Mithril Dagger"
 	mithril_dagger.description = "Smith a mithril dagger."
+	mithril_dagger.category = "Mithril"
 	mithril_dagger.level_required = 50
 	mithril_dagger.xp_per_action = 50.0
 	mithril_dagger.action_time = 2.5
@@ -390,6 +421,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_full_helm.id = "mithril_full_helm"
 	mithril_full_helm.name = "Mithril Full Helm"
 	mithril_full_helm.description = "Smith a mithril full helmet."
+	mithril_full_helm.category = "Mithril"
 	mithril_full_helm.level_required = 52
 	mithril_full_helm.xp_per_action = 100.0
 	mithril_full_helm.action_time = 3.0
@@ -402,6 +434,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_sword.id = "mithril_sword"
 	mithril_sword.name = "Mithril Sword"
 	mithril_sword.description = "Smith a mithril sword."
+	mithril_sword.category = "Mithril"
 	mithril_sword.level_required = 54
 	mithril_sword.xp_per_action = 50.0
 	mithril_sword.action_time = 2.5
@@ -414,6 +447,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_scimitar.id = "mithril_scimitar"
 	mithril_scimitar.name = "Mithril Scimitar"
 	mithril_scimitar.description = "Smith a mithril scimitar."
+	mithril_scimitar.category = "Mithril"
 	mithril_scimitar.level_required = 55
 	mithril_scimitar.xp_per_action = 100.0
 	mithril_scimitar.action_time = 3.0
@@ -426,6 +460,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_platelegs.id = "mithril_platelegs"
 	mithril_platelegs.name = "Mithril Platelegs"
 	mithril_platelegs.description = "Smith mithril platelegs."
+	mithril_platelegs.category = "Mithril"
 	mithril_platelegs.level_required = 56
 	mithril_platelegs.xp_per_action = 150.0
 	mithril_platelegs.action_time = 4.0
@@ -438,6 +473,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	mithril_platebody.id = "mithril_platebody"
 	mithril_platebody.name = "Mithril Platebody"
 	mithril_platebody.description = "Smith a mithril platebody."
+	mithril_platebody.category = "Mithril"
 	mithril_platebody.level_required = 58
 	mithril_platebody.xp_per_action = 250.0
 	mithril_platebody.action_time = 5.0
@@ -451,6 +487,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_arrowheads.id = "adamantite_arrowheads"
 	adamantite_arrowheads.name = "Adamantite Arrowheads"
 	adamantite_arrowheads.description = "Smith adamantite arrowheads from an adamantite bar."
+	adamantite_arrowheads.category = "Adamantite"
 	adamantite_arrowheads.level_required = 70
 	adamantite_arrowheads.xp_per_action = 62.5
 	adamantite_arrowheads.action_time = 2.0
@@ -463,6 +500,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_dagger.id = "adamantite_dagger"
 	adamantite_dagger.name = "Adamantite Dagger"
 	adamantite_dagger.description = "Smith an adamantite dagger."
+	adamantite_dagger.category = "Adamantite"
 	adamantite_dagger.level_required = 70
 	adamantite_dagger.xp_per_action = 62.5
 	adamantite_dagger.action_time = 2.5
@@ -475,6 +513,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_full_helm.id = "adamantite_full_helm"
 	adamantite_full_helm.name = "Adamantite Full Helm"
 	adamantite_full_helm.description = "Smith an adamantite full helmet."
+	adamantite_full_helm.category = "Adamantite"
 	adamantite_full_helm.level_required = 72
 	adamantite_full_helm.xp_per_action = 125.0
 	adamantite_full_helm.action_time = 3.0
@@ -487,6 +526,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_sword.id = "adamantite_sword"
 	adamantite_sword.name = "Adamantite Sword"
 	adamantite_sword.description = "Smith an adamantite sword."
+	adamantite_sword.category = "Adamantite"
 	adamantite_sword.level_required = 74
 	adamantite_sword.xp_per_action = 62.5
 	adamantite_sword.action_time = 2.5
@@ -499,6 +539,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_scimitar.id = "adamantite_scimitar"
 	adamantite_scimitar.name = "Adamantite Scimitar"
 	adamantite_scimitar.description = "Smith an adamantite scimitar."
+	adamantite_scimitar.category = "Adamantite"
 	adamantite_scimitar.level_required = 75
 	adamantite_scimitar.xp_per_action = 125.0
 	adamantite_scimitar.action_time = 3.0
@@ -511,6 +552,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_platelegs.id = "adamantite_platelegs"
 	adamantite_platelegs.name = "Adamantite Platelegs"
 	adamantite_platelegs.description = "Smith adamantite platelegs."
+	adamantite_platelegs.category = "Adamantite"
 	adamantite_platelegs.level_required = 76
 	adamantite_platelegs.xp_per_action = 187.5
 	adamantite_platelegs.action_time = 4.0
@@ -523,6 +565,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	adamantite_platebody.id = "adamantite_platebody"
 	adamantite_platebody.name = "Adamantite Platebody"
 	adamantite_platebody.description = "Smith an adamantite platebody."
+	adamantite_platebody.category = "Adamantite"
 	adamantite_platebody.level_required = 78
 	adamantite_platebody.xp_per_action = 312.5
 	adamantite_platebody.action_time = 5.0
@@ -536,6 +579,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_arrowheads.id = "runite_arrowheads"
 	runite_arrowheads.name = "Runite Arrowheads"
 	runite_arrowheads.description = "Smith runite arrowheads from a runite bar."
+	runite_arrowheads.category = "Runite"
 	runite_arrowheads.level_required = 85
 	runite_arrowheads.xp_per_action = 75.0
 	runite_arrowheads.action_time = 2.0
@@ -548,6 +592,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_dagger.id = "runite_dagger"
 	runite_dagger.name = "Runite Dagger"
 	runite_dagger.description = "Smith a runite dagger."
+	runite_dagger.category = "Runite"
 	runite_dagger.level_required = 85
 	runite_dagger.xp_per_action = 75.0
 	runite_dagger.action_time = 2.5
@@ -560,6 +605,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_full_helm.id = "runite_full_helm"
 	runite_full_helm.name = "Runite Full Helm"
 	runite_full_helm.description = "Smith a runite full helmet."
+	runite_full_helm.category = "Runite"
 	runite_full_helm.level_required = 87
 	runite_full_helm.xp_per_action = 150.0
 	runite_full_helm.action_time = 3.0
@@ -572,6 +618,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_sword.id = "runite_sword"
 	runite_sword.name = "Runite Sword"
 	runite_sword.description = "Smith a runite sword."
+	runite_sword.category = "Runite"
 	runite_sword.level_required = 89
 	runite_sword.xp_per_action = 75.0
 	runite_sword.action_time = 2.5
@@ -584,6 +631,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_scimitar.id = "runite_scimitar"
 	runite_scimitar.name = "Runite Scimitar"
 	runite_scimitar.description = "Smith a runite scimitar."
+	runite_scimitar.category = "Runite"
 	runite_scimitar.level_required = 90
 	runite_scimitar.xp_per_action = 150.0
 	runite_scimitar.action_time = 3.0
@@ -596,6 +644,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_platelegs.id = "runite_platelegs"
 	runite_platelegs.name = "Runite Platelegs"
 	runite_platelegs.description = "Smith runite platelegs."
+	runite_platelegs.category = "Runite"
 	runite_platelegs.level_required = 91
 	runite_platelegs.xp_per_action = 225.0
 	runite_platelegs.action_time = 4.0
@@ -608,6 +657,7 @@ static func create_methods() -> Array[TrainingMethodData]:
 	runite_platebody.id = "runite_platebody"
 	runite_platebody.name = "Runite Platebody"
 	runite_platebody.description = "Smith a runite platebody."
+	runite_platebody.category = "Runite"
 	runite_platebody.level_required = 93
 	runite_platebody.xp_per_action = 375.0
 	runite_platebody.action_time = 5.0

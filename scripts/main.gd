@@ -90,6 +90,7 @@ var skill_summary_panel: PanelContainer = null
 var skill_summary_grid: GridContainer = null
 var settings_button: Button = null
 var settings_panel: PanelContainer = null
+var collapsed_categories: Dictionary = {}  # skill_id -> { category_name: bool }
 
 func _ready() -> void:
 	_setup_signals()
@@ -305,87 +306,143 @@ func _populate_action_list() -> void:
 	# Get speed modifier once for all methods (used for time remaining calculation)
 	var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
 	
+	# Group methods by category
+	var categories: Dictionary = {}  # category_name -> Array[TrainingMethodData]
+	var category_order: Array = []  # Track order of categories
+	
 	for method in skill.training_methods:
-		var panel := PanelContainer.new()
-		panel.custom_minimum_size = Vector2(0, 80)
+		var category := method.category if method.category != "" else "General"
 		
-		var hbox := HBoxContainer.new()
-		hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		panel.add_child(hbox)
+		if not categories.has(category):
+			categories[category] = []
+			category_order.append(category)
 		
-		var info_vbox := VBoxContainer.new()
-		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.add_child(info_vbox)
+		categories[category].append(method)
+	
+	# Initialize collapsed state for this skill if not already done
+	if not collapsed_categories.has(selected_skill_id):
+		collapsed_categories[selected_skill_id] = {}
+	
+	# Create UI for each category
+	for category in category_order:
+		var methods: Array = categories[category]
 		
-		var name_label := Label.new()
-		name_label.text = method.name
-		if player_level < method.level_required:
-			name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-		info_vbox.add_child(name_label)
+		# Only create collapsible sections if there are multiple categories
+		if category_order.size() > 1:
+			# Create category header button
+			var category_header := Button.new()
+			category_header.custom_minimum_size = Vector2(0, 40)
+			category_header.alignment = HORIZONTAL_ALIGNMENT_LEFT
+			
+			# Get collapsed state for this category (default to expanded)
+			var is_collapsed: bool = collapsed_categories[selected_skill_id].get(category, false)
+			
+			# Show collapse/expand indicator
+			var indicator := "▼ " if not is_collapsed else "▶ "
+			category_header.text = "%s%s (%d)" % [indicator, category, methods.size()]
+			category_header.add_theme_font_size_override("font_size", 16)
+			category_header.add_theme_color_override("font_color", Color(0.8, 0.9, 1.0))
+			
+			# Connect toggle action
+			category_header.pressed.connect(_on_category_toggle.bind(category))
+			
+			action_list.add_child(category_header)
+			
+			# Skip adding methods if category is collapsed
+			if is_collapsed:
+				continue
 		
-		var stats_label := Label.new()
-		stats_label.text = method.get_stats_text(selected_skill_id)
-		stats_label.add_theme_font_size_override("font_size", 12)
-		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
-		info_vbox.add_child(stats_label)
-		
-		# Show required/produced items
-		var items_text := ""
-		if not method.consumed_items.is_empty():
-			for item_id in method.consumed_items:
-				var item_data := Inventory.get_item_data(item_id)
-				var item_name: String = item_data.name if item_data else item_id
-				var player_count := Inventory.get_item_count(item_id)
-				var count_color := "green" if player_count > 0 else "red"
-				items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
-		if not method.produced_items.is_empty():
-			for item_id in method.produced_items:
-				var item_data := Inventory.get_item_data(item_id)
-				var item_name: String = item_data.name if item_data else item_id
-				items_text += "→ %s " % item_name
-		
-		if not items_text.is_empty():
-			var items_label := RichTextLabel.new()
-			items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
-			items_label.bbcode_enabled = true
-			items_label.text = items_text.strip_edges()
-			items_label.fit_content = true
-			items_label.scroll_active = false
-			items_label.add_theme_font_size_override("normal_font_size", 11)
-			items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
-			info_vbox.add_child(items_label)
-		
-		# Show time until items run out (if method consumes items)
-		if not method.consumed_items.is_empty():
-			var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
-			if time_remaining >= 0:
-				var time_label := Label.new()
-				time_label.text = TrainingMethodData.format_time_remaining(time_remaining)
-				time_label.add_theme_font_size_override("font_size", 11)
-				if time_remaining == 0:
-					time_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
-				elif time_remaining < 60:
-					time_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
-				else:
-					time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.3))
-				info_vbox.add_child(time_label)
-		
-		var train_button := Button.new()
-		train_button.custom_minimum_size = Vector2(80, 40)
-		
-		if player_level >= method.level_required:
-			train_button.text = "Train"
-			train_button.pressed.connect(_on_train_button_pressed.bind(method.id))
-		else:
-			train_button.text = "Lv %d" % method.level_required
-			train_button.disabled = true
-		
-		hbox.add_child(train_button)
-		action_buttons[method.id] = train_button
-		action_list.add_child(panel)
+		# Add methods in this category
+		for method in methods:
+			var panel := PanelContainer.new()
+			panel.custom_minimum_size = Vector2(0, 80)
+			
+			var hbox := HBoxContainer.new()
+			hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			panel.add_child(hbox)
+			
+			var info_vbox := VBoxContainer.new()
+			info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			hbox.add_child(info_vbox)
+			
+			var name_label := Label.new()
+			name_label.text = method.name
+			if player_level < method.level_required:
+				name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+			info_vbox.add_child(name_label)
+			
+			var stats_label := Label.new()
+			stats_label.text = method.get_stats_text(selected_skill_id)
+			stats_label.add_theme_font_size_override("font_size", 12)
+			stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+			info_vbox.add_child(stats_label)
+			
+			# Show required/produced items
+			var items_text := ""
+			if not method.consumed_items.is_empty():
+				for item_id in method.consumed_items:
+					var item_data := Inventory.get_item_data(item_id)
+					var item_name: String = item_data.name if item_data else item_id
+					var player_count := Inventory.get_item_count(item_id)
+					var count_color := "green" if player_count > 0 else "red"
+					items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
+			if not method.produced_items.is_empty():
+				for item_id in method.produced_items:
+					var item_data := Inventory.get_item_data(item_id)
+					var item_name: String = item_data.name if item_data else item_id
+					items_text += "→ %s " % item_name
+			
+			if not items_text.is_empty():
+				var items_label := RichTextLabel.new()
+				items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
+				items_label.bbcode_enabled = true
+				items_label.text = items_text.strip_edges()
+				items_label.fit_content = true
+				items_label.scroll_active = false
+				items_label.add_theme_font_size_override("normal_font_size", 11)
+				items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
+				info_vbox.add_child(items_label)
+			
+			# Show time until items run out (if method consumes items)
+			if not method.consumed_items.is_empty():
+				var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
+				if time_remaining >= 0:
+					var time_label := Label.new()
+					time_label.text = TrainingMethodData.format_time_remaining(time_remaining)
+					time_label.add_theme_font_size_override("font_size", 11)
+					if time_remaining == 0:
+						time_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+					elif time_remaining < 60:
+						time_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+					else:
+						time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.3))
+					info_vbox.add_child(time_label)
+			
+			var train_button := Button.new()
+			train_button.custom_minimum_size = Vector2(80, 40)
+			
+			if player_level >= method.level_required:
+				train_button.text = "Train"
+				train_button.pressed.connect(_on_train_button_pressed.bind(method.id))
+			else:
+				train_button.text = "Lv %d" % method.level_required
+				train_button.disabled = true
+			
+			hbox.add_child(train_button)
+			action_buttons[method.id] = train_button
+			action_list.add_child(panel)
 
 func _on_train_button_pressed(method_id: String) -> void:
 	GameManager.start_training(selected_skill_id, method_id)
+
+## Handle category header toggle
+func _on_category_toggle(category: String) -> void:
+	# Toggle collapsed state
+	var current_state: bool = collapsed_categories[selected_skill_id].get(category, false)
+	collapsed_categories[selected_skill_id][category] = not current_state
+	
+	# Refresh the action list to show/hide the category
+	_populate_action_list()
 
 func _on_stop_button_pressed() -> void:
 	GameManager.stop_training()
