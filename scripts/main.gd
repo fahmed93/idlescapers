@@ -32,6 +32,11 @@ const PROGRESS_MARGIN := 20  # Margin around the grid
 const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
 const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
 
+# Smithing collapsible sections constants
+const EXPANDED_ARROW := "▼"  # Arrow symbol for expanded sections
+const COLLAPSED_ARROW := "▶"  # Arrow symbol for collapsed sections
+const SMITHING_SECTION_COLOR := Color(0.8, 0.7, 0.5)  # Gold color for smithing section headers
+
 @onready var skill_sidebar: VBoxContainer = $SkillSidebar/ScrollContainer/SidebarContent
 @onready var sidebar_panel: PanelContainer = $SkillSidebar
 @onready var sidebar_dim_overlay: ColorRect = $SidebarDimOverlay
@@ -423,10 +428,10 @@ func _populate_smithing_action_list(skill: SkillData, player_level: int, speed_m
 		# Create section header button
 		var section_button := Button.new()
 		section_button.custom_minimum_size = Vector2(0, 40)
-		section_button.text = "%s %s (%d)" % ["▼" if is_expanded else "▶", section_name, section_count]
+		section_button.text = "%s %s (%d)" % [EXPANDED_ARROW if is_expanded else COLLAPSED_ARROW, section_name, section_count]
 		section_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		section_button.add_theme_font_size_override("font_size", 16)
-		section_button.add_theme_color_override("font_color", Color(0.8, 0.7, 0.5))
+		section_button.add_theme_color_override("font_color", SMITHING_SECTION_COLOR)
 		section_button.pressed.connect(_on_smithing_section_toggled.bind(section_name))
 		action_list.add_child(section_button)
 		
