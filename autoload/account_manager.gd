@@ -97,6 +97,11 @@ func create_account(username: String, password: String) -> bool:
 	}
 	
 	accounts[clean_username] = account_data
+	
+	# If this is the first account, claim any orphaned characters (e.g., from migration)
+	if accounts.size() == 1:
+		_claim_orphaned_characters(account_data)
+	
 	save_accounts()
 	account_created.emit(clean_username)
 	print("[AccountManager] Created account: %s" % clean_username)
@@ -184,3 +189,28 @@ func get_character_slots() -> Array:
 ## Check if account exists
 func account_exists(username: String) -> bool:
 	return accounts.has(username.strip_edges())
+
+## Claim orphaned characters (characters not linked to any account)
+## This is called when creating the first account to handle migrated characters
+func _claim_orphaned_characters(account_data: Dictionary) -> void:
+	var all_characters := CharacterManager.get_all_characters()
+	var all_claimed_slots: Array[int] = []
+	
+	# Collect all slots claimed by all accounts
+	for account_username in accounts:
+		var acc: Dictionary = accounts[account_username]
+		var acc_slots: Array = acc.get("character_slots", [])
+		for slot in acc_slots:
+			if not all_claimed_slots.has(slot):
+				all_claimed_slots.append(slot)
+	
+	# Find orphaned characters
+	for slot_str in all_characters:
+		var slot: int = int(slot_str)
+		if not all_claimed_slots.has(slot):
+			# This character is orphaned, claim it for this account
+			var character_slots: Array = account_data.get("character_slots", [])
+			if not character_slots.has(slot):
+				character_slots.append(slot)
+				account_data["character_slots"] = character_slots
+				print("[AccountManager] Claimed orphaned character in slot %d" % slot)
