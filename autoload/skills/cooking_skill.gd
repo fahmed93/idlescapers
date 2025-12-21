@@ -18,18 +18,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_shrimp.success_rate = 0.7
 	methods.append(cook_shrimp)
 	
-	var cook_anchovy := TrainingMethodData.new()
-	cook_anchovy.id = "cook_anchovy"
-	cook_anchovy.name = "Cook Anchovy"
-	cook_anchovy.description = "Cook tiny anchovies into a salty treat."
-	cook_anchovy.level_required = 3
-	cook_anchovy.xp_per_action = 35.0
-	cook_anchovy.action_time = 1.8
-	cook_anchovy.consumed_items = {"raw_anchovy": 1}
-	cook_anchovy.produced_items = {"cooked_anchovy": 1}
-	cook_anchovy.success_rate = 0.65
-	methods.append(cook_anchovy)
-	
 	var cook_sardine := TrainingMethodData.new()
 	cook_sardine.id = "cook_sardine"
 	cook_sardine.name = "Cook Sardine"
@@ -41,18 +29,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_sardine.produced_items = {"cooked_sardine": 1}
 	cook_sardine.success_rate = 0.7
 	methods.append(cook_sardine)
-	
-	var cook_mackerel := TrainingMethodData.new()
-	cook_mackerel.id = "cook_mackerel"
-	cook_mackerel.name = "Cook Mackerel"
-	cook_mackerel.description = "Cook mackerel into a flavorful meal."
-	cook_mackerel.level_required = 8
-	cook_mackerel.xp_per_action = 45.0
-	cook_mackerel.action_time = 2.0
-	cook_mackerel.consumed_items = {"raw_mackerel": 1}
-	cook_mackerel.produced_items = {"cooked_mackerel": 1}
-	cook_mackerel.success_rate = 0.72
-	methods.append(cook_mackerel)
 	
 	var cook_herring := TrainingMethodData.new()
 	cook_herring.id = "cook_herring"
@@ -66,30 +42,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_herring.success_rate = 0.75
 	methods.append(cook_herring)
 	
-	var cook_cod := TrainingMethodData.new()
-	cook_cod.id = "cook_cod"
-	cook_cod.name = "Cook Cod"
-	cook_cod.description = "Cook cod into a delicious white fish dish."
-	cook_cod.level_required = 13
-	cook_cod.xp_per_action = 60.0
-	cook_cod.action_time = 2.2
-	cook_cod.consumed_items = {"raw_cod": 1}
-	cook_cod.produced_items = {"cooked_cod": 1}
-	cook_cod.success_rate = 0.78
-	methods.append(cook_cod)
-	
-	var cook_pike := TrainingMethodData.new()
-	cook_pike.id = "cook_pike"
-	cook_pike.name = "Cook Pike"
-	cook_pike.description = "Cook pike into a hearty meal."
-	cook_pike.level_required = 18
-	cook_pike.xp_per_action = 75.0
-	cook_pike.action_time = 2.5
-	cook_pike.consumed_items = {"raw_pike": 1}
-	cook_pike.produced_items = {"cooked_pike": 1}
-	cook_pike.success_rate = 0.82
-	methods.append(cook_pike)
-	
 	var cook_trout := TrainingMethodData.new()
 	cook_trout.id = "cook_trout"
 	cook_trout.name = "Cook Trout"
@@ -102,18 +54,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_trout.success_rate = 0.8
 	methods.append(cook_trout)
 	
-	var cook_bass := TrainingMethodData.new()
-	cook_bass.id = "cook_bass"
-	cook_bass.name = "Cook Bass"
-	cook_bass.description = "Cook bass into a premium fish dish."
-	cook_bass.level_required = 25
-	cook_bass.xp_per_action = 95.0
-	cook_bass.action_time = 2.8
-	cook_bass.consumed_items = {"raw_bass": 1}
-	cook_bass.produced_items = {"cooked_bass": 1}
-	cook_bass.success_rate = 0.84
-	methods.append(cook_bass)
-	
 	var cook_salmon := TrainingMethodData.new()
 	cook_salmon.id = "cook_salmon"
 	cook_salmon.name = "Cook Salmon"
@@ -125,18 +65,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_salmon.produced_items = {"cooked_salmon": 1}
 	cook_salmon.success_rate = 0.85
 	methods.append(cook_salmon)
-	
-	var cook_tuna := TrainingMethodData.new()
-	cook_tuna.id = "cook_tuna"
-	cook_tuna.name = "Cook Tuna"
-	cook_tuna.description = "Cook tuna into a protein-rich meal."
-	cook_tuna.level_required = 35
-	cook_tuna.xp_per_action = 110.0
-	cook_tuna.action_time = 3.0
-	cook_tuna.consumed_items = {"raw_tuna": 1}
-	cook_tuna.produced_items = {"cooked_tuna": 1}
-	cook_tuna.success_rate = 0.86
-	methods.append(cook_tuna)
 	
 	var cook_lobster := TrainingMethodData.new()
 	cook_lobster.id = "cook_lobster"
@@ -162,18 +90,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_swordfish.success_rate = 0.9
 	methods.append(cook_swordfish)
 	
-	var cook_manta_ray := TrainingMethodData.new()
-	cook_manta_ray.id = "cook_manta_ray"
-	cook_manta_ray.name = "Cook Manta Ray"
-	cook_manta_ray.description = "Cook manta ray into an exotic delicacy."
-	cook_manta_ray.level_required = 55
-	cook_manta_ray.xp_per_action = 160.0
-	cook_manta_ray.action_time = 3.2
-	cook_manta_ray.consumed_items = {"raw_manta_ray": 1}
-	cook_manta_ray.produced_items = {"cooked_manta_ray": 1}
-	cook_manta_ray.success_rate = 0.88
-	methods.append(cook_manta_ray)
-	
 	var cook_monkfish := TrainingMethodData.new()
 	cook_monkfish.id = "cook_monkfish"
 	cook_monkfish.name = "Cook Monkfish"
@@ -185,18 +101,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_monkfish.produced_items = {"cooked_monkfish": 1}
 	cook_monkfish.success_rate = 0.9
 	methods.append(cook_monkfish)
-	
-	var cook_sea_turtle := TrainingMethodData.new()
-	cook_sea_turtle.id = "cook_sea_turtle"
-	cook_sea_turtle.name = "Cook Sea Turtle"
-	cook_sea_turtle.description = "Cook sea turtle into a rare delicacy."
-	cook_sea_turtle.level_required = 68
-	cook_sea_turtle.xp_per_action = 180.0
-	cook_sea_turtle.action_time = 3.5
-	cook_sea_turtle.consumed_items = {"raw_sea_turtle": 1}
-	cook_sea_turtle.produced_items = {"cooked_sea_turtle": 1}
-	cook_sea_turtle.success_rate = 0.90
-	methods.append(cook_sea_turtle)
 	
 	var cook_shark := TrainingMethodData.new()
 	cook_shark.id = "cook_shark"
@@ -222,6 +126,103 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_anglerfish.success_rate = 0.95
 	methods.append(cook_anglerfish)
 	
+	# Additional cooking methods
+	var cook_anchovy := TrainingMethodData.new()
+	cook_anchovy.id = "cook_anchovy"
+	cook_anchovy.name = "Cook Anchovy"
+	cook_anchovy.description = "Cook tiny anchovies into a salty treat."
+	cook_anchovy.level_required = 3
+	cook_anchovy.xp_per_action = 35.0
+	cook_anchovy.action_time = 1.8
+	cook_anchovy.consumed_items = {"raw_anchovy": 1}
+	cook_anchovy.produced_items = {"cooked_anchovy": 1}
+	cook_anchovy.success_rate = 0.65
+	methods.append(cook_anchovy)
+	
+	var cook_mackerel := TrainingMethodData.new()
+	cook_mackerel.id = "cook_mackerel"
+	cook_mackerel.name = "Cook Mackerel"
+	cook_mackerel.description = "Cook mackerel into a flavorful meal."
+	cook_mackerel.level_required = 8
+	cook_mackerel.xp_per_action = 45.0
+	cook_mackerel.action_time = 2.0
+	cook_mackerel.consumed_items = {"raw_mackerel": 1}
+	cook_mackerel.produced_items = {"cooked_mackerel": 1}
+	cook_mackerel.success_rate = 0.72
+	methods.append(cook_mackerel)
+	
+	var cook_cod := TrainingMethodData.new()
+	cook_cod.id = "cook_cod"
+	cook_cod.name = "Cook Cod"
+	cook_cod.description = "Cook cod into a delicious white fish dish."
+	cook_cod.level_required = 13
+	cook_cod.xp_per_action = 60.0
+	cook_cod.action_time = 2.2
+	cook_cod.consumed_items = {"raw_cod": 1}
+	cook_cod.produced_items = {"cooked_cod": 1}
+	cook_cod.success_rate = 0.78
+	methods.append(cook_cod)
+	
+	var cook_pike := TrainingMethodData.new()
+	cook_pike.id = "cook_pike"
+	cook_pike.name = "Cook Pike"
+	cook_pike.description = "Cook pike into a hearty meal."
+	cook_pike.level_required = 18
+	cook_pike.xp_per_action = 75.0
+	cook_pike.action_time = 2.5
+	cook_pike.consumed_items = {"raw_pike": 1}
+	cook_pike.produced_items = {"cooked_pike": 1}
+	cook_pike.success_rate = 0.82
+	methods.append(cook_pike)
+	
+	var cook_bass := TrainingMethodData.new()
+	cook_bass.id = "cook_bass"
+	cook_bass.name = "Cook Bass"
+	cook_bass.description = "Cook bass into a premium fish dish."
+	cook_bass.level_required = 25
+	cook_bass.xp_per_action = 95.0
+	cook_bass.action_time = 2.8
+	cook_bass.consumed_items = {"raw_bass": 1}
+	cook_bass.produced_items = {"cooked_bass": 1}
+	cook_bass.success_rate = 0.84
+	methods.append(cook_bass)
+	
+	var cook_tuna := TrainingMethodData.new()
+	cook_tuna.id = "cook_tuna"
+	cook_tuna.name = "Cook Tuna"
+	cook_tuna.description = "Cook tuna into a protein-rich meal."
+	cook_tuna.level_required = 35
+	cook_tuna.xp_per_action = 110.0
+	cook_tuna.action_time = 3.0
+	cook_tuna.consumed_items = {"raw_tuna": 1}
+	cook_tuna.produced_items = {"cooked_tuna": 1}
+	cook_tuna.success_rate = 0.86
+	methods.append(cook_tuna)
+	
+	var cook_manta_ray := TrainingMethodData.new()
+	cook_manta_ray.id = "cook_manta_ray"
+	cook_manta_ray.name = "Cook Manta Ray"
+	cook_manta_ray.description = "Cook manta ray into an exotic delicacy."
+	cook_manta_ray.level_required = 55
+	cook_manta_ray.xp_per_action = 160.0
+	cook_manta_ray.action_time = 3.2
+	cook_manta_ray.consumed_items = {"raw_manta_ray": 1}
+	cook_manta_ray.produced_items = {"cooked_manta_ray": 1}
+	cook_manta_ray.success_rate = 0.88
+	methods.append(cook_manta_ray)
+	
+	var cook_sea_turtle := TrainingMethodData.new()
+	cook_sea_turtle.id = "cook_sea_turtle"
+	cook_sea_turtle.name = "Cook Sea Turtle"
+	cook_sea_turtle.description = "Cook sea turtle into a rare delicacy."
+	cook_sea_turtle.level_required = 68
+	cook_sea_turtle.xp_per_action = 180.0
+	cook_sea_turtle.action_time = 3.5
+	cook_sea_turtle.consumed_items = {"raw_sea_turtle": 1}
+	cook_sea_turtle.produced_items = {"cooked_sea_turtle": 1}
+	cook_sea_turtle.success_rate = 0.90
+	methods.append(cook_sea_turtle)
+	
 	var cook_sailfish := TrainingMethodData.new()
 	cook_sailfish.id = "cook_sailfish"
 	cook_sailfish.name = "Cook Sailfish"
@@ -246,4 +247,4 @@ static func create_methods() -> Array[TrainingMethodData]:
 	cook_kraken_tentacle.success_rate = 0.96
 	methods.append(cook_kraken_tentacle)
 	
-		return methods
+	return methods

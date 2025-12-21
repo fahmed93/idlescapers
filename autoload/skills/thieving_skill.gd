@@ -28,28 +28,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	farmer.success_rate = 0.65
 	methods.append(farmer)
 	
-	var market_trader := TrainingMethodData.new()
-	market_trader.id = "market_trader"
-	market_trader.name = "Market Trader"
-	market_trader.description = "Pickpocket market traders for moderate coin."
-	market_trader.level_required = 10
-	market_trader.xp_per_action = 18.0
-	market_trader.action_time = 2.8
-	market_trader.produced_items = {"coins": 12}
-	market_trader.success_rate = 0.62
-	methods.append(market_trader)
-	
-	var bandit := TrainingMethodData.new()
-	bandit.id = "bandit"
-	bandit.name = "Bandit"
-	bandit.description = "Pickpocket bandits for stolen goods."
-	bandit.level_required = 15
-	bandit.xp_per_action = 22.0
-	bandit.action_time = 3.0
-	bandit.produced_items = {"coins": 15}
-	bandit.success_rate = 0.60
-	methods.append(bandit)
-	
 	var warrior := TrainingMethodData.new()
 	warrior.id = "warrior"
 	warrior.name = "Warrior"

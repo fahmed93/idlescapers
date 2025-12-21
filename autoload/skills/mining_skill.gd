@@ -28,16 +28,6 @@ static func create_methods() -> Array[TrainingMethodData]:
 	tin.bonus_items = {"sapphire": 0.01, "emerald": 0.005, "ruby": 0.002, "diamond": 0.001}
 	methods.append(tin)
 	
-	var limestone := TrainingMethodData.new()
-	limestone.id = "limestone"
-	limestone.name = "Limestone"
-	limestone.description = "Mine limestone for construction."
-	limestone.level_required = 10
-	limestone.xp_per_action = 26.5
-	limestone.action_time = 3.0
-	limestone.produced_items = {"limestone": 1}
-	methods.append(limestone)
-	
 	var iron := TrainingMethodData.new()
 	iron.id = "iron_ore"
 	iron.name = "Iron Ore"
