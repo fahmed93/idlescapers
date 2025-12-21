@@ -145,9 +145,9 @@ func _populate_character_slots() -> void:
 		else:
 			# Slot occupied by another account - show as unavailable
 			var unavailable_label := Label.new()
-			unavailable_label.text = "Slot %d - Occupied by another user" % (slot + 1)
+			unavailable_label.text = "Slot %d - Unavailable" % (slot + 1)
 			unavailable_label.add_theme_font_size_override("font_size", 16)
-			unavailable_label.add_theme_color_override("font_color", Color(0.7, 0.4, 0.4))
+			unavailable_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
 			info_vbox.add_child(unavailable_label)
 		
 		character_slots_container.add_child(slot_panel)
