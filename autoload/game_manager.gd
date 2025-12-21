@@ -12,14 +12,6 @@ signal action_completed(skill_id: String, method_id: String, success: bool)
 const MAX_LEVEL := 99
 const XP_MULTIPLIER := 1.0
 
-## Skill Cape Effect Constants
-const CAPE_DOUBLE_DROP_CHANCE := 0.05  # 5% chance for double drops (fishing, woodcutting, skinning, foraging)
-const CAPE_SAVE_MATERIALS_CHANCE := 0.10  # 10% chance to save materials (fletching, herblore, crafting)
-const CAPE_SAVE_GEMS_CHANCE := 0.05  # 5% chance to save gems (jewelcrafting)
-const CAPE_EXTRA_XP_MULTIPLIER := 1.05  # 5% extra XP (agility, astrology)
-const CAPE_DOUBLE_XP_MULTIPLIER := 2.0  # 2x XP (firemaking)
-const CAPE_EXTRA_COINS_MULTIPLIER := 0.10  # 10% extra coins (thieving)
-
 ## Skill data registry
 var skills: Dictionary = {}  # skill_id: SkillData
 
@@ -355,104 +347,31 @@ func _process(delta: float) -> void:
 
 ## Complete a training action
 func _complete_action(method: TrainingMethodData) -> void:
-	# Calculate success rate with skill cape effects
-	var effective_success_rate := method.success_rate
+	var success := randf() <= method.success_rate
 	
-	# Apply skill cape effect: perfect cooking (100% success rate)
-	if UpgradeShop.has_cape_effect("perfect_cooking") and current_skill_id == "cooking":
-		effective_success_rate = 1.0
-	
-	# Apply skill cape effect: perfect iron smelting (100% success rate for iron)
-	if UpgradeShop.has_cape_effect("perfect_iron_smelting") and current_skill_id == "smithing":
-		if method.id == "iron_bar":
-			effective_success_rate = 1.0
-	
-	# Determine success based on effective success rate
-	var success := randf() <= effective_success_rate
-	
-	# Consume items (with skill cape effects for saving materials)
+	# Consume items
 	if not method.consumed_items.is_empty():
 		for item_id in method.consumed_items:
 			var amount: int = method.consumed_items[item_id]
-			
-			# Apply skill cape effects: chance to save materials
-			var should_consume := true
-			if UpgradeShop.has_cape_effect("save_fletching_materials") and current_skill_id == "fletching":
-				if randf() <= CAPE_SAVE_MATERIALS_CHANCE:
-					should_consume = false
-			elif UpgradeShop.has_cape_effect("save_herblore_ingredients") and current_skill_id == "herblore":
-				if randf() <= CAPE_SAVE_MATERIALS_CHANCE:
-					should_consume = false
-			elif UpgradeShop.has_cape_effect("save_gems") and current_skill_id == "jewelcrafting":
-				if randf() <= CAPE_SAVE_GEMS_CHANCE:
-					should_consume = false
-			elif UpgradeShop.has_cape_effect("save_crafting_hides") and current_skill_id == "crafting":
-				if randf() <= CAPE_SAVE_MATERIALS_CHANCE:
-					should_consume = false
-			
-			if should_consume:
-				if not Inventory.remove_item(item_id, amount):
-					stop_training()
-					return
+			if not Inventory.remove_item(item_id, amount):
+				stop_training()
+				return
 	
-	# Calculate XP with skill cape bonuses
-	var xp_to_grant := method.xp_per_action
-	
-	# Apply skill cape effect: double firemaking XP
-	if UpgradeShop.has_cape_effect("double_firemaking_xp") and current_skill_id == "firemaking":
-		xp_to_grant *= CAPE_DOUBLE_XP_MULTIPLIER
-	
-	# Apply skill cape effect: extra agility XP
-	if UpgradeShop.has_cape_effect("extra_agility_xp") and current_skill_id == "agility":
-		xp_to_grant *= CAPE_EXTRA_XP_MULTIPLIER
-	
-	# Apply skill cape effect: extra astrology XP
-	if UpgradeShop.has_cape_effect("extra_astrology_xp") and current_skill_id == "astrology":
-		xp_to_grant *= CAPE_EXTRA_XP_MULTIPLIER
-	
-	# Always give XP (with cape bonuses applied)
-	add_xp(current_skill_id, xp_to_grant)
+	# Always give XP
+	add_xp(current_skill_id, method.xp_per_action)
 	
 	# Produce items on success
 	if success and not method.produced_items.is_empty():
 		for item_id in method.produced_items:
 			var amount: int = method.produced_items[item_id]
 			Inventory.add_item(item_id, amount)
-			
-			# Apply skill cape effects: chance to get double items
-			var double_chance := 0.0
-			if UpgradeShop.has_cape_effect("double_fish") and current_skill_id == "fishing":
-				double_chance = CAPE_DOUBLE_DROP_CHANCE
-			elif UpgradeShop.has_cape_effect("double_logs") and current_skill_id == "woodcutting":
-				double_chance = CAPE_DOUBLE_DROP_CHANCE
-			elif UpgradeShop.has_cape_effect("double_hides") and current_skill_id == "skinning":
-				double_chance = CAPE_DOUBLE_DROP_CHANCE
-			elif UpgradeShop.has_cape_effect("double_foraging") and current_skill_id == "foraging":
-				double_chance = CAPE_DOUBLE_DROP_CHANCE
-			
-			if double_chance > 0.0 and randf() <= double_chance:
-				Inventory.add_item(item_id, amount)  # Add again for double
 	
 	# Check for bonus items on success (independent random roll for each)
 	if success and not method.bonus_items.is_empty():
 		for item_id in method.bonus_items:
 			var chance: float = method.bonus_items[item_id]
-			
-			# Apply skill cape effect: double gem chance for mining
-			if UpgradeShop.has_cape_effect("double_gem_chance") and current_skill_id == "mining":
-				chance *= 2.0
-			
 			if randf() <= chance:
 				Inventory.add_item(item_id, 1)
-	
-	# Apply skill cape effect: extra thieving coins
-	if success and UpgradeShop.has_cape_effect("extra_thieving_gold") and current_skill_id == "thieving":
-		# Check if this method produces coins by looking at produced_items
-		if method.produced_items.has("coins"):
-			# Add bonus coins
-			var bonus_coins := int(ceil(method.produced_items.get("coins", 0) * CAPE_EXTRA_COINS_MULTIPLIER))
-			if bonus_coins > 0:
-				Inventory.add_item("coins", bonus_coins)
 	
 	action_completed.emit(current_skill_id, method.id, success)
 

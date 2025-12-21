@@ -11,8 +11,6 @@ extends Resource
 @export var level_required: int = 1  # Skill level required to purchase
 @export var cost: int = 100  # Gold cost to purchase
 @export var speed_modifier: float = 0.1  # Percentage faster (0.1 = 10% faster)
-@export var is_skill_cape: bool = false  # True if this is a level 99 skill cape
-@export var cape_effect_id: String = ""  # Identifies the unique effect this cape provides
 
 ## Get formatted description with stats
 func get_stats_text() -> String:
