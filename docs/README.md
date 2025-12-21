@@ -5,6 +5,8 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 ## Features
 
 ### Core Gameplay
+- **Account System**: Login or create an account to manage your characters
+- **Multiple Characters**: Create up to 3 characters per account
 - **Skills (1-99)**: Level up skills from 1 to 99 using the classic RuneScape XP curve
 - **Training Methods**: Unlock new training methods at skill milestones
 - **Offline Progress**: Automatically calculates progress while you're away
@@ -37,12 +39,16 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 ### Running the Game
 1. Clone this repository
 2. Open the project in Godot
-3. Run the main scene (`scenes/main.tscn`)
+3. Run the main scene (starts at `scenes/login.tscn`)
+4. Create an account or login
+5. Create a character and start playing!
 
 ### Project Structure
 
 ```
 ├── autoload/               # Singleton scripts
+│   ├── account_manager.gd # Account authentication
+│   ├── character_manager.gd # Multi-character management
 │   ├── game_manager.gd    # XP, skills, training logic
 │   ├── inventory.gd       # Item management
 │   └── save_manager.gd    # Save/load, offline progress
@@ -53,6 +59,8 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 │       ├── skill_data.gd          # Skill resource class
 │       └── training_method_data.gd # Training method resource class
 ├── scenes/
+│   ├── login.tscn         # Login/account creation screen
+│   ├── startup.tscn       # Character selection screen
 │   └── main.tscn          # Main game scene
 ├── scripts/
 │   └── main.gd            # Main scene controller
@@ -76,6 +84,8 @@ XP required for each level: `sum of floor((level + 300 * 2^(level/7)) / 4)`
 ## Architecture
 
 ### Autoloads
+- **AccountManager**: Manages user accounts and authentication
+- **CharacterManager**: Manages character slots and selection
 - **GameManager**: Manages skill XP, levels, and training state
 - **Inventory**: Handles item storage and retrieval
 - **SaveManager**: Saves/loads game state and calculates offline progress

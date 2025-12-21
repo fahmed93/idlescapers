@@ -12,12 +12,13 @@ config_version=5
 
 config/name="IdleScapers"
 config/description="An idle game inspired by Melvor Idle/RuneScape with skills (1-99), training methods, and offline progress."
-run/main_scene="res://scenes/startup.tscn"
+run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
 [autoload]
 
+AccountManager="*res://autoload/account_manager.gd"
 CharacterManager="*res://autoload/character_manager.gd"
 GameManager="*res://autoload/game_manager.gd"
 Inventory="*res://autoload/inventory.gd"

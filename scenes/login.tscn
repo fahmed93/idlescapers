@@ -1,0 +1,214 @@
+[gd_scene load_steps=2 format=3 uid="uid://b7k3m9x5qn8r2"]
+
+[ext_resource type="Script" path="res://scripts/login.gd" id="1_login"]
+
+[node name="Login" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_login")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.12, 0.14, 0.18, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LoginPanel" type="PanelContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(500, 500)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/LoginPanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "IdleScapers"
+horizontal_alignment = 1
+
+[node name="SpacerTop" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="LoginLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Login"
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="UsernameLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
+layout_mode = 2
+text = "Username:"
+
+[node name="UsernameInput" type="LineEdit" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Enter username..."
+max_length = 20
+virtual_keyboard_enabled = true
+
+[node name="Spacer2" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="PasswordLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
+layout_mode = 2
+text = "Password:"
+
+[node name="PasswordInput" type="LineEdit" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Enter password..."
+max_length = 50
+secret = true
+virtual_keyboard_enabled = true
+
+[node name="Spacer3" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = " "
+horizontal_alignment = 1
+
+[node name="Spacer4" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="LoginButton" type="Button" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Login"
+
+[node name="Spacer5" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ShowCreateButton" type="Button" parent="CenterContainer/LoginPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Create Account"
+
+[node name="CreatePanel" type="PanelContainer" parent="CenterContainer"]
+visible = false
+custom_minimum_size = Vector2(500, 600)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/CreatePanel"]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "IdleScapers"
+horizontal_alignment = 1
+
+[node name="SpacerTop" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+
+[node name="CreateLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Create Account"
+horizontal_alignment = 1
+
+[node name="Spacer1" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="UsernameLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+text = "Username (min 3 characters):"
+
+[node name="UsernameInput" type="LineEdit" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Enter username..."
+max_length = 20
+virtual_keyboard_enabled = true
+
+[node name="Spacer2" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="PasswordLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+text = "Password (min 6 characters):"
+
+[node name="PasswordInput" type="LineEdit" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Enter password..."
+max_length = 50
+secret = true
+virtual_keyboard_enabled = true
+
+[node name="Spacer3" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="PasswordConfirmLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+text = "Confirm Password:"
+
+[node name="PasswordConfirmInput" type="LineEdit" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+placeholder_text = "Re-enter password..."
+max_length = 50
+secret = true
+virtual_keyboard_enabled = true
+
+[node name="Spacer4" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ErrorLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.3, 0.3, 1)
+theme_override_font_sizes/font_size = 14
+text = " "
+horizontal_alignment = 1
+
+[node name="Spacer5" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="CreateButton" type="Button" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Create Account"
+
+[node name="Spacer6" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ShowLoginButton" type="Button" parent="CenterContainer/CreatePanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "Back to Login"
