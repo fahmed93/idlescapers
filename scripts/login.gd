@@ -19,7 +19,7 @@ const STARTUP_SCENE := "res://scenes/startup.tscn"
 @onready var create_password: LineEdit = $CenterContainer/CreatePanel/VBoxContainer/PasswordInput
 @onready var create_password_confirm: LineEdit = $CenterContainer/CreatePanel/VBoxContainer/PasswordConfirmInput
 @onready var create_button: Button = $CenterContainer/CreatePanel/VBoxContainer/CreateButton
-@ontml:parameter name="create_error: Label = $CenterContainer/CreatePanel/VBoxContainer/ErrorLabel
+@onready var create_error: Label = $CenterContainer/CreatePanel/VBoxContainer/ErrorLabel
 @onready var show_login_button: Button = $CenterContainer/CreatePanel/VBoxContainer/ShowLoginButton
 
 func _ready() -> void:
