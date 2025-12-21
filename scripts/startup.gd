@@ -175,6 +175,8 @@ func _on_create_confirmed() -> void:
 		AccountManager.add_character_slot(selected_slot)
 		create_dialog.visible = false
 		_populate_character_slots()
+	else:
+		print("[Startup] Failed to create character '%s' in slot %d. Slot may already be occupied." % [character_name, selected_slot])
 
 func _on_create_canceled() -> void:
 	create_dialog.visible = false
