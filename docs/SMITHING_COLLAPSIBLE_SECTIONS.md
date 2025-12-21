@@ -34,7 +34,10 @@ The implementation adds three key components to `scripts/main.gd`:
    - `_create_action_panel()`: Extracted method to create individual training method panels
 
 ### UI Elements
-- **Section Headers**: Buttons with left-aligned text showing ▼ (expanded) or ▶ (collapsed) arrows
+- **Section Headers**: Buttons with left-aligned text showing:
+  - ▼ (expanded) or ▶ (collapsed) arrows
+  - Section name
+  - Item count in parentheses, e.g., "▼ Bronze (7)"
 - **Styling**: Gold color (#CCC080) matching smithing theme, 16px font size
 - **Default State**: All sections start expanded
 - **Persistence**: Section state is maintained during the session (resets on game restart)
