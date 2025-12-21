@@ -418,11 +418,12 @@ func _populate_smithing_action_list(skill: SkillData, player_level: int, speed_m
 	for section in sections:
 		var section_name: String = section["name"]
 		var is_expanded := smithing_expanded_sections.get(section_name, true)
+		var section_count := section["end"] - section["start"] + 1
 		
 		# Create section header button
 		var section_button := Button.new()
 		section_button.custom_minimum_size = Vector2(0, 40)
-		section_button.text = "%s %s" % ["▼" if is_expanded else "▶", section_name]
+		section_button.text = "%s %s (%d)" % ["▼" if is_expanded else "▶", section_name, section_count]
 		section_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 		section_button.add_theme_font_size_override("font_size", 16)
 		section_button.add_theme_color_override("font_color", Color(0.8, 0.7, 0.5))
