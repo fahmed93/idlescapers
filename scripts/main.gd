@@ -32,6 +32,11 @@ const PROGRESS_MARGIN := 20  # Margin around the grid
 const PROGRESS_SKILL_NAME_FONT_SIZE := 16  # Font size for skill names
 const PROGRESS_LEVEL_FONT_SIZE := 24  # Font size for level display
 
+# Smithing collapsible sections constants
+const EXPANDED_ARROW := "▼"  # Arrow symbol for expanded sections
+const COLLAPSED_ARROW := "▶"  # Arrow symbol for collapsed sections
+const SMITHING_SECTION_COLOR := Color(0.8, 0.7, 0.5)  # Gold color for smithing section headers
+
 @onready var skill_sidebar: VBoxContainer = $SkillSidebar/ScrollContainer/SidebarContent
 @onready var sidebar_panel: PanelContainer = $SkillSidebar
 @onready var sidebar_dim_overlay: ColorRect = $SidebarDimOverlay
@@ -90,6 +95,7 @@ var skill_summary_panel: PanelContainer = null
 var skill_summary_grid: GridContainer = null
 var settings_button: Button = null
 var settings_panel: PanelContainer = null
+var smithing_expanded_sections: Dictionary = {}  # section_name: bool (expanded state)
 
 func _ready() -> void:
 	_setup_signals()
@@ -305,84 +311,143 @@ func _populate_action_list() -> void:
 	# Get speed modifier once for all methods (used for time remaining calculation)
 	var speed_modifier := UpgradeShop.get_skill_speed_modifier(selected_skill_id)
 	
+	# Special handling for smithing skill with collapsible sections
+	if selected_skill_id == "smithing":
+		_populate_smithing_action_list(skill, player_level, speed_modifier)
+		return
+	
+	# Default handling for all other skills
 	for method in skill.training_methods:
-		var panel := PanelContainer.new()
-		panel.custom_minimum_size = Vector2(0, 80)
+		_create_action_panel(method, player_level, speed_modifier)
+
+## Create an action panel for a training method
+func _create_action_panel(method: TrainingMethodData, player_level: int, speed_modifier: float) -> PanelContainer:
+	var panel := PanelContainer.new()
+	panel.custom_minimum_size = Vector2(0, 80)
+	
+	var hbox := HBoxContainer.new()
+	hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	panel.add_child(hbox)
+	
+	var info_vbox := VBoxContainer.new()
+	info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	hbox.add_child(info_vbox)
+	
+	var name_label := Label.new()
+	name_label.text = method.name
+	if player_level < method.level_required:
+		name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
+	info_vbox.add_child(name_label)
+	
+	var stats_label := Label.new()
+	stats_label.text = method.get_stats_text(selected_skill_id)
+	stats_label.add_theme_font_size_override("font_size", 12)
+	stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
+	info_vbox.add_child(stats_label)
+	
+	# Show required/produced items
+	var items_text := ""
+	if not method.consumed_items.is_empty():
+		for item_id in method.consumed_items:
+			var item_data := Inventory.get_item_data(item_id)
+			var item_name: String = item_data.name if item_data else item_id
+			var player_count := Inventory.get_item_count(item_id)
+			var count_color := "green" if player_count > 0 else "red"
+			items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
+	if not method.produced_items.is_empty():
+		for item_id in method.produced_items:
+			var item_data := Inventory.get_item_data(item_id)
+			var item_name: String = item_data.name if item_data else item_id
+			items_text += "→ %s " % item_name
+	
+	if not items_text.is_empty():
+		var items_label := RichTextLabel.new()
+		items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
+		items_label.bbcode_enabled = true
+		items_label.text = items_text.strip_edges()
+		items_label.fit_content = true
+		items_label.scroll_active = false
+		items_label.add_theme_font_size_override("normal_font_size", 11)
+		items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
+		info_vbox.add_child(items_label)
+	
+	# Show time until items run out (if method consumes items)
+	if not method.consumed_items.is_empty():
+		var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
+		if time_remaining >= 0:
+			var time_label := Label.new()
+			time_label.text = TrainingMethodData.format_time_remaining(time_remaining)
+			time_label.add_theme_font_size_override("font_size", 11)
+			if time_remaining == 0:
+				time_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
+			elif time_remaining < 60:
+				time_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+			else:
+				time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.3))
+			info_vbox.add_child(time_label)
+	
+	var train_button := Button.new()
+	train_button.custom_minimum_size = Vector2(80, 40)
+	
+	if player_level >= method.level_required:
+		train_button.text = "Train"
+		train_button.pressed.connect(_on_train_button_pressed.bind(method.id))
+	else:
+		train_button.text = "Lv %d" % method.level_required
+		train_button.disabled = true
+	
+	hbox.add_child(train_button)
+	action_buttons[method.id] = train_button
+	action_list.add_child(panel)
+	return panel
+
+## Populate smithing action list with collapsible sections
+func _populate_smithing_action_list(skill: SkillData, player_level: int, speed_modifier: float) -> void:
+	# Define sections for smithing
+	var sections := [
+		{"name": "Bars", "start": 0, "end": 7},  # bronze_bar through runite_bar
+		{"name": "Bronze", "start": 8, "end": 14},  # bronze items
+		{"name": "Iron", "start": 15, "end": 21},  # iron items
+		{"name": "Steel", "start": 22, "end": 28},  # steel items
+		{"name": "Mithril", "start": 29, "end": 35},  # mithril items
+		{"name": "Adamantite", "start": 36, "end": 42},  # adamantite items
+		{"name": "Runite", "start": 43, "end": 49},  # runite items
+	]
+	
+	# Initialize expanded state (default all expanded)
+	for section in sections:
+		if not smithing_expanded_sections.has(section["name"]):
+			smithing_expanded_sections[section["name"]] = true
+	
+	# Create sections
+	for section in sections:
+		var section_name: String = section["name"]
+		var is_expanded := smithing_expanded_sections.get(section_name, true)
+		var section_count := section["end"] - section["start"] + 1
 		
-		var hbox := HBoxContainer.new()
-		hbox.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		panel.add_child(hbox)
+		# Create section header button
+		var section_button := Button.new()
+		section_button.custom_minimum_size = Vector2(0, 40)
+		section_button.text = "%s %s (%d)" % [EXPANDED_ARROW if is_expanded else COLLAPSED_ARROW, section_name, section_count]
+		section_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		section_button.add_theme_font_size_override("font_size", 16)
+		section_button.add_theme_color_override("font_color", SMITHING_SECTION_COLOR)
+		section_button.pressed.connect(_on_smithing_section_toggled.bind(section_name))
+		action_list.add_child(section_button)
 		
-		var info_vbox := VBoxContainer.new()
-		info_vbox.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		hbox.add_child(info_vbox)
-		
-		var name_label := Label.new()
-		name_label.text = method.name
-		if player_level < method.level_required:
-			name_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-		info_vbox.add_child(name_label)
-		
-		var stats_label := Label.new()
-		stats_label.text = method.get_stats_text(selected_skill_id)
-		stats_label.add_theme_font_size_override("font_size", 12)
-		stats_label.add_theme_color_override("font_color", Color(0.7, 0.7, 0.7))
-		info_vbox.add_child(stats_label)
-		
-		# Show required/produced items
-		var items_text := ""
-		if not method.consumed_items.is_empty():
-			for item_id in method.consumed_items:
-				var item_data := Inventory.get_item_data(item_id)
-				var item_name: String = item_data.name if item_data else item_id
-				var player_count := Inventory.get_item_count(item_id)
-				var count_color := "green" if player_count > 0 else "red"
-				items_text += "Uses: %s x%d [color=%s](%d owned)[/color] " % [item_name, method.consumed_items[item_id], count_color, player_count]
-		if not method.produced_items.is_empty():
-			for item_id in method.produced_items:
-				var item_data := Inventory.get_item_data(item_id)
-				var item_name: String = item_data.name if item_data else item_id
-				items_text += "→ %s " % item_name
-		
-		if not items_text.is_empty():
-			var items_label := RichTextLabel.new()
-			items_label.name = "ItemsLabel_%s" % method.id  # Add unique name for targeted updates
-			items_label.bbcode_enabled = true
-			items_label.text = items_text.strip_edges()
-			items_label.fit_content = true
-			items_label.scroll_active = false
-			items_label.add_theme_font_size_override("normal_font_size", 11)
-			items_label.add_theme_color_override("default_color", Color(0.6, 0.8, 0.6))
-			info_vbox.add_child(items_label)
-		
-		# Show time until items run out (if method consumes items)
-		if not method.consumed_items.is_empty():
-			var time_remaining := method.calculate_time_until_out_of_items(speed_modifier)
-			if time_remaining >= 0:
-				var time_label := Label.new()
-				time_label.text = TrainingMethodData.format_time_remaining(time_remaining)
-				time_label.add_theme_font_size_override("font_size", 11)
-				if time_remaining == 0:
-					time_label.add_theme_color_override("font_color", Color(1.0, 0.3, 0.3))
-				elif time_remaining < 60:
-					time_label.add_theme_color_override("font_color", Color(1.0, 0.8, 0.3))
+		# Create container for methods in this section
+		if is_expanded:
+			for i in range(section["start"], section["end"] + 1):
+				if i < skill.training_methods.size():
+					var method: TrainingMethodData = skill.training_methods[i]
+					_create_action_panel(method, player_level, speed_modifier)
 				else:
-					time_label.add_theme_color_override("font_color", Color(0.8, 0.8, 0.3))
-				info_vbox.add_child(time_label)
-		
-		var train_button := Button.new()
-		train_button.custom_minimum_size = Vector2(80, 40)
-		
-		if player_level >= method.level_required:
-			train_button.text = "Train"
-			train_button.pressed.connect(_on_train_button_pressed.bind(method.id))
-		else:
-			train_button.text = "Lv %d" % method.level_required
-			train_button.disabled = true
-		
-		hbox.add_child(train_button)
-		action_buttons[method.id] = train_button
-		action_list.add_child(panel)
+					push_warning("Smithing section '%s' has index %d out of bounds (total methods: %d)" % [section_name, i, skill.training_methods.size()])
+
+## Handle smithing section toggle
+func _on_smithing_section_toggled(section_name: String) -> void:
+	smithing_expanded_sections[section_name] = not smithing_expanded_sections.get(section_name, true)
+	_populate_action_list()  # Rebuild the list
 
 func _on_train_button_pressed(method_id: String) -> void:
 	GameManager.start_training(selected_skill_id, method_id)
