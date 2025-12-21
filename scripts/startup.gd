@@ -12,6 +12,8 @@ const MAX_CHARACTERS := 3
 @onready var create_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CreateButton
 @onready var cancel_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CancelButton
 @onready var delete_dialog: AcceptDialog = $DeleteConfirmDialog
+@onready var account_label: Label = $CenterContainer/MainPanel/VBoxContainer/AccountLabel
+@onready var logout_button: Button = $CenterContainer/MainPanel/VBoxContainer/LogoutButton
 
 var selected_slot: int = -1
 var slot_buttons: Array[Button] = []
@@ -32,6 +34,9 @@ func _ready() -> void:
 	
 	print("[Startup] User logged in: %s" % AccountManager.current_username)
 	
+	# Update account label
+	account_label.text = "Logged in as: %s" % AccountManager.current_username
+	
 	# Setup dialogs
 	create_dialog.visible = false
 	delete_dialog.visible = false
@@ -40,6 +45,7 @@ func _ready() -> void:
 	create_button.pressed.connect(_on_create_confirmed)
 	cancel_button.pressed.connect(_on_create_canceled)
 	delete_dialog.confirmed.connect(_on_delete_confirmed)
+	logout_button.pressed.connect(_on_logout_pressed)
 	
 	# Populate character slots
 	_populate_character_slots()
@@ -202,3 +208,7 @@ func _on_character_created(slot: int, character_name: String) -> void:
 
 func _on_character_deleted(slot: int) -> void:
 	print("[Startup] Character deleted from slot %d" % slot)
+
+func _on_logout_pressed() -> void:
+	AccountManager.logout()
+	get_tree().change_scene_to_file(LOGIN_SCENE)
