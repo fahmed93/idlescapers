@@ -27,6 +27,8 @@ func _load_upgrades() -> void:
 		"A powerful rod that makes fishing 50% faster.", 60, 10000, 0.50)
 	_add_upgrade("crystal_fishing_rod", "Crystal Fishing Rod", "fishing",
 		"A magical rod that makes fishing 70% faster.", 80, 25000, 0.70)
+	_add_upgrade("fishing_cape", "Fishing Cape of Mastery", "fishing",
+		"A prestigious cape worn by master anglers. Grants perfect technique, doubling fishing speed.", 99, 99000, 1.0)
 	
 	# Woodcutting upgrades
 	_add_upgrade("bronze_axe", "Bronze Axe", "woodcutting",
@@ -39,6 +41,8 @@ func _load_upgrades() -> void:
 		"A lightweight axe that makes woodcutting 40% faster.", 45, 5000, 0.40)
 	_add_upgrade("dragon_axe", "Dragon Axe", "woodcutting",
 		"A powerful axe that makes woodcutting 60% faster.", 61, 15000, 0.60)
+	_add_upgrade("woodcutting_cape", "Woodcutting Cape of Mastery", "woodcutting",
+		"A prestigious cape worn by legendary lumberjacks. Each swing becomes effortless, doubling woodcutting speed.", 99, 99000, 1.0)
 	
 	# Mining upgrades
 	_add_upgrade("bronze_pickaxe", "Bronze Pickaxe", "mining",
@@ -51,6 +55,8 @@ func _load_upgrades() -> void:
 		"A lightweight pickaxe that makes mining 40% faster.", 45, 5000, 0.40)
 	_add_upgrade("dragon_pickaxe", "Dragon Pickaxe", "mining",
 		"A powerful pickaxe that makes mining 60% faster.", 61, 15000, 0.60)
+	_add_upgrade("mining_cape", "Mining Cape of Mastery", "mining",
+		"A prestigious cape worn by master miners. Strikes become precise and powerful, doubling mining speed.", 99, 99000, 1.0)
 	
 	# Cooking upgrades
 	_add_upgrade("cooking_gloves", "Cooking Gloves", "cooking",
@@ -63,6 +69,8 @@ func _load_upgrades() -> void:
 		"A magical oven that makes cooking 50% faster.", 70, 12000, 0.50)
 	_add_upgrade("gourmet_toolkit", "Gourmet Toolkit", "cooking",
 		"Professional tools that make cooking 65% faster.", 85, 20000, 0.65)
+	_add_upgrade("cooking_cape", "Cooking Cape of Mastery", "cooking",
+		"A prestigious cape worn by culinary masters. Your dishes cook with perfection, doubling cooking speed.", 99, 99000, 1.0)
 	
 	# Fletching upgrades
 	_add_upgrade("fletching_knife", "Fletching Knife", "fletching",
@@ -75,6 +83,8 @@ func _load_upgrades() -> void:
 		"A refined workbench that makes fletching 55% faster.", 75, 15000, 0.55)
 	_add_upgrade("artisan_bowstring", "Artisan Bowstring Tool", "fletching",
 		"A specialized tool that makes fletching 70% faster.", 90, 30000, 0.70)
+	_add_upgrade("fletching_cape", "Fletching Cape of Mastery", "fletching",
+		"A prestigious cape worn by master fletchers. Your hands move with supernatural dexterity, doubling fletching speed.", 99, 99000, 1.0)
 	
 	# Firemaking upgrades
 	_add_upgrade("tinderbox", "Quality Tinderbox", "firemaking",
@@ -87,6 +97,8 @@ func _load_upgrades() -> void:
 		"A magical tool that makes firemaking 50% faster.", 75, 20000, 0.50)
 	_add_upgrade("eternal_flame", "Eternal Flame", "firemaking",
 		"A mystical flame that makes firemaking 80% faster.", 92, 40000, 0.80)
+	_add_upgrade("firemaking_cape", "Firemaking Cape of Mastery", "firemaking",
+		"A prestigious cape worn by pyromancy masters. Flames obey your will instantly, doubling firemaking speed.", 99, 99000, 1.0)
 	
 	# Smithing upgrades
 	_add_upgrade("smithing_hammer", "Smithing Hammer", "smithing",
@@ -99,6 +111,8 @@ func _load_upgrades() -> void:
 		"A superior forge that makes smithing 45% faster.", 65, 10000, 0.45)
 	_add_upgrade("dwarven_smithy", "Dwarven Smithy", "smithing",
 		"A legendary workshop that makes smithing 65% faster.", 85, 25000, 0.65)
+	_add_upgrade("smithing_cape", "Smithing Cape of Mastery", "smithing",
+		"A prestigious cape worn by legendary blacksmiths. Each strike resonates perfectly, doubling smithing speed.", 99, 99000, 1.0)
 	
 	# Herblore upgrades
 	_add_upgrade("mortar_pestle", "Mortar & Pestle", "herblore",
@@ -111,6 +125,8 @@ func _load_upgrades() -> void:
 		"A magical cauldron that makes herblore 50% faster.", 70, 12000, 0.50)
 	_add_upgrade("master_herbalist_kit", "Master Herbalist Kit", "herblore",
 		"Complete set that makes herblore 70% faster.", 90, 30000, 0.70)
+	_add_upgrade("herblore_cape", "Herblore Cape of Mastery", "herblore",
+		"A prestigious cape worn by grand alchemists. Your potions brew with mystical efficiency, doubling herblore speed.", 99, 99000, 1.0)
 	
 	# Thieving upgrades
 	_add_upgrade("lockpicks", "Lockpicks", "thieving",
@@ -123,6 +139,8 @@ func _load_upgrades() -> void:
 		"A concealing cloak that makes thieving 50% faster.", 65, 11000, 0.50)
 	_add_upgrade("master_thief_outfit", "Master Thief Outfit", "thieving",
 		"Complete outfit that makes thieving 75% faster.", 88, 28000, 0.75)
+	_add_upgrade("thieving_cape", "Thieving Cape of Mastery", "thieving",
+		"A prestigious cape worn by master thieves. You move like a shadow incarnate, doubling thieving speed.", 99, 99000, 1.0)
 	
 	# Agility upgrades
 	_add_upgrade("running_shoes", "Running Shoes", "agility",
@@ -135,6 +153,8 @@ func _load_upgrades() -> void:
 		"Professional equipment that makes agility 45% faster.", 68, 13000, 0.45)
 	_add_upgrade("graceful_outfit", "Graceful Outfit", "agility",
 		"Lightweight outfit that makes agility 65% faster.", 90, 32000, 0.65)
+	_add_upgrade("agility_cape", "Agility Cape of Mastery", "agility",
+		"A prestigious cape worn by legendary athletes. Your body moves with perfect balance and grace, doubling agility speed.", 99, 99000, 1.0)
 	
 	# Astrology upgrades
 	_add_upgrade("basic_telescope", "Basic Telescope", "astrology",
@@ -147,6 +167,8 @@ func _load_upgrades() -> void:
 		"A dedicated space that makes astrology 55% faster.", 72, 16000, 0.55)
 	_add_upgrade("celestial_globe", "Celestial Globe", "astrology",
 		"A mystical globe that makes astrology 80% faster.", 95, 45000, 0.80)
+	_add_upgrade("astrology_cape", "Astrology Cape of Mastery", "astrology",
+		"A prestigious cape worn by cosmic sages. The stars align at your command, doubling astrology speed.", 99, 99000, 1.0)
 	
 	# Jewelcrafting upgrades
 	_add_upgrade("jewelers_loupe", "Jeweler's Loupe", "jewelcrafting",
@@ -159,6 +181,8 @@ func _load_upgrades() -> void:
 		"A professional bench that makes jewelcrafting 50% faster.", 69, 14000, 0.50)
 	_add_upgrade("enchanted_tools", "Enchanted Tools", "jewelcrafting",
 		"Magical tools that make jewelcrafting 70% faster.", 91, 35000, 0.70)
+	_add_upgrade("jewelcrafting_cape", "Jewelcrafting Cape of Mastery", "jewelcrafting",
+		"A prestigious cape worn by master jewelers. Every cut becomes flawless, doubling jewelcrafting speed.", 99, 99000, 1.0)
 	
 	# Skinning upgrades
 	_add_upgrade("skinning_knife", "Skinning Knife", "skinning",
@@ -171,6 +195,8 @@ func _load_upgrades() -> void:
 		"Professional tools that make skinning 45% faster.", 66, 11500, 0.45)
 	_add_upgrade("legendary_flayer", "Legendary Flayer", "skinning",
 		"A mythical blade that makes skinning 65% faster.", 87, 29000, 0.65)
+	_add_upgrade("skinning_cape", "Skinning Cape of Mastery", "skinning",
+		"A prestigious cape worn by master hunters. Your blade glides through hide effortlessly, doubling skinning speed.", 99, 99000, 1.0)
 	
 	# Foraging upgrades
 	_add_upgrade("wicker_basket", "Wicker Basket", "foraging",
@@ -183,6 +209,8 @@ func _load_upgrades() -> void:
 		"A mystical amulet that makes foraging 50% faster.", 67, 13500, 0.50)
 	_add_upgrade("druid_staff", "Druid's Staff", "foraging",
 		"A powerful staff that makes foraging 70% faster.", 89, 31000, 0.70)
+	_add_upgrade("foraging_cape", "Foraging Cape of Mastery", "foraging",
+		"A prestigious cape worn by nature's chosen. Plants reveal themselves to you instantly, doubling foraging speed.", 99, 99000, 1.0)
 	
 	# Crafting upgrades
 	_add_upgrade("crafting_needle", "Crafting Needle", "crafting",
@@ -195,6 +223,8 @@ func _load_upgrades() -> void:
 		"A versatile bench that makes crafting 55% faster.", 71, 15500, 0.55)
 	_add_upgrade("artificers_toolkit", "Artificer's Toolkit", "crafting",
 		"Magical tools that make crafting 75% faster.", 93, 38000, 0.75)
+	_add_upgrade("crafting_cape", "Crafting Cape of Mastery", "crafting",
+		"A prestigious cape worn by legendary artisans. Your crafts form with supernatural precision, doubling crafting speed.", 99, 99000, 1.0)
 
 ## Helper to add upgrade definition
 func _add_upgrade(id: String, display_name: String, skill_id: String, 
