@@ -57,13 +57,13 @@ layout_mode = 2
 
 [node name="UsernameLabel" type="Label" parent="CenterContainer/LoginPanel/VBoxContainer"]
 layout_mode = 2
-text = "Username:"
+text = "Email:"
 
 [node name="UsernameInput" type="LineEdit" parent="CenterContainer/LoginPanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-placeholder_text = "Enter username..."
-max_length = 20
+placeholder_text = "Enter email..."
+max_length = 100
 virtual_keyboard_enabled = true
 
 [node name="Spacer2" type="Control" parent="CenterContainer/LoginPanel/VBoxContainer"]
@@ -142,13 +142,13 @@ layout_mode = 2
 
 [node name="UsernameLabel" type="Label" parent="CenterContainer/CreatePanel/VBoxContainer"]
 layout_mode = 2
-text = "Username (min 3 characters):"
+text = "Email:"
 
 [node name="UsernameInput" type="LineEdit" parent="CenterContainer/CreatePanel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-placeholder_text = "Enter username..."
-max_length = 20
+placeholder_text = "Enter email..."
+max_length = 100
 virtual_keyboard_enabled = true
 
 [node name="Spacer2" type="Control" parent="CenterContainer/CreatePanel/VBoxContainer"]

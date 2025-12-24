@@ -1,5 +1,5 @@
 ## Login screen controller
-## Handles user login and account creation
+## Handles user login and account creation via Firebase
 extends Control
 
 const STARTUP_SCENE := "res://scenes/startup.tscn"
@@ -21,6 +21,8 @@ const STARTUP_SCENE := "res://scenes/startup.tscn"
 @onready var create_button: Button = $CenterContainer/CreatePanel/VBoxContainer/CreateButton
 @onready var create_error: Label = $CenterContainer/CreatePanel/VBoxContainer/ErrorLabel
 @onready var show_login_button: Button = $CenterContainer/CreatePanel/VBoxContainer/ShowLoginButton
+
+var is_processing: bool = false
 
 func _ready() -> void:
 	# Show login panel by default
@@ -45,26 +47,34 @@ func _ready() -> void:
 	login_password.secret = true
 	create_password.secret = true
 	create_password_confirm.secret = true
+	
+	# Connect to AccountManager signals for async Firebase responses
+	AccountManager.logged_in.connect(_on_logged_in)
+	AccountManager.account_created.connect(_on_account_created)
+	AccountManager.auth_error.connect(_on_auth_error)
 
 func _on_login_pressed() -> void:
+	if is_processing:
+		return
+	
 	login_error.text = ""
 	
-	var username := login_username.text.strip_edges()
+	var email := login_username.text.strip_edges()
 	var password := login_password.text
 	
-	if username.is_empty():
-		login_error.text = "Username cannot be empty"
+	if email.is_empty():
+		login_error.text = "Email cannot be empty"
 		return
 	
 	if password.is_empty():
 		login_error.text = "Password cannot be empty"
 		return
 	
-	if AccountManager.login(username, password):
-		# Successfully logged in, go to character selection
-		get_tree().change_scene_to_file(STARTUP_SCENE)
-	else:
-		login_error.text = "Invalid username or password"
+	# Start Firebase login (async)
+	is_processing = true
+	login_button.disabled = true
+	login_error.text = "Logging in..."
+	AccountManager.login(email, password)
 
 func _on_login_text_submitted(_text: String) -> void:
 	_on_login_pressed()
@@ -76,18 +86,22 @@ func _on_show_create_pressed() -> void:
 	create_error.text = ""
 
 func _on_create_pressed() -> void:
+	if is_processing:
+		return
+	
 	create_error.text = ""
 	
-	var username := create_username.text.strip_edges()
+	var email := create_username.text.strip_edges()
 	var password := create_password.text
 	var password_confirm := create_password_confirm.text
 	
-	if username.is_empty():
-		create_error.text = "Username cannot be empty"
+	if email.is_empty():
+		create_error.text = "Email cannot be empty"
 		return
 	
-	if username.length() < 3:
-		create_error.text = "Username must be at least 3 characters"
+	# Basic email validation
+	if not "@" in email or not "." in email:
+		create_error.text = "Please enter a valid email address"
 		return
 	
 	if password.is_empty():
@@ -102,15 +116,11 @@ func _on_create_pressed() -> void:
 		create_error.text = "Passwords do not match"
 		return
 	
-	if AccountManager.create_account(username, password):
-		# Account created successfully, now login automatically
-		if AccountManager.login(username, password):
-			get_tree().change_scene_to_file(STARTUP_SCENE)
-		else:
-			# This should not happen, but handle it just in case
-			create_error.text = "Account created but login failed. Please try logging in manually."
-	else:
-		create_error.text = "Username already exists"
+	# Start Firebase account creation (async)
+	is_processing = true
+	create_button.disabled = true
+	create_error.text = "Creating account..."
+	AccountManager.create_account(email, password)
 
 func _on_create_text_submitted(_text: String) -> void:
 	_on_create_pressed()
@@ -120,3 +130,30 @@ func _on_show_login_pressed() -> void:
 	login_panel.visible = true
 	login_username.grab_focus()
 	login_error.text = ""
+
+## Called when AccountManager successfully logs in
+func _on_logged_in(email: String) -> void:
+	print("[Login] Successfully logged in: %s" % email)
+	is_processing = false
+	# Successfully logged in, go to character selection
+	get_tree().change_scene_to_file(STARTUP_SCENE)
+
+## Called when AccountManager successfully creates account
+func _on_account_created(email: String) -> void:
+	print("[Login] Account created: %s" % email)
+	is_processing = false
+	# Account created, Firebase auto-logs in, so go to character selection
+	get_tree().change_scene_to_file(STARTUP_SCENE)
+
+## Called when AccountManager encounters an auth error
+func _on_auth_error(error_message: String) -> void:
+	print("[Login] Auth error: %s" % error_message)
+	is_processing = false
+	login_button.disabled = false
+	create_button.disabled = false
+	
+	# Show error in appropriate panel
+	if login_panel.visible:
+		login_error.text = error_message
+	elif create_panel.visible:
+		create_error.text = error_message

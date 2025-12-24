@@ -1,45 +1,61 @@
 ## AccountManager Autoload
-## Handles user account management (login, registration, authentication)
+## Handles user account management via Firebase Authentication
 extends Node
 
-const ACCOUNTS_FILE := "user://idlescapers_accounts.json"
+const CHARACTER_SLOTS_FILE := "user://idlescapers_character_slots.json"
 
-signal account_created(username: String)
-signal logged_in(username: String)
+signal account_created(email: String)
+signal logged_in(email: String)
 signal logged_out()
+signal auth_error(error_message: String)
 
-## Account data structure
+## Character slots data structure
 ## {
-##   "username": String,
-##   "password_hash": String,  # Hashed password for basic security
-##   "created_at": int (unix timestamp),
-##   "character_slots": Array[int]  # List of character slot indices owned by this account
+##   "user_id": {
+##     "character_slots": Array[int]  # List of character slot indices owned by this user
+##   }
 ## }
-var accounts: Dictionary = {}  # username: account_data
+var character_slots_data: Dictionary = {}
 
-## Currently logged in username (empty string means no one is logged in)
+## Currently logged in user email (empty string means no one is logged in)
 var current_username: String = ""
 
-## Simple salt for password hashing (in a real production app, use per-user salts)
-const PASSWORD_SALT := "idlescapers_2024_salt"
+## Current Firebase user ID
+var current_user_id: String = ""
+
+## Firebase authentication state
+var firebase_auth = null
 
 func _ready() -> void:
-	load_accounts()
+	# Wait for Firebase to be ready
+	await get_tree().process_frame
+	
+	if Firebase and Firebase.Auth:
+		firebase_auth = Firebase.Auth
+		
+		# Connect to Firebase auth signals
+		firebase_auth.signup_succeeded.connect(_on_signup_succeeded)
+		firebase_auth.signup_failed.connect(_on_signup_failed)
+		firebase_auth.login_succeeded.connect(_on_login_succeeded)
+		firebase_auth.login_failed.connect(_on_login_failed)
+		firebase_auth.logout_succeeded.connect(_on_logout_succeeded)
+		
+		print("[AccountManager] Firebase authentication initialized.")
+	else:
+		print("[AccountManager] ERROR: Firebase not available! Check plugin configuration.")
+	
+	load_character_slots()
 
-## Hash a password with salt for storage
-func _hash_password(password: String) -> String:
-	return (password + PASSWORD_SALT).sha256_text()
-
-## Load accounts from file
-func load_accounts() -> void:
-	if not FileAccess.file_exists(ACCOUNTS_FILE):
-		print("[AccountManager] No accounts file found, starting fresh.")
-		accounts.clear()
+## Load character slots from file
+func load_character_slots() -> void:
+	if not FileAccess.file_exists(CHARACTER_SLOTS_FILE):
+		print("[AccountManager] No character slots file found, starting fresh.")
+		character_slots_data.clear()
 		return
 	
-	var file := FileAccess.open(ACCOUNTS_FILE, FileAccess.READ)
+	var file := FileAccess.open(CHARACTER_SLOTS_FILE, FileAccess.READ)
 	if not file:
-		print("[AccountManager] Failed to open accounts file.")
+		print("[AccountManager] Failed to open character slots file.")
 		return
 	
 	var json_string := file.get_as_text()
@@ -48,169 +64,177 @@ func load_accounts() -> void:
 	var json := JSON.new()
 	var error := json.parse(json_string)
 	if error != OK:
-		print("[AccountManager] Failed to parse accounts file: ", json.get_error_message())
+		print("[AccountManager] Failed to parse character slots file: ", json.get_error_message())
 		return
 	
-	accounts = json.data
-	print("[AccountManager] Loaded %d accounts." % accounts.size())
+	character_slots_data = json.data
+	print("[AccountManager] Loaded character slots data.")
 
-## Save accounts to file
-func save_accounts() -> void:
-	var file := FileAccess.open(ACCOUNTS_FILE, FileAccess.WRITE)
+## Save character slots to file
+func save_character_slots() -> void:
+	var file := FileAccess.open(CHARACTER_SLOTS_FILE, FileAccess.WRITE)
 	if file:
-		file.store_string(JSON.stringify(accounts, "\t"))
+		file.store_string(JSON.stringify(character_slots_data, "\t"))
 		file.close()
-		print("[AccountManager] Accounts saved.")
+		print("[AccountManager] Character slots saved.")
 
-## Create a new account
-func create_account(username: String, password: String) -> bool:
-	var clean_username := username.strip_edges()
+## Create a new account using Firebase
+func create_account(email: String, password: String) -> void:
+	var clean_email := email.strip_edges()
 	
-	if clean_username.is_empty():
-		print("[AccountManager] Username cannot be empty.")
-		return false
+	if clean_email.is_empty():
+		auth_error.emit("Email cannot be empty")
+		print("[AccountManager] Email cannot be empty.")
+		return
 	
 	if password.is_empty():
+		auth_error.emit("Password cannot be empty")
 		print("[AccountManager] Password cannot be empty.")
-		return false
-	
-	if clean_username.length() < 3:
-		print("[AccountManager] Username must be at least 3 characters.")
-		return false
+		return
 	
 	if password.length() < 6:
+		auth_error.emit("Password must be at least 6 characters")
 		print("[AccountManager] Password must be at least 6 characters.")
-		return false
+		return
 	
-	if accounts.has(clean_username):
-		print("[AccountManager] Username already exists: %s" % clean_username)
-		return false
+	if not firebase_auth:
+		auth_error.emit("Firebase authentication not available")
+		print("[AccountManager] Firebase authentication not available.")
+		return
 	
-	var now := int(Time.get_unix_time_from_system())
-	var password_hash := _hash_password(password)
-	
-	var account_data := {
-		"username": clean_username,
-		"password_hash": password_hash,
-		"created_at": now,
-		"character_slots": []
-	}
-	
-	accounts[clean_username] = account_data
-	
-	# If this is the first account, claim any orphaned characters (e.g., from migration)
-	if accounts.size() == 1:
-		_claim_orphaned_characters(account_data)
-	
-	save_accounts()
-	account_created.emit(clean_username)
-	print("[AccountManager] Created account: %s" % clean_username)
-	return true
+	# Use Firebase signup
+	firebase_auth.signup_with_email_and_password(clean_email, password)
+	print("[AccountManager] Creating account for: %s" % clean_email)
 
-## Login to an existing account
-func login(username: String, password: String) -> bool:
-	var clean_username := username.strip_edges()
+## Login to an existing account using Firebase
+func login(email: String, password: String) -> void:
+	var clean_email := email.strip_edges()
 	
-	if not accounts.has(clean_username):
-		print("[AccountManager] Account not found: %s" % clean_username)
-		return false
+	if not firebase_auth:
+		auth_error.emit("Firebase authentication not available")
+		print("[AccountManager] Firebase authentication not available.")
+		return
 	
-	var account_data: Dictionary = accounts[clean_username]
-	var password_hash := _hash_password(password)
-	
-	if account_data["password_hash"] != password_hash:
-		print("[AccountManager] Invalid password for: %s" % clean_username)
-		return false
-	
-	current_username = clean_username
-	logged_in.emit(clean_username)
-	print("[AccountManager] Logged in: %s" % clean_username)
-	return true
+	# Use Firebase login
+	firebase_auth.login_with_email_and_password(clean_email, password)
+	print("[AccountManager] Attempting login for: %s" % clean_email)
 
 ## Logout from current account
 func logout() -> void:
+	if not firebase_auth:
+		print("[AccountManager] Firebase authentication not available.")
+		return
+	
 	if current_username.is_empty():
 		print("[AccountManager] No one is logged in.")
 		return
 	
-	print("[AccountManager] Logged out: %s" % current_username)
-	current_username = ""
-	logged_out.emit()
+	firebase_auth.logout()
+	print("[AccountManager] Logging out: %s" % current_username)
 
 ## Check if a user is currently logged in
 func is_logged_in() -> bool:
-	return not current_username.is_empty()
+	return not current_username.is_empty() and not current_user_id.is_empty()
 
 ## Get current account data
 func get_current_account() -> Dictionary:
-	if current_username.is_empty():
+	if current_user_id.is_empty():
 		return {}
-	return accounts.get(current_username, {})
+	return character_slots_data.get(current_user_id, {})
 
 ## Add a character slot to current account
 func add_character_slot(slot: int) -> void:
-	if current_username.is_empty():
+	if current_user_id.is_empty():
 		print("[AccountManager] No one is logged in.")
 		return
 	
-	var account_data: Dictionary = accounts[current_username]
-	var slots: Array = account_data.get("character_slots", [])
+	if not character_slots_data.has(current_user_id):
+		character_slots_data[current_user_id] = {"character_slots": []}
+	
+	var user_data: Dictionary = character_slots_data[current_user_id]
+	var slots: Array = user_data.get("character_slots", [])
 	
 	if not slots.has(slot):
 		slots.append(slot)
-		account_data["character_slots"] = slots
-		save_accounts()
-		print("[AccountManager] Added slot %d to account: %s" % [slot, current_username])
+		user_data["character_slots"] = slots
+		save_character_slots()
+		print("[AccountManager] Added slot %d to user: %s" % [slot, current_username])
 
 ## Remove a character slot from current account
 func remove_character_slot(slot: int) -> void:
-	if current_username.is_empty():
+	if current_user_id.is_empty():
 		print("[AccountManager] No one is logged in.")
 		return
 	
-	var account_data: Dictionary = accounts[current_username]
-	var slots: Array = account_data.get("character_slots", [])
+	if not character_slots_data.has(current_user_id):
+		return
+	
+	var user_data: Dictionary = character_slots_data[current_user_id]
+	var slots: Array = user_data.get("character_slots", [])
 	
 	var index := slots.find(slot)
 	if index >= 0:
 		slots.remove_at(index)
-		account_data["character_slots"] = slots
-		save_accounts()
-		print("[AccountManager] Removed slot %d from account: %s" % [slot, current_username])
+		user_data["character_slots"] = slots
+		save_character_slots()
+		print("[AccountManager] Removed slot %d from user: %s" % [slot, current_username])
 
 ## Get character slots for current account
 func get_character_slots() -> Array:
-	if current_username.is_empty():
+	if current_user_id.is_empty():
 		return []
 	
-	var account_data: Dictionary = accounts.get(current_username, {})
-	return account_data.get("character_slots", [])
-
-## Check if account exists
-func account_exists(username: String) -> bool:
-	return accounts.has(username.strip_edges())
-
-## Claim orphaned characters (characters not linked to any account)
-## This is called when creating the first account to handle migrated characters
-func _claim_orphaned_characters(account_data: Dictionary) -> void:
-	var all_characters := CharacterManager.get_all_characters()
-	var all_claimed_slots: Array[int] = []
+	if not character_slots_data.has(current_user_id):
+		return []
 	
-	# Collect all slots claimed by all accounts
-	for account_username in accounts:
-		var acc: Dictionary = accounts[account_username]
-		var acc_slots: Array = acc.get("character_slots", [])
-		for slot in acc_slots:
-			if not all_claimed_slots.has(slot):
-				all_claimed_slots.append(slot)
+	var user_data: Dictionary = character_slots_data.get(current_user_id, {})
+	return user_data.get("character_slots", [])
+
+## Check if account exists (not applicable with Firebase, always returns false)
+func account_exists(email: String) -> bool:
+	# With Firebase, we can't check if an account exists without authentication
+	return false
+
+## Firebase callback: signup succeeded
+func _on_signup_succeeded(auth_info: Dictionary) -> void:
+	print("[AccountManager] Signup succeeded: ", auth_info)
+	current_username = auth_info.get("email", "")
+	current_user_id = auth_info.get("localid", "")
 	
-	# Find orphaned characters
-	for slot_str in all_characters:
-		var slot: int = int(slot_str)
-		if not all_claimed_slots.has(slot):
-			# This character is orphaned, claim it for this account
-			var character_slots: Array = account_data.get("character_slots", [])
-			if not character_slots.has(slot):
-				character_slots.append(slot)
-				account_data["character_slots"] = character_slots
-				print("[AccountManager] Claimed orphaned character in slot %d" % slot)
+	# Initialize character slots for new user
+	if not character_slots_data.has(current_user_id):
+		character_slots_data[current_user_id] = {"character_slots": []}
+		save_character_slots()
+	
+	account_created.emit(current_username)
+	logged_in.emit(current_username)
+
+## Firebase callback: signup failed
+func _on_signup_failed(error_code: int, error_message: String) -> void:
+	print("[AccountManager] Signup failed: [%d] %s" % [error_code, error_message])
+	auth_error.emit(error_message)
+
+## Firebase callback: login succeeded
+func _on_login_succeeded(auth_info: Dictionary) -> void:
+	print("[AccountManager] Login succeeded: ", auth_info)
+	current_username = auth_info.get("email", "")
+	current_user_id = auth_info.get("localid", "")
+	
+	# Initialize character slots if not exists
+	if not character_slots_data.has(current_user_id):
+		character_slots_data[current_user_id] = {"character_slots": []}
+		save_character_slots()
+	
+	logged_in.emit(current_username)
+
+## Firebase callback: login failed
+func _on_login_failed(error_code: int, error_message: String) -> void:
+	print("[AccountManager] Login failed: [%d] %s" % [error_code, error_message])
+	auth_error.emit(error_message)
+
+## Firebase callback: logout succeeded
+func _on_logout_succeeded() -> void:
+	print("[AccountManager] Logout succeeded")
+	current_username = ""
+	current_user_id = ""
+	logged_out.emit()

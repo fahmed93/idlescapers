@@ -5,7 +5,7 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 ## Features
 
 ### Core Gameplay
-- **Account System**: Login or create an account to manage your characters
+- **Account System**: Firebase Authentication for secure login and account creation
 - **Multiple Characters**: Create up to 3 characters per account
 - **Skills (1-99)**: Level up skills from 1 to 99 using the classic RuneScape XP curve
 - **Training Methods**: Unlock new training methods at skill milestones
@@ -35,39 +35,62 @@ An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 
 ### Requirements
 - Godot 4.2 or higher
+- Firebase project (for authentication) - see setup instructions below
+
+### Firebase Setup
+
+Before running the game, you must configure Firebase Authentication:
+
+1. **Create a Firebase project** at [Firebase Console](https://console.firebase.google.com/)
+2. **Enable Email/Password authentication** in Firebase Console → Authentication → Sign-in method
+3. **Get your Firebase config** from Project Settings → Your apps → Web app
+4. **Configure the plugin**:
+   - Copy `addons/godot-firebase/example.env` to `addons/godot-firebase/.env`
+   - Fill in your Firebase configuration values
+5. **Enable the plugin** in Godot: Project → Project Settings → Plugins → Check "GodotFirebase"
+
+**Detailed instructions**: See `todo/FIREBASE_SETUP.md` for step-by-step guide.
 
 ### Running the Game
 1. Clone this repository
 2. Open the project in Godot
-3. Run the main scene (starts at `scenes/login.tscn`)
-4. Create an account or login
-5. Create a character and start playing!
+3. **Complete Firebase setup** (see above)
+4. Run the main scene (starts at `scenes/login.tscn`)
+5. Create an account with email/password
+6. Create a character and start playing!
 
 ### Project Structure
 
 ```
-├── autoload/               # Singleton scripts
-│   ├── account_manager.gd # Account authentication
+├── addons/                  # Godot plugins
+│   ├── godot-firebase/      # Firebase plugin for authentication
+│   └── http-sse-client/     # HTTP SSE client (Firebase dependency)
+├── autoload/                # Singleton scripts
+│   ├── account_manager.gd   # Firebase authentication
 │   ├── character_manager.gd # Multi-character management
-│   ├── game_manager.gd    # XP, skills, training logic
-│   ├── inventory.gd       # Item management
-│   └── save_manager.gd    # Save/load, offline progress
+│   ├── game_manager.gd      # XP, skills, training logic
+│   ├── inventory.gd         # Item management
+│   └── save_manager.gd      # Save/load, offline progress
 ├── resources/
 │   ├── items/
-│   │   └── item_data.gd   # Item resource class
+│   │   └── item_data.gd     # Item resource class
 │   └── skills/
 │       ├── skill_data.gd          # Skill resource class
 │       └── training_method_data.gd # Training method resource class
 ├── scenes/
-│   ├── login.tscn         # Login/account creation screen
-│   ├── startup.tscn       # Character selection screen
-│   └── main.tscn          # Main game scene
+│   ├── login.tscn           # Login/account creation screen
+│   ├── startup.tscn         # Character selection screen
+│   └── main.tscn            # Main game scene
 ├── scripts/
-│   └── main.gd            # Main scene controller
-├── test/                  # Test scripts and scenes
-├── docs/                  # Documentation
-│   ├── README.md          # This file
-│   ├── TODO.md            # Future development plans
+│   └── main.gd              # Main scene controller
+├── test/                    # Test scripts and scenes
+├── todo/                    # Setup and migration documentation
+│   ├── FIREBASE_SETUP.md    # Firebase configuration guide
+│   ├── TESTING_NOTES.md     # Testing strategies
+│   └── MIGRATION_GUIDE.md   # Breaking changes and migration
+├── docs/                    # Documentation
+│   ├── README.md            # This file
+│   ├── TODO.md              # Future development plans
 │   └── UPGRADES_IMPLEMENTATION.md  # Upgrades system documentation
 └── project.godot          # Godot project configuration
 ```
