@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+Firebase="*res://addons/godot-firebase/firebase/firebase.tscn"
 AccountManager="*res://autoload/account_manager.gd"
 CharacterManager="*res://autoload/character_manager.gd"
 GameManager="*res://autoload/game_manager.gd"
@@ -42,6 +43,10 @@ theme/default_font="res://fonts/LiberationSans-Regular.ttf"
 [input_devices]
 
 pointing/emulate_touch_from_mouse=true
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot-firebase/plugin.cfg")
 
 [rendering]
 
