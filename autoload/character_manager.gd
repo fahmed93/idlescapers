@@ -3,7 +3,7 @@
 extends Node
 
 const MAX_CHARACTERS := 3
-const CHARACTERS_FILE := "user://idlescapers_characters.json"
+const CHARACTERS_FILE := "user://skillforge_characters.json"
 
 signal character_created(slot: int, character_name: String)
 signal character_deleted(slot: int)
@@ -157,7 +157,7 @@ func is_max_characters_reached() -> bool:
 
 ## Get save file path for a character slot
 func _get_save_file_path(slot: int) -> String:
-	return "user://idlescapers_save_slot_%d.json" % slot
+	return "user://skillforge_save_slot_%d.json" % slot
 
 ## Get current character's save file path
 func get_current_save_file() -> String:
@@ -175,7 +175,7 @@ func update_character_stats(slot: int, total_level: int, total_xp: float) -> voi
 
 ## Migrate old save file to slot 0 if it exists
 func _migrate_old_save_if_exists() -> void:
-	const OLD_SAVE_FILE := "user://idlescapers_save.json"
+	const OLD_SAVE_FILE := "user://skillforge_save.json"
 	
 	# Only migrate if old save exists and we have no characters
 	if FileAccess.file_exists(OLD_SAVE_FILE) and characters.is_empty():

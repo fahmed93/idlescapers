@@ -102,8 +102,8 @@ func _ready() -> void:
 	
 	# Clean up - delete test accounts
 	print("Cleaning up test data...")
-	if FileAccess.file_exists("user://idlescapers_accounts.json"):
-		DirAccess.remove_absolute("user://idlescapers_accounts.json")
+	if FileAccess.file_exists("user://skillforge_accounts.json"):
+		DirAccess.remove_absolute("user://skillforge_accounts.json")
 	print("Cleanup complete.\n")
 	
 	# Quit after tests

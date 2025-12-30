@@ -107,8 +107,8 @@ func _ready() -> void:
 	Store.gold = 0
 	
 	# Clean up save file
-	if FileAccess.file_exists("user://idlescapers_save.json"):
-		DirAccess.remove_absolute("user://idlescapers_save.json")
+	if FileAccess.file_exists("user://skillforge_save.json"):
+		DirAccess.remove_absolute("user://skillforge_save.json")
 		print("Cleaned up test save file")
 	
 	# Exit

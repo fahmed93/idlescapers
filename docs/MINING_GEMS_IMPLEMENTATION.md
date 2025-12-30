@@ -1,7 +1,7 @@
 # Mining Gem Finding Feature
 
 ## Overview
-This implementation adds a random chance to find gems when performing mining actions in IdleScapers. Higher tier gems have lower drop chances, creating a rarity system.
+This implementation adds a random chance to find gems when performing mining actions in SkillForge Idle. Higher tier gems have lower drop chances, creating a rarity system.
 
 ## Changes Made
 

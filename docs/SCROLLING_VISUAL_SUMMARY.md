@@ -222,7 +222,7 @@ All met ✅:
 
 1. **Merge this PR** to main branch
 2. **Deploy** via GitHub Actions to Pages
-3. **Test live** at https://fahmed93.github.io/idlescapers
+3. **Test live** at https://fahmed93.github.io/skillforgeidle
 4. **Monitor** user feedback
 5. **Celebrate** the improved UX! 🎊
 
