@@ -214,7 +214,7 @@ User: "This works great!" 😊
 ## Files Modified
 
 ```
-idlescapers/
+skillforgeidle/
 ├── scripts/
 │   └── mobile_scroll_container.gd ← MAIN FIX
 ├── docs/

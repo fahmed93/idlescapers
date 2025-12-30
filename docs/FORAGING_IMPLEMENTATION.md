@@ -1,7 +1,7 @@
 # Foraging Skill Implementation
 
 ## Overview
-The Foraging skill has been successfully implemented for IdleScapers. This skill allows players to gather dirty herbs from the wilderness, which serve as the raw material source for the Herblore skill.
+The Foraging skill has been successfully implemented for SkillForge Idle. This skill allows players to gather dirty herbs from the wilderness, which serve as the raw material source for the Herblore skill.
 
 ## What Was Implemented
 

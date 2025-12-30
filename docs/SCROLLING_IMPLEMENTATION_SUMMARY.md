@@ -144,7 +144,7 @@ func _gui_input(event: InputEvent) -> void:
 ### Post-merge Steps
 1. Merge PR to main branch
 2. Deploy to GitHub Pages
-3. Test live at https://fahmed93.github.io/idlescapers
+3. Test live at https://fahmed93.github.io/skillforgeidle
 4. Gather user feedback
 5. Monitor for issues
 

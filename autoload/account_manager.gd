@@ -2,7 +2,7 @@
 ## Handles user account management (login, registration, authentication)
 extends Node
 
-const ACCOUNTS_FILE := "user://idlescapers_accounts.json"
+const ACCOUNTS_FILE := "user://skillforge_accounts.json"
 
 signal account_created(username: String)
 signal logged_in(username: String)
@@ -21,7 +21,7 @@ var accounts: Dictionary = {}  # username: account_data
 var current_username: String = ""
 
 ## Simple salt for password hashing (in a real production app, use per-user salts)
-const PASSWORD_SALT := "idlescapers_2024_salt"
+const PASSWORD_SALT := "skillforge_2024_salt"
 
 func _ready() -> void:
 	load_accounts()

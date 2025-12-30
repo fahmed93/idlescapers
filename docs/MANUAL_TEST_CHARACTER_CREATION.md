@@ -25,7 +25,7 @@ The first account created automatically claims any orphaned (unlinked) character
 
 ### Scenario 2: With Migrated Character (Legacy Save)
 **Setup**: 
-- Create a file `~/.local/share/godot/app_userdata/IdleScapers/idlescapers_save.json` with old save data
+- Create a file `~/.local/share/godot/app_userdata/SkillForge Idle/skillforge_save.json` with old save data
 - Or manually create a character before any accounts exist
 
 1. Launch the game

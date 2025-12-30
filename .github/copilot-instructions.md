@@ -1,4 +1,4 @@
-# IdleScapers - Copilot Instructions
+# SkillForge Idle - Copilot Instructions
 
 ## Project Overview
 Godot 4.5 idle game inspired by Melvor Idle/RuneScape. Mobile-first (720x1280), skills 1-99 with RuneScape XP curve, offline progress, JSON persistence, multiple character slots.
@@ -137,7 +137,7 @@ func _ready() -> void:
 - **Godot Version**: 4.5+ (see `project.godot` features)
 - **Startup Scene**: `scenes/startup.tscn` (character selection)
 - **Main Game**: `scenes/main.tscn`
-- **Save Location**: `user://idlescapers_slot_X.json` (per character)
+- **Save Location**: `user://skillforge_slot_X.json` (per character)
 - **Touch Emulation**: Enabled for mouse (`project.godot`)
 
 ## XP Formula
@@ -152,7 +152,7 @@ GitHub Actions workflows in `.github/workflows/`:
 
 The workflow uses `chickensoft-games/setup-godot@v2` with Godot 4.5.0 and exports to HTML5/Web.
 
-**Live Demo**: https://fahmed93.github.io/idlescapers
+**Live Demo**: https://fahmed93.github.io/skillforgeidle
 
 ## Build & Test Commands
 

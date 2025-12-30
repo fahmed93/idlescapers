@@ -20,8 +20,8 @@ Create a startup screen for the game where you can start a new game or select an
 1. **CharacterManager** (`autoload/character_manager.gd`)
    - Manages character slots (max 3)
    - Handles creation, deletion, selection
-   - Stores character metadata in `user://idlescapers_characters.json`
-   - Individual save files: `user://idlescapers_save_slot_X.json`
+   - Stores character metadata in `user://skillforge_characters.json`
+   - Individual save files: `user://skillforge_save_slot_X.json`
 
 2. **Startup Screen** (`scenes/startup.tscn`, `scripts/startup.gd`)
    - Character selection UI
@@ -45,10 +45,10 @@ Create a startup screen for the game where you can start a new game or select an
 ### File Structure
 ```
 user://
-├── idlescapers_characters.json      # Character metadata (max 3)
-├── idlescapers_save_slot_0.json     # Character 0 save data
-├── idlescapers_save_slot_1.json     # Character 1 save data
-└── idlescapers_save_slot_2.json     # Character 2 save data
+├── skillforge_characters.json      # Character metadata (max 3)
+├── skillforge_save_slot_0.json     # Character 0 save data
+├── skillforge_save_slot_1.json     # Character 1 save data
+└── skillforge_save_slot_2.json     # Character 2 save data
 ```
 
 ### User Flows
@@ -203,4 +203,4 @@ Successfully implemented a complete character selection system with:
 - Clean, maintainable code
 - Comprehensive documentation
 
-The implementation follows all Godot 4.5 best practices and IdleScapers coding conventions.
+The implementation follows all Godot 4.5 best practices and SkillForge Idle coding conventions.

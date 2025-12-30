@@ -1,7 +1,7 @@
 # Herblore Skill Implementation
 
 ## Overview
-The Herblore skill has been successfully implemented for IdleScapers, following the established pattern used by other skills in the game.
+The Herblore skill has been successfully implemented for SkillForge Idle, following the established pattern used by other skills in the game.
 
 ## What Was Implemented
 

@@ -8,7 +8,7 @@ The game now requires users to login or create an account before accessing chara
 ### AccountManager Autoload
 - **Location**: `autoload/account_manager.gd`
 - **Purpose**: Manages user accounts and authentication
-- **Save File**: `user://idlescapers_accounts.json`
+- **Save File**: `user://skillforge_accounts.json`
 
 #### Account Data Structure
 Each account contains:
@@ -105,11 +105,11 @@ Each account contains:
 ## File Structure
 ```
 user://
-├── idlescapers_accounts.json         # All account data
-├── idlescapers_characters.json       # All character metadata
-├── idlescapers_save_slot_0.json      # Character 0 save data
-├── idlescapers_save_slot_1.json      # Character 1 save data
-└── idlescapers_save_slot_2.json      # Character 2 save data
+├── skillforge_accounts.json         # All account data
+├── skillforge_characters.json       # All character metadata
+├── skillforge_save_slot_0.json      # Character 0 save data
+├── skillforge_save_slot_1.json      # Character 1 save data
+└── skillforge_save_slot_2.json      # Character 2 save data
 ```
 
 ## Testing
