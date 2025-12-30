@@ -3,7 +3,6 @@
 extends Control
 
 const MAIN_SCENE := "res://scenes/main.tscn"
-const LOGIN_SCENE := "res://scenes/login.tscn"
 const MAX_CHARACTERS := 3
 
 @onready var character_slots_container: VBoxContainer = $CenterContainer/MainPanel/VBoxContainer/CharacterSlots
@@ -12,8 +11,6 @@ const MAX_CHARACTERS := 3
 @onready var create_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CreateButton
 @onready var cancel_button: Button = $CreateCharacterDialog/VBoxContainer/ButtonsContainer/CancelButton
 @onready var delete_dialog: AcceptDialog = $DeleteConfirmDialog
-@onready var account_label: Label = $CenterContainer/MainPanel/VBoxContainer/AccountLabel
-@onready var logout_button: Button = $CenterContainer/MainPanel/VBoxContainer/LogoutButton
 
 var selected_slot: int = -1
 var slot_buttons: Array[Button] = []
@@ -26,16 +23,7 @@ func _format_timestamp(timestamp: int) -> String:
 	return Time.get_datetime_string_from_unix_time(timestamp)
 
 func _ready() -> void:
-	# Check if user is logged in
-	if not AccountManager.is_logged_in():
-		print("[Startup] No user logged in, redirecting to login screen.")
-		get_tree().change_scene_to_file(LOGIN_SCENE)
-		return
-	
-	print("[Startup] User logged in: %s" % AccountManager.current_username)
-	
-	# Update account label
-	account_label.text = "Logged in as: %s" % AccountManager.current_username
+	print("[Startup] Character selection screen loaded.")
 	
 	# Setup dialogs
 	create_dialog.visible = false
@@ -45,7 +33,6 @@ func _ready() -> void:
 	create_button.pressed.connect(_on_create_confirmed)
 	cancel_button.pressed.connect(_on_create_canceled)
 	delete_dialog.confirmed.connect(_on_delete_confirmed)
-	logout_button.pressed.connect(_on_logout_pressed)
 	
 	# Populate character slots
 	_populate_character_slots()
@@ -59,9 +46,6 @@ func _populate_character_slots() -> void:
 	for child in character_slots_container.get_children():
 		child.queue_free()
 	slot_buttons.clear()
-	
-	# Get character slots for current account
-	var account_slots: Array = AccountManager.get_character_slots()
 	
 	# Create buttons for each slot
 	for slot in range(MAX_CHARACTERS):
@@ -77,9 +61,8 @@ func _populate_character_slots() -> void:
 		hbox.add_child(info_vbox)
 		
 		var character_data := CharacterManager.get_character(slot)
-		var is_account_slot: bool = account_slots.has(slot)
 		
-		# Show character if it belongs to current account, or show empty slot if not occupied
+		# Show character or empty slot
 		if character_data.is_empty():
 			# Empty slot
 			var empty_label := Label.new()
@@ -94,8 +77,8 @@ func _populate_character_slots() -> void:
 			create_btn.custom_minimum_size = Vector2(100, 80)
 			create_btn.pressed.connect(_on_create_character_pressed.bind(slot))
 			hbox.add_child(create_btn)
-		elif is_account_slot:
-			# Occupied slot belonging to current account
+		else:
+			# Occupied slot
 			var name_label := Label.new()
 			name_label.text = character_data.get("name", "Unknown")
 			name_label.add_theme_font_size_override("font_size", 20)
@@ -142,13 +125,6 @@ func _populate_character_slots() -> void:
 			delete_btn.add_theme_color_override("font_color", Color(0.8, 0.3, 0.3))
 			delete_btn.pressed.connect(_on_delete_character_pressed.bind(slot))
 			buttons_vbox.add_child(delete_btn)
-		else:
-			# Slot occupied by another account - show as unavailable
-			var unavailable_label := Label.new()
-			unavailable_label.text = "Slot %d - Unavailable" % (slot + 1)
-			unavailable_label.add_theme_font_size_override("font_size", 16)
-			unavailable_label.add_theme_color_override("font_color", Color(0.5, 0.5, 0.5))
-			info_vbox.add_child(unavailable_label)
 		
 		character_slots_container.add_child(slot_panel)
 
@@ -171,8 +147,6 @@ func _on_create_confirmed() -> void:
 		return
 	
 	if CharacterManager.create_character(selected_slot, character_name):
-		# Link character slot to current account
-		AccountManager.add_character_slot(selected_slot)
 		create_dialog.visible = false
 		_populate_character_slots()
 	else:
@@ -200,8 +174,6 @@ func _on_delete_character_pressed(slot: int) -> void:
 func _on_delete_confirmed() -> void:
 	if selected_slot >= 0:
 		CharacterManager.delete_character(selected_slot)
-		# Remove character slot from current account
-		AccountManager.remove_character_slot(selected_slot)
 		_populate_character_slots()
 		selected_slot = -1
 
@@ -210,7 +182,3 @@ func _on_character_created(slot: int, character_name: String) -> void:
 
 func _on_character_deleted(slot: int) -> void:
 	print("[Startup] Character deleted from slot %d" % slot)
-
-func _on_logout_pressed() -> void:
-	AccountManager.logout()
-	get_tree().change_scene_to_file(LOGIN_SCENE)
