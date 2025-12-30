@@ -10,7 +10,7 @@ This document describes the visual flow and appearance of the new login system.
 ```
 ┌──────────────────────────────────────────────────┐
 │                                                  │
-│                   IdleScapers                    │
+│                SkillForge Idle                   │
 │                                                  │
 │                      Login                       │
 │                                                  │
@@ -34,7 +34,7 @@ This document describes the visual flow and appearance of the new login system.
 ```
 
 **Features:**
-- Large "IdleScapers" title at top (36pt font)
+- Large "SkillForge Idle" title at top (36pt font)
 - "Login" subtitle (24pt font)
 - Username input field (40px height)
 - Password input field (40px height, secret mode)
@@ -49,7 +49,7 @@ This document describes the visual flow and appearance of the new login system.
 ```
 ┌──────────────────────────────────────────────────┐
 │                                                  │
-│                   IdleScapers                    │
+│                SkillForge Idle                   │
 │                                                  │
 │                 Create Account                   │
 │                                                  │
@@ -97,7 +97,7 @@ This document describes the visual flow and appearance of the new login system.
 ```
 ┌──────────────────────────────────────────────────┐
 │                                                  │
-│                   IdleScapers                    │
+│                SkillForge Idle                   │
 │              Logged in as: username              │
 │  ┌────────────────────────────────────────────┐ │
 │  │                 LOGOUT                     │ │
@@ -231,7 +231,7 @@ Login Screen
 - Minimum button height: 30-50px for touch-friendly interface
 
 ### Typography
-- Title: 36pt (IdleScapers)
+- Title: 36pt (SkillForge Idle)
 - Subtitle: 24pt (Login/Create Account)
 - Section headers: 16-20pt
 - Body text: 12-14pt

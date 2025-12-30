@@ -1,7 +1,7 @@
 # Log Icons Implementation
 
 ## Overview
-This document describes the implementation of icons for all 17 log types in IdleScapers.
+This document describes the implementation of icons for all 17 log types in SkillForge Idle.
 
 ## Generated Icons
 

@@ -7,9 +7,9 @@ Users cannot create characters after logging in due to migrated characters occup
 
 ### Migration System
 The `CharacterManager._migrate_old_save_if_exists()` function runs during app startup and:
-1. Checks for old save file (`user://idlescapers_save.json`)
+1. Checks for old save file (`user://skillforge_save.json`)
 2. Creates a "Legacy Character" in slot 0
-3. Stores it in `user://idlescapers_characters.json`
+3. Stores it in `user://skillforge_characters.json`
 4. **Does NOT link it to any account**
 
 ### Account System

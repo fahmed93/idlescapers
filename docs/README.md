@@ -1,4 +1,4 @@
-# IdleScapers
+# SkillForge Idle
 
 An idle game inspired by Melvor Idle and RuneScape, built with Godot 4.x.
 
@@ -130,7 +130,7 @@ See [TODO.md](TODO.md) for planned skills and features including:
 
 This project is automatically deployed to GitHub Pages when changes are pushed to the main branch.
 
-**Live Demo**: [https://fahmed93.github.io/idlescapers](https://fahmed93.github.io/idlescapers)
+**Live Demo**: [https://fahmed93.github.io/skillforgeidle](https://fahmed93.github.io/skillforgeidle)
 
 ### Deployment Process
 - **Workflow**: `.github/workflows/deploy.yml`

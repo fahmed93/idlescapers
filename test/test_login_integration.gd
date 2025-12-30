@@ -5,10 +5,10 @@ func _ready() -> void:
 	print("\n=== Testing Login to Character Selection Integration ===\n")
 	
 	# Clean up any existing test data
-	if FileAccess.file_exists("user://idlescapers_accounts.json"):
-		DirAccess.remove_absolute("user://idlescapers_accounts.json")
-	if FileAccess.file_exists("user://idlescapers_characters.json"):
-		DirAccess.remove_absolute("user://idlescapers_characters.json")
+	if FileAccess.file_exists("user://skillforge_accounts.json"):
+		DirAccess.remove_absolute("user://skillforge_accounts.json")
+	if FileAccess.file_exists("user://skillforge_characters.json"):
+		DirAccess.remove_absolute("user://skillforge_characters.json")
 	
 	# Wait for autoloads to initialize
 	await get_tree().process_frame
@@ -92,13 +92,13 @@ func _ready() -> void:
 	# Clean up
 	print("Cleaning up test data...")
 	AccountManager.logout()
-	if FileAccess.file_exists("user://idlescapers_accounts.json"):
-		DirAccess.remove_absolute("user://idlescapers_accounts.json")
-	if FileAccess.file_exists("user://idlescapers_characters.json"):
-		DirAccess.remove_absolute("user://idlescapers_characters.json")
+	if FileAccess.file_exists("user://skillforge_accounts.json"):
+		DirAccess.remove_absolute("user://skillforge_accounts.json")
+	if FileAccess.file_exists("user://skillforge_characters.json"):
+		DirAccess.remove_absolute("user://skillforge_characters.json")
 	# Clean up character save files
 	for slot in range(3):
-		var save_file := "user://idlescapers_save_slot_%d.json" % slot
+		var save_file := "user://skillforge_save_slot_%d.json" % slot
 		if FileAccess.file_exists(save_file):
 			DirAccess.remove_absolute(save_file)
 	print("Cleanup complete.\n")

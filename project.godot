@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="IdleScapers"
+config/name="SkillForge Idle"
 config/description="An idle game inspired by Melvor Idle/RuneScape with skills (1-99), training methods, and offline progress."
 run/main_scene="res://scenes/login.tscn"
 config/features=PackedStringArray("4.5", "Mobile")

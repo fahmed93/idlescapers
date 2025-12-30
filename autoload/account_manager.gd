@@ -2,7 +2,7 @@
 ## Handles user account management via Firebase Authentication
 extends Node
 
-const CHARACTER_SLOTS_FILE := "user://idlescapers_character_slots.json"
+const CHARACTER_SLOTS_FILE := "user://skillforge_character_slots.json"
 
 signal account_created(email: String)
 signal logged_in(email: String)

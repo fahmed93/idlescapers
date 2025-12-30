@@ -1,7 +1,7 @@
 # Inventory Icon Display Implementation
 
 ## Overview
-This implementation adds visual icon display to inventory items in the IdleScapers game. Items that have icon textures configured will now display their icons in the inventory grid.
+This implementation adds visual icon display to inventory items in the SkillForge Idle game. Items that have icon textures configured will now display their icons in the inventory grid.
 
 ## Changes Made
 

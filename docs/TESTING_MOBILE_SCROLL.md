@@ -133,7 +133,7 @@ Test on actual mobile device:
 ## Automated Test
 Run the automated test to verify configuration:
 ```bash
-cd /home/runner/work/idlescapers/idlescapers
+cd /home/runner/work/skillforgeidle/skillforgeidle
 godot --headless --path . test/test_sidebar_scrolling.tscn
 godot --headless --path . test/test_main_screen_scroll.tscn
 ```
@@ -239,7 +239,7 @@ Before marking this PR as complete:
 
 1. **Merge PR** to main branch
 2. **Deploy** to GitHub Pages
-3. **Test live** at https://fahmed93.github.io/idlescapers
+3. **Test live** at https://fahmed93.github.io/skillforgeidle
 4. **Gather feedback** from users
 5. **Monitor** for any issues
 6. **Iterate** if needed (adjust threshold, add features)

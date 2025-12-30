@@ -9,7 +9,7 @@ The game now supports multiple character saves (up to 3 characters) with a start
 - **Location**: `autoload/character_manager.gd`
 - **Purpose**: Manages character slots, creation, deletion, and selection
 - **Max Characters**: 3
-- **Save File**: `user://idlescapers_characters.json`
+- **Save File**: `user://skillforge_characters.json`
 
 #### Character Data Structure
 Each character contains:
@@ -31,7 +31,7 @@ Each character contains:
 ### SaveManager Updates
 - **Location**: `autoload/save_manager.gd`
 - **Changes**:
-  - Save files are now per-character: `user://idlescapers_save_slot_X.json`
+  - Save files are now per-character: `user://skillforge_save_slot_X.json`
   - Auto-save is disabled until a character is selected
   - Save/load operations use `CharacterManager.get_current_save_file()`
   - Added `_reset_game_state()` to reset all game data for new characters
@@ -50,7 +50,7 @@ Each character contains:
 
 ## Migration from Old Saves
 The system automatically migrates existing saves:
-- If `user://idlescapers_save.json` exists and no characters are created yet
+- If `user://skillforge_save.json` exists and no characters are created yet
 - Creates a "Legacy Character" in slot 0
 - Copies old save data to new slot 0 save file
 - Removes old save file after successful migration
@@ -80,10 +80,10 @@ The system automatically migrates existing saves:
 ## File Structure
 ```
 user://
-├── idlescapers_characters.json      # Character list (max 3)
-├── idlescapers_save_slot_0.json     # Character 0 save data
-├── idlescapers_save_slot_1.json     # Character 1 save data
-└── idlescapers_save_slot_2.json     # Character 2 save data
+├── skillforge_characters.json      # Character list (max 3)
+├── skillforge_save_slot_0.json     # Character 0 save data
+├── skillforge_save_slot_1.json     # Character 1 save data
+└── skillforge_save_slot_2.json     # Character 2 save data
 ```
 
 ## Testing
@@ -97,7 +97,7 @@ A test script is available at `test_character_system.gd` that validates:
 
 ## UI Layout
 The startup screen has:
-- **Title**: "IdleScapers"
+- **Title**: "SkillForge Idle"
 - **Subtitle**: "Select or Create a Character"
 - **3 Character Slots**: Each showing either:
   - Empty slot with "Create Character" button

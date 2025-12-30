@@ -1,7 +1,7 @@
-# IdleScapers - Future Development TODO
+# SkillForge Idle - Future Development TODO
 
 ## Overview
-This document outlines planned skills, features, and improvements for IdleScapers, an idle game inspired by Melvor Idle and RuneScape.
+This document outlines planned skills, features, and improvements for SkillForge Idle, an idle game inspired by Melvor Idle and RuneScape.
 
 ---
 

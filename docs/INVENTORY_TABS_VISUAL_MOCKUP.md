@@ -173,7 +173,7 @@ Right-click on Main tab → No context menu appears
 
 ## Color Scheme Suggestions
 
-Based on existing IdleScapers UI:
+Based on existing SkillForge Idle UI:
 
 - **Main Tab**: Green tint (#6b8b6b) - matches inventory button color
 - **Custom Tabs**: Neutral gray (#808080)
